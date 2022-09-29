@@ -39,7 +39,7 @@
 
 ### Pet list
 
-* Endpoint path: pets/
+* Endpoint path: api/pets/
 * Endpoint method: GET
 
 * Response:
@@ -79,7 +79,7 @@
 
 ### Create a pet
 
-* Endpoint path: pets/
+* Endpoint path: api/pets/
 * Endpoint method: POST
 * Headers:
   * Authorization: Bearer token
@@ -125,7 +125,7 @@
 
 ### Pet detail
 
-* Endpoint path: pets/<id>
+* Endpoint path: api/pets/<id>
 * Endpoint method: GET
 
 * Response:
@@ -157,7 +157,7 @@
 
 ### Pet update
 
-* Endpoint path: pets/<id>
+* Endpoint path: api/pets/<id>
 * Endpoint method: PUT
 
 * Headers:
@@ -217,7 +217,7 @@
 
 ### Pet delete
 
-* Endpoint path: pets/<id>
+* Endpoint path: api/pets/<id>
 * Endpoint method: DELETE
 
 * Headers:
@@ -225,6 +225,94 @@
 
 * Response: success message
 
+* Response shape (JSON):
+    ```json
+    {
+        "message": string
+    }
+    ```
+
+### Create an account (signup)
+
+* Endpoint path: api/accounts/
+* Endpoint method: POST
+
+* Request shape (JSON):
+    ```json
+    {
+        "email": string,
+        "password": string,
+        "zip_code": string,
+        "first_name": string,
+        "last_name": string,
+        "address": {
+            "address_one": string,
+            "address_two": string,
+            "city": string,
+            "state": string
+        },
+        "picture": string,
+        "applications": [],
+        "roles": []
+    }
+    ```
+
+* Response: success message
+* Response shape (JSON):
+    ```json
+    {
+        "message": string
+    }
+    ```
+
+### Promote an account
+
+* Endpoint path: api/accounts/<id>
+* Endpoint method: PATCH
+* Headers:
+  * Authorization: Bearer token (rescue admin)
+
+* Request shape (JSON):
+    ```json
+    {
+        "roles": []
+    }
+
+* Response: success message
+* Response shape (JSON):
+    ```json
+    {
+        "message": string
+    }
+    ```
+
+### Update an account
+
+* Endpoint path: api/accounts/
+* Endpoint method: PATCH or PUT ???
+* Headers:
+  * Authorization: Bearer token (own user)
+
+* Request shape (JSON):
+    ```json
+    {
+        "email": string,
+        "password": string,
+        "zip_code": string,
+        "first_name": string,
+        "last_name": string,
+        "address": {
+            "address_one": string,
+            "address_two": string,
+            "city": string,
+            "state": string
+        },
+        "picture": string,
+        "applications": [],
+    }
+    ```
+
+* Response: success message
 * Response shape (JSON):
     ```json
     {
