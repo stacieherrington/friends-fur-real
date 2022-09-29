@@ -253,7 +253,8 @@
         },
         "picture": string,
         "applications": [],
-        "roles": []
+        "roles": [],
+        "favorites": []
     }
     ```
 
@@ -309,6 +310,7 @@
         },
         "picture": string,
         "applications": [],
+        "favorites": []
     }
     ```
 
