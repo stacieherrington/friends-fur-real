@@ -14,8 +14,26 @@
     ```json
     {
       "account": {
-        "email": string
+        "email": string,
+        "first_name": string,
+        "last_name": string,
+        "avatar_url": string
+
       },
       "token": string
     }
+    ```
+
+### Log out
+
+* Endpoint path: /token
+* Endpoint method: DELETE
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: Always true
+* Response shape (JSON):
+    ```json
+    true
     ```
