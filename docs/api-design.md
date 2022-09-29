@@ -351,12 +351,32 @@
     {
         "name": string,
         "address": {
+            "city": string,
+            "state": string,
+            "zip_code": string
+        },
+        "logo": string
+    }
+
+### Rescue detail
+* Endpoint path: api/rescues/<id>
+* Endpoint method: GET
+* Response: rescue detail page
+* Response shape (JSON):
+    ```json
+    {
+        "name": string,
+        "description": string,
+        "address": {
             "address_one": string,
             "address_two": string,
             "city": string,
-            "state": string
+            "state": string,
+            "zip_code": string
         },
         "logo": string,
         "picture": string,
-        "rescue_admin": {}
+        "rescue_admin": {},
+        "pets": [],
+        "approved_fosters": []
     }
