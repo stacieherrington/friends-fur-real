@@ -319,3 +319,44 @@
         "message": string
     }
     ```
+
+<!-- ### Foster list
+* Endpoint path: api/fosters/
+* Endpoint method: GET
+* Headers:
+  * Authorization: Bearer token (only rescue admin and staff (and superuser))
+
+
+### Foster application
+
+* Endpoint path: api/foster/application ???
+* Endpoint method: POST
+* Headers:
+  * Authorization: Bearer token (own user)
+
+* Request shape (JSON):
+    ```json
+    {
+
+    } -->
+
+### Rescue list
+* Endpoint path: api/rescues/
+* Endpoint method: GET
+
+* Response: a list of rescues
+
+* Response shape (JSON):
+    ```json
+    {
+        "name": string,
+        "address": {
+            "address_one": string,
+            "address_two": string,
+            "city": string,
+            "state": string
+        },
+        "logo": string,
+        "picture": string,
+        "rescue_admin": {}
+    }
