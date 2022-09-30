@@ -254,7 +254,9 @@
         "picture": string,
         "applications": [],
         "roles": [],
-        "favorites": []
+        "favorites": [],
+        "adopted_pets": [],
+        "success_stories": []
     }
     ```
 
@@ -310,7 +312,9 @@
         },
         "picture": string,
         "applications": [],
-        "favorites": []
+        "favorites": [],
+        "adopted_pets": [],
+        "success_stories": []
     }
     ```
 
@@ -380,5 +384,155 @@
         "picture": string,
         "rescue_admin": {},
         "pets": [],
-        "approved_fosters": []
+        "staff": [],
+        "approved_adopters": []
     }
+
+### Adoption Application
+* Endpoint path: api/pets/<id>/adopt
+* Endpoint method: POST
+* Headers:
+  * Authorization: Bearer token (own user)
+
+* Request shape (JSON):
+   ```json
+   {
+        "pet": {},
+        "first_name": string,
+        "last_name": string,
+        "address": {
+            "address_one": string,
+            "address_two": string,
+            "city": string,
+            "state": string,
+            "zip_code": string
+        },
+        "phone_number": string,
+        "has_small_children": bool,
+        "has_dogs": bool,
+        "has_cats": bool,
+        "residence_type": string,
+        "residence_owned": bool,
+        "landlord_restrictions": string,
+        "date_ready": string,
+        "wants_preapproval": bool,
+        "agrees_to_terms": bool,
+        "status": string (choice)
+    }
+    ```
+* Response: adoption application success message
+* Response shape (JSON):
+    ```json
+    {
+        "message": string
+    }
+    ```
+
+### Adopt application list
+
+* Endpoint path: api/rescues/<id>/applications
+* Endpoint method: GET
+
+* Response: a list of applications belonging to that rescue
+
+* Response shape (JSON):
+    ```json
+    {
+        "applications": []
+    }
+    ```
+
+### Adopt application detail
+
+* Endpoint path: api/rescues/<id>/applications/<id>
+* Endpoint method: GET
+* Headers:
+  * Authorization: Bearer token (own user)
+
+* Response: a detail view of one application
+
+* Response shape (JSON):
+    ```json
+       {
+        "pet": {},
+        "first_name": string,
+        "last_name": string,
+        "address": {
+            "address_one": string,
+            "address_two": string,
+            "city": string,
+            "state": string,
+            "zip_code": string
+        },
+        "phone_number": string,
+        "has_small_children": bool,
+        "has_dogs": bool,
+        "has_cats": bool,
+        "residence_type": string,
+        "residence_owned": bool,
+        "landlord_restrictions": string,
+        "date_ready": string,
+        "wants_preapproval": bool,
+        "agrees_to_terms": bool,
+        "status": string (choice)
+    }
+    ```
+
+### Success Story
+* Endpoint path: api/pets/<id>/story
+* Endpoint method: POST
+* Headers:
+  * Authorization: Bearer token (logged in user, user already adopted this pet)
+
+* Request shape (JSON):
+   ```json
+   {
+        "pet": {},
+        "account": {},
+        "title": string,
+        "story": string,
+        "picture": string,
+        "status": string (choice)
+    }
+    ```
+* Response shape (JSON):
+    ```json
+    {
+        "message": string
+    }
+
+### Success story list
+* Endpoint path: api/rescues/<id>/stories
+* Endpoint method: GET
+* Headers:
+  * Authorization: Bearer token (rescue staff)
+
+* Response: a list of success stories specific to this rescue
+* Response shape (JSON):
+    ```json
+    {
+        "pet": {},
+        "account": {},
+        "title": string,
+        "status": string (choice)
+    }
+
+### Success Story
+* Endpoint path: api/pets/<id>/story
+* Endpoint method: GET
+* Headers:
+  * Authorization: Bearer token (depends on "status")
+
+* Response: a detail page of one story
+
+* Response shape (JSON):
+   ```json
+   {
+        "pet": {},
+        "account": {},
+        "title": string,
+        "story": string,
+        "picture": string,
+        "status": string (choice)
+    }
+    ```
