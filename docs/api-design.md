@@ -471,6 +471,7 @@
         "title": string,
         "status": string (choice)
     }
+    ```
 
 ### Success Story
 * Endpoint path: api/pets/<id>/story
@@ -487,5 +488,18 @@
         "story": string,
         "picture": string,
         "status": string (choice)
+    }
+    ```
+
+### Success story list all
+* Endpoint path: api/stories
+* Endpoint method: GET
+* Response: a list of all approved success stories
+* Response shape (JSON):
+    ```json
+    {
+        "pet": {},
+        "account": {},
+        "title": string,
     }
     ```
