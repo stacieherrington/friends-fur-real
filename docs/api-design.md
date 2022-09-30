@@ -1,14 +1,11 @@
 # APIs
 
 ### Log in
-
 * Endpoint path: /token
 * Endpoint method: POST
-
 * Request shape (form):
   * username: string
   * password: string
-
 * Response: Account information and a token
 * Response shape (JSON):
     ```json
@@ -24,13 +21,10 @@
     ```
 
 ### Log out
-
 * Endpoint path: /token
 * Endpoint method: DELETE
-
 * Headers:
   * Authorization: Bearer token
-
 * Response: Always true
 * Response shape (JSON):
     ```json
@@ -38,12 +32,9 @@
     ```
 
 ### Pet list
-
 * Endpoint path: api/pets/
 * Endpoint method: GET
-
 * Response:
-
 * Response shape (JSON):
     ```json
     {
@@ -78,12 +69,10 @@
     ```
 
 ### Create a pet
-
 * Endpoint path: api/pets/
 * Endpoint method: POST
 * Headers:
   * Authorization: Bearer token
-
 * Request shape (JSON):
     ```json
     {
@@ -112,9 +101,7 @@
         "adopter": string
     }
     ```
-
 * Response: success message string
-
 * Response shape (JSON):
     ```json
     {
@@ -124,12 +111,9 @@
 
 
 ### Pet detail
-
 * Endpoint path: api/pets/<id>
 * Endpoint method: GET
-
 * Response:
-
 * Response shape (JSON):
     ```json
     {
@@ -156,13 +140,10 @@
     ```
 
 ### Pet update
-
 * Endpoint path: api/pets/<id>
 * Endpoint method: PUT
-
 * Headers:
   * Authorization: Bearer token
-
 * Request shape (JSON):
     ```json
     {
@@ -187,9 +168,7 @@
         "adopter": string
     }
     ```
-
 * Response: the pet detail page
-
 * Response shape (JSON):
     ```json
     {
@@ -216,15 +195,11 @@
     ```
 
 ### Pet delete
-
 * Endpoint path: api/pets/<id>
 * Endpoint method: DELETE
-
 * Headers:
   * Authorization: Bearer token
-
 * Response: success message
-
 * Response shape (JSON):
     ```json
     {
@@ -233,10 +208,8 @@
     ```
 
 ### Create an account (signup)
-
 * Endpoint path: api/accounts/
 * Endpoint method: POST
-
 * Request shape (JSON):
     ```json
     {
@@ -259,7 +232,6 @@
         "success_stories": []
     }
     ```
-
 * Response: success message
 * Response shape (JSON):
     ```json
@@ -269,18 +241,15 @@
     ```
 
 ### Promote an account
-
 * Endpoint path: api/accounts/<id>
 * Endpoint method: PATCH
 * Headers:
   * Authorization: Bearer token (rescue admin)
-
 * Request shape (JSON):
     ```json
     {
         "roles": []
     }
-
 * Response: success message
 * Response shape (JSON):
     ```json
@@ -290,12 +259,10 @@
     ```
 
 ### Update an account
-
 * Endpoint path: api/accounts/
 * Endpoint method: PATCH or PUT ???
 * Headers:
   * Authorization: Bearer token (own user)
-
 * Request shape (JSON):
     ```json
     {
@@ -317,7 +284,6 @@
         "success_stories": []
     }
     ```
-
 * Response: success message
 * Response shape (JSON):
     ```json
@@ -349,9 +315,7 @@
 ### Rescue list
 * Endpoint path: api/rescues/
 * Endpoint method: GET
-
 * Response: a list of rescues
-
 * Response shape (JSON):
     ```json
     {
@@ -393,7 +357,6 @@
 * Endpoint method: POST
 * Headers:
   * Authorization: Bearer token (own user)
-
 * Request shape (JSON):
    ```json
    {
@@ -429,12 +392,9 @@
     ```
 
 ### Adopt application list
-
 * Endpoint path: api/rescues/<id>/applications
 * Endpoint method: GET
-
 * Response: a list of applications belonging to that rescue
-
 * Response shape (JSON):
     ```json
     {
@@ -443,14 +403,11 @@
     ```
 
 ### Adopt application detail
-
 * Endpoint path: api/rescues/<id>/applications/<id>
 * Endpoint method: GET
 * Headers:
   * Authorization: Bearer token (own user)
-
 * Response: a detail view of one application
-
 * Response shape (JSON):
     ```json
        {
@@ -483,7 +440,6 @@
 * Endpoint method: POST
 * Headers:
   * Authorization: Bearer token (logged in user, user already adopted this pet)
-
 * Request shape (JSON):
    ```json
    {
@@ -506,7 +462,6 @@
 * Endpoint method: GET
 * Headers:
   * Authorization: Bearer token (rescue staff)
-
 * Response: a list of success stories specific to this rescue
 * Response shape (JSON):
     ```json
@@ -522,9 +477,7 @@
 * Endpoint method: GET
 * Headers:
   * Authorization: Bearer token (depends on "status")
-
 * Response: a detail page of one story
-
 * Response shape (JSON):
    ```json
    {
