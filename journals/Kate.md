@@ -6,5 +6,5 @@ Today, I worked on:
 
 The team tested if the application/host was running and it worked!
 
-Getting all the docker files and images to work is amazing! 
+Getting all the docker files and images to work is amazing! Also finding out that adding '[all]' on the fastapi requirements includes any fastapi dependencies. Which is pretty cool!
 
