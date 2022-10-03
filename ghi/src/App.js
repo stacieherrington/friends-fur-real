@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   const [launch_info, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);  
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getData() {
@@ -29,6 +29,7 @@ function App() {
 
   return (
     <div>
+      <h1>hello world!</h1>
       <ErrorNotification error={error} />
       <Construct info={launch_info} />
     </div>

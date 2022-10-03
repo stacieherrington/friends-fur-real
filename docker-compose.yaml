@@ -1,17 +1,19 @@
 volumes:
-  example-node-modules:
+  fur-node-modules:
     external: true
-  example-mongo-data:
+  fur-mongo-data:
     external: true
 services:
   mongo:
     image: mongo:6
     volumes:
       - ./setup/mongodb:/docker-entrypoint-initdb.d
-      - example-mongo-data:/data/db
+      - fur-mongo-data:/data/db
+    ports:
+      - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: example_user
-      MONGO_INITDB_ROOT_PASSWORD: example_password
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
   mongo-express:
     build:
       context: setup/mongo-express
@@ -20,8 +22,8 @@ services:
       - 8081:8081
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_ADMINUSERNAME: example_user
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example_password
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
       WAIT_HOSTS: mongo:27017
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
@@ -44,7 +46,7 @@ services:
       context: ghi
       dockerfile: Dockerfile.dev
     volumes:
-      - example-node-modules:/app/node_modules
+      - fur-node-modules:/app/node_modules
       - ./ghi:/app
     ports:
       - 3000:3000
