@@ -11,3 +11,8 @@ def test_pet(id:str,queries:PetQueries=Depends()):
         return response
     else:
         raise HTTPException(404,"this pet id is not exist!")
+
+@router.post('/api/pets/')
+def create_pet(name:str,queries:PetQueries=Depends()):
+    response = queries.create_pet(name)
+    return response

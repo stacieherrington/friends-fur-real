@@ -16,3 +16,7 @@ class PetQueries(Queries):
             return None
         props['id'] = str(props['_id'])
         return PetOut(**props)
+
+    def create_pet(self,name):
+        self.collection.insert_one({'name':name})
+        return {"message":"Yeah! pet added!"}
