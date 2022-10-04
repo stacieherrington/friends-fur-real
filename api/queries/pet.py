@@ -10,13 +10,13 @@ class PetQueries(Queries):
     def get_pet(self,id) -> PetOut:
         try:
             id = ObjectId(id)
-            props = self.collection.find_one({"_id":id})
+            pet = self.collection.find_one({"_id":id})
         except:
             return None
-        if not props:
+        if not pet:
             return None
-        props['id'] = str(props['_id'])
-        return PetOut(**props)
+        pet['id'] = str(pet['_id'])
+        return PetOut(**pet)
 
     def create_pet(self,name):
         self.collection.insert_one({'name':name})
@@ -29,3 +29,13 @@ class PetQueries(Queries):
             pet['id'] = str(pet['_id'])
             pets.append(PetOut(**(pet)))
         return pets
+    
+    def delete_pet(self,id):
+        try:
+            id = ObjectId(id)
+            pet = self.collection.find_one({"_id":id})
+        except:
+            return None
+        if pet:
+            self.collection.delete_one({"id":id})
+            return {"message":"pet has been deleted!"}

@@ -2,8 +2,10 @@ from pydantic import BaseModel
 from typing import List
 
 
+
+
 class PetOut(BaseModel):
-    id:str
+    id:str | None
     name:str
     type:str | None
     breed:str | None
