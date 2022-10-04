@@ -7,8 +7,11 @@ class PetQueries(Queries):
     COLLECTION = 'pet'
 
     def get_pet(self,id) -> PetOut:
-        id = ObjectId(id)
-        props = self.collection.find_one({"_id":id})
+        try:
+            id = ObjectId(id)
+            props = self.collection.find_one({"_id":id})
+        except:
+            return None
         if not props:
             return None
         props['id'] = str(props['_id'])
