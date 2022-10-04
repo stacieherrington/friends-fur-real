@@ -16,3 +16,8 @@ def test_pet(id:str,queries:PetQueries=Depends()):
 def create_pet(name:str,queries:PetQueries=Depends()):
     response = queries.create_pet(name)
     return response
+
+@router.get("/api/pets")
+def list_pets(queries:PetQueries=Depends()):
+    response = queries.list_pets()
+    return {"pets":response}

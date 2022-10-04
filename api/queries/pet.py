@@ -2,6 +2,7 @@ from .client import Queries
 from models import PetOut
 from bson.objectid import ObjectId
 
+
 class PetQueries(Queries):
     DB_NAME = 'fur'
     COLLECTION = 'pet'
@@ -20,3 +21,11 @@ class PetQueries(Queries):
     def create_pet(self,name):
         self.collection.insert_one({'name':name})
         return {"message":"Yeah! pet added!"}
+
+    def list_pets(self):
+        pets= []
+        cursor = self.collection.find({})
+        for pet in cursor:
+            pet['id'] = str(pet['_id'])
+            pets.append(PetOut(**(pet)))
+        return pets
