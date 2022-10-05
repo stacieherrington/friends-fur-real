@@ -10,3 +10,14 @@ def create_story (
     queries:SuccessStoryQueries=Depends()):
     response = queries.create_story(story)
     return response
+
+
+@router.get('/api/pets/{id}/story')
+def get_story (
+    id:str,
+    queries:SuccessStoryQueries=Depends()):
+    response = queries.get_story(id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This story does not exist!")

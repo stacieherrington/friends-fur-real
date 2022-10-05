@@ -11,3 +11,15 @@ class SuccessStoryQueries(Queries):
     def create_story(self, story:SuccessStoryIn):
         self.collection.insert_one(story.dict())
         return {"message": "Thank you for your story!"}
+
+    def get_story(self, id) -> SuccessStoryOut:
+        try:
+            id = ObjectId(id)
+            story = self.collection.find_one({"_id":id})
+        except:
+            return None
+        if story:
+            story['id'] = str(story['_id'])
+            return SuccessStoryOut(**story)
+        else:
+            return None
