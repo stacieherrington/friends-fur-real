@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import pet
+from routers import pet, rescue
 
 app = FastAPI()
 
@@ -17,4 +17,4 @@ app.add_middleware(
 
 
 app.include_router(pet.router)
-
+app.include_router(rescue.router)
