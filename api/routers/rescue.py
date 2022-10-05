@@ -29,6 +29,15 @@ def delete_rescue(id: str, queries: RescueQueries=Depends()):
         raise HTTPException(404,"This rescue id does not exist!")
 
 
-@router.get("/api/rescues", response_model=RescuesList)
+@router.get("/api/rescues/", response_model=RescuesList)
 def list_rescues(queries: RescueQueries=Depends()):
     return RescuesList(rescues=queries.list_rescues())
+
+
+@router.put("/api/rescues/{id}/", response_model=RescueOut)
+def update_rescue(id:str, data: RescueIn, queries: RescueQueries=Depends()):
+    response = queries.update_rescue(id, data)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This rescue id does not exist!")
