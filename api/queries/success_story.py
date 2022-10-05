@@ -12,6 +12,7 @@ class SuccessStoryQueries(Queries):
         self.collection.insert_one(story.dict())
         return {"message": "Thank you for your story!"}
 
+<<<<<<< HEAD
     def list_stories(self) ->List[SuccessStoryOut]:
         result = self.collection.find({})
         stories = []
@@ -20,3 +21,16 @@ class SuccessStoryQueries(Queries):
             stories.append(SuccessStoryOut(**story))
         return stories
      
+=======
+    def get_story(self, id) -> SuccessStoryOut:
+        try:
+            id = ObjectId(id)
+            story = self.collection.find_one({"_id":id})
+        except:
+            return None
+        if story:
+            story['id'] = str(story['_id'])
+            return SuccessStoryOut(**story)
+        else:
+            return None
+>>>>>>> refs/remotes/origin/main

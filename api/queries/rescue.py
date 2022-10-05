@@ -41,3 +41,17 @@ class RescueQueries(Queries):
             rescue['id'] = str(rescue['_id'])
             rescues.append(RescueOut(**rescue))
         return rescues
+
+    def update_rescue(self, id, data) -> RescueOut:
+        try:
+            id = ObjectId(id)
+            rescue = self.collection.find_one_and_update(
+                {"_id":id},
+                {"$set": data.dict()},
+                return_document=ReturnDocument.AFTER
+                )
+        except:
+            return None
+        if rescue:
+            rescue['id'] = str(rescue['_id'])
+            return RescueOut(**rescue)

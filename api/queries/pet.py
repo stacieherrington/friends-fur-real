@@ -47,14 +47,11 @@ class PetQueries(Queries):
         try:
             print(data, "AaAAAAAAAAAAAAAAAAAA<----------------")
             id = ObjectId(id)
-            pet = self.collection.find_one_and_update({"_id":id}, {"$set": data.dict()}, return_document=ReturnDocument.AFTER)
-
-            # pet = self.collection.find_one_and_update({"_id":id},
-            #     data,
-            #     return_document=ReturnDocument.AFTER)
-            # pet = self.collection.find_and_modify({"query": {"_id":id},
-            #     "new": True,
-            #     "update": data.dict() })
+            pet = self.collection.find_one_and_update(
+                {"_id":id},
+                {"$set": data.dict()},
+                return_document=ReturnDocument.AFTER
+                )
         except:
             return None
         if pet:
