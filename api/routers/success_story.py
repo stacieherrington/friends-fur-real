@@ -11,11 +11,9 @@ def create_story (
     response = queries.create_story(story)
     return response
 
-<<<<<<< HEAD
 @router.get("/api/stories/",response_model=SuccessStoryList)
 def list_stories(queries:SuccessStoryQueries=Depends()):
     return SuccessStoryList(stories=queries.list_stories())
-=======
 
 @router.get('/api/pets/{id}/story')
 def get_story (
@@ -26,4 +24,3 @@ def get_story (
         return response
     else:
         raise HTTPException(404, "This story does not exist!")
->>>>>>> refs/remotes/origin/main
