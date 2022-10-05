@@ -23,6 +23,8 @@ class PetIn(BaseModel):
     special_needs: bool | None
     adopter: str | None  # AccountOut ?
     is_adopted: bool | None
+    rescue_id: str | None
+    story_id: str | None
 
 
 class PetOut(PetIn):
@@ -89,15 +91,15 @@ class AdoptionApplicationList(BaseModel):
 
 class SuccessStoryIn(BaseModel):
     pet: PetOut
-    account: object # account not made yet
-    title: str
-    story: str 
-    picture: str
+    account: object | None# account not made yet
+    title: str | None
+    story: str | None
+    picture: str | None
     status: Literal[
         "Submitted",
         "Approved",
         "Rejected",
-    ] 
+    ] |None
 
 class SuccessStoryOut(SuccessStoryIn):
     id: str
