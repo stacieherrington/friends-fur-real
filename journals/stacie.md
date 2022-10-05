@@ -1,3 +1,11 @@
+10/05/2022
+
+Today we got so much done. We did pet update as a group, then we worked
+individually on issues we created. I worked on the Rescue model and all
+the CRUD functionality for rescue. I then helped Kate with some logic for
+success story list by rescue.
+
+
 10/04/2022
 
 Today we worked as a whole group again and we got started with our pet models/queries/routers.
