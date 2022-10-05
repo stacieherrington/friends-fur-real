@@ -21,3 +21,11 @@ def get_story (
         return response
     else:
         raise HTTPException(404, "This story does not exist!")
+        
+
+@router.get('/api/rescues/{rescue_id}/stories')
+def list_rescue_stories (
+    rescue_id: str,
+    queries: SuccessStoryQueries=Depends()):
+    response = queries.get_stories_by_rescue(rescue_id)
+    return SuccessStoryList(stories=response)
