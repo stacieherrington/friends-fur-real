@@ -1,5 +1,5 @@
 from .client import Queries
-from models import RescueOut
+from models import RescueOut, RescueIn
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument
@@ -19,3 +19,7 @@ class RescueQueries(Queries):
             return None
         rescue['id'] = str(rescue['_id'])
         return RescueOut(**rescue)
+
+    def create_rescue(self, rescue: RescueIn):
+        self.collection.insert_one(rescue.dict())
+        return {"message":"Yeah! Rescue added!"}
