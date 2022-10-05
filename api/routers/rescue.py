@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import RescueOut, RescueIn
+from models import RescueOut, RescueIn, RescuesList
 from queries.rescue import RescueQueries
 
 router = APIRouter()
@@ -27,3 +27,8 @@ def delete_rescue(id: str, queries: RescueQueries=Depends()):
         return response
     else:
         raise HTTPException(404,"This rescue id does not exist!")
+
+
+@router.get("/api/rescues", response_model=RescuesList)
+def list_rescues(queries: RescueQueries=Depends()):
+    return RescuesList(rescues=queries.list_rescues())

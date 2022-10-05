@@ -24,7 +24,6 @@ class RescueQueries(Queries):
         self.collection.insert_one(rescue.dict())
         return {"message":"Yeah! Rescue added!"}
 
-
     def delete_rescue(self, id):
         try:
             id = ObjectId(id)
@@ -34,3 +33,11 @@ class RescueQueries(Queries):
         if rescue:
             self.collection.delete_one({"_id": id})
             return {"message": "Rescue has been deleted!"}
+
+    def list_rescues(self) -> List[RescueOut]:
+        result = self.collection.find({})
+        rescues = []
+        for rescue in result:
+            rescue['id'] = str(rescue['_id'])
+            rescues.append(RescueOut(**rescue))
+        return rescues
