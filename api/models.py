@@ -22,11 +22,13 @@ class PetIn(BaseModel):
     spayed_neutered:bool | None
     house_trained:bool | None
     special_needs:bool | None
+    adopter: str | None # AccountOut ?
+    is_adopted:bool | None
+
 
 class PetOut(PetIn):
     id:str
-    adopter: str | None # AccountOut ?
-    is_adopted:bool | None
+
 
 class PetsList(BaseModel):
     pets: List[PetOut]
