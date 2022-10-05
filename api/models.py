@@ -32,3 +32,22 @@ class PetOut(PetIn):
 
 class PetsList(BaseModel):
     pets: List[PetOut]
+
+
+class RescueIn(BaseModel):
+    name: str
+    description: str | None
+    address: Address
+    logo: str | None
+    picture: str | None
+    rescue_admin: object | None
+    pets: List[PetOut] | None
+    staff: List[str] | None # no staff/account yet
+    approved_adopters: List[str] | None
+
+
+class RescueOut(RescueIn):
+    id: str
+
+class RescueList(BaseModel):
+    rescues: List[RescueOut]
