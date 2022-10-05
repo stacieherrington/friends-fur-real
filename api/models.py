@@ -1,3 +1,4 @@
+from typing import Literal
 from pydantic import BaseModel
 from typing import List
 
@@ -84,3 +85,23 @@ class AdoptionApplicationOut(PetIn):
 
 class AdoptionApplicationList(BaseModel):
     adoptions: List[AdoptionApplicationOut]
+
+
+class SuccessStoryIn(BaseModel):
+    pet: PetOut
+    account: object # account not made yet
+    title: str
+    story: str 
+    picture: str
+    status: Literal[
+        "Submitted",
+        "Approved",
+        "Rejected",
+    ] 
+
+class SuccessStoryOut(SuccessStoryIn):
+    id: str
+
+
+class SuccessStoryList(BaseModel):
+    stories: List[SuccessStoryOut]
