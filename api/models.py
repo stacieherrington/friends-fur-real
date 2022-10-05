@@ -60,3 +60,25 @@ class RescueOut(RescueIn):
 
 class RescuesList(BaseModel):
     rescues: List[RescueOut]
+class AdoptionApplicationIn(BaseModel):
+    pet: PetOut | None
+    first_name: str | None
+    last_name: str | None
+    address: Address | None
+    phone_number: str | None
+    has_small_children: bool | None
+    has_dogs: bool | None
+    has_cats: bool | None
+    residence_type: str | None
+    residence_owned: str | None
+    landlord_restrictions: str | None
+    date_ready: str | None
+    wants_preapproval: bool | None
+    agrees_to_terms: bool | None
+    status: str | None
+
+class AdoptionApplicationOut(PetIn):
+    id:str
+
+class AdoptionApplicationList(BaseModel):
+    adoptions: List[AdoptionApplicationOut]
