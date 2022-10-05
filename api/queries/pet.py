@@ -1,6 +1,7 @@
 from .client import Queries
-from models import PetOut
+from models import PetOut, PetIn, PetsList
 from bson.objectid import ObjectId
+from typing import List
 
 
 class PetQueries(Queries):
@@ -16,18 +17,20 @@ class PetQueries(Queries):
         if not pet:
             return None
         pet['id'] = str(pet['_id'])
+        # pet['adopter']
+        # pet['is_adopted']
         return PetOut(**pet)
 
-    def create_pet(self,name):
-        self.collection.insert_one({'name':name})
+    def create_pet(self,pet:PetIn):
+        self.collection.insert_one(pet.dict())
         return {"message":"Yeah! pet added!"}
 
-    def list_pets(self):
-        pets= []
-        cursor = self.collection.find({})
-        for pet in cursor:
+    def list_pets(self)->List[PetOut]:
+        result = self.collection.find({})
+        pets = []
+        for pet in result:
             pet['id'] = str(pet['_id'])
-            pets.append(PetOut(**(pet)))
+            pets.append(PetOut(**pet))
         return pets
     
     def delete_pet(self,id):
@@ -37,5 +40,5 @@ class PetQueries(Queries):
         except:
             return None
         if pet:
-            self.collection.delete_one({"id":id})
+            self.collection.delete_one({"_id":id})
             return {"message":"pet has been deleted!"}
