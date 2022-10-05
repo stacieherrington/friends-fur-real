@@ -35,6 +35,60 @@ class PetsList(BaseModel):
     pets: List[PetOut]
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class SuccessStoryIn(BaseModel):
     pet: PetOut
     account: object # account not made yet
