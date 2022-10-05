@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import PetOut
+from models import PetOut,PetIn,PetsList
 from queries.pet import PetQueries
 
 router = APIRouter()
@@ -13,14 +13,14 @@ def test_pet(id:str,queries:PetQueries=Depends()):
         raise HTTPException(404,"this pet id is not exist!")
 
 @router.post('/api/pets/')
-def create_pet(pet:PetOut,queries:PetQueries=Depends()):
+def create_pet(pet:PetIn,queries:PetQueries=Depends()):
     response = queries.create_pet(pet.name)
     return response
 
-@router.get("/api/pets")
+@router.get("/api/pets",)
 def list_pets(queries:PetQueries=Depends()):
     response = queries.list_pets()
-    return {"pets":response}
+    return PetsList(response)
 
 @router.delete("/api/pets/{id}")
 def delete_pet(id:str,queries:PetQueries=Depends()):

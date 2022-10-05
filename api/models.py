@@ -4,8 +4,7 @@ from typing import List
 
 
 
-class PetOut(BaseModel):
-    id:str | None
+class PetIn(BaseModel):
     name:str
     type:str | None
     breed:str | None
@@ -23,6 +22,11 @@ class PetOut(BaseModel):
     spayed_neutered:bool | None
     house_trained:bool | None
     special_needs:bool | None
+
+class PetOut(PetIn):
+    id:str
+    adopter: str | None # AccountOut ?
     is_adopted:bool | None
-    adopter: str | None # account id ?
-    
+
+class PetsList(BaseModel):
+    pets: List[PetOut]

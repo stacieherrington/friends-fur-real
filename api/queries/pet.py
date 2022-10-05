@@ -1,5 +1,5 @@
 from .client import Queries
-from models import PetOut
+from models import PetOut, PetIn, PetsList
 from bson.objectid import ObjectId
 
 
@@ -16,6 +16,8 @@ class PetQueries(Queries):
         if not pet:
             return None
         pet['id'] = str(pet['_id'])
+        # pet['adopter']
+        # pet['is_adopted']
         return PetOut(**pet)
 
     def create_pet(self,name):
