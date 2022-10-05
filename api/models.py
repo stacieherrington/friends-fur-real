@@ -2,32 +2,30 @@ from pydantic import BaseModel
 from typing import List
 
 
-
-
 class PetIn(BaseModel):
-    name:str
-    type:str | None
-    breed:str | None
-    age:int | None
-    sex:str | None
-    size:str | None
-    description:str | None
-    weight:int | None # str ?
+    name: str
+    type: str | None
+    breed: str | None
+    age: int | None
+    sex: str | None
+    size: str | None
+    description: str | None
+    weight: int | None  # str ?
     pictures: List[str] | None
-    primary_color:str | None
-    ok_with_dogs:bool | None
-    ok_with_cats:bool | None
-    shots_up_to_date:bool | None
-    ok_with_kids:bool | None
-    spayed_neutered:bool | None
-    house_trained:bool | None
-    special_needs:bool | None
-    adopter: str | None # AccountOut ?
-    is_adopted:bool | None
+    primary_color: str | None
+    ok_with_dogs: bool | None
+    ok_with_cats: bool | None
+    shots_up_to_date: bool | None
+    ok_with_kids: bool | None
+    spayed_neutered: bool | None
+    house_trained: bool | None
+    special_needs: bool | None
+    adopter: str | None  # AccountOut ?
+    is_adopted: bool | None
 
 
 class PetOut(PetIn):
-    id:str
+    id: str
 
 
 class PetsList(BaseModel):
@@ -48,10 +46,10 @@ class RescueIn(BaseModel):
     address: Address | None
     logo: str | None
     picture: str | None
-    rescue_admin: str | None # Replace with Account
-    pets: List[PetOut]| None
-    staff: List[str] | None # Replace with List[Account]
-    approved_adopters: List[str] | None # Replace with List[Account]
+    rescue_admin: str | None  # Replace with Account
+    pets: List[PetOut] | None
+    staff: List[str] | None  # Replace with List[Account]
+    approved_adopters: List[str] | None  # Replace with List[Account]
 
 
 class RescueOut(RescueIn):
@@ -60,6 +58,8 @@ class RescueOut(RescueIn):
 
 class RescuesList(BaseModel):
     rescues: List[RescueOut]
+
+
 class AdoptionApplicationIn(BaseModel):
     pet: PetOut | None
     first_name: str | None
@@ -77,8 +77,10 @@ class AdoptionApplicationIn(BaseModel):
     agrees_to_terms: bool | None
     status: str | None
 
-class AdoptionApplicationOut(PetIn):
-    id:str
+
+class AdoptionApplicationOut(AdoptionApplicationIn):
+    id: str
+
 
 class AdoptionApplicationList(BaseModel):
     adoptions: List[AdoptionApplicationOut]

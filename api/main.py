@@ -1,15 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import pet
+from routers import pet, adoption_application
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        os.environ.get("CORS_HOST", "http://localhost:3000")
-    ],
+    allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -17,4 +15,4 @@ app.add_middleware(
 
 
 app.include_router(pet.router)
-
+app.include_router(adoption_application.router)
