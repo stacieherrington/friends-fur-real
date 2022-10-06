@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from models import PetOut,PetIn,PetsList
 from queries.pet import PetQueries
 
-router = APIRouter()
+router = APIRouter(tags=["Pets"])
 
 @router.get('/api/pets/{id}/',response_model=PetOut)
 def get_pet(id:str,queries:PetQueries=Depends()):

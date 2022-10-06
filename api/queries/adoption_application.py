@@ -15,9 +15,13 @@ class AdoptionApplicationQueries(Queries):
 
     def create_application(self, app: AdoptionApplicationIn):
         self.collection.insert_one(app.dict())
-        return {"message": "Congratulations! Your Application has been submitted!"}
+        return {
+            "message": "Congratulations! Your Application has been submitted!"
+        }
 
-    def list_adoption_applications(self) -> List[AdoptionApplicationOut]:
+    def list_adoption_applications(
+        self,
+    ) -> List[AdoptionApplicationOut]:
         response = self.collection.find({})
         apps = []
         for app in response:
@@ -35,7 +39,9 @@ class AdoptionApplicationQueries(Queries):
         app["id"] = str(app["_id"])
         return AdoptionApplicationOut(**app)
 
-    def update_adoption_application(self, id, data) -> AdoptionApplicationOut:
+    def update_adoption_application(
+        self, id, data
+    ) -> AdoptionApplicationOut:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
@@ -56,4 +62,6 @@ class AdoptionApplicationQueries(Queries):
             return None
         if app:
             self.collection.delete_one({"_id": id})
-            return {"message": "Your Adoption Application has been deleted!"}
+            return {
+                "message": "Your Adoption Application has been deleted!"
+            }
