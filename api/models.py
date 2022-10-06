@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 
 
@@ -91,7 +91,7 @@ class AdoptionApplicationList(BaseModel):
 
 class SuccessStoryIn(BaseModel):
     pet: PetOut
-    account: object | None# account not made yet
+    account: object | None  # account not made yet
     title: str | None
     story: str | None
     picture: str | None
@@ -99,7 +99,8 @@ class SuccessStoryIn(BaseModel):
         "Submitted",
         "Approved",
         "Rejected",
-    ] |None
+    ] | None
+
 
 class SuccessStoryOut(SuccessStoryIn):
     id: str
