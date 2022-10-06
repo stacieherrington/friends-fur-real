@@ -108,3 +108,17 @@ class SuccessStoryOut(SuccessStoryIn):
 
 class SuccessStoryList(BaseModel):
     stories: List[SuccessStoryOut]
+
+class AccountIn(BaseModel):
+    email: str
+    password: str
+
+class Account(AccountIn):
+    id: str
+    roles: List[str]
+
+class AccountOut(BaseModel):
+    id: str
+    roles: List[str]
+
+

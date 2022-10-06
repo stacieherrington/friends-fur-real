@@ -39,9 +39,7 @@ class AdoptionApplicationQueries(Queries):
         app["id"] = str(app["_id"])
         return AdoptionApplicationOut(**app)
 
-    def update_adoption_application(
-        self, id, data
-    ) -> AdoptionApplicationOut:
+    def update_adoption_application(self, id, data) -> AdoptionApplicationOut:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
@@ -62,6 +60,4 @@ class AdoptionApplicationQueries(Queries):
             return None
         if app:
             self.collection.delete_one({"_id": id})
-            return {
-                "message": "Your Adoption Application has been deleted!"
-            }
+            return {"message": "Your Adoption Application has been deleted!"}

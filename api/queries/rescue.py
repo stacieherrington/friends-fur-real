@@ -6,23 +6,23 @@ from pymongo import ReturnDocument
 
 
 class RescueQueries(Queries):
-    DB_NAME = 'fur'
-    COLLECTION = 'rescue'
+    DB_NAME = "fur"
+    COLLECTION = "rescue"
 
     def get_rescue(self, id) -> RescueOut:
         try:
             id = ObjectId(id)
-            rescue = self.collection.find_one({"_id":id})
+            rescue = self.collection.find_one({"_id": id})
         except:
             return None
         if not rescue:
             return None
-        rescue['id'] = str(rescue['_id'])
+        rescue["id"] = str(rescue["_id"])
         return RescueOut(**rescue)
 
     def create_rescue(self, rescue: RescueIn):
         self.collection.insert_one(rescue.dict())
-        return {"message":"Yeah! Rescue added!"}
+        return {"message": "Yeah! Rescue added!"}
 
     def delete_rescue(self, id):
         try:
@@ -38,7 +38,7 @@ class RescueQueries(Queries):
         result = self.collection.find({})
         rescues = []
         for rescue in result:
-            rescue['id'] = str(rescue['_id'])
+            rescue["id"] = str(rescue["_id"])
             rescues.append(RescueOut(**rescue))
         return rescues
 
@@ -46,12 +46,12 @@ class RescueQueries(Queries):
         try:
             id = ObjectId(id)
             rescue = self.collection.find_one_and_update(
-                {"_id":id},
+                {"_id": id},
                 {"$set": data.dict()},
-                return_document=ReturnDocument.AFTER
-                )
+                return_document=ReturnDocument.AFTER,
+            )
         except:
             return None
         if rescue:
-            rescue['id'] = str(rescue['_id'])
+            rescue["id"] = str(rescue["_id"])
             return RescueOut(**rescue)
