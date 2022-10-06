@@ -10,3 +10,11 @@ What I learned today:
 2. In order to use class build-in function, have to create an instance of it. 
 3. FastAPI model as parameter using Model.field_name to get the data, NOT Model['field_name']
 4. How FastAPI Model Queries and Routers working together.
+
+## Oct 5, 2022
+Today, Worked on:
+- We create pet-update-api as group. working with Kate and Stacie to create success-story-list-by-rescue_id.
+- create list_stories api
+- helped team mates on merging branches to main.
+what I learned today: 
+using tags = 'group_name' to group api-s for fastAPI/docs
