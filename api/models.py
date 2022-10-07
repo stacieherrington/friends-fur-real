@@ -62,9 +62,7 @@ class RescueOut(RescueIn):
 class RescuesList(BaseModel):
     rescues: List[RescueOut]
 
-
-class AdoptionApplicationIn(BaseModel):
-    pet: PetOut | None
+class AdoptionApplicationUpdate(BaseModel):
     first_name: str | None
     last_name: str | None
     address: Address | None
@@ -79,6 +77,9 @@ class AdoptionApplicationIn(BaseModel):
     wants_preapproval: bool | None
     agrees_to_terms: bool | None
     status: str | None
+    
+class AdoptionApplicationIn(AdoptionApplicationUpdate):
+    pet: PetOut | None
 
 
 class AdoptionApplicationOut(AdoptionApplicationIn):
@@ -109,16 +110,33 @@ class SuccessStoryOut(SuccessStoryIn):
 class SuccessStoryList(BaseModel):
     stories: List[SuccessStoryOut]
 
+
 class AccountIn(BaseModel):
     email: str
     password: str
 
+
 class Account(AccountIn):
     id: str
     roles: List[str]
+
 
 class AccountOut(BaseModel):
     id: str
     roles: List[str]
 
 
+class AccountUpdate(AccountIn):
+    first_name: str
+    last_name: str
+    address: Address
+    picture: str
+    applications: List[str]
+    favorites: List[str]
+    adopted_pets: List[str]
+    success_stories: List[str]
+    roles: List[str]
+
+
+class AccountList(BaseModel):
+    accounts: List[AccountOut]

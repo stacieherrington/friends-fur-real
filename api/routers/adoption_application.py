@@ -3,6 +3,7 @@ from models import (
     AdoptionApplicationIn,
     AdoptionApplicationList,
     AdoptionApplicationOut,
+    AdoptionApplicationUpdate,
 )
 from queries.adoption_application import AdoptionApplicationQueries
 
@@ -46,22 +47,20 @@ def get_adoption_application(
         )
 
 
-@router.put(
+@router.patch(
     "/api/adoption_applications/{id}/",
-    response_model=AdoptionApplicationOut,
+    response_model=AdoptionApplicationUpdate,
 )
 def update_adoption_application(
     id: str,
-    data: AdoptionApplicationIn,
+    data: AdoptionApplicationUpdate,
     queries: AdoptionApplicationQueries = Depends(),
 ):
     response = queries.update_adoption_application(id, data)
     if response:
         return response
     else:
-        raise HTTPException(
-            404, "This adoption applcation id does not exist!"
-        )
+        raise HTTPException(404, "This adoption applcation id does not exist!")
 
 
 @router.delete("/api/adoption_applications/{id}/")

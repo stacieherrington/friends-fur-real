@@ -19,11 +19,7 @@ from queries.accounts import (
     DuplicateAccountError,
 )
 
-from models import (
-    Account,
-    AccountIn,
-    AccountOut,
-)
+from models import Account, AccountIn, AccountOut, AccountList, AccountUpdate
 
 SIGNING_KEY = os.environ["SIGNING_KEY"]
 ALGORITHM = "HS256"
@@ -33,46 +29,56 @@ router = APIRouter(tags=["Account Authentication"])
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token", auto_error=False)
 
+
 class HttpError(BaseModel):
     detail: str
 
+
 class TokenData(BaseModel):
-    username:str
+    username: str
+
 
 class AccessToken(BaseModel):
-    access_token:str
+    access_token: str
     type: str
     account: AccountOut | None
 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
 
 def authenticate_account(
     repo: AccountQueries,
     email: str,
     password: str,
-)-> Account:
-    account = repo.get(email)
+) -> Account:
+    account = repo.get_account(email)
     if not account:
         return False
     if not verify_password(password, account.password):
         return False
     return account
 
+
 def create_access_token(data: dict) -> str:
     encoded_jwt = jwt.encode(data, SIGNING_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 def set_access_cookie(
     account: Account,
     request: Request,
     response: Response,
-)-> str:
+) -> str:
     account_data = AccountOut(**account.dict()).dict()
     data = {"sub": account.email, "account": account_data}
-    access_token = create_access_token(data=data,)
+    access_token = create_access_token(
+        data=data,
+    )
     token = {"access_token": access_token, "token_type": "bearer"}
     headers = request.headers
     samesite = "none"
@@ -89,12 +95,13 @@ def set_access_cookie(
     )
     return token
 
+
 def delete_access_cookie(
-    request:Request,
-    response:Response,
+    request: Request,
+    response: Response,
 ) -> str:
     headers = request.headers
-    samesite= "none"
+    samesite = "none"
     secure = True
     if "origin" in headers and "localhost" in headers["origin"]:
         samesite = "lax"
@@ -105,9 +112,12 @@ def delete_access_cookie(
         samesite=samesite,
         secure=secure,
     )
+
+
 async def try_get_current_account(
     bearer_token: Optional[str] = Depends(oauth2_scheme),
-    cookie_token: Optional[str] | None = (Cookie(default=None, alias=COOKIE_NAME)),
+    cookie_token: Optional[str]
+    | None = (Cookie(default=None, alias=COOKIE_NAME)),
 ) -> AccountOut:
     token = bearer_token
     if not token and cookie_token:
@@ -140,7 +150,9 @@ async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     repo: AccountQueries = Depends(),
 ):
-    account = authenticate_account(repo, form_data.username, form_data.password)
+    account = authenticate_account(
+        repo, form_data.username, form_data.password
+    )
     if not account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -168,7 +180,7 @@ async def delete_token(request: Request, response: Response):
     return True
 
 
-@router.post("/api/accounts", response_model=AccountOut | HttpError)
+@router.post("/api/accounts/", response_model=AccountOut | HttpError)
 async def create_account(
     info: AccountIn,
     request: Request,
@@ -185,3 +197,38 @@ async def create_account(
         )
     set_access_cookie(account, request, response)
     return account
+
+
+@router.get(
+    "/api/accounts/",
+    response_model=AccountList,
+)
+async def list_accounts(
+    queries: AccountQueries = Depends(),
+):
+    return AccountList(accounts=queries.list_accounts())
+
+
+@router.patch(
+    "/api/accounts/{id}/",
+    response_model=AccountOut,
+)
+async def update_account(
+    id: str,
+    data: AccountUpdate,
+    queries: AccountQueries = Depends(),
+):
+    response = queries.update_account(id, data)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This account id does not exist!")
+
+
+@router.delete("/api/accounts/{id}/")
+async def delete_account(id: str, queries: AccountQueries = Depends()):
+    response = queries.delete_account(id)
+    if response:
+        return response, {"message": f"Account {id} has been deleted!"}
+    else:
+        raise HTTPException(404, "Id for this account does not exist!")
