@@ -1,6 +1,11 @@
+
 from pydantic import BaseModel
 from typing import List
 from models.rescue import Address
+from models.pet import PetOut
+from models.success_story import SuccessStoryOut
+from models.adoption_application import AdoptionApplicationOut
+from pydantic_model import PydanticObjectId
 
 class AccountIn(BaseModel):
     email: str
@@ -8,7 +13,7 @@ class AccountIn(BaseModel):
 
 
 class Account(AccountIn):
-    id: str
+    id: PydanticObjectId
     roles: List[str]
 
 
@@ -22,10 +27,10 @@ class AccountUpdate(AccountIn):
     last_name: str
     address: Address
     picture: str
-    applications: List[str]
-    favorites: List[str]
-    adopted_pets: List[str]
-    success_stories: List[str]
+    applications: List[AdoptionApplicationOut]
+    favorites: List[PetOut]
+    adopted_pets: List[PetOut]
+    success_stories: List[SuccessStoryOut]
     roles: List[str]
 
 

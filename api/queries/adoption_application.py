@@ -1,4 +1,3 @@
-from http.client import HTTPException
 from .client import Queries
 from models.adoption_application import (
     AdoptionApplicationIn,
@@ -6,12 +5,7 @@ from models.adoption_application import (
     AdoptionApplicationOut,
 )
 from bson.objectid import ObjectId
-from typing import List
 from pymongo import ReturnDocument
-
-
-class ApplicationDoesNotExist(ValueError):
-    pass
 
 
 class AdoptionApplicationQueries(Queries):
@@ -19,50 +13,47 @@ class AdoptionApplicationQueries(Queries):
     COLLECTION = "adoption_applications"
 
     def create_application(self, appt: AdoptionApplicationIn):
-        self.collection.insert_one(appt.dict())
-        return {
-            "message": "Congratulations! Your application has been submitted!"
-        }
+        self.collection.insert_one(appt.dict()) #.inserted_id
+        return {"success!"}
 
-    # Time Complexity: O(n)
     def list_adoption_applications(
         self,
     ) -> AdoptionApplicationList:
         response = self.collection.find({})
-        appts = []
-        for appt in response:
-            appt["id"] = str(appt["_id"])
-            appts.append(AdoptionApplicationOut(**appt))
-        return appts
+        apps = []
+        for app in response:
+            app["id"] = str(app["_id"])
+            apps.append(AdoptionApplicationOut(**app))
+        return apps
 
     def get_adoption_application(self, id) -> AdoptionApplicationOut:
         try:
-            appt = self.collection.find_one({"_id": ObjectId(id)})
+            app = self.collection.find_one({"_id": ObjectId(id)})
         except:
             return None
-        if not appt:
+        if not app:
             return None
-        appt["id"] = str(appt["_id"])
-        return AdoptionApplicationOut(**appt)
+        app["id"] = str(app["_id"])
+        return AdoptionApplicationOut(**app)
 
     def update_adoption_application(self, id, data) -> AdoptionApplicationOut:
         try:
-            appt = self.collection.find_one_and_update(
+            app = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
                 {"$set": data.dict()},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
-        if appt:
-            return AdoptionApplicationOut(**appt, id=id)
+        if app:
+            return AdoptionApplicationOut(**app, id=id)
 
     def delete_adoption_application(self, id):
         try:
             id = ObjectId(id)
-            appt = self.collection.find_one({"_id": id})
+            app = self.collection.find_one({"_id": id})
         except:
             return None
-        if appt:
+        if app:
             self.collection.delete_one({"_id": id})
             return {"message": "Your Adoption application has been deleted!"}

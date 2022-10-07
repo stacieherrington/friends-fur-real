@@ -46,7 +46,7 @@ class AccountQueries(Queries):
         props["id"] = str(props["_id"])
         return Account(**props)
 
-    def update_account(self, id, data) -> AccountOut:
+    def update_account(self, id, data) -> AccountUpdate:
         try:
             acct = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},

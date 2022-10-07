@@ -10,13 +10,16 @@ from queries.adoption_application import AdoptionApplicationQueries
 router = APIRouter(tags=["Adoption Applications"])
 
 
-@router.post("/api/adoption_applications/")
+@router.post("/api/adoption_applications/", summary="Create Adoption Application", description="This will create a new application")
 def create_adoption_application(
     app: AdoptionApplicationIn,
     queries: AdoptionApplicationQueries = Depends(),
 ):
     response = queries.create_application(app)
-    return response
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "Application already exists")
 
 
 @router.get(

@@ -3,6 +3,7 @@ from typing import List
 from models.rescue import Address
 from models.pet import PetOut
 
+
 class AdoptionApplicationUpdate(BaseModel):
     first_name: str | None
     last_name: str | None
@@ -18,7 +19,8 @@ class AdoptionApplicationUpdate(BaseModel):
     wants_preapproval: bool | None
     agrees_to_terms: bool | None
     status: str | None
-    
+
+
 class AdoptionApplicationIn(AdoptionApplicationUpdate):
     pet: PetOut | None
 
