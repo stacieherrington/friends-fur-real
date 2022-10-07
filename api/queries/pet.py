@@ -1,5 +1,5 @@
 from .client import Queries
-from models import PetOut, PetIn, PetsList
+from models.pet import PetOut, PetIn, PetsList
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument

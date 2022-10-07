@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import PetOut,PetIn,PetsList
+from models.pet import PetOut,PetIn,PetsList
 from queries.pet import PetQueries
 
 router = APIRouter(tags=["Pets"])

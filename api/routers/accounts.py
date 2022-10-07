@@ -19,7 +19,13 @@ from queries.accounts import (
     DuplicateAccountError,
 )
 
-from models import Account, AccountIn, AccountOut, AccountList, AccountUpdate
+from models.accounts import (
+    Account,
+    AccountIn,
+    AccountOut,
+    AccountList,
+    AccountUpdate,
+)
 
 SIGNING_KEY = os.environ["SIGNING_KEY"]
 ALGORITHM = "HS256"
@@ -213,7 +219,7 @@ async def list_accounts(
     "/api/accounts/{id}/",
     response_model=AccountOut,
 )
-async def update_account(
+def update_account(
     id: str,
     data: AccountUpdate,
     queries: AccountQueries = Depends(),
@@ -229,6 +235,6 @@ async def update_account(
 async def delete_account(id: str, queries: AccountQueries = Depends()):
     response = queries.delete_account(id)
     if response:
-        return response, {"message": f"Account {id} has been deleted!"}
+        return response
     else:
         raise HTTPException(404, "Id for this account does not exist!")

@@ -1,6 +1,12 @@
 from pymongo import ReturnDocument
 from .client import Queries
-from models import Account, AccountIn, AccountOut, AccountList, AccountUpdate
+from models.accounts import (
+    Account,
+    AccountIn,
+    AccountOut,
+    AccountList,
+    AccountUpdate,
+)
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
 
@@ -16,10 +22,10 @@ class AccountQueries(Queries):
     def create(self, acct: AccountIn, roles=["base"]) -> Account:
         props = acct.dict()
         props["roles"] = roles
-        result = self.collection.find_one({"email": props["email"]})
-        if result:
+        try:
+            self.collection.insert_one(props)
+        except DuplicateKeyError:
             raise DuplicateAccountError()
-        self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return Account(**props)
 
@@ -40,22 +46,23 @@ class AccountQueries(Queries):
         props["id"] = str(props["_id"])
         return Account(**props)
 
-    def update_account(self, id, data) -> AccountUpdate:
+    def update_account(self, id, data) -> AccountOut:
         try:
             acct = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
                 {"$set": data.dict()},
-                return_document=ReturnDocument.AFTER,
+                return_document=ReturnDocument.BEFORE,
             )
         except:
             return None
-        # if acct:
-        #     acct["id"] = str(acct["_id"])
-        return AccountUpdate(**acct, id=id)
+        return AccountOut(**acct, id=id)
 
     def delete_account(self, id):
         try:
-            self.collection.find_one_and_delete({"_id": ObjectId(id)})
+            id = ObjectId(id)
+            account = self.collection.find_one({"_id": id})
         except:
             return None
-        return {"message": "Your Account has been deleted!"}
+        if account:
+            self.collection.delete_one({"_id": id})
+            return {"message": f"Account {id} has been deleted!"}

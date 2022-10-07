@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import (
+from models.adoption_application import (
     AdoptionApplicationIn,
     AdoptionApplicationList,
     AdoptionApplicationOut,
@@ -67,6 +67,7 @@ def update_adoption_application(
 def delete_adoption_application(
     id: str, queries: AdoptionApplicationQueries = Depends()
 ):
+
     response = queries.delete_adoption_application(id)
     if response:
         return response

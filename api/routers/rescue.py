@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import RescueOut, RescueIn, RescuesList
+from models.rescue import RescueOut, RescueIn, RescuesList
 from queries.rescue import RescueQueries
 
 router = APIRouter(tags=["Rescues"])

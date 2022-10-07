@@ -1,5 +1,5 @@
 from .client import Queries
-from models import RescueOut, RescueIn
+from models.rescue import RescueOut, RescueIn
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument

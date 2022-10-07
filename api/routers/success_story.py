@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import SuccessStoryIn, SuccessStoryList, SuccessStoryOut
+from models.success_story import SuccessStoryIn, SuccessStoryList, SuccessStoryOut
 from queries.success_story import SuccessStoryQueries
 
 router = APIRouter(tags=["Stories"])

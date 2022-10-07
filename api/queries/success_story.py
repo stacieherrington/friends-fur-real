@@ -1,7 +1,11 @@
 from .client import Queries
 from bson.objectid import ObjectId
 from typing import List
-from models import SuccessStoryOut, SuccessStoryIn, SuccessStoryList
+from models.success_story import (
+    SuccessStoryOut,
+    SuccessStoryIn,
+    SuccessStoryList,
+)
 
 
 class SuccessStoryQueries(Queries):
