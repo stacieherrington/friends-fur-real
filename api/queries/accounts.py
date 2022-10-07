@@ -19,6 +19,13 @@ class AccountQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "accounts"
 
+    def get_account_to_auth(self, email: str) -> AccountIn:
+        props = self.collection.find_one({"email": email})
+        if not props:
+            return None
+        props["id"] = str(props["_id"])
+        return Account(**props)
+
     def create(self, acct: AccountIn, roles=["base"]) -> Account:
         props = acct.dict()
         props["roles"] = roles
@@ -32,30 +39,32 @@ class AccountQueries(Queries):
     def list_accounts(
         self,
     ) -> AccountList:
-        response = self.collection.find({})
+        accounts = self.collection.find()
         accts = []
-        for acct in response:
+        for acct in accounts:
             acct["id"] = str(acct["_id"])
             accts.append(AccountOut(**acct))
         return accts
 
-    def get_account(self, email: str) -> AccountIn:
-        props = self.collection.find_one({"email": email})
-        if not props:
+    def single_account(self, id) -> AccountUpdate:
+        try:
+            acct = self.collection.find_one({"_id": ObjectId(id)})
+        except:
             return None
-        props["id"] = str(props["_id"])
-        return Account(**props)
+        if not acct:
+            return None
+        return AccountUpdate(**acct, id=id)
 
     def update_account(self, id, data) -> AccountUpdate:
         try:
             acct = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
-                {"$set": data.dict()},
-                return_document=ReturnDocument.BEFORE,
+                {"$set": data.dict(exclude_unset=True)},
+                return_document=ReturnDocument.AFTER,
             )
         except:
             return None
-        return AccountOut(**acct, id=id)
+        return AccountUpdate(**acct)
 
     def delete_account(self, id):
         try:

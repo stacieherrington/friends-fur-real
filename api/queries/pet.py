@@ -16,10 +16,10 @@ class PetQueries(Queries):
             return None
         if not pet:
             return None
-        pet['id'] = str(pet['_id'])
+        # pet['id'] = str(pet['_id'])
         # pet['adopter']
         # pet['is_adopted']
-        return PetOut(**pet)
+        return PetOut(**pet, id=id)
 
     def create_pet(self,pet:PetIn):
         self.collection.insert_one(pet.dict())
@@ -55,5 +55,5 @@ class PetQueries(Queries):
         except:
             return None
         if pet:
-            pet['id'] = str(pet['_id'])
-            return PetOut(**pet)
+            # pet['id'] = str(pet['_id'])
+            return PetOut(**pet, id=id)

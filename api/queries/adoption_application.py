@@ -1,3 +1,4 @@
+from models.adoption_application import AdoptionApplicationUpdate
 from .client import Queries
 from models.adoption_application import (
     AdoptionApplicationIn,
@@ -13,7 +14,7 @@ class AdoptionApplicationQueries(Queries):
     COLLECTION = "adoption_applications"
 
     def create_application(self, appt: AdoptionApplicationIn):
-        self.collection.insert_one(appt.dict()) #.inserted_id
+        self.collection.insert_one(appt.dict())  # .inserted_id
         return {"success!"}
 
     def list_adoption_applications(
@@ -26,27 +27,29 @@ class AdoptionApplicationQueries(Queries):
             apps.append(AdoptionApplicationOut(**app))
         return apps
 
-    def get_adoption_application(self, id) -> AdoptionApplicationOut:
+    def single_adoption_application(self, id) -> AdoptionApplicationUpdate:
         try:
             app = self.collection.find_one({"_id": ObjectId(id)})
         except:
             return None
         if not app:
             return None
-        app["id"] = str(app["_id"])
-        return AdoptionApplicationOut(**app)
+        # app["id"] = str(app["_id"])
+        return AdoptionApplicationUpdate(**app, id=id)
 
-    def update_adoption_application(self, id, data) -> AdoptionApplicationOut:
+    def update_adoption_application(
+        self, id, data
+    ) -> AdoptionApplicationUpdate:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
-                {"$set": data.dict()},
+                {"$set": data.dict(exclude_unset=True)},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
         if app:
-            return AdoptionApplicationOut(**app, id=id)
+            return AdoptionApplicationUpdate(**app, id=id)
 
     def delete_adoption_application(self, id):
         try:

@@ -11,7 +11,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from bson.objectid import ObjectId
 import os
 
 from queries.accounts import (
@@ -31,7 +32,7 @@ SIGNING_KEY = os.environ["SIGNING_KEY"]
 ALGORITHM = "HS256"
 COOKIE_NAME = "fastapi_access_token"
 
-router = APIRouter(tags=["Account Authentication"])
+router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token", auto_error=False)
 
@@ -62,7 +63,7 @@ def authenticate_account(
     email: str,
     password: str,
 ) -> Account:
-    account = repo.get_account(email)
+    account = repo.get_accoun_to_auth(email)
     if not account:
         return False
     if not verify_password(password, account.password):
@@ -149,7 +150,7 @@ async def get_current_account(
     return account
 
 
-@router.post("/token")
+@router.post("/token", tags=["Token Authorization"])
 async def login_for_access_token(
     response: Response,
     request: Request,
@@ -168,7 +169,9 @@ async def login_for_access_token(
     return set_access_cookie(account, request, response)
 
 
-@router.get("/token", response_model=AccessToken | None)
+@router.get(
+    "/token", response_model=AccessToken | None, tags=["Token Authorization"]
+)
 async def get_token(
     request: Request, account: AccountOut = Depends(try_get_current_account)
 ):
@@ -180,13 +183,17 @@ async def get_token(
         }
 
 
-@router.delete("/token")
+@router.delete("/token", tags=["Token Authorization"])
 async def delete_token(request: Request, response: Response):
     delete_access_cookie(request, response)
     return True
 
 
-@router.post("/api/accounts/", response_model=AccountOut | HttpError)
+@router.post(
+    "/api/accounts/",
+    response_model=AccountOut | HttpError,
+    tags=["Account Authentication"],
+)
 async def create_account(
     info: AccountIn,
     request: Request,
@@ -208,6 +215,7 @@ async def create_account(
 @router.get(
     "/api/accounts/",
     response_model=AccountList,
+    tags=["Account Authentication"],
 )
 async def list_accounts(
     queries: AccountQueries = Depends(),
@@ -215,9 +223,23 @@ async def list_accounts(
     return AccountList(accounts=queries.list_accounts())
 
 
+@router.get(
+    "/api/accounts/{id}/",
+    response_model=AccountUpdate,
+    tags=["Account Authentication"],
+)
+def single_account(id: str, queries: AccountQueries = Depends()):
+    account = queries.single_account(id)
+    if account:
+        return account
+    else:
+        raise HTTPException(404, f"This Account id: {id} does not exist")
+
+
 @router.patch(
     "/api/accounts/{id}/",
-    response_model=AccountOut,
+    response_model=AccountUpdate,
+    tags=["Account Authentication"],
 )
 def update_account(
     id: str,
@@ -231,7 +253,10 @@ def update_account(
         raise HTTPException(404, "This account id does not exist!")
 
 
-@router.delete("/api/accounts/{id}/")
+@router.delete(
+    "/api/accounts/{id}/",
+    tags=["Account Authentication"],
+)
 async def delete_account(id: str, queries: AccountQueries = Depends()):
     response = queries.delete_account(id)
     if response:

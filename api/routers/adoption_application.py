@@ -6,11 +6,15 @@ from models.adoption_application import (
     AdoptionApplicationUpdate,
 )
 from queries.adoption_application import AdoptionApplicationQueries
+from pydantic_model import PydanticObjectId
 
 router = APIRouter(tags=["Adoption Applications"])
 
 
-@router.post("/api/adoption_applications/", summary="Create Adoption Application", description="This will create a new application")
+@router.post(
+    "/api/adoption_applications/",
+    description="This will create a new application",
+)
 def create_adoption_application(
     app: AdoptionApplicationIn,
     queries: AdoptionApplicationQueries = Depends(),
@@ -25,6 +29,8 @@ def create_adoption_application(
 @router.get(
     "/api/adoption_applications/",
     response_model=AdoptionApplicationList,
+    summary="All Adoption Applications",
+    description="This lists all available adoption applications",
 )
 def list_adoption_applications(
     queries: AdoptionApplicationQueries = Depends(),
@@ -36,17 +42,18 @@ def list_adoption_applications(
 
 @router.get(
     "/api/adoption_applications/{id}/",
-    response_model=AdoptionApplicationOut,
+    response_model=AdoptionApplicationUpdate,
+    summary="Single Adoption Application",
 )
-def get_adoption_application(
+def single_adoption_application(
     id: str, queries: AdoptionApplicationQueries = Depends()
 ):
-    response = queries.get_adoption_application(id)
+    response = queries.single_adoption_application(id)
     if response:
         return response
     else:
         raise HTTPException(
-            404, "This adoption application id does not exist!"
+            404, f"This adoption application {id} does not exist!"
         )
 
 
