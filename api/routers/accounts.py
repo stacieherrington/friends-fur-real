@@ -11,8 +11,9 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from typing import Optional, List
-from bson.objectid import ObjectId
+from typing import Optional  # , List
+
+# from bson.objectid import ObjectId
 import os
 
 from queries.accounts import (
@@ -170,7 +171,11 @@ async def login_for_access_token(
 
 
 @router.get(
-    "/token", response_model=AccessToken | None, tags=["Token Authorization"]
+    "/token",
+    response_model=AccessToken | None,
+    tags=[
+        "Token Authorization",
+    ],
 )
 async def get_token(
     request: Request, account: AccountOut = Depends(try_get_current_account)
@@ -246,6 +251,8 @@ def update_account(
     data: AccountUpdate,
     queries: AccountQueries = Depends(),
 ):
+    # ensure password will be hashed
+    data.password = pwd_context.hash(data.password)
     response = queries.update_account(id, data)
     if response:
         return response

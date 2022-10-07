@@ -1,9 +1,10 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import List  # , Optional
 from models.rescue import Address
-from models.pet import PetOut
-from models.success_story import SuccessStoryOut
-from models.adoption_application import AdoptionApplicationOut
+
+# from models.pet import PetOut
+# from models.success_story import SuccessStoryOut
+# from models.adoption_application import AdoptionApplicationOut
 from pydantic_model import PydanticObjectId
 
 
@@ -17,7 +18,7 @@ class Account(AccountIn):
     roles: List[str]
 
 
-class AccountOut(BaseModel):
+class AccountOut(AccountIn):
     id: str
     roles: List[str]
 
