@@ -29,3 +29,21 @@ Also created Query/Route of:
 - getting one success story by id
 
 The team worked together on listing the Success stories by rescue, which was interesting to learn (having to figure out how to connect the relation).  
+
+
+## October 6, 2022
+
+Today we worked on Accounts/Authentication. 
+
+The team discussed and worked on the Accounts model, router, queries. We also did some more research on jwt/authentication to get a better understanding. 
+
+Unfortunately, there was no "aha!" moment for me today. 
+
+
+## October 10, 2022
+
+Today the team discussed and worked more on the Authentication/tokens, as well as promoting users to "staff" and removing the "promotions" as well. 
+
+We have been trying to figure out how to deal with a token when promoting a user to "staff". Either by forcing a logout or maybe by setting an expiration for the tokens. We have not figured it out exactly just yet. 
+
+No particular "aha" moment today as well. 
