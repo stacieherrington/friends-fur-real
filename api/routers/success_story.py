@@ -35,5 +35,5 @@ def list_rescue_stories(
     return SuccessStoryList(stories=response)
 
 @router.get("/api/stories/random", response_model=SuccessStoryList)
-def list_stories(queries: SuccessStoryQueries = Depends()):
+def get_three_random_stories(queries: SuccessStoryQueries = Depends()):
     return SuccessStoryList(stories=queries.get_three_random_stories())

@@ -3,6 +3,7 @@ from models.pet import PetOut, PetIn, PetsList
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument
+from random import randint
 
 class PetQueries(Queries):
     DB_NAME = 'fur'
@@ -57,3 +58,23 @@ class PetQueries(Queries):
         if pet:
             # pet['id'] = str(pet['_id'])
             return PetOut(**pet, id=id)
+
+    def get_three_random_pets(self):
+        result = self.collection.find({})
+        pets = []
+        three_pets = []
+        for pet in result:
+            pet['id'] = str(pet['_id'])
+            pets.append(PetOut(**pet))
+        random_num_list = []
+        if len(pets) >= 3:
+            n = 3
+        else:
+            n = len(pets)
+        while len(random_num_list) < n:
+            random_num = randint(0, len(pets) - 1)
+            if random_num not in random_num_list:
+                random_num_list.append(random_num)
+        for num in random_num_list:
+            three_pets.append(pets[num])
+        return three_pets
