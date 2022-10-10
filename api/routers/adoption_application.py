@@ -60,6 +60,7 @@ def single_adoption_application(
 @router.patch(
     "/api/adoption_applications/{id}/",
     response_model=AdoptionApplicationUpdate,
+    response_description="Successfully Updated Application!",
 )
 def update_adoption_application(
     id: str,
@@ -73,7 +74,10 @@ def update_adoption_application(
         raise HTTPException(404, "This adoption applcation id does not exist!")
 
 
-@router.delete("/api/adoption_applications/{id}/")
+@router.delete(
+    "/api/adoption_applications/{id}/",
+    response_description="Successfully Deleted Account!",
+)
 def delete_adoption_application(
     id: str, queries: AdoptionApplicationQueries = Depends()
 ):

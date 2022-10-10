@@ -1,4 +1,5 @@
 from pymongo import ReturnDocument
+
 from .client import Queries
 from models.accounts import (
     Account,
@@ -6,6 +7,7 @@ from models.accounts import (
     AccountOut,
     AccountList,
     AccountUpdate,
+    AccountDisplay,
 )
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
@@ -49,14 +51,14 @@ class AccountQueries(Queries):
             accts.append(AccountOut(**acct))
         return accts
 
-    def single_account(self, id) -> AccountUpdate:
+    def single_account(self, id) -> AccountDisplay:
         try:
             acct = self.collection.find_one({"_id": ObjectId(id)})
         except:
             return None
         if not acct:
             return None
-        return AccountUpdate(**acct, id=id)
+        return AccountDisplay(**acct, id=id)
 
     def update_account(self, id, data) -> AccountUpdate:
         try:
@@ -67,7 +69,7 @@ class AccountQueries(Queries):
             )
         except:
             return None
-        return AccountUpdate(**acct)
+        return AccountDisplay(**acct, id=id)
 
     def delete_account(self, id):
         try:
@@ -78,3 +80,25 @@ class AccountQueries(Queries):
         if account:
             self.collection.delete_one({"_id": id})
             return {"message": f"Account {id} has been deleted!"}
+
+    def promote_account(self, id) -> AccountOut:
+        try:
+            acct = self.collection.find_one_and_update(
+                {"_id": ObjectId(id)},
+                {"$addToSet": {"roles": "staff"}},
+                return_document=ReturnDocument.AFTER,
+            )
+        except:
+            return None
+        return AccountOut(**acct, id=id)
+
+    def demote_account(self, id) -> AccountOut:
+        try:
+            acct = self.collection.find_one_and_update(
+                {"_id": ObjectId(id)},
+                {"$pull": {"roles": "staff"}},
+                return_document=ReturnDocument.AFTER,
+            )
+        except:
+            return None
+        return AccountOut(**acct, id=id)

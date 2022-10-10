@@ -27,6 +27,7 @@ from models.accounts import (
     AccountOut,
     AccountList,
     AccountUpdate,
+    AccountDisplay,
 )
 
 SIGNING_KEY = os.environ["SIGNING_KEY"]
@@ -64,7 +65,7 @@ def authenticate_account(
     email: str,
     password: str,
 ) -> Account:
-    account = repo.get_accoun_to_auth(email)
+    account = repo.get_account_to_auth(email)
     if not account:
         return False
     if not verify_password(password, account.password):
@@ -230,7 +231,7 @@ async def list_accounts(
 
 @router.get(
     "/api/accounts/{id}/",
-    response_model=AccountUpdate,
+    response_model=AccountDisplay,
     tags=["Account Authentication"],
 )
 def single_account(id: str, queries: AccountQueries = Depends()):
@@ -243,7 +244,7 @@ def single_account(id: str, queries: AccountQueries = Depends()):
 
 @router.patch(
     "/api/accounts/{id}/",
-    response_model=AccountUpdate,
+    response_model=AccountDisplay,
     tags=["Account Authentication"],
 )
 def update_account(
@@ -252,7 +253,7 @@ def update_account(
     queries: AccountQueries = Depends(),
 ):
     # ensure password will be hashed
-    data.password = pwd_context.hash(data.password)
+    # data.password = pwd_context.hash(data.password)
     response = queries.update_account(id, data)
     if response:
         return response
@@ -270,3 +271,28 @@ async def delete_account(id: str, queries: AccountQueries = Depends()):
         return response
     else:
         raise HTTPException(404, "Id for this account does not exist!")
+
+
+@router.patch(
+    "/api/accounts/promote/{id}/",
+)
+async def promote_account(
+    id: str, queries: AccountQueries = Depends()
+):
+    response = queries.promote_account(id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "Cannot promote-- Invalid Account ")
+
+@router.patch(
+    "/api/accounts/demote/{id}/",
+)
+async def demote_account(
+    id: str, queries: AccountQueries = Depends()
+):
+    response = queries.demote_account(id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "Cannot promote-- Invalid Account ")
