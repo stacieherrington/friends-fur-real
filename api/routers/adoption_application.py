@@ -6,7 +6,6 @@ from models.adoption_application import (
     AdoptionApplicationUpdate,
 )
 from queries.adoption_application import AdoptionApplicationQueries
-from pydantic_model import PydanticObjectId
 
 router = APIRouter(tags=["Adoption Applications"])
 
