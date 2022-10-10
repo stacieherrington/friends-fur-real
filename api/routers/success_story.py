@@ -33,3 +33,7 @@ def list_rescue_stories(
 ):
     response = queries.get_stories_by_rescue(rescue_id)
     return SuccessStoryList(stories=response)
+
+@router.get("/api/stories/random", response_model=SuccessStoryList)
+def list_stories(queries: SuccessStoryQueries = Depends()):
+    return SuccessStoryList(stories=queries.get_three_random_stories())
