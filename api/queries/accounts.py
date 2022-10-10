@@ -31,13 +31,12 @@ class AccountQueries(Queries):
     def create(self, acct: AccountIn, roles=["base"]) -> Account:
         props = acct.dict()
         props["roles"] = roles
-        # AccountQueries.get_account_to_auth(
-        #     self, self.collection.find_one({"email": props.email})
-        # )
-        try:
-            self.collection.insert_one(props)
-        except DuplicateKeyError:
-            raise DuplicateAccountError()
+
+        dup_test = self.collection.find_one({"email": props["email"]})
+        if dup_test:
+            raise DuplicateAccountError
+
+        self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return Account(**props)
 
