@@ -13,6 +13,7 @@ from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
 from typing import Any
 
+
 class DuplicateAccountError(ValueError):
     pass
 
@@ -21,21 +22,22 @@ class AccountQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "accounts"
 
-    def get_account_to_auth(self, email: str) -> AccountIn:
+    def get(self, email: str) -> Account:
         props = self.collection.find_one({"email": email})
         if not props:
             return None
         props["id"] = str(props["_id"])
         return Account(**props)
 
-    def create(self, acct: AccountIn, roles=["base"]) -> Account:
+    def create(
+        self, acct: AccountIn, hashed_password: str, roles=["base"]
+    ) -> Account:
         props = acct.dict()
+        props["password"] = hashed_password
         props["roles"] = roles
-
         dup_test = self.collection.find_one({"email": props["email"]})
         if dup_test:
             raise DuplicateAccountError
-
         self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return Account(**props)
@@ -61,7 +63,6 @@ class AccountQueries(Queries):
 
     def get_account_dict(self, id) -> dict[str, Any]:
         return self.collection.find_one({"_id": ObjectId(id)})
-
 
     def update_account(self, id, data) -> AccountUpdate:
         try:
@@ -106,11 +107,12 @@ class AccountQueries(Queries):
             return None
         return AccountOut(**acct, id=id)
 
-    def set_account_location(self, acct: dict, location: dict) -> AccountDisplay:
+    def set_account_location(
+        self, acct: dict, location: dict
+    ) -> AccountDisplay:
         try:
             self.collection.update_one(
-                {"_id": acct["_id"]},
-                {"$set": {"location": location}}
+                {"_id": acct["_id"]}, {"$set": {"location": location}}
             )
             acct["location"] = location
         except Exception as e:
