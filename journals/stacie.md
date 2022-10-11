@@ -1,3 +1,9 @@
+10/10/2022
+
+Today we worked on accounts as a group. On my own, I created an api to get
+location coordinates from an account's address. I had an aha moment regarding
+organization of the code.
+
 10/05/2022
 
 Today we got so much done. We did pet update as a group, then we worked
