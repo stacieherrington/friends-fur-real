@@ -1,3 +1,11 @@
+10/11/2022
+
+Today I created an api to get location coordinates from a rescue's address. I
+basically copied what I did yesterday but still ran into some bugs. Finally got
+it working. The next step for the location filter will be to figure out how to
+make the db query to sort documents by distance.
+
+
 10/10/2022
 
 Today we worked on accounts as a group. On my own, I created an api to get
@@ -21,7 +29,8 @@ Rather than one aha moment, it was a whole day of learning FastAPI and MongoDB.
 
 10/03/2022
 
-Today as a whole group we worked on setup--the yaml file and the Dockerfiles. We also created our database volumes and installed MongoDB Compass.
+Today as a whole group we worked on setup--the yaml file and the Dockerfiles. We
+also created our database volumes and installed MongoDB Compass.
 
 It was really cool to get all the Docker containers running!
 
