@@ -3,13 +3,16 @@ from typing import List
 
 from models.pet import PetOut
 
+class Location(BaseModel):
+    latitude: str | None
+    longitude: str | None
 
 class Address(BaseModel):
-    address_one: str
-    address_two: str
-    city: str
-    state: str
-    zip_code: str
+    address_one: str | None
+    address_two: str | None
+    city: str | None
+    state: str | None
+    zip_code: str | None
 
 class RescueIn(BaseModel):
     name: str

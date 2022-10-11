@@ -11,7 +11,7 @@ from models.accounts import (
 )
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
-
+from typing import Any
 
 class DuplicateAccountError(ValueError):
     pass
@@ -57,7 +57,11 @@ class AccountQueries(Queries):
             return None
         if not acct:
             return None
-        return AccountDisplay(**acct, id=id)
+        return AccountDisplay(**acct)
+
+    def get_account_dict(self, id) -> dict[str, Any]:
+        return self.collection.find_one({"_id": ObjectId(id)})
+
 
     def update_account(self, id, data) -> AccountUpdate:
         try:
@@ -68,7 +72,7 @@ class AccountQueries(Queries):
             )
         except:
             return None
-        return AccountDisplay(**acct, id=id)
+        return AccountDisplay(**acct)
 
     def delete_account(self, id):
         try:
@@ -101,3 +105,15 @@ class AccountQueries(Queries):
         except:
             return None
         return AccountOut(**acct, id=id)
+
+    def set_account_location(self, acct: dict, location: dict) -> AccountDisplay:
+        try:
+            self.collection.update_one(
+                {"_id": acct["_id"]},
+                {"$set": {"location": location}}
+            )
+            acct["location"] = location
+        except Exception as e:
+            print(e)
+            return None
+        return AccountDisplay(**acct)
