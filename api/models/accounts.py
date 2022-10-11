@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from models.adoption_application import AdoptionApplicationOut
 from models.success_story import SuccessStoryOut  # , Optional
-from models.rescue import Address
+from models.rescue import Address, Location
 from models.pet import PetOut
 
 # from models.pet import PetOut
@@ -36,6 +36,8 @@ class AccountDisplay(BaseModel):
     favorites: List[PetOut] | None
     adopted_pets: List[PetOut] | None
     success_stories: List[SuccessStoryOut] | None
+    location: Location | None
+
 
 
 class AccountUpdate(AccountDisplay):

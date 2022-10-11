@@ -29,6 +29,7 @@ from models.accounts import (
     AccountUpdate,
     AccountDisplay,
 )
+from acl.nominatim import Nominatim
 
 SIGNING_KEY = os.environ["SIGNING_KEY"]
 ALGORITHM = "HS256"
@@ -296,3 +297,23 @@ async def demote_account(
         return response
     else:
         raise HTTPException(404, "Cannot promote-- Invalid Account ")
+
+@router.patch(
+    "/api/accounts/localize/{id}/",
+)
+async def localize_account(
+    id: str, queries: AccountQueries = Depends(), address_service: Nominatim = Depends()
+):
+    account = queries.get_account_dict(id)
+    address = account["address"]
+    address_string = address["address_one"]
+    if address["address_two"] is not None:
+        address_string = f"{address_string}, {address['address_two']}"
+    address_string = f"{address_string},{address['city']}, {address['state']}, {address['zip_code']}"
+    query = address_string.replace(" ", "+")
+    location = address_service.location_from_address(query)
+    response = queries.set_account_location(account, location)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "Cannot set location")
