@@ -39,7 +39,6 @@ class AccountDisplay(BaseModel):
     location: Location | None
 
 
-
 class AccountUpdate(AccountDisplay):
     # email: str | None
     password: str | None

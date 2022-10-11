@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from models.rescue import RescueOut, RescueIn, RescuesList
 from queries.rescue import RescueQueries
+from acl.nominatim import Nominatim
 
 router = APIRouter(tags=["Rescues"])
 
@@ -43,3 +44,23 @@ def update_rescue(
         return response
     else:
         raise HTTPException(404, "This rescue id does not exist!")
+
+@router.patch(
+    "/api/rescues/localize/{id}/",
+)
+async def localize_rescue(
+    id: str, queries: RescueQueries = Depends(), address_service: Nominatim = Depends()
+):
+    rescue = queries.get_rescue_dict(id)
+    address = rescue["address"]
+    address_string = address["address_one"]
+    if address["address_two"] is not None:
+        address_string = f"{address_string}, {address['address_two']}"
+    address_string = f"{address_string},{address['city']}, {address['state']}, {address['zip_code']}"
+    query = address_string.replace(" ", "+")
+    location = address_service.location_from_address(query)
+    response = queries.set_rescue_location(rescue, location)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "Cannot set location")

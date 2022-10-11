@@ -1,7 +1,7 @@
 from .client import Queries
 from models.rescue import RescueOut, RescueIn
 from bson.objectid import ObjectId
-from typing import List
+from typing import List, Any
 from pymongo import ReturnDocument
 
 
@@ -19,6 +19,9 @@ class RescueQueries(Queries):
             return None
         rescue["id"] = str(rescue["_id"])
         return RescueOut(**rescue)
+
+    def get_rescue_dict(self, id) -> dict[str, Any]:
+        return self.collection.find_one({"_id": ObjectId(id)})
 
     def create_rescue(self, rescue: RescueIn):
         self.collection.insert_one(rescue.dict())
@@ -55,3 +58,15 @@ class RescueQueries(Queries):
         if rescue:
             rescue["id"] = str(rescue["_id"])
             return RescueOut(**rescue)
+
+    def set_rescue_location(self, rescue: dict, location: dict) -> RescueOut:
+        try:
+            self.collection.update_one(
+                {"_id": rescue["_id"]},
+                {"$set": {"location": location}}
+            )
+            rescue["location"] = location
+        except Exception as e:
+            print(e)
+            return None
+        return RescueOut(**rescue)

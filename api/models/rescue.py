@@ -24,10 +24,11 @@ class RescueIn(BaseModel):
     pets: List[PetOut] | None
     staff: List[str] | None  # Replace with List[Account]
     approved_adopters: List[str] | None  # Replace with List[Account]
+    location: Location | None
 
 
 class RescueOut(RescueIn):
-    id: str
+    id: str | None
 
 
 class RescuesList(BaseModel):
