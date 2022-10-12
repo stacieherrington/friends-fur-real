@@ -18,3 +18,15 @@ Today, Worked on:
 - helped team mates on merging branches to main.
 what I learned today: 
 using tags = 'group_name' to group api-s for fastAPI/docs
+
+## Oct 10, 2022
+Today, Worked on:
+- Help Tyler to test Accounts apis and fix bugs
+- Found out we need a way to kick off a loged in user after promoted or demoted.
+    * because the old token does not include the updated roles.
+
+## Oct 11, 2022
+Today, Worked on:
+- trying to draw a diagram to display all the relations for all the models we have. We can use it to filter or search or display cross models/collections
+- fix docker-compose.yaml file to make ghi/node working on windows
+- 
