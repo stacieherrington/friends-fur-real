@@ -1,5 +1,5 @@
 from pymongo import ReturnDocument
-
+from queries.sessions import SessionQueries
 from .client import Queries
 from models.accounts import (
     Account,
@@ -94,6 +94,7 @@ class AccountQueries(Queries):
             )
         except:
             return None
+        SessionQueries().delete_sessions(account_id=id)
         return AccountOut(**acct, id=id)
 
     def demote_account(self, id) -> AccountOut:
@@ -105,6 +106,7 @@ class AccountQueries(Queries):
             )
         except:
             return None
+        SessionQueries().delete_sessions(account_id=id)
         return AccountOut(**acct, id=id)
 
     def set_account_location(
