@@ -18,7 +18,7 @@ function NavBar() {
                   width="100"
                   height="100"
                   className="d-inline-block align-top"
-                  alt="React Bootstrap logo"
+                  alt="Pet logo"
                 />
               </Navbar.Brand>
             </div>

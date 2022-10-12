@@ -10,7 +10,7 @@ function App() {
     <>
       <BrowserRouter>
         <NavBar />
-        <div className="container">
+        <div className="container m-auto justify-content-center">
           <Routes>
             <Route path="/" element={<HomePage />} />
           </Routes>
