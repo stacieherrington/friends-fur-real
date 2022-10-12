@@ -10,6 +10,9 @@ from models.pet import PetOut
 # from models.adoption_application import AdoptionApplicationOut
 # from pydantic_model import PydanticObjectId
 
+class SessionOut(BaseModel):
+    jti:str
+    account_id:str
 
 class AccountIn(BaseModel):
     email: str | None

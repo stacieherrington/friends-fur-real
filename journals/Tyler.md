@@ -15,3 +15,17 @@
 - Regardless, today was a great day for everyone.  We got a lot done collectively as a group
 - I believe everything is implemented except for users which should be pretty east. 
 - Mongo DB is becoming easier and easier to work with, and FastAPI's are slowly looking more and more recognizable.
+
+## October 8 2022
+- Over the weekend I worked a lot on trying to accomplish CRUD for accounts.  I think we have everything implemented but I have a few blockers that i'll present to the group on monday. Hopefully we can work together to sort these issues out.  I switched our models.py to become a models folder to store the various different models in seperate .py files.  I ensured functionality by adding all necessary imports.  I'll find out monday if the group approves of the idea.
+
+## October 10 2022
+- We worked on solidifying account CRUD. Together we fixed a few missing functionalities and issues that I had ran into over the weekend. 
+- I'm glad my group was very accepting to a few ideas I came up with as well as being able to help contribute to fixing a few bugs I had ran into with account CRUD.  
+- We each sort of went through and tested things out too just to ensure functionality had not been broken anywhere else.  
+- I'm looking forward to reading more about Redux-toolkit to help me not have to drill props around like I had to on my last project.  Redux is going to have an enormous impact moving forward with the front end.
+- We have a group blocker that sort of stems from a necessity for a 'refresh_token.'  We currently only have unlimited tokens.  I was able to find a way to put an expiration time on a token, but need to develop a way to be able to have a refresh token upon expiration of the token, i think?
+
+## October 11 2022
+- I spent a lot of time trying to fix a small error on implementing jwtdown_fastapi instead of utilizing from jose import jwt.  It all paid off at the end though and now we're about to ensure users are logged out both during promotion and demotion of roles.
+- 
