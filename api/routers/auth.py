@@ -37,4 +37,4 @@ class Auth(Authenticator):
         return session_repo.get(jti) is not None
 
 
-authenticator = Auth(os.environ["SIGNING_KEY"])
+xauthenticator = Auth(os.environ["SIGNING_KEY"])
