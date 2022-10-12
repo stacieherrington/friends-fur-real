@@ -37,6 +37,12 @@ def update_pet(id:str, data: PetIn, queries:PetQueries=Depends()):
     else:
         raise HTTPException(404,"this pet id does not exist!")
 
+
 @router.get("/api/pets/random", response_model=PetsList)
 def get_three_random_pets(queries:PetQueries=Depends()):
     return PetsList(pets=queries.get_three_random_pets())
+
+
+@router.get("/api/pets/{account_id}", response_model=PetsList)
+def get_pets_by_distance(account_id: str, queries: PetQueries=Depends()):
+    return PetsList(pets=queries.sort_pets_by_distance(account_id))
