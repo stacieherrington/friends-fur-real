@@ -46,7 +46,6 @@ class PetQueries(Queries):
 
     def update_pet(self, id, data) -> PetOut:
         try:
-            print(data, "AaAAAAAAAAAAAAAAAAAA<----------------")
             id = ObjectId(id)
             pet = self.collection.find_one_and_update(
                 {"_id":id},
