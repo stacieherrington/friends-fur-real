@@ -47,3 +47,18 @@ Today the team discussed and worked more on the Authentication/tokens, as well a
 We have been trying to figure out how to deal with a token when promoting a user to "staff". Either by forcing a logout or maybe by setting an expiration for the tokens. We have not figured it out exactly just yet. 
 
 No particular "aha" moment today as well. 
+
+
+## October 11, 2022
+
+Today the team continued to work on Authentication/tokens, as it was not working properly. I also tried to start working on the front-end(Homepage & Nav).
+
+As I was trying to work on the front-end, I was having issues with react rendering any saved changes I have made. It did not render immediately or after refresh, I needed to stop by docker and start it back up to start the changes. So the team was trying to figure it out and fix the issue. 
+
+
+## October 12, 2022
+
+Today I was finally able to start working on the front-end since our react issue has been fixed. I created a Homepage template, a Navbar template which included creating a few components. I also utilized bootstrap for our front-end. abs
+
+
+I learned how to create an overlay background using bootstrap, which is cool! 
