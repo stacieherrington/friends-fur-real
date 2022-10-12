@@ -5,7 +5,7 @@ from models.pet import PetOut
 
 class Location(BaseModel):
     type: str | None
-    coordinates: List[float]
+    coordinates: List[float] | None
 
 class Address(BaseModel):
     address_one: str | None

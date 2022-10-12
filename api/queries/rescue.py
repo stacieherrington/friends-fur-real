@@ -3,6 +3,7 @@ from models.rescue import RescueOut, RescueIn
 from bson.objectid import ObjectId
 from typing import List, Any
 from pymongo import ReturnDocument
+from .accounts import AccountQueries
 
 
 class RescueQueries(Queries):
@@ -70,3 +71,19 @@ class RescueQueries(Queries):
             print(e)
             return None
         return RescueOut(**rescue)
+
+    def sort_rescues_by_distance(self, account_id):
+        account = AccountQueries().get_account_dict(account_id)
+        account_location = account["location"]
+        location_query = {
+            "$nearSphere": {
+                "$geometry": account_location,
+                "$maxDistance": 321869, # 200 miles in meters
+            }
+        }
+        result = self.collection.find({"loc": location_query}) # This was Tyler's change and Stacie doesn't quite understand it
+        rescues = []
+        for rescue in result:
+            rescue["id"] = str(rescue["_id"])
+            rescues.append(RescueOut(**rescue))
+        return rescues

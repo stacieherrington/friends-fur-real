@@ -80,19 +80,3 @@ class PetQueries(Queries):
         for num in random_num_list:
             three_pets.append(pets[num])
         return three_pets
-
-    def sort_pets_by_distance(self, account_id):
-        account = AccountQueries().get_account_dict(account_id)
-        account_location = account["location"]
-        location_query = {
-            "$nearSphere": {
-                "$geometry": account_location,
-                "$maxDistance": 321869,
-            }
-        }
-        result = self.collection.find({"loc": location_query})
-        pets = []
-        for pet in result:
-            pet["id"] = str(pet["_id"])
-            pets.append(PetOut(**pet))
-        return pets
