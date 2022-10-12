@@ -312,6 +312,10 @@ async def localize_account(
     address_string = f"{address_string},{address['city']}, {address['state']}, {address['zip_code']}"
     query = address_string.replace(" ", "+")
     location = address_service.location_from_address(query)
+    if location is None:
+        address_string = f"{address['city']}, {address['state']}, {address['zip_code']}"
+        query = address_string.replace(" ", "+")
+        location = address_service.location_from_address(query)
     response = queries.set_account_location(account, location)
     if response:
         return response
