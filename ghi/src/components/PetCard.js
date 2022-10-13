@@ -27,6 +27,11 @@ export default function PetCard() {
         <Button size="small">More Info</Button>
         <Button size="small">Adopt</Button>
       </CardActions>
+      <CardActions>
+        {/* Only show this for staff/admin role */}
+        <Button size="small">Update</Button>
+        <Button size="small">Delete</Button>
+      </CardActions>
     </Card>
   );
 }
