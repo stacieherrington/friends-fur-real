@@ -81,7 +81,7 @@ class RescueQueries(Queries):
                 "$maxDistance": 321869, # 200 miles in meters
             }
         }
-        result = self.collection.find({"loc": location_query}) # This was Tyler's change and Stacie doesn't quite understand it
+        result = self.collection.find({"location": location_query})
         rescues = []
         for rescue in result:
             rescue["id"] = str(rescue["_id"])

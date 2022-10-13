@@ -1,3 +1,10 @@
+10/13/2022
+
+db.rescue.createIndex({location: "2dsphere"}) <-- This needs to run on every
+Mongo db that's going to do our application.
+
+
+
 10/12/2022
 
 Today I worked on trying to use $nearSphere to sort pets by distance from the
