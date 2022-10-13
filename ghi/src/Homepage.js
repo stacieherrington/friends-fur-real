@@ -15,7 +15,7 @@ function HomePage() {
         <div style={{ backgroundImage: "url(/images/pups.jpg)" }}>
           <img
             src="images/pups.jpg"
-            width="60%"
+            width="50%"
             className="d-inline-block align-top"
             alt="Pet logo"
             shape="rounded"
@@ -26,7 +26,7 @@ function HomePage() {
         <h1 className='display-5 fw-bold'>Pet Highlights</h1>
         <PetCard />
       </div>
-      <div className='py-1 "border border-secondary"'>
+      <div className='py-1'>
         <h1 className='display-5 fw-bold'>Success Stories</h1>
         <StoryCard />
       </div>

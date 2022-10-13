@@ -17,7 +17,7 @@ function NavBar() {
                   src="images/cute-icon.png"
                   width="100"
                   height="100"
-                  className="d-inline-block align-top"
+                  className="d-inline-block align-top rounded-3 shadow-4"
                   alt="Pet logo"
                 />
               </Navbar.Brand>
