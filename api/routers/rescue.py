@@ -68,3 +68,7 @@ async def localize_rescue(
         return response
     else:
         raise HTTPException(404, "Cannot set location")
+
+@router.get("/api/rescues/{account_id}", response_model = RescuesList)
+def get_rescues_by_distance(account_id: str, queries: RescueQueries = Depends()):
+    return RescuesList(rescues = queries.sort_rescues_by_distance(account_id))

@@ -1,3 +1,23 @@
+10/13/2022
+
+db.rescue.createIndex({location: "2dsphere"}) <-- This needs to run on every
+Mongo db that's going to do our application.
+
+
+
+10/12/2022
+
+Today I worked on trying to use $nearSphere to sort pets by distance from the
+user. None of us could get it to work yet. I started writing this code under Pets
+but I moved it to Rescues because Rescues have addresses and pets but pets don't
+have addresses.
+
+Gary and I disagree about the way that data should be modeled. I want to have
+objects as properties on models and he thinks this is bad design.
+
+Not an aha moment kind of day, unfortunately.
+
+
 10/11/2022
 
 Today I created an api to get location coordinates from a rescue's address. I
