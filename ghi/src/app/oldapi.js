@@ -4,7 +4,7 @@ import { clearForm } from "./accountSlice";
 export const apiSlice = createApi({
   reducerPath: "app",
   baseQuery: fetchBaseQuery({
-    baseUrl: ProcessingInstruction.env.REACT_APP_API_HOST,
+    baseUrl: process.env.REACT_APP_API_HOST,
     prepareHeaders: (headers, { getState }) => {
       const selector = apiSlice.endpoints.getToken.select();
       const { data: tokenData } = selector(getState());
@@ -14,14 +14,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: [
-    "Account",
-    "Token",
-    "Adoption_Application",
-    "Pet",
-    "Rescue",
-    "Success_Story",
-  ],
+  tagTypes: ["Account", "Token"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (data) => ({
@@ -84,27 +77,5 @@ export const apiSlice = createApi({
       }),
       providesTags: ["Token"],
     }),
-    addPet: builder.mutation({
-      query: (form) => {
-        const formData = new FormData(form);
-        const entries = Array.from(formData.entries());
-        const data = entries.reduce((acc, [key, value]) => {
-          acc[key] = Number.parseInt(value) || value;
-          return acc;
-        }, {});
-        return {
-          method: "post",
-          url: "/api/pets",
-          credentials: "include",
-          body: data,
-        };
-      },
-      invalidatesTags: [{type: 'Pet', id: "LIST" }],
-    }),
-    getPets: builder.query({
-        query: () => `/api/pets`,
-        
-    }),
-
   }),
 });

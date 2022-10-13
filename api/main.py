@@ -17,6 +17,7 @@ app = FastAPI(
     "  ©"
     "Pawsibilities 2022",
     version="16.4.0.2",
+    redoc_url="/docs",
     docs_url="/pawsible",
     contact={
         "name": "Friends Fur Real",

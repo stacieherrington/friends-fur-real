@@ -26,8 +26,7 @@ class Auth(Authenticator):
     def get_session_getter(self, session_repo: SessionQueries = Depends()):
         return session_repo
 
-    async def jti_created(
-        self, jti, account, session_repo):
+    async def jti_created(self, jti, account, session_repo):
         session_repo.create(jti, account)
 
     async def jti_destroyed(self, jti, session_repo):
@@ -37,4 +36,4 @@ class Auth(Authenticator):
         return session_repo.get(jti) is not None
 
 
-xauthenticator = Auth(os.environ["SIGNING_KEY"])
+authenticator = Auth(os.environ["SIGNING_KEY"])
