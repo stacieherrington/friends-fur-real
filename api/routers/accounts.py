@@ -52,9 +52,6 @@ not_authorized = HTTPException(
 @router.get(
     "/token/",
     response_model=AccountToken | None,
-    tags=[
-        "Token Authorization",
-    ],
 )
 async def get_token(
     request: Request,
@@ -71,7 +68,7 @@ async def get_token(
 @router.post(
     "/api/accounts",
     response_model=AccountToken | HttpError,
-    tags=["Accounts"],
+
 )
 async def create_account(
     info: AccountIn,
@@ -95,7 +92,6 @@ async def create_account(
 
 @router.delete(
     "/api/sessions/{account_id}",
-    tags=["Token Authorization"],
 )
 async def delete_session(
     account_id: str,
@@ -111,7 +107,6 @@ async def delete_session(
 @router.get(
     "/api/accounts",
     response_model=AccountList,
-    tags=["Accounts"],
 )
 async def list_accounts(
     queries: AccountQueries = Depends(),
@@ -122,7 +117,6 @@ async def list_accounts(
 @router.get(
     "/api/accounts/{id}",
     response_model=AccountDisplay,
-    tags=["Accounts"],
 )
 def single_account(id: str, queries: AccountQueries = Depends()):
     account = queries.single_account(id)
@@ -135,7 +129,6 @@ def single_account(id: str, queries: AccountQueries = Depends()):
 @router.patch(
     "/api/accounts/{id}",
     response_model=AccountDisplay,
-    tags=["Accounts"],
 )
 def update_account(
     id: str,
@@ -153,7 +146,6 @@ def update_account(
 
 @router.patch(
     "/api/accounts/promote/{id}",
-    tags=["Accounts"],
 )
 async def promote_account(id: str, queries: AccountQueries = Depends()):
     response = queries.promote_account(id)
@@ -165,7 +157,6 @@ async def promote_account(id: str, queries: AccountQueries = Depends()):
 
 @router.patch(
     "/api/accounts/demote/{id}",
-    tags=["Accounts"],
 )
 async def demote_account(id: str, queries: AccountQueries = Depends()):
     response = queries.demote_account(id)
@@ -177,7 +168,6 @@ async def demote_account(id: str, queries: AccountQueries = Depends()):
 
 @router.patch(
     "/api/accounts/localize/{id}",
-    tags=["Accounts"],
 )
 async def localize_account(
     id: str,
