@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import providesList from "./functions/providesList";
+import providesList from "./providesList";
 
 export const rescueSlice = createApi({
   reducerPath: "rescues",
