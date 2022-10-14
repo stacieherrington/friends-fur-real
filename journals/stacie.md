@@ -1,8 +1,12 @@
 10/13/2022
 
+Today I fixed the geospatial query. I learned the problem was something missing
+called a 2dsphere index.
+## NOTE!
 db.rescue.createIndex({location: "2dsphere"}) <-- This needs to run on every
 Mongo db that's going to do our application.
 
+I also started learning MUI.
 
 
 10/12/2022
