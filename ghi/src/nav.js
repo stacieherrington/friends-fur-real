@@ -1,14 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useGetTokenQuery, useLogoutMutation } from "./endpoints/authEndpoints";
+import { useGetTokenQuery, useLogoutMutation } from "./store/api";
 import { useDispatch } from "react-redux";
 import {
   showModal,
   LOGIN_MODAL,
   SIGNUP_MODAL,
-} from "./endpoints/accountSlice";
+} from "./store/endpoints/accountSlice";
 import logo from "./logo.svg";
-import LoginModal from "./modals/loginModal";
-import SignupModal from "./modals/signupModal";
+import LoginModal from "./LoginModal";
+import SignupModal from "./SignupModal";
 import { useEffect } from "react";
 
 function LoginButtons(props) {
