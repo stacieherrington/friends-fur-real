@@ -5,14 +5,15 @@ from typing import List
 from pymongo import ReturnDocument
 from random import randint
 
-class PetQueries(Queries):
-    DB_NAME = 'fur'
-    COLLECTION = 'pet'
 
-    def get_pet(self,id) -> PetOut:
+class PetQueries(Queries):
+    DB_NAME = "fur"
+    COLLECTION = "pet"
+
+    def get_pet(self, id) -> PetOut:
         try:
             # id = ObjectId(id)
-            pet = self.collection.find_one({"_id":ObjectId(id)})
+            pet = self.collection.find_one({"_id": ObjectId(id)})
         except:
             return None
         if not pet:
@@ -22,37 +23,37 @@ class PetQueries(Queries):
         # pet['is_adopted']
         return PetOut(**pet, id=id)
 
-    def create_pet(self,pet:PetIn):
+    def create_pet(self, pet: PetIn):
         self.collection.insert_one(pet.dict())
-        return {"message":"Yeah! pet added!"}
+        return {"message": "Yeah! pet added!"}
 
-    def list_pets(self)->List[PetOut]:
+    def list_pets(self) -> List[PetOut]:
         result = self.collection.find({})
         pets = []
         for pet in result:
-            pet['id'] = str(pet['_id'])
+            pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
 
-    def delete_pet(self,id):
+    def delete_pet(self, id):
         try:
             id = ObjectId(id)
-            pet = self.collection.find_one({"_id":id})
+            pet = self.collection.find_one({"_id": id})
         except:
             return None
         if pet:
-            self.collection.delete_one({"_id":id})
-            return {"message":"pet has been deleted!"}
+            self.collection.delete_one({"_id": id})
+            return {"message": "pet has been deleted!"}
 
     def update_pet(self, id, data) -> PetOut:
         try:
             print(data, "AaAAAAAAAAAAAAAAAAAA<----------------")
             id = ObjectId(id)
             pet = self.collection.find_one_and_update(
-                {"_id":id},
+                {"_id": id},
                 {"$set": data.dict()},
-                return_document=ReturnDocument.AFTER
-                )
+                return_document=ReturnDocument.AFTER,
+            )
         except:
             return None
         if pet:
@@ -64,7 +65,7 @@ class PetQueries(Queries):
         pets = []
         three_pets = []
         for pet in result:
-            pet['id'] = str(pet['_id'])
+            pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         random_num_list = []
         if len(pets) >= 3:
