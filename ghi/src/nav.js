@@ -7,8 +7,6 @@ import {
   SIGNUP_MODAL,
 } from "./store/endpoints/accountSlice";
 import logo from "./logo.svg";
-import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal";
 import { useEffect } from "react";
 
 function LoginButtons(props) {
@@ -105,8 +103,6 @@ function Nav() {
           </div>
         </div>
       </nav>
-      <LoginModal />
-      <SignupModal />
     </>
   );
 }
