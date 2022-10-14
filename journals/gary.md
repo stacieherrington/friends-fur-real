@@ -29,4 +29,12 @@ Today, Worked on:
 Today, Worked on:
 - trying to draw a diagram to display all the relations for all the models we have. We can use it to filter or search or display cross models/collections
 - fix docker-compose.yaml file to make ghi/node working on windows
-- 
+
+## Oct 12, 2022
+Today, worked on:
+- still working on clear all the relations between models.
+
+## Oct 13, 2022
+Today, Worded on :
+- all models wairframs and conections are done. all the pages and apis need for each on commont: - https://whimsical.com/fur-normal-account-TJ3iXQfk1iG4YmCn1KuD47
+- and list out all the grouped api for each model, with all the detail. docs/api_model_diagram.excalidraw
