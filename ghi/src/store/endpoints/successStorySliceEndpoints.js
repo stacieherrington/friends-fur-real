@@ -19,7 +19,15 @@ export function successStoryEndpoints(builder) {
     }),
     listSuccessStory: builder.query({
       query: () => `/api/stories/`,
-      providesTags: ["SuccessStory"],
+      providesTags: (data) => {
+        const tags = [{ type: "SuccessStory", id: "LIST" }];
+        if (!data || !data.stories) return tags;
+        const { stories } = data;
+        if (stories) {
+          tags.concat(...stories.map(({ id }) => ({ type: "SuccessStory", id })));
+        }
+        return tags;
+      },
     }),
     getSuccessStory: builder.query({
       query: (petId) => `/api/pets/${petId}/story${petId}/`,

@@ -19,7 +19,15 @@ export function rescueEndpoints(builder) {
     }),
     listRescues: builder.query({
       query: () => `/api/rescues/`,
-      providesTags: ["Rescue"],
+      providesTags: (data) => {
+        const tags = [{ type: "Rescue", id: "LIST" }];
+        if (!data || !data.rescues) return tags;
+        const { rescues } = data;
+        if (rescues) {
+          tags.concat(...rescues.map(({ id }) => ({ type: "Rescue", id })));
+        }
+        return tags;
+      },
     }),
     getRescue: builder.query({
       query: (rescueId) => `/api/rescue/${rescueId}/`,

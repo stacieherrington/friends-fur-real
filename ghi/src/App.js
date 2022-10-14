@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import Notification from "./Notification";
 import PetCard from "./PetCard";
-import { useGetTokenQuery, useListPetsQuery } from "./store/api";
+import {
+  useGetTokenQuery,
+  useListPetsQuery,
+  useListAccountsQuery,
+  useListRescuesQuery,
+  useListSuccessStoryQuery,
+  useListAdoptionApplicationsQuery,
+} from "./store/api";
 import { ReconnectingWebSocket } from "./ReconnectiongWebsocket";
 import "./App.css";
 import LoginModal from "./LoginModal";
@@ -11,10 +18,37 @@ const socketUrl = `${process.env.REACT_APP_WS_HOST}/ws`;
 const socket = new ReconnectingWebSocket(socketUrl);
 
 function App() {
+  const {
+    data: applicationsData,
+    isError: applicationsError,
+    isLoading: applicationsLoading,
+    refetch: fetchApplications,
+  } = useListAdoptionApplicationsQuery();
+  const {
+    data: storiesData,
+    isError: storiesError,
+    isLoading: storiesLoading,
+    refetch: fetchStory,
+  } = useListSuccessStoryQuery();
+
+  const {
+    data: accountsData,
+    isError: accountsError,
+    isLoading: accountsLoading,
+    refetch: fetchAccounts,
+  } = useListAccountsQuery();
+  const {
+    data: rescuesData,
+    isError: rescuesError,
+    isLoading: rescuesLoading,
+    refetch: fetchRescues,
+  } = useListRescuesQuery();
   const { data: petData, isError, isLoading, refetch } = useListPetsQuery();
   const { data: tokenData } = useGetTokenQuery();
   const isStaff =
-    tokenData && tokenData.account_id && tokenData.account_id.roles.includes("staff");
+    tokenData &&
+    tokenData.account_id &&
+    tokenData.account_id.roles.includes("staff");
   const accountId = tokenData && tokenData.account_id && tokenData.account_id;
 
   useEffect(() => {

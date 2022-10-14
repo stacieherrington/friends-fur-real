@@ -19,12 +19,25 @@ export function adoptionApplicationEndpoints(builder) {
     }),
     listAdoptionApplications: builder.query({
       query: () => `/api/adoption_applications/`,
-      providesTags: ["AdoptionApplication"],
+      providesTags: (data) => {
+        const tags = [{ type: "AdoptionApplication", id: "LIST" }];
+        if (!data || !data.adoptions) return tags;
+        const { adoptionApplications } = data;
+        if (adoptionApplications) {
+          tags.concat(
+            ...adoptionApplications.map(({ id }) => ({
+              type: "AdoptionApplication",
+              id,
+            }))
+          );
+        }
+        return tags;
+      },
     }),
     getAdoptionApplication: builder.query({
       query: (adoptionApplicationId) =>
         `/api/adoption_applications/${adoptionApplicationId}`,
-      providesTags: adoptionApplication => [
+      providesTags: (adoptionApplication) => [
         { type: "AdoptionApplication", id: adoptionApplication.id },
       ],
     }),
@@ -33,8 +46,11 @@ export function adoptionApplicationEndpoints(builder) {
         method: "PATCH",
         url: `/api/adoption_applications/${adoptionApplicationId}`,
       }),
-      invalidatesTags: (result, error, adoptionApplicationId) => [
-        { type: "AdoptionApplication", id: adoptionApplicationId },
+      providesTags: (adoptionApplication) => [
+        { type: "AdoptionApplication", id: adoptionApplication.id },
+      ],
+      invalidateTags: (adoptionApplication) => [
+        { type: "AdoptionApplication", id: adoptionApplication.id },
       ],
     }),
     deleteAdoptionApplication: builder.mutation({
@@ -42,8 +58,8 @@ export function adoptionApplicationEndpoints(builder) {
         method: "DELETE",
         url: `/api/adoption_applications/${adoptionApplicationId}`,
       }),
-      invalidatesTags: (result, error, adoptionApplicationId) => [
-        { type: "AdoptionApplication", id: adoptionApplicationId },
+      invalidateTags: (adoptionApplication) => [
+        { type: "AdoptionApplication", id: adoptionApplication.id },
       ],
     }),
   };
