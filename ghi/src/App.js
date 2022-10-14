@@ -14,9 +14,8 @@ function App() {
   const { data: petData, isError, isLoading, refetch } = useListPetsQuery();
   const { data: tokenData } = useGetTokenQuery();
   const isStaff =
-    tokenData && tokenData.account && tokenData.account.roles.includes("staff");
-  const accountId = tokenData && tokenData.account && tokenData.account.id;
-  console.log(accountId);
+    tokenData && tokenData.account_id && tokenData.account_id.roles.includes("staff");
+  const accountId = tokenData && tokenData.account_id && tokenData.account_id;
 
   useEffect(() => {
     socket.addEventListener("message", ({ petData }) => {
@@ -47,8 +46,7 @@ function App() {
             />
           ))}
         </div>
-      )
-      }
+      )}
       <LoginModal />
       <SignupModal />
     </div>

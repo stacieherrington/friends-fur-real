@@ -69,9 +69,9 @@ export function authEndpoints(builder) {
         method: "DELETE",
         url: `/api/sessions/${account_id}/`,
       }),
-      invalidatesTags: (result, error, account_id) => [
-        { type: "Account", id: account_id },
-      ],
+      // invalidatesTags: (result, error, account_id) => [
+      //   { type: "Account", id: account_id },     ],
+      invalidatesTags: [{ type: "Account", id: "LIST" }],
     }),
   };
 }

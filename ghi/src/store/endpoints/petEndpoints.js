@@ -17,9 +17,21 @@ export function petEndpoints(builder) {
       },
       invalidateTags: [{ type: "Pet", id: "LIST" }],
     }),
+    // listPets: builder.query({
+    //   query: () => `/api/pets/`,
+    //   providesTags: ["Pet"],
+    // }),
     listPets: builder.query({
       query: () => `/api/pets/`,
-      providesTags: ["Pet"],
+      providesTags: (data) => {
+        const tags = [{ type: "Pet", id: "LIST" }];
+        if (!data || !data.pets) return tags;
+        const { pets } = data;
+        if (pets) {
+          tags.concat(...pets.map(({ id }) => ({ type: "Pet", id })));
+        }
+        return tags;
+      },
     }),
     getPet: builder.query({
       query: (petId) => `/api/pets/${petId}/`,
@@ -27,17 +39,17 @@ export function petEndpoints(builder) {
     }),
     putPet: builder.mutation({
       query: (petId) => ({
-        method: "PUT",
+        method: "put",
         url: `/api/pets/${petId}/`,
       }),
-      invalidatesTags: (result, error, petId) => [{ type: "Pet", id: petId }],
+      invalidatesTags: [{ type: "Pet", id: "LIST" }],
     }),
     deletePet: builder.mutation({
       query: (petId) => ({
-        method: "DELETE",
+        method: "delete",
         url: `/api/pets/${petId}/`,
       }),
-      invalidatesTags: (result, error, petId) => [{ type: "Pet", id: petId }],
+      invalidatesTags: [{ type: "Pet", id: "LIST" }],
     }),
   };
 }
