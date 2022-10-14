@@ -53,7 +53,7 @@ export function petEndpoints(builder) {
         url: `/api/pets/${petId}/`,
         body: put,
       }),
-      // providesTags: (pet) => [{ type: "Pet", id: pet.id }],
+      providesTags: (pet) => [{ type: "Pet", id: pet.id }],
       invalidatesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),
     deletePet: builder.mutation({

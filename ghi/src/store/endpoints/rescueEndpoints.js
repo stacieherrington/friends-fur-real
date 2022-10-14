@@ -30,13 +30,13 @@ export function rescueEndpoints(builder) {
       },
     }),
     getRescue: builder.query({
-      query: (rescueId) => `/api/rescue/${rescueId}/`,
-      providesTags: rescue => [{ type: "Rescue", id:rescue.id }],
+      query: (rescueId) => `/api/rescues/${rescueId}/`,
+      providesTags: (rescue) => [{ type: "Rescue", id: rescue.id }],
     }),
     putRescue: builder.mutation({
       query: (rescueId) => ({
         method: "PUT",
-        url: `/api/rescue/${rescueId}/`,
+        url: `/api/rescues/${rescueId}/`,
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },
@@ -45,7 +45,7 @@ export function rescueEndpoints(builder) {
     deleteRescue: builder.mutation({
       query: (rescueId) => ({
         method: "DELETE",
-        url: `/api/rescue/${rescueId}/`,
+        url: `/api/rescues/${rescueId}/`,
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },

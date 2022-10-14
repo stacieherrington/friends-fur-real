@@ -24,16 +24,16 @@ export function successStoryEndpoints(builder) {
         if (!data || !data.stories) return tags;
         const { stories } = data;
         if (stories) {
-          tags.concat(...stories.map(({ id }) => ({ type: "SuccessStory", id })));
+          tags.concat(
+            ...stories.map(({ id }) => ({ type: "SuccessStory", id }))
+          );
         }
         return tags;
       },
     }),
     getSuccessStory: builder.query({
-      query: (petId) => `/api/pets/${petId}/story${petId}/`,
-      providesTags: (result, error, petId) => [
-        { type: "SuccessStory", id: petId },
-      ],
+      query: (petId) => `/api/pets/${petId}/story/`,
+      providesTags: (story) => [{ type: "SuccessStory", id: story.id }],
     }),
     listRescueStories: builder.query({
       query: () => `/api/rescues/{rescue_id}/stories/`,

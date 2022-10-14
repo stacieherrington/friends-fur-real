@@ -11,8 +11,8 @@ class PetQueries(Queries):
 
     def get_pet(self,id) -> PetOut:
         try:
-            id = ObjectId(id)
-            pet = self.collection.find_one({"_id":id})
+            # id = ObjectId(id)
+            pet = self.collection.find_one({"_id":ObjectId(id)})
         except:
             return None
         if not pet:

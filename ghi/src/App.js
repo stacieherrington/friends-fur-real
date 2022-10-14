@@ -8,6 +8,13 @@ import {
   useListRescuesQuery,
   useListSuccessStoryQuery,
   useListAdoptionApplicationsQuery,
+  useGetAdoptionApplicationQuery,
+  useGetSuccessStoryQuery,
+  useSingleAccountQuery,
+  useGetRescueQuery,
+  useAddAdoptionApplicationMutation,
+  usePatchAdoptionApplicationMutation,
+  useGetPetQuery,
 } from "./store/api";
 import { ReconnectingWebSocket } from "./ReconnectiongWebsocket";
 import "./App.css";
@@ -19,17 +26,35 @@ const socket = new ReconnectingWebSocket(socketUrl);
 
 function App() {
   const {
+    data: aAddD,
+    isError: aAddE,
+    isLoading: aAddL,
+    refetch: fAdd,
+  } = usePatchAdoptionApplicationMutation("634990ee48e8840550d91a57");
+  const {
     data: applicationsData,
     isError: applicationsError,
     isLoading: applicationsLoading,
     refetch: fetchApplications,
   } = useListAdoptionApplicationsQuery();
   const {
+    data: appData,
+    isError: appError,
+    isLoading: appLoad,
+    refetch: oneApp,
+  } = useGetAdoptionApplicationQuery("634990ee48e8840550d91a57");
+  const {
     data: storiesData,
     isError: storiesError,
     isLoading: storiesLoading,
-    refetch: fetchStory,
+    refetch: fetchStories,
   } = useListSuccessStoryQuery();
+  const {
+    data: storyData,
+    isError: storyError,
+    isLoading: storyLoading,
+    refetch: fetchStory,
+  } = useGetSuccessStoryQuery("6349914148e8840550d91a58");
 
   const {
     data: accountsData,
@@ -38,11 +63,29 @@ function App() {
     refetch: fetchAccounts,
   } = useListAccountsQuery();
   const {
+    data: accountD,
+    isError: accountE,
+    isLoading: accountL,
+    refetch: fAccount,
+  } = useSingleAccountQuery("63488738f58d4c732b27d36e");
+  const {
     data: rescuesData,
     isError: rescuesError,
     isLoading: rescuesLoading,
     refetch: fetchRescues,
   } = useListRescuesQuery();
+  const {
+    data: rData,
+    isError: rE,
+    isLoading: rL,
+    refetch: fR,
+  } = useGetRescueQuery("634991b548e8840550d91a59");
+  const {
+    data: petsData,
+    isError: petsError,
+    isLoading: petsLoading,
+    refetch: petsRefetch,
+  } = useGetPetQuery("6348d66848e8840550d91a55");
   const { data: petData, isError, isLoading, refetch } = useListPetsQuery();
   const { data: tokenData } = useGetTokenQuery();
   const isStaff =
@@ -78,7 +121,8 @@ function App() {
               isStaff={isStaff}
               accountId={accountId}
             />
-          ))}
+            
+          ))}Hey Gary, this webpage knows what you ate for lunch!
         </div>
       )}
       <LoginModal />
