@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { authEndpoints } from "./slices/authEndpoints";
-import { petEndpoints } from "./slices/petEndpoints";
-import { adoptionApplicationEndpoints } from "./slices/adoptionApplicationEndpoints";
-import { successStoryEndpoints } from "./slices/successStorySliceEndpoints";
-import { extraAccountEndpoints } from "./slices/extraAccountEndpoints";
-import { rescueEndpoints } from './slices/rescueEndpoints'
+import { authEndpoints } from "./endpoints/authEndpoints";
+import { petEndpoints } from "./endpoints/petEndpoints";
+import { adoptionApplicationEndpoints } from "./endpoints/adoptionApplicationEndpoints";
+import { successStoryEndpoints } from "./endpoints/successStorySliceEndpoints";
+import { extraAccountEndpoints } from "./endpoints/extraAccountEndpoints";
+import { rescueEndpoints } from "./endpoints/rescueEndpoints";
 
 export const apiSlice = createApi({
   reducerPath: "app",
@@ -71,4 +71,3 @@ export const {
   useListRescueStoriesQuery,
   useThreeRandomStoriesQuery,
 } = apiSlice;
-

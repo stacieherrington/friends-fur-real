@@ -8,6 +8,7 @@ from routers import (
     success_story,
     accounts,
     auth,
+    sockets,
 )
 
 app = FastAPI(
@@ -45,3 +46,4 @@ app.include_router(
 )
 app.include_router(auth.authenticator.router)
 app.include_router(accounts.router, tags=["Accounts"])
+app.include_router(sockets.router)

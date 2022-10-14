@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post(
-    "",
+    "/",
     description="This will create a new application",
 )
 def create_adoption_application(
@@ -26,7 +26,7 @@ def create_adoption_application(
 
 
 @router.get(
-    "",
+    "/",
     response_model=AdoptionApplicationList,
     summary="All Adoption Applications",
     description="This lists all available adoption applications",
@@ -40,7 +40,7 @@ def list_adoption_applications(
 
 
 @router.get(
-    "/{id}",
+    "/{id}/",
     response_model=AdoptionApplicationUpdate,
     summary="Single Adoption Application",
 )
@@ -57,7 +57,7 @@ def single_adoption_application(
 
 
 @router.patch(
-    "/{id}",
+    "/{id}/",
     response_model=AdoptionApplicationUpdate,
     response_description="Successfully Updated Application!",
 )
@@ -74,7 +74,7 @@ def update_adoption_application(
 
 
 @router.delete(
-    "/{id}",
+    "/{id}/",
     response_description="Successfully Deleted Account!",
 )
 def delete_adoption_application(

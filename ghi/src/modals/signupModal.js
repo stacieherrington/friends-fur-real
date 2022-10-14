@@ -6,7 +6,7 @@ import {
   showModal,
   updateField,
   SIGNUP_MODAL,
-} from "../app/slices/accountSlice";
+} from "../endpoints/accountSlice";
 import Notification from ".../Notification";
 
 export default function SignupModal() {
@@ -14,8 +14,10 @@ export default function SignupModal() {
   const { show, username, password } = useSelector((state) => state.account);
   const modalClass = `modal ${show === SIGNUP_MODAL ? "is-active" : ""}`;
   const [signup, { error, isLoading: signupLoading }] = useSignUpMutation();
-  const field = useCallback((e) =>
-    dispatch(updateField({ field: e.target.name, value: e.target.value }))
+  const field = useCallback(
+    (e) =>
+      dispatch(updateField({ field: e.target.name, value: e.target.value })),
+    [dispatch]
   );
   return (
     <div className={modalClass} key='signup-modal'>

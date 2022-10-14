@@ -66,9 +66,8 @@ async def get_token(
 
 
 @router.post(
-    "/api/accounts",
+    "/api/accounts/",
     response_model=AccountToken | HttpError,
-
 )
 async def create_account(
     info: AccountIn,
@@ -91,7 +90,7 @@ async def create_account(
 
 
 @router.delete(
-    "/api/sessions/{account_id}",
+    "/api/sessions/{account_id}/",
 )
 async def delete_session(
     account_id: str,
@@ -105,7 +104,7 @@ async def delete_session(
 
 
 @router.get(
-    "/api/accounts",
+    "/api/accounts/",
     response_model=AccountList,
 )
 async def list_accounts(
@@ -115,7 +114,7 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/accounts/{id}",
+    "/api/accounts/{id}/",
     response_model=AccountDisplay,
 )
 def single_account(id: str, queries: AccountQueries = Depends()):
@@ -127,7 +126,7 @@ def single_account(id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/{id}",
+    "/api/accounts/{id}/",
     response_model=AccountDisplay,
 )
 def update_account(
@@ -145,10 +144,10 @@ def update_account(
 
 
 @router.patch(
-    "/api/accounts/promote/{id}",
+    "/api/accounts/promote/{id}/",
 )
-async def promote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.promote_account(id)
+async def promote_account(email: str, queries: AccountQueries = Depends()):
+    response = queries.promote_account(email)
     if response:
         return response
     else:
@@ -156,10 +155,10 @@ async def promote_account(id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/demote/{id}",
+    "/api/accounts/demote/{id}/",
 )
-async def demote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.demote_account(id)
+async def demote_account(email: str, queries: AccountQueries = Depends()):
+    response = queries.demote_account(email)
     if response:
         return response
     else:
@@ -167,7 +166,7 @@ async def demote_account(id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/localize/{id}",
+    "/api/accounts/localize/{id}/",
 )
 async def localize_account(
     id: str,
@@ -183,7 +182,9 @@ async def localize_account(
     query = address_string.replace(" ", "+")
     location = address_service.location_from_address(query)
     if location is None:
-        address_string = f"{address['city']}, {address['state']}, {address['zip_code']}"
+        address_string = (
+            f"{address['city']}, {address['state']}, {address['zip_code']}"
+        )
         query = address_string.replace(" ", "+")
         location = address_service.location_from_address(query)
     response = queries.set_account_location(account, location)

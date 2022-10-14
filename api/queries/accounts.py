@@ -85,29 +85,29 @@ class AccountQueries(Queries):
             self.collection.delete_one({"_id": id})
             return {"message": f"Account {id} has been deleted!"}
 
-    def promote_account(self, id) -> AccountOut:
+    def promote_account(self, email) -> AccountOut:
         try:
             acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
+                {"email": email},
                 {"$addToSet": {"roles": "staff"}},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
-        SessionQueries().delete_sessions(account_id=id)
-        return AccountOut(**acct, id=id)
+        SessionQueries().delete_sessions(account_id=str(acct["_id"]))
+        return AccountOut(**acct, id=str(acct["_id"]))
 
-    def demote_account(self, id) -> AccountOut:
+    def demote_account(self, email) -> AccountOut:
         try:
             acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
+                {"email": email},
                 {"$pull": {"roles": "staff"}},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
-        SessionQueries().delete_sessions(account_id=id)
-        return AccountOut(**acct, id=id)
+        SessionQueries().delete_sessions(account_id=str(acct["_id"]))
+        return AccountOut(**acct, id=str(acct["_id"]))
 
     def set_account_location(
         self, acct: dict, location: dict

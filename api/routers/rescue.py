@@ -6,7 +6,7 @@ from acl.nominatim import Nominatim
 router = APIRouter()
 
 
-@router.get("/{id}", response_model=RescueOut)
+@router.get("/{id}/", response_model=RescueOut)
 def get_rescue(id: str, queries: RescueQueries = Depends()):
     response = queries.get_rescue(id)
     if response:
@@ -15,13 +15,13 @@ def get_rescue(id: str, queries: RescueQueries = Depends()):
         raise HTTPException(404, "this rescue id does not exist!")
 
 
-@router.post("")
+@router.post("/")
 def create_rescue(rescue: RescueIn, queries: RescueQueries = Depends()):
     response = queries.create_rescue(rescue)
     return response
 
 
-@router.delete("{id}")
+@router.delete("/{id}/")
 def delete_rescue(id: str, queries: RescueQueries = Depends()):
     response = queries.delete_rescue(id)
     if response:
@@ -30,12 +30,12 @@ def delete_rescue(id: str, queries: RescueQueries = Depends()):
         raise HTTPException(404, "This rescue id does not exist!")
 
 
-@router.get("", response_model=RescuesList)
+@router.get("/", response_model=RescuesList)
 def list_rescues(queries: RescueQueries = Depends()):
     return RescuesList(rescues=queries.list_rescues())
 
 
-@router.put("/{id}", response_model=RescueOut)
+@router.put("/{id}/", response_model=RescueOut)
 def update_rescue(id: str, data: RescueIn, queries: RescueQueries = Depends()):
     response = queries.update_rescue(id, data)
     if response:
@@ -45,7 +45,7 @@ def update_rescue(id: str, data: RescueIn, queries: RescueQueries = Depends()):
 
 
 @router.patch(
-    "/localize/{id}",
+    "/localize/{id}/",
 )
 async def localize_rescue(
     id: str,

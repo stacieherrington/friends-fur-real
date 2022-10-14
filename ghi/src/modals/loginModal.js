@@ -9,7 +9,7 @@ import {
   showModal,
   updateField,
   LOG_IN_MODAL,
-} from "../app/slices/accountSlice";
+} from "../endpoints/accountSlice";
 import Notification from "./Notification";
 
 export default function LoginModal() {
