@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import Notification from "./Notification";
 import PetCard from "./PetCard";
-import { useGetTokenQuery, useListPetsQuery } from "./api";
+import { useGetTokenQuery, useListPetsQuery } from "./store/api";
 import { ReconnectingWebSocket } from "./ReconnectiongWebsocket";
 import "./App.css";
+import LoginModal from "./LoginModal";
+import SignupModal from "./SignupModal";
 
 const socketUrl = `${process.env.REACT_APP_WS_HOST}/ws`;
 const socket = new ReconnectingWebSocket(socketUrl);
@@ -45,7 +47,10 @@ function App() {
             />
           ))}
         </div>
-      )}
+      )
+      }
+      <LoginModal />
+      <SignupModal />
     </div>
   );
 }

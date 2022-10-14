@@ -3,7 +3,7 @@ import { useGetTokenQuery, useLogoutMutation } from "./endpoints/authEndpoints";
 import { useDispatch } from "react-redux";
 import {
   showModal,
-  LOG_IN_MODAL,
+  LOGIN_MODAL,
   SIGNUP_MODAL,
 } from "./endpoints/accountSlice";
 import logo from "./logo.svg";
@@ -24,7 +24,7 @@ function LoginButtons(props) {
         <strong>Sign up</strong>
       </button>
       <button
-        onClick={() => dispatch(showModal(LOG_IN_MODAL))}
+        onClick={() => dispatch(showModal(LOGIN_MODAL))}
         className='button is-light'
       >
         Login

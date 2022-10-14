@@ -1,40 +1,34 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSignUpMutation } from "../app/slices/authEndpoints";
-import { preventDefault } from "../functions/utilities";
+import { useLoginMutation } from "./store/api";
+import { eventTargetSelector as target, preventDefault } from "./store/utility";
 import {
   showModal,
   updateField,
-  SIGNUP_MODAL,
-} from "../endpoints/accountSlice";
-import Notification from ".../Notification";
+  LOGIN_MODAL,
+} from "./store/endpoints/accountSlice";
+import Notification from "./Notification";
 
-export default function SignupModal() {
+export default function LoginModal() {
   const dispatch = useDispatch();
   const { show, username, password } = useSelector((state) => state.account);
-  const modalClass = `modal ${show === SIGNUP_MODAL ? "is-active" : ""}`;
-  const [signup, { error, isLoading: signupLoading }] = useSignUpMutation();
+  const modalClass = `modal ${show === LOGIN_MODAL ? "is-active" : ""}`;
+  const [login, { error, isLoading: loginLoading }] = useLoginMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
   return (
-    <div className={modalClass} key='signup-modal'>
+    <div className={modalClass} key='login-modal'>
       <div className='modal-background'></div>
       <div className='modal-content'>
         <div className='box content'>
-          <h3>Signup</h3>
+          <h3>Login</h3>
           {error ? (
             <Notification type='danger'>{error.data.detail}</Notification>
           ) : null}
-          <form
-            method='POST'
-            onSubmit={preventDefault(signup, () => ({
-              email: username,
-              password,
-            }))}
-          >
+          <form method='POST' onSubmit={preventDefault(login, target)}>
             <div className='field'>
               <label className='label' htmlFor='email'>
                 Email
@@ -67,7 +61,7 @@ export default function SignupModal() {
             </div>
             <div className='field is-grouped'>
               <div className='control'>
-                <button disabled={signupLoading} className='button is-success'>
+                <button disabled={loginLoading} className='button is-success'>
                   Submit
                 </button>
               </div>
