@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 export default function PetCard() {
   return (
-    <Card sx={{ maxWidth: 280 }}>
+    <Card sx={{ maxWidth: 250 }}>
       <CardMedia
         component="img"
         height="200"
