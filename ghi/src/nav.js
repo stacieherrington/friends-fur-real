@@ -1,8 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  useGetTokenQuery,
-  useLogoutMutation,
-} from "./store/api";
+import { useGetTokenQuery, useLogoutMutation } from "./store/api";
 import { useDispatch } from "react-redux";
 import {
   showModal,
