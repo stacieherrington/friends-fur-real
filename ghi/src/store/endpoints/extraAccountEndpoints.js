@@ -23,8 +23,8 @@ export function extraAccountEndpoints(builder) {
     }),
     singleAccount: builder.query({
       query: (allAccountSliceId) => `/api/accounts/${allAccountSliceId}`,
-      providesTags: (result, error, allAccountSliceId) => [
-        { type: "Account", id: allAccountSliceId },
+      providesTags: account => [
+        { type: "Account", id: account.id },
       ],
     }),
     patchUpdateAccount: builder.mutation({

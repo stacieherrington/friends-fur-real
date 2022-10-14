@@ -23,7 +23,7 @@ export function rescueEndpoints(builder) {
     }),
     getRescue: builder.query({
       query: (rescueId) => `/api/rescue/${rescueId}/`,
-      providesTags: (result, error, id) => [{ type: "Rescue", id }],
+      providesTags: rescue => [{ type: "Rescue", id:rescue.id }],
     }),
     putRescue: builder.mutation({
       query: (rescueId) => ({

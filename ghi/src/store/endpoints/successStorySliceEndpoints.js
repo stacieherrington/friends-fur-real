@@ -10,7 +10,7 @@ export function successStoryEndpoints(builder) {
         }, {});
         return {
           method: "POST",
-          url: "/api/pets{id}/story/",
+          url: `/api/pets{id}/story/`,
           credentials: "include",
           body: data,
         };
@@ -22,9 +22,9 @@ export function successStoryEndpoints(builder) {
       providesTags: ["SuccessStory"],
     }),
     getSuccessStory: builder.query({
-      query: (successStoryId) => `/api/pets/{id}/story${successStoryId}/`,
-      providesTags: (result, error, successStoryId) => [
-        { type: "SuccessStory", id: successStoryId },
+      query: (petId) => `/api/pets/${petId}/story${petId}/`,
+      providesTags: (result, error, petId) => [
+        { type: "SuccessStory", id: petId },
       ],
     }),
     listRescueStories: builder.query({

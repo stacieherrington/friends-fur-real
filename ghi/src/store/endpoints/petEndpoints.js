@@ -10,7 +10,7 @@ export function petEndpoints(builder) {
         }, {});
         return {
           method: "POST",
-          url: "/api/pets",
+          url: "/api/pets/",
           credentials: "include",
           body: data,
         };
@@ -35,7 +35,7 @@ export function petEndpoints(builder) {
     }),
     getPet: builder.query({
       query: (petId) => `/api/pets/${petId}/`,
-      providesTags: (result, error, id) => [{ type: "Pet", id }],
+      providesTags: pet => [{ type: "Pet", id: pet.id }],
     }),
     putPet: builder.mutation({
       query: (petId) => ({

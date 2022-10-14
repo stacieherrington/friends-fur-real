@@ -24,8 +24,8 @@ export function adoptionApplicationEndpoints(builder) {
     getAdoptionApplication: builder.query({
       query: (adoptionApplicationId) =>
         `/api/adoption_applications/${adoptionApplicationId}`,
-      providesTags: (result, error, adoptionApplicationId) => [
-        { type: "AdoptionApplication", id: adoptionApplicationId },
+      providesTags: adoptionApplication => [
+        { type: "AdoptionApplication", id: adoptionApplication.id },
       ],
     }),
     patchAdoptionApplication: builder.mutation({
