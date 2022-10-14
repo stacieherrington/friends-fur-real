@@ -8,7 +8,7 @@ import {
 } from "./endpoints/accountSlice";
 import logo from "./logo.svg";
 import LoginModal from "./modals/loginModal";
-import SignupModal from "./modals/signupModal";
+import SignupModal from "./SignupModal";
 import { useEffect } from "react";
 
 function LoginButtons(props) {
