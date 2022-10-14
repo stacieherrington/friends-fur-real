@@ -25,12 +25,8 @@ const socketUrl = `${process.env.REACT_APP_WS_HOST}/ws`;
 const socket = new ReconnectingWebSocket(socketUrl);
 
 function App() {
-  const {
-    data: aAddD,
-    isError: aAddE,
-    isLoading: aAddL,
-    refetch: fAdd,
-  } = usePatchAdoptionApplicationMutation("6349e0080f7972d806667b2d");
+  const [patchAdopt, { error: adoptError }] =
+    usePatchAdoptionApplicationMutation("6349e0080f7972d806667b2d");
   const {
     data: applicationsData,
     isError: applicationsError,
