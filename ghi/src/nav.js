@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 function NavBar() {
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid mt-5">
         <Navbar bg="light" variant="light" expand="lg">
           <Container>
             <div>
