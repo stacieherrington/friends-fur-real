@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Notification from "./Notification";
-import PetCard from "./PetCard";
+import PetCard from "./components/PetCard";
 import {
   useGetTokenQuery,
   useListPetsQuery,
@@ -21,12 +21,11 @@ import "./App.css";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
-import DrawerAppBar from './DrawerAppBar';
-import HomePage from './Homepage';
-import NavBar from './nav';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import DrawerAppBar from "./DrawerAppBar";
+import HomePage from "./Homepage";
+import NavBar from "./Nav";
 const socketUrl = `${process.env.REACT_APP_WS_HOST}/ws`;
 const socket = new ReconnectingWebSocket(socketUrl);
 
@@ -127,7 +126,7 @@ function App() {
   //             isStaff={isStaff}
   //             accountId={accountId}
   //           />
-            
+
   //         ))}Hey Gary, this webpage knows what you ate for lunch!
   //       </div>
   //     )}
@@ -140,9 +139,9 @@ function App() {
       <BrowserRouter>
         <DrawerAppBar />
         <NavBar />
-        <div className="container">
+        <div className='container'>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path='/' element={<HomePage />} />
           </Routes>
         </div>
       </BrowserRouter>
