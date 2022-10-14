@@ -1,14 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useGetTokenQuery, useLogoutMutation } from "./store/api";
+import { useGetTokenQuery, useLogoutMutation } from "./endpoints/authEndpoints";
 import { useDispatch } from "react-redux";
 import {
   showModal,
   LOGIN_MODAL,
   SIGNUP_MODAL,
-} from "./store/endpoints/accountSlice";
+} from "./endpoints/accountSlice";
 import logo from "./logo.svg";
-import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal";
+import LoginModal from "./modals/loginModal";
+import SignupModal from "./modals/signupModal";
 import { useEffect } from "react";
 
 function LoginButtons(props) {
@@ -105,8 +105,8 @@ function Nav() {
           </div>
         </div>
       </nav>
-      {/* <LoginModal />
-      <SignupModal /> */}
+      <LoginModal />
+      <SignupModal />
     </>
   );
 }
