@@ -38,3 +38,15 @@ Today, worked on:
 Today, Worded on :
 - all models wairframs and conections are done. all the pages and apis need for each on commont: - https://whimsical.com/fur-normal-account-TJ3iXQfk1iG4YmCn1KuD47
 - and list out all the grouped api for each model, with all the detail. docs/api_model_diagram.excalidraw
+
+## Oct 14, 2022
+Today, Worked on:
+- refactory on apis for all the models
+- Pet:
+    1. when create a pet the “is_adopted” is false by default
+    2. when create a pet please add a “rescue_id” from pet form.
+    3. random 3 pets now return 3 pets with false on “is_adopted”
+    4. add list pet by rescue_id
+    5. change id to model_id on urls to help understand.
+- Rescue:
+    1. 
