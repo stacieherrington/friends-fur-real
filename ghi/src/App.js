@@ -25,7 +25,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import DrawerAppBar from "./DrawerAppBar";
 import HomePage from "./Homepage";
-import NavBar from "./Nav";
+import NavBar from "./nav";
 const socketUrl = `${process.env.REACT_APP_WS_HOST}/ws`;
 const socket = new ReconnectingWebSocket(socketUrl);
 
