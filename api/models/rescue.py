@@ -4,8 +4,8 @@ from typing import List
 from models.pet import PetOut
 
 class Location(BaseModel):
-    latitude: str | None
-    longitude: str | None
+    type: str | None
+    coordinates: List[float] | None
 
 class Address(BaseModel):
     address_one: str | None

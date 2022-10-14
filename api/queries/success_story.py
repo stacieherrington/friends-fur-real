@@ -1,6 +1,7 @@
 from .client import Queries
 from bson.objectid import ObjectId
 from typing import List
+from pymongo import ReturnDocument
 from models.success_story import (
     SuccessStoryOut,
     SuccessStoryIn,
@@ -66,3 +67,28 @@ class SuccessStoryQueries(Queries):
             story["id"] = str(story["_id"])
             stories.append(SuccessStoryOut(**story))
         return stories
+
+
+    def delete_story(self, id):
+        try:
+            id = ObjectId(id)
+            story = self.collection.find_one({"_id":id})
+        except:
+            return None
+        if story:
+            self.collection.delete_one({"_id":id})
+            return {"message":"pet has been deleted!"}
+
+
+    def update_story(self, id, data):
+        try:
+            id = ObjectId(id)
+            story = self.collection.find_one_and_update(
+                {"_id":id},
+                {"$set": data.dict()},
+                return_document=ReturnDocument.AFTER
+                )
+        except:
+            return None
+        if story:
+            return SuccessStoryOut(**story)

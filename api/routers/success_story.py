@@ -42,3 +42,21 @@ def list_rescue_stories(
 @router.get("/stories/random/", response_model=SuccessStoryList)
 def get_three_random_stories(queries: SuccessStoryQueries = Depends()):
     return SuccessStoryList(stories=queries.get_three_random_stories())
+
+
+@router.delete("/api/stories/{id}/")
+def delete_pet(id:str,queries: SuccessStoryQueries=Depends()):
+    response = queries.delete_story(id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This story id does not exist!")
+
+
+@router.put("/api/stories/{id}/", response_model=SuccessStoryOut)
+def update_story(id:str, data: SuccessStoryIn, queries: SuccessStoryQueries=Depends()):
+    response = queries.update_story(id, data)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This story id does not exist!")
