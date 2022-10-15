@@ -17,23 +17,6 @@ export function ApplicationEndpoints(builder) {
       },
       invalidateTags: [{ type: "Application", id: "LIST" }],
     }),
-    // listApplications: builder.query({
-    //   query: () => `/api/applications/`,
-    //   providesTags: (data) => {
-    //     const tags = [{ type: "Application", id: "LIST" }];
-    //     if (!data || !data.adoptions) return tags;
-    //     const { Applications } = data;
-    //     if (Applications) {
-    //       tags.concat(
-    //         ...Applications.map(({ id }) => ({
-    //           type: "Application",
-    //           id,
-    //         }))
-    //       );
-    //     }
-    //     return tags;
-    //   },
-    // }),
     listAccountApplications: builder.query({
       query: (accountId) => `/api/accounts/${accountId}/applications/`,
       providesTags: (data) => {
