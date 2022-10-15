@@ -84,6 +84,13 @@ class ApplicationQueries(Queries):
         )
         return ApplicationOut(**result, id=application_id)
 
+    def delete_application(self, application_id):
+        delete_result = self.collection.delete_one(
+            filter={"_id": ObjectId(application_id)}
+        )
+        if delete_result.acknowledged:
+            return {"message": "Your Adoption application has been deleted!"}
+
 
 """
     def update_adoption_application(self, id, data) -> ApplicationIn:
@@ -97,14 +104,4 @@ class ApplicationQueries(Queries):
             return None
         if app:
             return ApplicationIn(**app, id=id)
-
-    def delete_adoption_application(self, id):
-        try:
-            id = ObjectId(id)
-            app = self.collection.find_one({"_id": id})
-        except:
-            return None
-        if app:
-            self.collection.delete_one({"_id": id})
-            return {"message": "Your Adoption application has been deleted!"}
 """

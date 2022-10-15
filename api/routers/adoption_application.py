@@ -101,6 +101,17 @@ def reject_application(
     return response
 
 
+@router.delete(
+    "/api/applications/{application_id}/",
+    summary="Delete an Application",
+    description="Delete an application by application_id, allow user to cancle an applicaiton from account profile page",
+)
+def delete_application(
+    application_id: str, queries: ApplicationQueries = Depends()
+):
+    return queries.delete_application(application_id)
+
+
 """
 @router.patch(
     "/api/adoption_applications/{id}/",
@@ -118,20 +129,4 @@ def update_adoption_application(
     else:
         raise HTTPException(404, "This adoption applcation id does not exist!")
 
-
-@router.delete(
-    "/api/adoption_applications/{id}/",
-    response_description="Successfully Deleted Account!",
-)
-def delete_adoption_application(
-    id: str, queries: ApplicationQueries = Depends()
-):
-
-    response = queries.delete_adoption_application(id)
-    if response:
-        return response
-    else:
-        raise HTTPException(
-            404, "This adoption application id does not exist!"
-        )
 """
