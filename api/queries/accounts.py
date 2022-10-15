@@ -52,6 +52,16 @@ class AccountQueries(Queries):
             accts.append(AccountOut(**acct))
         return accts
 
+    def list_accounts_by_rescue_id(self, rescue_id) -> AccountList:
+        accounts = self.collection.find(
+            {"rescue_id": rescue_id, "roles": "staff"}
+        )
+        accts = []
+        for acct in accounts:
+            acct["id"] = str(acct["_id"])
+            accts.append(AccountOut(**acct))
+        return accts
+
     def single_account(self, id) -> AccountDisplay:
         try:
             acct = self.collection.find_one({"_id": ObjectId(id)})

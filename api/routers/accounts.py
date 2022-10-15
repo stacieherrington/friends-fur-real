@@ -52,7 +52,6 @@ not_authorized = HTTPException(
 @router.get(
     "/token/",
     response_model=AccountToken | None,
-    description="create an account, form.address.zip_code is required!!!",
     tags=[
         "Token Authorization",
     ],
@@ -71,6 +70,7 @@ async def get_token(
 
 @router.post(
     "/api/accounts/",
+    description="create an account, form.address.zip_code is required!!!",
     response_model=AccountToken | HttpError,
     tags=["Accounts"],
 )
@@ -118,6 +118,20 @@ async def list_accounts(
     queries: AccountQueries = Depends(),
 ):
     return AccountList(accounts=queries.list_accounts())
+
+
+@router.get(
+    "/api/{rescue_id}/staffs/",
+    tags=["Accounts"],
+    response_model=AccountList,
+    summary="List Rescue Staffs",
+    description="list all the staffs for by rescue_id",
+)
+async def list_accounts(
+    rescue_id: str,
+    queries: AccountQueries = Depends(),
+):
+    return AccountList(accounts=queries.list_accounts_by_rescue_id(rescue_id))
 
 
 @router.get(
