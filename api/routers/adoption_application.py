@@ -1,53 +1,57 @@
 from fastapi import APIRouter, Depends, HTTPException
 from models.adoption_application import (
-    AdoptionApplicationIn,
-    AdoptionApplicationList,
-    AdoptionApplicationOut,
-    AdoptionApplicationUpdate,
+    ApplicationIn,
+    ApplicationList,
+    ApplicationOut,
 )
-from queries.adoption_application import AdoptionApplicationQueries
+from queries.adoption_application import ApplicationQueries
 
-router = APIRouter(tags=["Adoption Applications"])
+router = APIRouter(tags=["Applications"])
 
 
 @router.post(
-    "/api/adoption_applications/",
-    description="This will create a new application",
+    "/api/applications/",
+    summary="Create Application",
+    description="This will create a new application, need all the form_info and pet_id ,rescue_id ,account_id. this api will auto check if there is an application from same account to a same pet ",
 )
 def create_adoption_application(
-    app: AdoptionApplicationIn,
-    queries: AdoptionApplicationQueries = Depends(),
+    app: ApplicationIn,
+    queries: ApplicationQueries = Depends(),
 ):
     response = queries.create_application(app)
     if response:
         return response
     else:
-        raise HTTPException(404, "Application already exists")
+        raise HTTPException(
+            400, "Sorry, You have submitted an application for this pet!"
+        )
 
 
 @router.get(
-    "/api/adoption_applications/",
-    response_model=AdoptionApplicationList,
-    summary="All Adoption Applications",
-    description="This lists all available adoption applications",
+    "/api/{rescue_id}/applications/",
+    response_model=ApplicationList,
+    summary="List all Application for Rescue",
+    description="This lists all the applicaitons by rescue_id",
 )
 def list_adoption_applications(
-    queries: AdoptionApplicationQueries = Depends(),
+    rescue_id: str,
+    queries: ApplicationQueries = Depends(),
 ):
-    return AdoptionApplicationList(
-        adoptions=queries.list_adoption_applications()
+    return ApplicationList(
+        applications=queries.list_applications_by_rescue_id(rescue_id)
     )
 
 
 @router.get(
-    "/api/adoption_applications/{id}/",
-    response_model=AdoptionApplicationUpdate,
-    summary="Single Adoption Application",
+    "/api/applications/{application_id}/",
+    response_model=ApplicationOut,
+    summary="Detail Application",
+    description="get application detail by application_id",
 )
-def single_adoption_application(
-    id: str, queries: AdoptionApplicationQueries = Depends()
+def detail_application(
+    application_id: str, queries: ApplicationQueries = Depends()
 ):
-    response = queries.single_adoption_application(id)
+    response = queries.detail_application(application_id)
     if response:
         return response
     else:
@@ -56,15 +60,16 @@ def single_adoption_application(
         )
 
 
+"""
 @router.patch(
     "/api/adoption_applications/{id}/",
-    response_model=AdoptionApplicationUpdate,
+    response_model=ApplicationIn,
     response_description="Successfully Updated Application!",
 )
 def update_adoption_application(
     id: str,
-    data: AdoptionApplicationUpdate,
-    queries: AdoptionApplicationQueries = Depends(),
+    data: ApplicationIn,
+    queries: ApplicationQueries = Depends(),
 ):
     response = queries.update_adoption_application(id, data)
     if response:
@@ -78,7 +83,7 @@ def update_adoption_application(
     response_description="Successfully Deleted Account!",
 )
 def delete_adoption_application(
-    id: str, queries: AdoptionApplicationQueries = Depends()
+    id: str, queries: ApplicationQueries = Depends()
 ):
 
     response = queries.delete_adoption_application(id)
@@ -88,3 +93,4 @@ def delete_adoption_application(
         raise HTTPException(
             404, "This adoption application id does not exist!"
         )
+"""

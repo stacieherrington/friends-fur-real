@@ -1,10 +1,10 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Literal
 from models.rescue import Address
 from models.pet import PetOut
 
 
-class AdoptionApplicationUpdate(BaseModel):
+class ApplicationIn(BaseModel):
     first_name: str | None
     last_name: str | None
     address: Address | None
@@ -18,16 +18,23 @@ class AdoptionApplicationUpdate(BaseModel):
     date_ready: str | None
     wants_preapproval: bool | None
     agrees_to_terms: bool | None
-    status: str | None
+    account_id: str | None
+    pet_id: str | None
+    rescue_id: str | None
+    status: Literal[
+        "Submitted",
+        "Approved",
+        "Rejected",
+    ] | None
 
 
-class AdoptionApplicationIn(AdoptionApplicationUpdate):
-    pet: PetOut | None
+# class AdoptionApplicationIn(AdoptionApplicationUpdate):
+#     pet: PetOut | None
 
 
-class AdoptionApplicationOut(AdoptionApplicationIn):
+class ApplicationOut(ApplicationIn):
     id: str
 
 
-class AdoptionApplicationList(BaseModel):
-    adoptions: List[AdoptionApplicationOut]
+class ApplicationList(BaseModel):
+    applications: List[ApplicationOut]
