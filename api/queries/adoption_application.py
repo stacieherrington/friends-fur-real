@@ -2,11 +2,11 @@ from .client import Queries
 from typing import List
 from models.adoption_application import (
     ApplicationIn,
-    ApplicationList,
     ApplicationOut,
 )
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
+from .pet import PetQueries
 
 
 class ApplicationQueries(Queries):
@@ -61,7 +61,10 @@ class ApplicationQueries(Queries):
                 "message": "Sorry, this pet has been adopted by other family!"
             }
         else:
-            # 3. if there is no approved application for this pet, update all application status to Rejected, then update current application_id to approved
+            # 3. if there is no approved application for this pet,
+            #       update all application status to Rejected, then update current application_id to approved
+            #       update pet is_adopted to True
+            PetQueries().is_adopted(pet_id)
             self.collection.update_many(
                 filter={"pet_id": pet_id},
                 update={"$set": {"status": "Rejected"}},
@@ -72,6 +75,14 @@ class ApplicationQueries(Queries):
                 return_document=ReturnDocument.AFTER,
             )
             return ApplicationOut(**result, id=application_id)
+
+    def reject_application(self, application_id) -> ApplicationOut:
+        result = self.collection.find_one_and_update(
+            filter={"_id": ObjectId(application_id)},
+            update={"$set": {"status": "Rejected"}},
+            return_document=ReturnDocument.AFTER,
+        )
+        return ApplicationOut(**result, id=application_id)
 
 
 """

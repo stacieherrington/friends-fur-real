@@ -77,7 +77,7 @@ def detail_application(
 
 @router.patch(
     "/api/applications/{application_id}/approve/",
-    response_model=ApplicationOut,
+    response_model=ApplicationOut | dict,
     summary="Approve an Application",
     description="Approve an application by application_id, will check if there is an approved application based on the same pet_id, if not, change current status to Approved and change all other application have the same pet_id to Rejected",
 )
@@ -85,6 +85,19 @@ def approve_application(
     application_id: str, queries: ApplicationQueries = Depends()
 ):
     response = queries.approve_application(application_id)
+    return response
+
+
+@router.patch(
+    "/api/applications/{application_id}/reject/",
+    response_model=ApplicationOut | dict,
+    summary="Reject an Application",
+    description="Reject an application by application_id",
+)
+def reject_application(
+    application_id: str, queries: ApplicationQueries = Depends()
+):
+    response = queries.reject_application(application_id)
     return response
 
 
