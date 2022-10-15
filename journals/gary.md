@@ -48,5 +48,8 @@ Today, Worked on:
     3. random 3 pets now return 3 pets with false on “is_adopted”
     4. add list pet by rescue_id
     5. change id to model_id on urls to help understand.
-- Rescue:
-    1. 
+- Application:
+    1. renamed adoption_applications to applications
+    2. add list applications by account_id and list applications by rescue_id for user to view on profile page and rescue admin staff to review
+    3. add api to approve an application by application_id, will auto check if there is an application is approved for the same pet_id, if yes, auto reject; if no auto reject all other applications for the same pet_id and change target pet is_adopted to True
+    4. add api to reject an application by application_id
