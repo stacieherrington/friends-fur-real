@@ -52,6 +52,7 @@ not_authorized = HTTPException(
 @router.get(
     "/token/",
     response_model=AccountToken | None,
+    description="create an account, form.address.zip_code is required!!!",
     tags=[
         "Token Authorization",
     ],
@@ -193,7 +194,9 @@ async def localize_account(
     query = address_string.replace(" ", "+")
     location = address_service.location_from_address(query)
     if location is None:
-        address_string = f"{address['city']}, {address['state']}, {address['zip_code']}"
+        address_string = (
+            f"{address['city']}, {address['state']}, {address['zip_code']}"
+        )
         query = address_string.replace(" ", "+")
         location = address_service.location_from_address(query)
     response = queries.set_account_location(account, location)

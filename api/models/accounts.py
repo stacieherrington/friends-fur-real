@@ -17,19 +17,24 @@ class SessionOut(BaseModel):
 
 
 class AccountIn(BaseModel):
-    email: str | None
-    password: str | None
+    email: str
+    password: str
+    address: Address
 
 
 class Account(AccountIn):
     id: str
     roles: List[str]
+    rescue_id: str | None
+    address: Address | None
 
 
 class AccountOut(BaseModel):
     email: str
     id: str
     roles: List[str]
+    rescue_id: str | None
+    address: Address | None
 
 
 class AccountDisplay(BaseModel):
