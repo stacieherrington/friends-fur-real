@@ -69,7 +69,7 @@ class AccountQueries(Queries):
             return None
         if not acct:
             return None
-        return AccountDisplay(**acct)
+        return AccountDisplay(**acct, id=id)
 
     def get_account_dict(self, id) -> dict[str, Any]:
         return self.collection.find_one({"_id": ObjectId(id)})

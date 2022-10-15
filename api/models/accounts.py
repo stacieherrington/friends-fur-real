@@ -33,24 +33,20 @@ class AccountOut(BaseModel):
     email: str
     id: str
     roles: List[str]
-    rescue_id: str | None
+    # rescue_id: str | None
     address: Address | None
 
 
-class AccountDisplay(BaseModel):
+class AccountDisplay(AccountOut):
     first_name: str | None
     last_name: str | None
-    address: Address | None
     picture: str | None
-    applications: List[ApplicationOut] | None
-    favorites: List[PetOut] | None
-    adopted_pets: List[PetOut] | None
-    success_stories: List[SuccessStoryOut] | None
+    address: Address | None
     location: Location | None
 
 
 class AccountUpdate(AccountDisplay):
-    # email: str | None
+
     password: str | None
 
 

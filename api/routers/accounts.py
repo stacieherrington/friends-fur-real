@@ -135,16 +135,18 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/accounts/{id}/",
+    "/api/accounts/{account_id}/",
     response_model=AccountDisplay,
     tags=["Accounts"],
 )
-def single_account(id: str, queries: AccountQueries = Depends()):
-    account = queries.single_account(id)
+async def single_account(account_id: str, queries: AccountQueries = Depends()):
+    account = queries.single_account(account_id)
     if account:
         return account
     else:
-        raise HTTPException(404, f"This Account id: {id} does not exist")
+        raise HTTPException(
+            404, f"This Account id: {account_id} does not exist"
+        )
 
 
 @router.patch(
