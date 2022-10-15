@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from models.adoption_application import ApplicationOut
+from models.application import ApplicationOut
 from models.success_story import SuccessStoryOut  # , Optional
 from models.rescue import Address, Location
 from models.pet import PetOut

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models.adoption_application import (
+from models.application import (
     ApplicationIn,
     ApplicationList,
     ApplicationOut,
 )
-from queries.adoption_application import ApplicationQueries
+from queries.application import ApplicationQueries
 
 router = APIRouter(tags=["Applications"])
 

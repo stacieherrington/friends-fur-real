@@ -1,6 +1,6 @@
 from .client import Queries
 from typing import List
-from models.adoption_application import (
+from models.application import (
     ApplicationIn,
     ApplicationOut,
 )
