@@ -76,3 +76,9 @@ class PetQueries(Queries):
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
+
+    def is_adopted(self, pet_id):
+        self.collection.update_one(
+            filter={"_id": ObjectId(pet_id)},
+            update={"$set": {"is_adopted": True}},
+        )
