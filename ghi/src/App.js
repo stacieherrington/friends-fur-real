@@ -4,8 +4,9 @@ import './App.css';
 import DrawerAppBar from './DrawerAppBar';
 import ApplicationList from './applications/ApplicationsList';
 import HomePage from './Homepage';
-import NavBar from './nav';
+// import NavBar from './nav';
 import LoginForm from './Login/Login'
+import QueryTest from './store/QueryTest';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/applications" element={<ApplicationList />} />
             <Route path="/login" element={<LoginForm />} />
           </Routes>
+          <QueryTest/>
         </div>
       </BrowserRouter>
     </>
