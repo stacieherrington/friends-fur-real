@@ -36,14 +36,10 @@ app.add_middleware(
 )
 
 
-app.include_router(pet.router, tags=["Pets"], prefix="/api/pets")
-app.include_router(rescue.router, tags=["Rescues"], prefix="/api/rescues")
-app.include_router(success_story.router, tags=["Stories"], prefix="/api")
-app.include_router(
-    adoption_application.router,
-    tags=["Adoption Applications"],
-    prefix="/api/adoption_applications",
-)
+app.include_router(pet.router, tags=["Pets"])
+app.include_router(rescue.router, tags=["Rescues"])
+app.include_router(success_story.router, tags=["Stories"])
+app.include_router(adoption_application.router, tags=["Adoption Applications"])
 app.include_router(auth.authenticator.router)
 app.include_router(accounts.router, tags=["Accounts"])
 app.include_router(sockets.router)

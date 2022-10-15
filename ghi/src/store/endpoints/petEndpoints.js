@@ -17,20 +17,6 @@ export function petEndpoints(builder) {
       },
       invalidateTags: [{ type: "Pet", id: "LIST" }],
     }),
-    // listPets: builder.query({
-    //   query: () => `/api/pets/`,
-    //   providesTags: ["Pet"],
-    // }),
-    // listPets: builder.query({
-    //   query: () => `/api/pets/`,
-    //   providesTags: (data) =>
-    //     data
-    //       ? [
-    //           ...data.map(({ id }) => ({ type: "Pet", id })),
-    //           { type: "Pet", id: "LIST" },
-    //         ]
-    //       : [{ type: "Pet", id: "LIST" }],
-    // }),
     listPets: builder.query({
       query: () => `/api/pets/`,
       providesTags: (data) => {
@@ -53,7 +39,6 @@ export function petEndpoints(builder) {
         url: `/api/pets/${petId}/`,
         body: put,
       }),
-      providesTags: (pet) => [{ type: "Pet", id: pet.id }],
       invalidatesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),
     deletePet: builder.mutation({

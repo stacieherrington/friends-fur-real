@@ -1,7 +1,7 @@
 import React from "react";
 
 const PetCard = () => {
-  return <div>PetCard</div>;
+  return <div>extra pets</div>;
 };
 
 export default PetCard;
