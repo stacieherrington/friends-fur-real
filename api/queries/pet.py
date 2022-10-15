@@ -20,16 +20,18 @@ class PetQueries(Queries):
             return None
         if not pet:
             return None
-        # pet['id'] = str(pet['_id'])
-        # pet['adopter']
-        # pet['is_adopted']
-        return PetOut(**pet, id=id)
+        return PetOut(**pet, id=str(id))
 
-    def create_pet(self, pet: PetIn):
-        self.collection.insert_one(pet.dict())
-        return {"message": "Yeah! pet added!"}
+    def create_pet(self, pet: PetIn) -> PetOut:
+        pet = pet.dict()
+        pet["is_adopted"] = False
+        insert_result = self.collection.insert_one(pet)
+        # the insert_result have acknowledged(True/ False), and inserted_id(ObjectID of the new pet)
+        if insert_result.acknowledged:
+            return {"message": "Yeah! pet added!"}
 
     def list_pets(self) -> List[PetOut]:
+        # now return all the pet, need working on sort by distance later?
         result = self.collection.find({})
         pets = []
         for pet in result:
@@ -38,13 +40,9 @@ class PetQueries(Queries):
         return pets
 
     def delete_pet(self, id):
-        try:
-            id = ObjectId(id)
-            pet = self.collection.find_one({"_id": id})
-        except:
-            return None
-        if pet:
-            self.collection.delete_one({"_id": id})
+        delete_result = self.collection.delete_one({"_id": ObjectId(id)})
+        # delete result has delete_result.deleted_count(ing), and delete_result.acknowledged(bool)
+        if delete_result:
             return {"message": "pet has been deleted!"}
 
     def update_pet(self, id, data) -> PetOut:
@@ -58,25 +56,29 @@ class PetQueries(Queries):
         except:
             return None
         if pet:
-            # pet['id'] = str(pet['_id'])
-            return PetOut(**pet, id=id)
 
-    def get_three_random_pets(self):
-        result = self.collection.find({})
+            return PetOut(**pet, id=str(id))
+
+    def get_three_random_pets(self) -> List[PetOut]:
+        result = self.collection.aggregate(
+            [{"$match": {"is_adopted": False}}, {"$sample": {"size": 3}}]
+        )
         pets = []
-        three_pets = []
         for pet in result:
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
-        random_num_list = []
-        if len(pets) >= 3:
-            n = 3
-        else:
-            n = len(pets)
-        while len(random_num_list) < n:
-            random_num = randint(0, len(pets) - 1)
-            if random_num not in random_num_list:
-                random_num_list.append(random_num)
-        for num in random_num_list:
-            three_pets.append(pets[num])
-        return three_pets
+        return pets
+
+    def list_rescue_pets(self, rescue_id) -> List[PetOut]:
+        result = self.collection.find({"rescue_id": rescue_id})
+        pets = []
+        for pet in result:
+            pet["id"] = str(pet["_id"])
+            pets.append(PetOut(**pet))
+        return pets
+
+    def is_adopted(self, pet_id):
+        self.collection.update_one(
+            filter={"_id": ObjectId(pet_id)},
+            update={"$set": {"is_adopted": True}},
+        )

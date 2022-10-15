@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
 
+
 class PetIn(BaseModel):
     name: str
     type: str | None
@@ -19,7 +20,6 @@ class PetIn(BaseModel):
     spayed_neutered: bool | None
     house_trained: bool | None
     special_needs: bool | None
-    adopter: str | None  # AccountOut ?
     is_adopted: bool | None
     rescue_id: str | None
     story_id: str | None
