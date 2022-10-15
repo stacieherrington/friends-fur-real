@@ -112,21 +112,19 @@ def delete_application(
     return queries.delete_application(application_id)
 
 
-"""
 @router.patch(
-    "/api/adoption_applications/{id}/",
-    response_model=ApplicationIn,
-    response_description="Successfully Updated Application!",
+    "/api/applications/{application_id}/",
+    response_model=ApplicationOut,
+    summary="Update Application(by adopter)",
+    description="Allowed adopter to update application details from account profile page",
 )
-def update_adoption_application(
-    id: str,
+def update_application(
+    application_id: str,
     data: ApplicationIn,
     queries: ApplicationQueries = Depends(),
 ):
-    response = queries.update_adoption_application(id, data)
+    response = queries.update_application(application_id, data)
     if response:
         return response
     else:
-        raise HTTPException(404, "This adoption applcation id does not exist!")
-
-"""
+        raise HTTPException(404, "This applcation id does not exist!")

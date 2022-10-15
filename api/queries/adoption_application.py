@@ -91,17 +91,14 @@ class ApplicationQueries(Queries):
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
-
-"""
-    def update_adoption_application(self, id, data) -> ApplicationIn:
+    def update_application(self, application_id, data) -> ApplicationIn:
         try:
             app = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
+                {"_id": ObjectId(application_id)},
                 {"$set": data.dict(exclude_unset=True)},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
         if app:
-            return ApplicationIn(**app, id=id)
-"""
+            return ApplicationOut(**app, id=application_id)
