@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from routers import (
     pet,
-    adoption_application,
+    application,
     rescue,
     success_story,
     accounts,
@@ -39,6 +39,6 @@ app.add_middleware(
 app.include_router(pet.router)
 app.include_router(rescue.router)
 app.include_router(success_story.router)
-app.include_router(adoption_application.router)
+app.include_router(application.router)
 app.include_router(auth.authenticator.router)
 app.include_router(accounts.router)
