@@ -28,6 +28,21 @@ def create_adoption_application(
 
 
 @router.get(
+    "/api/accounts/{account_id}/applications/",
+    response_model=ApplicationList,
+    summary="List all Application for an account profile page",
+    description="This lists all the applicaitons by account_id",
+)
+def list_account_applications(
+    account_id: str,
+    queries: ApplicationQueries = Depends(),
+):
+    return ApplicationList(
+        applications=queries.list_account_applications(account_id)
+    )
+
+
+@router.get(
     "/api/{rescue_id}/applications/",
     response_model=ApplicationList,
     summary="List all Application for Rescue",
@@ -58,6 +73,19 @@ def detail_application(
         raise HTTPException(
             404, f"This adoption application {id} does not exist!"
         )
+
+
+@router.patch(
+    "/api/applications/{application_id}/approve/",
+    response_model=ApplicationOut,
+    summary="Approve an Application",
+    description="Approve an application by application_id, will check if there is an approved application based on the same pet_id, if not, change current status to Approved and change all other application have the same pet_id to Rejected",
+)
+def approve_application(
+    application_id: str, queries: ApplicationQueries = Depends()
+):
+    response = queries.approve_application(application_id)
+    return response
 
 
 """
