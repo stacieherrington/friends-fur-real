@@ -234,7 +234,7 @@ async def demote_account(
     if response:
         return response
     else:
-        raise HTTPException(404, "Cannot promote-- Invalid Account ")
+        raise HTTPException(404, "Cannot deomote-- Invalid Account ")
 
 
 # Can you move this localize function under queries.account.py?
