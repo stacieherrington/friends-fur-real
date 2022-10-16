@@ -63,10 +63,7 @@ class AccountQueries(Queries):
         return accts
 
     def single_account(self, id) -> AccountDisplay:
-        try:
-            acct = self.collection.find_one({"_id": ObjectId(id)})
-        except:
-            return None
+        acct = self.collection.find_one({"_id": ObjectId(id)})
         if not acct:
             return None
         return AccountDisplay(**acct)
@@ -75,14 +72,12 @@ class AccountQueries(Queries):
         return self.collection.find_one({"_id": ObjectId(id)})
 
     def update_account(self, id, data) -> AccountDisplay:
-        try:
-            acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
-                {"$set": data.dict(exclude_unset=True)},
-                return_document=ReturnDocument.AFTER,
-            )
-
-        except:
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(id)},
+            {"$set": data.dict(exclude_unset=True)},
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
             return None
         return AccountDisplay(**acct)
 

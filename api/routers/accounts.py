@@ -60,6 +60,7 @@ async def get_token(
     request: Request,
     account: Account = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
+    # this line is to check if the user is logined
     if account and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
@@ -111,6 +112,7 @@ async def delete_session(
     return True
 
 
+# IDK if we need this:
 @router.get(
     "/api/accounts/",
     response_model=AccountList,
@@ -137,20 +139,26 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/accounts/{account_id}/",
+    "/api/accounts/profile/",
     response_model=AccountDisplay,
-    summary="Detail an account by account_id",
+    summary="Detail Current Logined Account",
     description="display on account profile page,can use PATCH /api/accounts/{account_id} to update",
     tags=["Accounts"],
 )
 async def single_account(
-    account_id: str,
-    account1: dict = Depends(authenticator.get_current_account_data),
+    request: Request,
+    account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    account = queries.single_account(account_id)
-    if account:
-        return account
+    # check if logined:
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+
+    response = queries.single_account(account_id)
+    if response:
+        return response
     else:
         raise HTTPException(
             404, f"This Account id: {account_id} does not exist"
@@ -158,20 +166,24 @@ async def single_account(
 
 
 @router.patch(
-    "/api/accounts/{account_id}/",
+    "/api/accounts/profile/",
     response_model=AccountDisplay,
-    summary="Update Account",
-    description="allowed login user to update personal detail in account profile page.(CAN NOT change password yet!)",
+    summary="Update Current Logined Account",
+    description="allowed logined user to update personal detail in account profile page.(Don't Change Email! CAN NOT change password yet!)",
     tags=["Accounts"],
 )
 def update_account(
-    account_id: str,
+    request: Request,
     data: AccountUpdate,
+    account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # to check old passwrod, need a way to decode hashed password
-    # ensure password will be hashed
-    # data.password = pwd_context.hash(data.password)
+    # to check old passwrod, need a way to decode hashed password -> ensure password will be hashed -> data.password = pwd_context.hash(data.password)
+    # check if logined:
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
     response = queries.update_account(account_id, data)
     if response:
         return response
@@ -182,7 +194,7 @@ def update_account(
 @router.patch(
     "/api/accounts/promote/{email}/",
     summary="Promote an account as a staff by email",
-    description="Admin enter an email to promote that account to staff with the same rescue_id of admin",
+    description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(aotu use same rescue_id of the admin)",
     tags=["Accounts"],
 )
 async def promote_account(
@@ -205,7 +217,7 @@ async def promote_account(
 @router.patch(
     "/api/accounts/demote/{email}/",
     summary="Demote an account as a staff by email",
-    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin",
+    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belone to this admin's rescue",
     tags=["Accounts"],
 )
 async def demote_account(
