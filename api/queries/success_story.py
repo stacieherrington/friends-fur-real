@@ -61,8 +61,6 @@ class SuccessStoryQueries(Queries):
             stories.append(SuccessStoryOut(**story))
         return stories
 
-
-"""
     def get_story(self, id) -> SuccessStoryOut:
         try:
             id = ObjectId(id)
@@ -75,6 +73,8 @@ class SuccessStoryQueries(Queries):
         else:
             return None
 
+
+"""
     def get_three_random_stories(self) -> List[SuccessStoryOut]:
         result = self.collection.find({})
         stories = []
