@@ -43,8 +43,18 @@ class SuccessStoryQueries(Queries):
                 "message": "The application is not exist or may not been approved!"
             }
 
-    def list_approved_stories(self) -> List[SuccessStoryOut]:
+    def get_approved_stories(self) -> List[SuccessStoryOut]:
         result = self.collection.find({"status": "Approved"})
+        stories = []
+        for story in result:
+            story["id"] = str(story["_id"])
+            stories.append(SuccessStoryOut(**story))
+        return stories
+
+    def get_three_random_stories(self) -> List[SuccessStoryOut]:
+        result = self.collection.aggregate(
+            [{"$match": {"status": "Approved"}}, {"$sample": {"size": 3}}]
+        )
         stories = []
         for story in result:
             story["id"] = str(story["_id"])

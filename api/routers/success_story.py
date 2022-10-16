@@ -45,7 +45,16 @@ def create_story(
     response_model=SuccessStoryList,
 )
 def list_stories(queries: SuccessStoryQueries = Depends()):
-    return SuccessStoryList(stories=queries.list_approved_stories())
+    return SuccessStoryList(stories=queries.get_approved_stories())
+
+
+@router.get(
+    "/api/stories/random/",
+    summary="List 3 Random Approved Stories",
+    response_model=SuccessStoryList,
+)
+def get_three_random_stories(queries: SuccessStoryQueries = Depends()):
+    return SuccessStoryList(stories=queries.get_three_random_stories())
 
 
 """
