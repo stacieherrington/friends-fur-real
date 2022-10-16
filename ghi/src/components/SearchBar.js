@@ -3,11 +3,21 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import {useSelector} from 'react-redux'
+import { useListRescuesQuery} from '../store/api'
 
 
 
 
 function SearchBar() {
+  const search = useSelector((state) => state.search);
+  const {data, error, isLoading } = useListRescuesQuery(search)
+  if (isLoading) {
+    return <div> Loading...</div>
+  }
+  if ('message' in data){
+    return <div>Hello</div>
+  }
   return (
     <Paper
       component="form"

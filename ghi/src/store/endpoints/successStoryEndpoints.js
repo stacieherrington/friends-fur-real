@@ -10,7 +10,7 @@ export function SuccessStoryEndpoints(builder) {
         }, {});
         return {
           method: "POST",
-          url: `/api/pets{id}/story/`,
+          url: `/api/pets/{id}/story/`,
           credentials: "include",
           body: data,
         };
