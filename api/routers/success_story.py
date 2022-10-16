@@ -72,14 +72,32 @@ def get_story(id: str, queries: SuccessStoryQueries = Depends()):
 
 
 @router.get(
-    "/api/rescue/{rescue_id}/stories",
+    "/api/rescue/{rescue_id}/stories/",
     summary="List all approved stories by rescue_id",
     description="allowed user to use dropdown to filter approved stories by rescue_id",
+    response_model=SuccessStoryList,
 )
 def list_rescue_stories(
     rescue_id: str, queries: SuccessStoryQueries = Depends()
 ):
-    response = queries.get_stories_by_rescue(rescue_id)
+    response = queries.get_approved_stories_by_rescue(rescue_id)
+    return SuccessStoryList(stories=response)
+
+
+@router.get(
+    "/api/manage/stories/",
+    summary="List All Stories for Review by admin/staff rescue_id",
+    description="this api check if the current user is 'admin'/ 'staff', and list all the stories for their recue only",
+    response_model=SuccessStoryList,
+)
+def manage_list_story(
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: SuccessStoryQueries = Depends(),
+):
+    if "admin" not in account["roles"] and "staff" not in account["roles"]:
+        raise not_authorized
+    rescue_id = account["rescue_id"]
+    response = queries.get_all_stories_by_rescue(rescue_id)
     return SuccessStoryList(stories=response)
 
 

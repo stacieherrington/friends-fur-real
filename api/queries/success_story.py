@@ -73,7 +73,19 @@ class SuccessStoryQueries(Queries):
         else:
             return None
 
-    def get_stories_by_rescue(self, rescue_id) -> List[SuccessStoryOut]:
+    def get_approved_stories_by_rescue(
+        self, rescue_id
+    ) -> List[SuccessStoryOut]:
+        result = self.collection.find(
+            {"rescue_id": rescue_id, "status": "Approved"}
+        )
+        stories = []
+        for story in result:
+            story["id"] = str(story["_id"])
+            stories.append(SuccessStoryOut(**story))
+        return stories
+
+    def get_all_stories_by_rescue(self, rescue_id) -> List[SuccessStoryOut]:
         result = self.collection.find({"rescue_id": rescue_id})
         stories = []
         for story in result:
