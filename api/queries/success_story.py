@@ -8,16 +8,36 @@ from models.success_story import (
     SuccessStoryList,
 )
 from random import randint
+from .application import ApplicationQueries
 
 
 class SuccessStoryQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "story"
 
-    def create_story(self, story: SuccessStoryIn):
-        self.collection.insert_one(story.dict())
-        return {"message": "Thank you for your story!"}
+    def create_story(self, story: SuccessStoryIn, application_id):
+        story = story.dict()
+        # use application_id to get pet_id, rescue_id,account_id, and check if the status of application is "Approved"
+        try:
+            application = (
+                ApplicationQueries().detail_application(application_id).dict()
+            )
+        except:
+            return None
+        if application and application["status"] == "Approved":
+            story["pet_id"] = application["pet_id"]
+            story["rescue_id"] = application["rescue_id"]
+            story["account_id"] = application["account_id"]
+            insert_result = self.collection.insert_one(story)
+            if insert_result.acknowledged:
+                return {"message": "Thank you for your story!"}
+        else:
+            return {
+                "message": "The application is not exist or may not been approved!"
+            }
 
+
+"""
     def list_stories(self) -> List[SuccessStoryOut]:
         result = self.collection.find({})
         stories = []
@@ -92,3 +112,4 @@ class SuccessStoryQueries(Queries):
             return None
         if story:
             return SuccessStoryOut(**story)
+"""
