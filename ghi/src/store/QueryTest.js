@@ -32,13 +32,13 @@ function QueryTest() {
     isError: accountApplicationsError,
     isLoading: accountApplicationsLoading,
     refetch: fetchAccountApplications,
-  } = useListAccountApplicationsQuery();
+  } = useListAccountApplicationsQuery("634b5040d2a575392428bc3b");
   const {
     data: rescueApplicationData,
     isError: rescueApplicationError,
     isLoading: rescueApplicationLoading,
     refetch: fetchRescueApplications,
-  } = useListRescueApplicationsQuery();
+  } = useListRescueApplicationsQuery("634b62bc87266e04ec596318");
   const {
     data: appData,
     isError: appError,
