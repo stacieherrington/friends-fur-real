@@ -32,11 +32,11 @@ export function SuccessStoryEndpoints(builder) {
       },
     }),
     getSuccessStory: builder.query({
-      query: (petId) => `/api/pets/${petId}/story/`,
-      providesTags: (story) => [{ type: "SuccessStory", id: story.id }],
+      query: (petId) => `/api/pets/${petId}/`,
+      providesTags: (result) => [{ type: "SuccessStory", id: result.story_id }],
     }),
     listRescueStories: builder.query({
-      query: () => `/api/rescues/{rescue_id}/stories/`,
+      query: (rescueId) => `/api/rescues/${rescueId}/stories/`,
       providesTags: ["SuccessStory"],
     }),
     threeRandomStories: builder.query({

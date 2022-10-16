@@ -51,6 +51,12 @@ export function ApplicationEndpoints(builder) {
         return tags;
       },
     }),
+    listAllApplications: builder.query({
+      query: () => `/api/applications/`,
+      providesTags: (application) => [
+        { type: "Application", id: application.id },
+      ],
+    }),
     getApplication: builder.query({
       query: (applicationId) => `/api/applications/${applicationId}/`,
       providesTags: (application) => [

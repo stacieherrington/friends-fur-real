@@ -10,7 +10,7 @@ export function AccountEndpoints(builder) {
         }, {});
         return {
           method: "POST",
-          url: "/api/accounts",
+          url: "/api/accounts/",
           credentials: "include",
           body: data,
         };
@@ -18,7 +18,7 @@ export function AccountEndpoints(builder) {
       invalidateTags: [{ type: "Account", id: "LIST" }],
     }),
     listAccounts: builder.query({
-      query: () => `/api/accounts`,
+      query: () => `/api/accounts/`,
       providesTags: (data) => {
         const tags = [{ type: "Account", id: "LIST" }];
         if (!data || !data.accounts) return tags;
@@ -42,7 +42,7 @@ export function AccountEndpoints(builder) {
     //       : [{ type: "Post", id: "LIST" }],
     // }),
     singleAccount: builder.query({
-      query: (allAccountSliceId) => `/api/accounts/${allAccountSliceId}`,
+      query: (allAccountSliceId) => `/api/accounts/${allAccountSliceId}/`,
       providesTags: (account) => [{ type: "Account", id: account.id }],
     }),
     patchUpdateAccount: builder.mutation({
@@ -60,7 +60,7 @@ export function AccountEndpoints(builder) {
     patchPromoteAccount: builder.mutation({
       query: (allAccountSliceId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/promote/${allAccountSliceId}`,
+        url: `/api/accounts/promote/${allAccountSliceId}/`,
         body: patch,
       }),
       providesTags: (account) => [{ type: "Account", id: account.id }],
@@ -72,7 +72,7 @@ export function AccountEndpoints(builder) {
     patchDemoteAccount: builder.mutation({
       query: (allAccountSliceId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/demote/${allAccountSliceId}`,
+        url: `/api/accounts/demote/${allAccountSliceId}/`,
         body: patch,
       }),
       providesTags: (account) => [{ type: "Account", id: account.id }],
@@ -84,7 +84,7 @@ export function AccountEndpoints(builder) {
     patchLocalizeAccount: builder.mutation({
       query: (allAccountSliceId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/localize/${allAccountSliceId}`,
+        url: `/api/accounts/localize/${allAccountSliceId}/`,
         body: patch,
       }),
       providesTags: (account) => [{ type: "Account", id: account.id }],

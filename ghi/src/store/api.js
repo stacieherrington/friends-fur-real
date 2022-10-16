@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AuthEndpoints } from "./endpoints/authEndpoints";
 import { PetEndpoints } from "./endpoints/petEndpoints";
 import { ApplicationEndpoints } from "./endpoints/applicationEndpoints";
-import { SuccessStoryEndpoints } from "./endpoints/successStorySliceEndpoints";
-import { AccountEndpoints } from "./endpoints/extraAccountEndpoints";
+import { SuccessStoryEndpoints } from "./endpoints/successStoryEndpoints";
+import { AccountEndpoints } from "./endpoints/accountEndpoints";
 import { RescueEndpoints } from "./endpoints/rescueEndpoints";
 
 export const apiSlice = createApi({
@@ -53,6 +53,7 @@ export const {
   useAddApplicationMutation,
   useListAccountApplicationsQuery,
   useListRescueApplicationsQuery,
+  useListAllApplicationsQuery,
   useGetApplicationQuery,
   usePatchApplicationMutation,
   useApproveApplicationMutation,

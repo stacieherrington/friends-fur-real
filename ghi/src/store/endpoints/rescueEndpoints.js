@@ -31,7 +31,7 @@ export function RescueEndpoints(builder) {
     }),
     getRescue: builder.query({
       query: (rescueId) => `/api/rescues/${rescueId}/`,
-      providesTags: (rescue) => [{ type: "Rescue", id: rescue.id }],
+      // providesTags: (rescue) => [{ type: "Rescue", id: rescue.id }],
     }),
     putRescue: builder.mutation({
       query: (rescueId) => ({

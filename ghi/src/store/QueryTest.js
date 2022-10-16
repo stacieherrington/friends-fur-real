@@ -44,7 +44,7 @@ function QueryTest() {
     isError: appError,
     isLoading: appLoad,
     refetch: oneApp,
-  } = useGetApplicationQuery();
+  } = useGetApplicationQuery("634b581a85915559ee4cfe93");
   const {
     data: storiesData,
     isError: storiesError,
@@ -56,7 +56,7 @@ function QueryTest() {
     isError: storyError,
     isLoading: storyLoading,
     refetch: fetchStory,
-  } = useGetSuccessStoryQuery();
+  } = useGetSuccessStoryQuery("634b621187266e04ec596317");
 
   const {
     data: accountsData,
@@ -69,7 +69,7 @@ function QueryTest() {
     isError: accountE,
     isLoading: accountL,
     refetch: accountR,
-  } = useSingleAccountQuery();
+  } = useSingleAccountQuery("634b5040d2a575392428bc3b");
   const {
     data: rescuesData,
     isError: rescuesError,
@@ -81,13 +81,13 @@ function QueryTest() {
     isError: rE,
     isLoading: rL,
     refetch: fR,
-  } = useGetRescueQuery();
+  } = useGetRescueQuery("634b62bc87266e04ec596318");
   const {
     data: petsData,
     isError: petsError,
     isLoading: petsLoading,
     refetch: petsRefetch,
-  } = useGetPetQuery();
+  } = useGetPetQuery("634b621187266e04ec596317");
   const { data: petData, isError, isLoading, refetch } = useListPetsQuery();
   const { data: tokenData } = useGetTokenQuery();
   const isStaff =
