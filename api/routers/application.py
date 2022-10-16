@@ -71,7 +71,7 @@ def detail_application(
         return response
     else:
         raise HTTPException(
-            404, f"This adoption application {id} does not exist!"
+            404, f"This application {application_id} does not exist!"
         )
 
 
@@ -85,7 +85,10 @@ def approve_application(
     application_id: str, queries: ApplicationQueries = Depends()
 ):
     response = queries.approve_application(application_id)
-    return response
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "this application does not exist!")
 
 
 @router.patch(

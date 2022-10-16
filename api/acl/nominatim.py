@@ -14,5 +14,5 @@ class Nominatim:
             return None
         latitude = float(json_data[0]["lat"])
         longitude = float(json_data[0]["lon"])
-        location = {"type": "Point", "coordinates": [longitude, latitude]}
+        location = {"type": "Point", "coordinates": [latitude, longitude]}
         return location

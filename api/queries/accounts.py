@@ -69,18 +69,19 @@ class AccountQueries(Queries):
             return None
         if not acct:
             return None
-        return AccountDisplay(**acct, id=id)
+        return AccountDisplay(**acct)
 
     def get_account_dict(self, id) -> dict[str, Any]:
         return self.collection.find_one({"_id": ObjectId(id)})
 
-    def update_account(self, id, data) -> AccountUpdate:
+    def update_account(self, id, data) -> AccountDisplay:
         try:
             acct = self.collection.find_one_and_update(
                 {"_id": ObjectId(id)},
                 {"$set": data.dict(exclude_unset=True)},
                 return_document=ReturnDocument.AFTER,
             )
+
         except:
             return None
         return AccountDisplay(**acct)
@@ -119,6 +120,7 @@ class AccountQueries(Queries):
         SessionQueries().delete_sessions(account_id=id)
         return AccountOut(**acct, id=id)
 
+    # here:
     def set_account_location(
         self, acct: dict, location: dict
     ) -> AccountDisplay:

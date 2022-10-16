@@ -47,7 +47,10 @@ class ApplicationQueries(Queries):
 
     def approve_application(self, application_id) -> ApplicationOut:
         # 1. check if there is an approved applicaiton with the same pet_id
-        pet_id = self.detail_application(application_id).pet_id
+        pet = self.detail_application(application_id)
+        if not pet:
+            return None  # handle not find that application_id
+        pet_id = pet.pet_id
         has_approved_app = self.collection.find_one(
             {"pet_id": pet_id, "status": "Approved"}
         )

@@ -61,6 +61,7 @@ async def get_token(
     account: Account = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
+        print(account, "-------------account------------")
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",
@@ -125,7 +126,7 @@ async def list_accounts(
     tags=["Accounts"],
     response_model=AccountList,
     summary="List Rescue Staffs",
-    description="list all the staffs for by rescue_id",
+    description="list all the staffs for rescue admin by rescue_id",
 )
 async def list_accounts(
     rescue_id: str,
@@ -137,6 +138,8 @@ async def list_accounts(
 @router.get(
     "/api/accounts/{account_id}/",
     response_model=AccountDisplay,
+    summary="Detail an account by account_id",
+    description="display on account profile page,can use PATCH /api/accounts/{account_id} to update",
     tags=["Accounts"],
 )
 async def single_account(account_id: str, queries: AccountQueries = Depends()):
@@ -150,18 +153,21 @@ async def single_account(account_id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/{id}/",
+    "/api/accounts/{account_id}/",
     response_model=AccountDisplay,
+    summary="Update Account",
+    description="allowed login user to update personal detail in account profile page.(CAN NOT change password yet!)",
     tags=["Accounts"],
 )
 def update_account(
-    id: str,
+    account_id: str,
     data: AccountUpdate,
     queries: AccountQueries = Depends(),
 ):
+    # to check old passwrod, need a way to decode hashed password
     # ensure password will be hashed
     # data.password = pwd_context.hash(data.password)
-    response = queries.update_account(id, data)
+    response = queries.update_account(account_id, data)
     if response:
         return response
     else:
@@ -192,6 +198,9 @@ async def demote_account(id: str, queries: AccountQueries = Depends()):
         raise HTTPException(404, "Cannot promote-- Invalid Account ")
 
 
+# Can you move this localize function under queries.account.py?
+# Make it one function when you call it pass in an account_id
+# so we can use it anywhere we could by just call import can call it?
 @router.patch(
     "/api/accounts/localize/{id}/",
     tags=["Accounts"],
