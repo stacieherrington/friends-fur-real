@@ -71,13 +71,19 @@ def get_story(id: str, queries: SuccessStoryQueries = Depends()):
         raise HTTPException(404, "This story does not exist!")
 
 
-"""
-@router.get("/api/rescues/{rescue_id}/stories")
+@router.get(
+    "/api/rescue/{rescue_id}/stories",
+    summary="List all approved stories by rescue_id",
+    description="allowed user to use dropdown to filter approved stories by rescue_id",
+)
 def list_rescue_stories(
     rescue_id: str, queries: SuccessStoryQueries = Depends()
 ):
     response = queries.get_stories_by_rescue(rescue_id)
     return SuccessStoryList(stories=response)
+
+
+"""
 
 @router.delete("/api/stories/{id}/")
 def delete_pet(id:str,queries: SuccessStoryQueries=Depends()):
