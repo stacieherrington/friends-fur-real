@@ -125,16 +125,22 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/{rescue_id}/staffs/",
+    "/api/manage/staffs/",
     tags=["Accounts"],
     response_model=AccountList,
     summary="List Rescue Staffs",
-    description="list all the staffs for rescue admin by rescue_id",
+    description="* admin required! list all the staffs for rescue admin by rescue_id, will auto check if logined account is 'admin', will auto get admin's rescue_id and only display staffs belone to the rescue! ",
 )
 async def list_accounts(
-    rescue_id: str,
+    account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
+    # 1. check if "admin" in "roles":
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # 2. get rescue_id from admin account:
+    rescue_id = account["rescue_id"]
+    # 3. return the list of staffs by rescue_id:
     return AccountList(accounts=queries.list_accounts_by_rescue_id(rescue_id))
 
 
@@ -178,7 +184,7 @@ def update_account(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # to check old passwrod, need a way to decode hashed password -> ensure password will be hashed -> data.password = pwd_context.hash(data.password)
+    # for change password: need to check old passwrod, need a way to decode hashed password -> ensure password will be hashed -> data.password = pwd_context.hash(data.password)
     # check if logined:
     if account and authenticator.cookie_name in request.cookies:
         account_id = account["id"]
@@ -207,6 +213,7 @@ async def promote_account(
         raise not_authorized
     # 2. get rescue_id from current admin account:
     rescue_id = account["rescue_id"]
+    # 3. promote account by using email and rescue_id:
     response = queries.promote_account(email, rescue_id)
     if response:
         return response
