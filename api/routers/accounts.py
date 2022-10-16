@@ -61,7 +61,6 @@ async def get_token(
     account: Account = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
-        print(account, "-------------account------------")
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",
@@ -101,9 +100,11 @@ async def create_account(
 )
 async def delete_session(
     account_id: str,
+    # here is how to check current_account data/roles from back end 1
     account: dict = Depends(authenticator.get_current_account_data),
     repo: SessionQueries = Depends(),
 ) -> bool:
+    # here is how to check current_account data/roles from back end 2
     if "base" not in account["roles"]:
         raise not_authorized
     repo.delete_sessions(account_id)
@@ -142,7 +143,11 @@ async def list_accounts(
     description="display on account profile page,can use PATCH /api/accounts/{account_id} to update",
     tags=["Accounts"],
 )
-async def single_account(account_id: str, queries: AccountQueries = Depends()):
+async def single_account(
+    account_id: str,
+    account1: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
     account = queries.single_account(account_id)
     if account:
         return account
@@ -175,11 +180,22 @@ def update_account(
 
 
 @router.patch(
-    "/api/accounts/promote/{id}/",
+    "/api/accounts/promote/{email}/",
+    summary="Promote an account as a staff by email",
+    description="Admin enter an email to promote that account to staff with the same rescue_id of admin",
     tags=["Accounts"],
 )
-async def promote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.promote_account(id)
+async def promote_account(
+    email: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # 1. check if "admin" in "roles":
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # 2. get rescue_id from current admin account:
+    rescue_id = account["rescue_id"]
+    response = queries.promote_account(email, rescue_id)
     if response:
         return response
     else:
@@ -187,11 +203,22 @@ async def promote_account(id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/demote/{id}/",
+    "/api/accounts/demote/{email}/",
+    summary="Demote an account as a staff by email",
+    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin",
     tags=["Accounts"],
 )
-async def demote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.demote_account(id)
+async def demote_account(
+    email: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # 1. check if "admin" in current account 'roles':
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # get rescue_id from current account data:
+    rescue_id = account["rescue_id"]
+    response = queries.demote_account(email, rescue_id)
     if response:
         return response
     else:
