@@ -39,12 +39,16 @@ def create_story(
         raise not_authorized
 
 
-"""
-@router.get("/api/stories/", response_model=SuccessStoryList)
+@router.get(
+    "/api/stories/",
+    summary="List All Approved Stories",
+    response_model=SuccessStoryList,
+)
 def list_stories(queries: SuccessStoryQueries = Depends()):
-    return SuccessStoryList(stories=queries.list_stories())
+    return SuccessStoryList(stories=queries.list_approved_stories())
 
 
+"""
 @router.get("/api/pets/{id}/story")
 def get_story(id: str, queries: SuccessStoryQueries = Depends()):
     response = queries.get_story(id)

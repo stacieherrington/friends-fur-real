@@ -17,6 +17,12 @@ class SuccessStoryQueries(Queries):
 
     def create_story(self, story: SuccessStoryIn, application_id):
         story = story.dict()
+        # need to check if there is an story based on this application_id
+        dup_check = self.collection.find_one(
+            {"application_id": application_id}
+        )
+        if dup_check:
+            return {"message": "You have submitted a story for this pet!"}
         # use application_id to get pet_id, rescue_id,account_id, and check if the status of application is "Approved"
         try:
             application = (
@@ -25,6 +31,7 @@ class SuccessStoryQueries(Queries):
         except:
             return None
         if application and application["status"] == "Approved":
+            story["application_id"] = application_id
             story["pet_id"] = application["pet_id"]
             story["rescue_id"] = application["rescue_id"]
             story["account_id"] = application["account_id"]
@@ -36,16 +43,16 @@ class SuccessStoryQueries(Queries):
                 "message": "The application is not exist or may not been approved!"
             }
 
-
-"""
-    def list_stories(self) -> List[SuccessStoryOut]:
-        result = self.collection.find({})
+    def list_approved_stories(self) -> List[SuccessStoryOut]:
+        result = self.collection.find({"status": "Approved"})
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
             stories.append(SuccessStoryOut(**story))
         return stories
 
+
+"""
     def get_story(self, id) -> SuccessStoryOut:
         try:
             id = ObjectId(id)
