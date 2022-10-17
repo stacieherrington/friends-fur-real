@@ -104,7 +104,7 @@ def manage_list_story(
 @router.patch(
     "/api/stories/{story_id}/approve/",
     summary="To Approve a Story",
-    description="will auto check if current is admin/staff and check if this story related pet/application belone to this rescue",
+    description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
 )
 def approve_story(
     story_id: str,
@@ -119,6 +119,38 @@ def approve_story(
         if story and account_rescue_id == story.dict()["rescue_id"]:
             # 3. approve story by story id
             response = queries.approve_story(story_id)
+            if response:
+                return response
+            raise HTTPException(
+                400,
+                "this story id is not exist or you don't have right to approve this story",
+            )
+        raise HTTPException(
+            400,
+            "this story id is not exist or you don't have right to approve this story",
+        )
+    else:
+        raise not_authorized
+
+
+@router.patch(
+    "/api/stories/{story_id}/reject/",
+    summary="To Reject a Story",
+    description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
+)
+def reject_story(
+    story_id: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: SuccessStoryQueries = Depends(),
+):
+    # 1. check if current user is admin/ staff
+    if "admin" in account["roles"] or "staff" in account["roles"]:
+        # 2. check if account[rescue_id] = story[rescue_id]
+        story = queries.get_story(story_id)
+        account_rescue_id = account["rescue_id"]
+        if story and account_rescue_id == story.dict()["rescue_id"]:
+            # 3. approve story by story id
+            response = queries.reject_story(story_id)
             if response:
                 return response
             raise HTTPException(
