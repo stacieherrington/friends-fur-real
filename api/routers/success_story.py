@@ -183,22 +183,61 @@ def list_account_story(
         raise not_authorized
 
 
-"""
-
-@router.delete("/api/stories/{id}/")
-def delete_pet(id:str,queries: SuccessStoryQueries=Depends()):
-    response = queries.delete_story(id)
-    if response:
-        return response
+@router.patch(
+    "/api/stories/{story_id}/",
+    summary="update an submitted story before approved/rejected.",
+    description="allowed current user to update a submitted story before approved/rejected.",
+    response_model=SuccessStoryOut,
+)
+def update_story(
+    request: Request,
+    story_id: str,
+    data: SuccessStoryIn,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: SuccessStoryQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+    story = queries.get_story(story_id)
+    if story:
+        if story.dict()["account_id"] == account_id:
+            response = queries.update_story(story_id, data)
+            if response:
+                return response
+            else:
+                raise HTTPException(404, "This story id does not exist!")
+        else:
+            raise not_authorized
     else:
         raise HTTPException(404, "This story id does not exist!")
 
 
-@router.put("/api/stories/{id}/", response_model=SuccessStoryOut)
-def update_story(id:str, data: SuccessStoryIn, queries: SuccessStoryQueries=Depends()):
-    response = queries.update_story(id, data)
-    if response:
-        return response
+@router.delete(
+    "/api/stories/{story_id}/",
+    summary="Delete A Story",
+    description="allowed current user to delete a submitted story .",
+)
+def delete_story(
+    request: Request,
+    story_id: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: SuccessStoryQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+    story = queries.get_story(story_id)
+    if story:
+        if story.dict()["account_id"] == account_id:
+            response = queries.delete_story(story_id)
+            if response:
+                return response
+            else:
+                raise HTTPException(404, "This story id does not exist!")
+        else:
+            raise not_authorized
     else:
         raise HTTPException(404, "This story id does not exist!")
-"""

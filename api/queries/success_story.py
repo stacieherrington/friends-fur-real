@@ -7,7 +7,7 @@ from models.success_story import (
     SuccessStoryIn,
     SuccessStoryList,
 )
-from random import randint
+
 from .application import ApplicationQueries
 
 
@@ -131,30 +131,26 @@ class SuccessStoryQueries(Queries):
             stories.append(SuccessStoryOut(**story))
         return stories
 
-
-"""
-
-    def delete_story(self, id):
+    def update_story(self, story_id, data):
         try:
-            id = ObjectId(id)
-            story = self.collection.find_one({"_id":id})
-        except:
-            return None
-        if story:
-            self.collection.delete_one({"_id":id})
-            return {"message":"pet has been deleted!"}
-
-
-    def update_story(self, id, data):
-        try:
-            id = ObjectId(id)
+            id = ObjectId(story_id)
+            data = data.dict()
+            data["status"] = "Submitted"
             story = self.collection.find_one_and_update(
-                {"_id":id},
-                {"$set": data.dict()},
-                return_document=ReturnDocument.AFTER
-                )
+                {"_id": id},
+                {"$set": data},
+                return_document=ReturnDocument.AFTER,
+            )
         except:
             return None
         if story:
-            return SuccessStoryOut(**story)
-"""
+            return SuccessStoryOut(**story, id=story_id)
+
+    def delete_story(self, story_id):
+        try:
+            id = ObjectId(story_id)
+            delete_result = self.collection.delete_one(filter={"_id": id})
+        except:
+            return None
+        if delete_result.acknowledged:
+            return {"message": "pet has been deleted!"}
