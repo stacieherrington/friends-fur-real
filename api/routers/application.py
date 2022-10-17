@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from .auth import authenticator
 from models.application import (
     ApplicationIn,
     ApplicationList,
@@ -7,24 +8,35 @@ from models.application import (
 from queries.application import ApplicationQueries
 
 router = APIRouter(tags=["Applications"])
+not_authorized = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Invalid authentication credentials",
+    headers={"WWW-Authenticate": "Bearer"},
+)
 
 
 @router.post(
     "/api/applications/",
     summary="Create Application",
-    description="This will create a new application, need all the form_info and pet_id ,rescue_id ,account_id. this api will auto check if there is an application from same account to a same pet ",
+    description="This will create a new application, need all the form_info and pet_id ,rescue_id ,will auto add current user's account_id . this api will auto check if there is an application from same account to a same pet ",
 )
 def create_adoption_application(
     app: ApplicationIn,
+    request: Request,
+    account: dict = Depends(authenticator.get_current_account_data),
     queries: ApplicationQueries = Depends(),
 ):
-    response = queries.create_application(app)
-    if response:
-        return response
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+        response = queries.create_application(app, account_id)
+        if response:
+            return response
+        else:
+            raise HTTPException(
+                400, "Sorry, You have submitted an application for this pet!"
+            )
     else:
-        raise HTTPException(
-            400, "Sorry, You have submitted an application for this pet!"
-        )
+        raise not_authorized
 
 
 @router.get(

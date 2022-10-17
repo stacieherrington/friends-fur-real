@@ -52,9 +52,6 @@ not_authorized = HTTPException(
 @router.get(
     "/token/",
     response_model=AccountToken | None,
-    tags=[
-        "Token Authorization",
-    ],
 )
 async def get_token(
     request: Request,
@@ -97,7 +94,6 @@ async def create_account(
 
 @router.delete(
     "/api/sessions/{account_id}/",
-    tags=["Token Authorization"],
 )
 async def delete_session(
     account_id: str,
@@ -248,15 +244,15 @@ async def demote_account(
 # Make it one function when you call it pass in an account_id
 # so we can use it anywhere we could by just call import can call it?
 @router.patch(
-    "/api/accounts/localize/{id}/",
+    "/api/accounts/{account_id}/localize/",
     tags=["Accounts"],
 )
 async def localize_account(
-    id: str,
+    account_id: str,
     queries: AccountQueries = Depends(),
     address_service: Nominatim = Depends(),
 ):
-    account = queries.get_account_dict(id)
+    account = queries.get_account_dict(account_id)
     address = account["address"]
     address_string = address["address_one"]
     if address["address_two"] is not None:

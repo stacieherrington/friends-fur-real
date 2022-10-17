@@ -14,7 +14,11 @@ def get_pet(pet_id: str, queries: PetQueries = Depends()):
         raise HTTPException(404, "this pet id does not exist!")
 
 
-@router.post("/api/pets/")
+@router.post(
+    "/api/pets/",
+    summary="create a pet",
+    tags=["management"],
+)
 def create_pet(pet: PetIn, queries: PetQueries = Depends()):
     response = queries.create_pet(pet)
     return response
@@ -25,7 +29,9 @@ def list_pets(queries: PetQueries = Depends()):
     return PetsList(pets=queries.list_pets())
 
 
-@router.delete("/api/pets/{pet_id}/")
+@router.delete(
+    "/api/pets/{pet_id}/", summary="delete a pet  ----> management <----"
+)
 def delete_pet(pet_id: str, queries: PetQueries = Depends()):
     response = queries.delete_pet(pet_id)
     if response:
@@ -48,6 +54,6 @@ def get_three_random_pets(queries: PetQueries = Depends()):
     return PetsList(pets=queries.get_three_random_pets())
 
 
-@router.get("/api/{rescue_id}/pets/", response_model=PetsList)
+@router.get("/api/rescues/{rescue_id}/pets/", response_model=PetsList)
 def list_rescue_pets(rescue_id: str, queries: PetQueries = Depends()):
     return PetsList(pets=queries.list_rescue_pets(rescue_id))

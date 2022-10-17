@@ -6,13 +6,13 @@ from acl.nominatim import Nominatim
 router = APIRouter(tags=["Rescues"])
 
 
-@router.get("/api/rescues/{id}/", response_model=RescueOut)
-def get_rescue(id: str, queries: RescueQueries = Depends()):
-    response = queries.get_rescue(id)
+@router.get("/api/rescues/{rescue_id}/", response_model=RescueOut)
+def get_rescue(rescue_id: str, queries: RescueQueries = Depends()):
+    response = queries.get_rescue(rescue_id)
     if response:
         return response
     else:
-        raise HTTPException(404, "this rescue id does not exist!")
+        raise HTTPException(404, "this rescue rescue_id does not exist!")
 
 
 @router.post(
@@ -23,13 +23,13 @@ def create_rescue(rescue: RescueIn, queries: RescueQueries = Depends()):
     return response
 
 
-@router.delete("/api/rescues/{id}/")
-def delete_rescue(id: str, queries: RescueQueries = Depends()):
-    response = queries.delete_rescue(id)
+@router.delete("/api/rescues/{rescue_id}/")
+def delete_rescue(rescue_id: str, queries: RescueQueries = Depends()):
+    response = queries.delete_rescue(rescue_id)
     if response:
         return response
     else:
-        raise HTTPException(404, "This rescue id does not exist!")
+        raise HTTPException(404, "This rescue rescue_id does not exist!")
 
 
 @router.get("/api/rescues/", response_model=RescuesList)
@@ -37,24 +37,26 @@ def list_rescues(queries: RescueQueries = Depends()):
     return RescuesList(rescues=queries.list_rescues())
 
 
-@router.put("/api/rescues/{id}/", response_model=RescueOut)
-def update_rescue(id: str, data: RescueIn, queries: RescueQueries = Depends()):
-    response = queries.update_rescue(id, data)
+@router.put("/api/rescues/{rescue_id}/", response_model=RescueOut)
+def update_rescue(
+    rescue_id: str, data: RescueIn, queries: RescueQueries = Depends()
+):
+    response = queries.update_rescue(rescue_id, data)
     if response:
         return response
     else:
-        raise HTTPException(404, "This rescue id does not exist!")
+        raise HTTPException(404, "This rescue rescue_id does not exist!")
 
 
 @router.patch(
-    "/api/rescues/localize/{id}/",
+    "/api/rescues/{rescue_id}/localize/",
 )
 async def localize_rescue(
-    id: str,
+    rescue_id: str,
     queries: RescueQueries = Depends(),
     address_service: Nominatim = Depends(),
 ):
-    rescue = queries.get_rescue_dict(id)
+    rescue = queries.get_rescue_dict(rescue_id)
     address = rescue["address"]
     address_string = address["address_one"]
     if address["address_two"] is not None:

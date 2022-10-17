@@ -13,11 +13,12 @@ class ApplicationQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "adoption_applications"
 
-    def create_application(self, app: ApplicationIn):
+    def create_application(self, app: ApplicationIn, account_id):
         app = app.dict()
+        app["account_id"] = account_id
         # check if the account_id has an application based on the same pet_id:
         record = self.collection.find_one(
-            {"pet_id": app["pet_id"], "account_id": app["account_id"]}
+            {"pet_id": app["pet_id"], "account_id": account_id}
         )
         if not record:
             insert_result = self.collection.insert_one(app)
@@ -105,3 +106,11 @@ class ApplicationQueries(Queries):
             return None
         if app:
             return ApplicationOut(**app, id=application_id)
+
+    def current_account_id_match_application(
+        self, application_id, current_account_id
+    ) -> bool:
+        application = self.detail_application(application_id)
+        if application:
+            return application.dict()["account_id"] == current_account_id
+        return False
