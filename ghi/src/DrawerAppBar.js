@@ -76,11 +76,13 @@ function DrawerAppBar(props) {
       </Typography>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
-            <ListItemText primary={"Home"} />
-          </ListItemButton>
-        </ListItem>
+        <Link href="/">
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary={"Home"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <ListItem disablePadding>
           <ListItemButton onClick={handleMenu3} sx={{ textAlign: 'center' }}>
             <ListItemText primary={"Rescues"} />
@@ -170,9 +172,11 @@ function DrawerAppBar(props) {
             FFR Logo
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button sx={{ color: '#fff' }}>
-              {"Home"}
-            </Button>
+            <Link href="/">
+              <Button sx={{ color: '#fff' }}>
+                {"Home"}
+              </Button>
+            </Link>
             <Button onClick={handleMenu1} sx={{ color: '#fff' }}>
               {"Rescues"}
             </Button>
