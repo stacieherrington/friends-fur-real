@@ -23,11 +23,8 @@ class RescueIn(BaseModel):
     address: Address | None
     logo: str | None
     picture: str | None
-    rescue_admin: str | None  # Replace with Account
-    pets: List[PetOut] | None
-    staff: List[str] | None  # Replace with List[Account]
-    approved_adopters: List[str] | None  # Replace with List[Account]
     location: Location | None
+    admin_email: str
 
 
 class RescueOut(RescueIn):
