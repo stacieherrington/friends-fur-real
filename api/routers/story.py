@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from models.success_story import (
+from queries.application import ApplicationQueries
+from models.story import (
     SuccessStoryIn,
     SuccessStoryList,
     SuccessStoryOut,
 )
-from queries.success_story import SuccessStoryQueries
+from queries.story import SuccessStoryQueries
 from .auth import authenticator
 
 router = APIRouter(tags=["Stories"])
@@ -27,9 +28,14 @@ def create_story(
     request: Request,
     account: dict = Depends(authenticator.get_current_account_data),
     queries: SuccessStoryQueries = Depends(),
+    application_queries: ApplicationQueries = Depends(),
 ):
     # 1. check if login and get account_id:
     if account and authenticator.cookie_name in request.cookies:
+        if not application_queries.current_account_id_match_application(
+            application_id, account["id"]
+        ):
+            raise not_authorized
         response = queries.create_story(story, application_id)
         if response:
             return response

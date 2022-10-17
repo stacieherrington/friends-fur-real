@@ -72,7 +72,7 @@ def list_adoption_applications(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: ApplicationQueries = Depends(),
 ):
-    if "staff" not in account["roles"] or "admin" not in account["roles"]:
+    if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
     rescue_id = account["rescue_id"]
     return ApplicationList(
@@ -111,7 +111,7 @@ def approve_application(
     queries: ApplicationQueries = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
-    if "staff" not in account["roles"] or "admin" not in account["roles"]:
+    if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
     elif not queries.current_staff_rescue_id_match_application(
         application_id, account["rescue_id"]
@@ -136,7 +136,7 @@ def reject_application(
     queries: ApplicationQueries = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
-    if "staff" not in account["roles"] or "admin" not in account["roles"]:
+    if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
     elif not queries.current_staff_rescue_id_match_application(
         application_id, account["rescue_id"]

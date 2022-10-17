@@ -2,7 +2,7 @@ from .client import Queries
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument
-from models.success_story import (
+from models.story import (
     SuccessStoryOut,
     SuccessStoryIn,
     SuccessStoryList,
@@ -13,7 +13,7 @@ from .application import ApplicationQueries
 
 class SuccessStoryQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "story"
+    COLLECTION = "stories"
 
     def create_story(self, story: SuccessStoryIn, application_id):
         story = story.dict()

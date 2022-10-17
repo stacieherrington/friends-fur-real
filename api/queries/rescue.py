@@ -8,7 +8,7 @@ from .accounts import AccountQueries
 
 class RescueQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "rescue"
+    COLLECTION = "rescues"
 
     def get_rescue(self, id) -> RescueOut:
         try:

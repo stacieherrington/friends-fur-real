@@ -10,7 +10,7 @@ from .accounts import AccountQueries
 
 class PetQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "pet"
+    COLLECTION = "pets"
 
     def get_pet(self, id) -> PetOut:
         try:

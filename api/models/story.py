@@ -1,7 +1,6 @@
 from typing import Literal
 from pydantic import BaseModel
 from typing import List
-from models.pet import PetOut
 
 
 class SuccessStoryIn(BaseModel):

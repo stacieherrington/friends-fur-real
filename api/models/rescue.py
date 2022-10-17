@@ -23,12 +23,12 @@ class RescueIn(BaseModel):
     address: Address | None
     logo: str | None
     picture: str | None
-    location: Location | None
     admin_email: str
 
 
 class RescueOut(RescueIn):
     id: str | None
+    location: Location | None
 
 
 class RescuesList(BaseModel):

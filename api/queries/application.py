@@ -11,7 +11,7 @@ from .pet import PetQueries
 
 class ApplicationQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "adoption_applications"
+    COLLECTION = "applications"
 
     def create_application(self, app: ApplicationIn, account_id):
         app = app.dict()
@@ -121,7 +121,7 @@ class ApplicationQueries(Queries):
     def current_staff_rescue_id_match_application(
         self, application_id, current_staff_rescue_id
     ) -> bool:
-        application = self.approve_application(application_id)
+        application = self.detail_application(application_id)
         if application:
             return application.dict()["rescue_id"] == current_staff_rescue_id
         return False
