@@ -121,11 +121,11 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/manage/staffs/",
-    tags=["Accounts"],
+    "/api/manage/staff/",
+    tags=["Accounts", "management"],
     response_model=AccountList,
-    summary="List Rescue Staffs",
-    description="* admin required! list all the staffs for rescue admin by rescue_id, will auto check if logined account is 'admin', will auto get admin's rescue_id and only display staffs belone to the rescue! ",
+    summary="List Rescue staff ----> management",
+    description="* admin required! list all the staff for rescue admin by rescue_id, will auto check if logined account is 'admin', will auto get admin's rescue_id and only display staff belone to the rescue! ",
 )
 async def list_accounts(
     account: dict = Depends(authenticator.get_current_account_data),
@@ -136,7 +136,7 @@ async def list_accounts(
         raise not_authorized
     # 2. get rescue_id from admin account:
     rescue_id = account["rescue_id"]
-    # 3. return the list of staffs by rescue_id:
+    # 3. return the list of staff by rescue_id:
     return AccountList(accounts=queries.list_accounts_by_rescue_id(rescue_id))
 
 
@@ -195,9 +195,9 @@ def update_account(
 
 @router.patch(
     "/api/accounts/promote/{email}/",
-    summary="Promote an account as a staff by email",
+    summary="Promote an account as a staff by email ----> management",
     description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(aotu use same rescue_id of the admin)",
-    tags=["Accounts"],
+    tags=["Accounts", "management"],
 )
 async def promote_account(
     email: str,
@@ -219,9 +219,9 @@ async def promote_account(
 
 @router.patch(
     "/api/accounts/demote/{email}/",
-    summary="Demote an account as a staff by email",
+    summary="Demote an account as a staff by email ----> management",
     description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belone to this admin's rescue",
-    tags=["Accounts"],
+    tags=["Accounts", "management"],
 )
 async def demote_account(
     email: str,

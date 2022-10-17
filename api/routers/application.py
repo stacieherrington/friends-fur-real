@@ -63,8 +63,9 @@ def list_account_applications(
 @router.get(
     "/api/manage/applications/",
     response_model=ApplicationList,
-    summary="List all Application for Rescue",
+    summary="List all Application for Rescue ----> management",
     description="This lists all the applicaitons by rescue_id of current admin/staff",
+    tags=["management"],
 )
 def list_adoption_applications(
     request: Request,
@@ -101,8 +102,9 @@ def detail_application(
 @router.patch(
     "/api/applications/{application_id}/approve/",
     response_model=ApplicationOut | dict,
-    summary="Approve an Application",
+    summary="Approve an Application ----> management",
     description="Approve an application by application_id, will check if there is an approved application based on the same pet_id, if not, change current status to Approved and change all other application have the same pet_id to Rejected",
+    tags=["management"],
 )
 def approve_application(
     application_id: str,
@@ -125,8 +127,9 @@ def approve_application(
 @router.patch(
     "/api/applications/{application_id}/reject/",
     response_model=ApplicationOut | dict,
-    summary="Reject an Application",
+    summary="Reject an Application ----> management",
     description="Reject an application by application_id",
+    tags=["management"],
 )
 def reject_application(
     application_id: str,

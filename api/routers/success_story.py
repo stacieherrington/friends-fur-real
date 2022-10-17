@@ -86,9 +86,10 @@ def list_rescue_stories(
 
 @router.get(
     "/api/manage/stories/",
-    summary="List All Stories for Review by admin/staff rescue_id",
+    summary="List All Stories for Review by admin/staff rescue_id ----> management",
     description="this api check if the current user is 'admin'/ 'staff', and list all the stories for their recue only",
     response_model=SuccessStoryList,
+    tags=["management"],
 )
 def manage_list_story(
     account: dict = Depends(authenticator.get_current_account_data),
@@ -103,8 +104,9 @@ def manage_list_story(
 
 @router.patch(
     "/api/stories/{story_id}/approve/",
-    summary="To Approve a Story",
+    summary="To Approve a Story ----> management",
     description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
+    tags=["management"],
 )
 def approve_story(
     story_id: str,
@@ -135,8 +137,9 @@ def approve_story(
 
 @router.patch(
     "/api/stories/{story_id}/reject/",
-    summary="To Reject a Story",
+    summary="To Reject a Story ----> management",
     description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
+    tags=["management"],
 )
 def reject_story(
     story_id: str,
