@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import DrawerAppBar from './DrawerAppBar';
 import ApplicationList from './applications/ApplicationsList';
+import ApplicationForm from './applications/ApplicationForm'
 import HomePage from './Homepage';
 import LoginForm from './Login/Login'
 import SignUpForm from './Signup/Signup';
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/applications" element={<ApplicationList />} />
+            <Route path='/applications/new' element={<ApplicationForm/>}/>
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignUpForm />} />
           </Routes>
