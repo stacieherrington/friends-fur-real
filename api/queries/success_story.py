@@ -93,6 +93,21 @@ class SuccessStoryQueries(Queries):
             stories.append(SuccessStoryOut(**story))
         return stories
 
+    def approve_story(self, story_id) -> SuccessStoryOut:
+        try:
+            story = self.get_story(story_id).dict()
+        except:
+            return
+        # 1. check db, make sure the target story status is Submitted:
+        if story["status"] == "Submitted":
+            # 2. update status from Submitted to Approved
+            result = self.collection.find_one_and_update(
+                filter={"_id": ObjectId(story_id)},
+                update={"$set": {"status": "Approved"}},
+                return_document=ReturnDocument.AFTER,
+            )
+            return SuccessStoryOut(**result, id=story_id)
+
 
 """
 
