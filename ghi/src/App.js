@@ -11,7 +11,7 @@ function App() {
     <>
       <BrowserRouter>
         <DrawerAppBar />
-        <NavBar />
+
         <div className="container">
           <Routes>
             <Route path="/" element={<HomePage />} />
