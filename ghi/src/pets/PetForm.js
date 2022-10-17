@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import PetsIcon from '@mui/icons-material/Pets';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -13,18 +14,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
+import { MenuItem } from '@mui/material';
 
 
 const theme = createTheme();
+
+const sexes = [
+  {
+    value: 'female',
+  },
+  {
+    value: 'male',
+  },
+]
+
 
 export default function SignUpForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const handleChange = (event) => {
+      setSex(event.target.value);
+    };
   };
 
   return (
@@ -41,10 +52,10 @@ export default function SignUpForm() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: '#CFE0FB' }}>
-              <LockOutlinedIcon />
+              <PetsIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+              Add a pet
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -52,32 +63,68 @@ export default function SignUpForm() {
                   <TextField
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="name"
+                    label="Name"
+                    name="name"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
+                    id="type"
+                    label="Type"
+                    name="type"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    id="zip_code"
-                    label="ZIP Code"
-                    name="zip_code"
-                    autoComplete="zip-code"
+                    id="breed"
+                    label="Breed"
+                    name="breed"
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="breed"
+                    label="Breed"
+                    name="breed"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type={"number"}
+                    onChange={(event) =>
+                        event.target.value < 0
+                            ? (event.target.value = 0)
+                            : event.target.value
+                    }
+                    required
+                    fullWidth
+                    id="age"
+                    label="Age"
+                    name="age"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    select
+                    label="Select"
+                    value={sexes}
+                    onChange={handleChange}
+                    helperText="Please select sex"
+                  >
+                    {sexes.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
               </Grid>
               <Button
@@ -86,15 +133,8 @@ export default function SignUpForm() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Add Pet
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="/login" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
           <Copyright sx={{ mt: 10 }} />

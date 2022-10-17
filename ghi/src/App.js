@@ -8,6 +8,7 @@ import HomePage from './Homepage';
 import LoginForm from './Login/Login';
 import PetsList from './pets/PetsList';
 import Signup from './Signup/Signup';
+import PetForm from './pets/PetForm';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/applications" element={<ApplicationList />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/pets" element={<PetsList />} />
+            <Route path="/pets/create" element={<PetForm />} />
             <Route path="/signup" element = {<Signup />} />
             <Route path="/login" element = {<LoginForm />} />
           </Routes>
