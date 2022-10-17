@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from 'react'
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,44 +16,7 @@ import { MuiTelInput } from "mui-tel-input";
 // import FormGroup from '@mui/material/FormGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import AppCheckbox from './appCheckbox'
-
-// function Checkbox2() {
-//   const [hasChildren, setHasChildren] = useState(false)
-//   const handleBoxChange = () => {
-//     setHasChildren(true)
-//   }
-//   console.log(hasChildren)
-//   return (
-//     <FormGroup>
-//       <Grid>
-//       <FormControlLabel control={<Checkbox />} value={hasChildren} onChange={handleBoxChange} label="Small children" />
-//       <FormControlLabel control={<Checkbox />} label="Dogs" />
-//       <FormControlLabel control={<Checkbox />} label="Cats" />
-//       <FormControlLabel control={<Checkbox />} label="Request pre-approval" />
-//       <FormControlLabel control={<Checkbox />} label="Agree to terms" />
-//       </Grid>
-//     </FormGroup>
-//   );
-// }
-
-// function CheckboxesGroup() {
-//   const [state, setState] = React.useState({
-//     children: false,
-//      dogs: false, 
-//      cats: false, 
-//      preApproval: false, 
-//      terms:false})
-  
-//   const handleCheckChange = (event) => {
-//     setState({
-//       ...state,
-//       [event.target.name]: event.target.checked,
-//     });
-//   };
-//   const error = [children, dogs, cats, preApproval, terms ].filter((v) => v).length !== 2;
-// }
-  
+import AppCheckbox from "./appCheckbox";
 
 function PhoneNumber() {
   const [phone, setPhone] = useState("");
@@ -61,13 +24,13 @@ function PhoneNumber() {
   const handleChange = (newPhone) => {
     setPhone(newPhone);
   };
-
   return (
     <MuiTelInput
       value={phone}
       placeholder='Phone Number'
-      onlyCountries={["US"]}
       onChange={handleChange}
+      onlyCountries={['US']}
+      fullWidth
     />
   );
 }
@@ -102,12 +65,7 @@ export default function ApplicationForm() {
           <Typography component='h1' variant='h5'>
             Application Form
           </Typography>
-          <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component='form' onSubmit={handleSubmit} noValidate>
             <TextField
               margin='normal'
               required
@@ -128,28 +86,25 @@ export default function ApplicationForm() {
               id='lastName'
               autoComplete='current-lastname'
             />
+            <PhoneNumber />
+            <AppCheckbox />
             <TextField
               margin='normal'
               required
               fullWidth
-              name='address'
-              placeholder='Address'
+              name='residence_type'
+              placeholder='Type of Residence'
               type='text'
               id='address'
               autoComplete='current-address'
             />
-            <PhoneNumber />
-            <AppCheckbox/>
-
-
-
 
             <TextField
               margin='normal'
               required
               fullWidth
               name='password'
-              label='Password'
+              placeholder='Residence Owned'
               type='password'
               id='password'
               autoComplete='current-password'
@@ -159,7 +114,7 @@ export default function ApplicationForm() {
               required
               fullWidth
               name='password'
-              label='Password'
+              placeholder='Landlord Restrictions'
               type='password'
               id='password'
               autoComplete='current-password'
@@ -169,8 +124,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               name='password'
-              label='Password'
-              type='password'
+              placeholder='Date Ready'
+              type='date'
               id='password'
               autoComplete='current-password'
             />
@@ -189,17 +144,10 @@ export default function ApplicationForm() {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
-              color='primary'
+              color='success'
             >
-              Sign In
+              Submit
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href='/signup' variant='body2'>
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 10, mb: 4 }} />
