@@ -72,7 +72,7 @@ def get_story(id: str, queries: SuccessStoryQueries = Depends()):
 
 
 @router.get(
-    "/api/rescue/{rescue_id}/stories/",
+    "/api/rescues/{rescue_id}/stories/",
     summary="List all approved stories by rescue_id",
     description="allowed user to use dropdown to filter approved stories by rescue_id",
     response_model=SuccessStoryList,
@@ -167,7 +167,7 @@ def reject_story(
 
 @router.get(
     "/api/accounts/profile/stories/",
-    summary="List All Stories for Current",
+    summary="List All Stories for Current User",
     description="This api list all the current user's stories",
     response_model=SuccessStoryList,
 )
