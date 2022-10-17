@@ -89,9 +89,12 @@ class ApplicationQueries(Queries):
         return ApplicationOut(**result, id=application_id)
 
     def delete_application(self, application_id):
-        delete_result = self.collection.delete_one(
-            filter={"_id": ObjectId(application_id)}
-        )
+        try:
+            delete_result = self.collection.delete_one(
+                filter={"_id": ObjectId(application_id)}
+            )
+        except:
+            return {"message": "this application id is not exist!"}
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
@@ -113,4 +116,12 @@ class ApplicationQueries(Queries):
         application = self.detail_application(application_id)
         if application:
             return application.dict()["account_id"] == current_account_id
+        return False
+
+    def current_staff_rescue_id_match_application(
+        self, application_id, current_staff_rescue_id
+    ) -> bool:
+        application = self.approve_application(application_id)
+        if application:
+            return application.dict()["rescue_id"] == current_staff_rescue_id
         return False
