@@ -6,7 +6,7 @@ import ApplicationList from './applications/ApplicationsList';
 import HomePage from './Homepage';
 import NavBar from './nav';
 import LoginForm from './Login/Login'
-import PetsList from './PetsList'
+import PetsList from './pets/PetsList'
 
 function App() {
 
