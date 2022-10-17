@@ -165,6 +165,24 @@ def reject_story(
         raise not_authorized
 
 
+@router.get(
+    "/api/accounts/profile/stories/",
+    summary="List All Stories for Current",
+    description="This api list all the current user's stories",
+    response_model=SuccessStoryList,
+)
+def list_account_story(
+    request: Request,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: SuccessStoryQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+        return SuccessStoryList(stories=queries.list_account_story(account_id))
+    else:
+        raise not_authorized
+
+
 """
 
 @router.delete("/api/stories/{id}/")

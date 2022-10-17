@@ -123,6 +123,14 @@ class SuccessStoryQueries(Queries):
             )
             return SuccessStoryOut(**result, id=story_id)
 
+    def list_account_story(self, account_id) -> List[SuccessStoryOut]:
+        result = self.collection.find({"account_id": account_id})
+        stories = []
+        for story in result:
+            story["id"] = str(story["_id"])
+            stories.append(SuccessStoryOut(**story))
+        return stories
+
 
 """
 
