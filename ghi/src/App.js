@@ -5,8 +5,9 @@ import DrawerAppBar from './DrawerAppBar';
 import ApplicationList from './applications/ApplicationsList';
 import HomePage from './Homepage';
 // import NavBar from './nav';
-import LoginForm from './Login/Login'
-import PetsList from './pets/PetsList'
+import LoginForm from './Login/Login';
+import PetsList from './pets/PetsList';
+import Signup from './Signup/Signup';
 
 function App() {
 
