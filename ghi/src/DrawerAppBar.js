@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link } from '@mui/material';
 
 
 const drawerWidth = 240;
@@ -128,6 +129,20 @@ function DrawerAppBar(props) {
           <MenuItem onClick={handleClose}>Adopter Link 1</MenuItem>
           <MenuItem onClick={handleClose}>Adopter Link 2</MenuItem>
         </Menu>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <Link href="/signup">
+              <ListItemText primary={"Signup"} />
+            </Link>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <Link href="/login">
+              <ListItemText primary={"Login"} />
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -200,12 +215,16 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose2}>Adopters Link 1</MenuItem>
               <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
             </Menu>
-            <Button sx={{ color: '#fff' }}>
-              {"Signup"}
-            </Button>
-            <Button sx={{ color: '#fff' }}>
-              {"Login"}
-            </Button>
+            <Link href="/signup">
+              <Button sx={{ color: '#fff' }}>
+                {"Signup"}
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button sx={{ color: '#fff' }}>
+                {"Login"}
+              </Button>
+            </Link>
             <Button sx={{ color: '#fff' }}>
               {"Logout"}
             </Button>
