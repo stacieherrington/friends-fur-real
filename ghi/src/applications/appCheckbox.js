@@ -17,7 +17,7 @@ export default function AppCheckbox() {
     wants_prepproval: false,
     agrees_to_terms: false,
     residence_owned: false,
-    smoker: true,
+    smoke_free_home: true,
   });
 
   const handleChange = (event) => {
@@ -28,7 +28,7 @@ export default function AppCheckbox() {
   };
   const {
     has_small_children,
-    smoker,
+    smoke_free_home,
     has_dogs,
     has_cats,
     wants_prepproval,
@@ -67,14 +67,15 @@ export default function AppCheckbox() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={smoker}
+                  checked={smoke_free_home}
                   onChange={handleChange}
-                  name='smoker'
-                  checkedIcon={<SmokingRoomsSharpIcon color='error' />}
-                  icon={<SmokeFreeSharpIcon color='success' />}
+                  name='smoke_free_home'
+                  icon={<SmokingRoomsSharpIcon color='error' />}
+                  checkedIcon={<SmokeFreeSharpIcon color='success' />}
                 />
               }
-              label='Smoker'
+              label='Smoke Free Home'
+            //   ({...checkboxValues.smoke_free_home}? label='Smoke free' : label='smoker')
             />
           </FormGroup>
         </FormControl>
