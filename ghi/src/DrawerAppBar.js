@@ -21,6 +21,18 @@ import { Link } from '@mui/material';
 
 const drawerWidth = 240;
 
+async function logout() {
+  const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+    method: 'DELETE',
+    credentials: "include",
+  });
+  if (response.ok) {
+    console.log("logged out")
+  } else {
+    console.error(response)
+  }
+}
+
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -226,11 +238,11 @@ function DrawerAppBar(props) {
             </Link>
             <Link href="/login">
               <Button sx={{ color: '#fff' }}>
-                {"Login"}
+                Login
               </Button>
             </Link>
-            <Button sx={{ color: '#fff' }}>
-              {"Logout"}
+            <Button sx={{ color: '#fff' }} onClick={logout}>
+              Logout
             </Button>
           </Box>
           <div>
