@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link } from '@mui/material';
-import ManagementMenu from './Navs/ManagementMenu';
+import ManagementMenu from './Manage/ManagementMenu';
 
 const drawerWidth = 240;
 
