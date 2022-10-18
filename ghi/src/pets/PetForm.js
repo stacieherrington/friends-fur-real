@@ -14,28 +14,54 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
-import { MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
+import { useState } from 'react';
+import { json } from 'react-router-dom';
 
 
 const theme = createTheme();
 
-const sexes = [
-  {
-    value: 'female',
-  },
-  {
-    value: 'male',
-  },
-]
-
 
 export default function SignUpForm() {
-  const handleSubmit = (event) => {
+  const [fields, setFields] = useState({
+    "name": "",
+    "type": "",
+    "breed": "",
+    "age": "",
+    "sex": "",
+    "size": "",
+    "description": "",
+    "weight": "",
+    "pictures": [],
+    "primary_color": "",
+    "ok_with_dogs": true,
+    "ok_with_cats": true,
+    "shots_up_to_date": true,
+    "ok_with_kids": true,
+    "spayed_neutered": true,
+    "house_trained": true,
+    "special_needs": true,
+  });
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const handleChange = (event) => {
-      setSex(event.target.value);
-    };
+    fields.age = Number.parseInt(fields.age)
+    fields.weight = Number.parseInt(fields.weight)
+    const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
+    const response = await fetch(url, {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify(fields),
+      headers: {"content-type": "application/json"},
+    });
+    if (response.ok) {
+      console.log("Success!")
+    } else {
+      console.error(response)
+    }
+  };
+  const handleChange = (event) => {
+    const update = {...fields, [event.target.name]: event.target.value};
+    setFields(update);
   };
 
   return (
@@ -57,7 +83,7 @@ export default function SignUpForm() {
             <Typography component="h1" variant="h5">
               Add a pet
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -66,6 +92,8 @@ export default function SignUpForm() {
                     id="name"
                     label="Name"
                     name="name"
+                    onChange={handleChange}
+                    value={fields.name}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -75,15 +103,8 @@ export default function SignUpForm() {
                     id="type"
                     label="Type"
                     name="type"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="breed"
-                    label="Breed"
-                    name="breed"
+                    onChange={handleChange}
+                    value={fields.type}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -112,18 +133,19 @@ export default function SignUpForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    required
                     select
                     label="Select"
-                    value={sexes}
+                    value={fields.sex}
+                    name="sex"
                     onChange={handleChange}
                     helperText="Please select sex"
                   >
-                    {sexes.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
+                    <MenuItem value="female">
+                      female
+                    </MenuItem>
+                    <MenuItem value="male">
+                      male
+                    </MenuItem>
                   </TextField>
                 </Grid>
               </Grid>

@@ -6,21 +6,22 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function PetCard() {
+export default function PetCard(props) {
+
   return (
     <Card sx={{ maxWidth: 250 }}>
-      <CardMedia
+      {props.pictures && props.pictures.length?<CardMedia
         component="img"
         height="200"
-        image="images/pit-dog.jpg"
-        alt="Pitbull"
-      />
+        image={props.pictures[0]}
+        alt={props.breed}
+      />: null}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Ozzy
+          {props.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Amet volutpat consequat mauris nunc congue nisi vitae suscipit.
+          {props.description}
         </Typography>
       </CardContent>
       <CardActions>
