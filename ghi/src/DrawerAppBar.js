@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link } from '@mui/material';
-
+import ManagementMenu from './Navs/ManagementMenu';
 
 const drawerWidth = 240;
 
@@ -34,6 +34,10 @@ async function logout() {
 }
 
 function DrawerAppBar(props) {
+  let { is_admin, is_staff, is_base } = props;
+  is_staff = true;
+  is_admin = false;
+  is_base = false;
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -100,24 +104,24 @@ function DrawerAppBar(props) {
             <ListItemText primary={"Rescues"} />
           </ListItemButton>
           <Menu
-          id="menu-appbar1"
-          anchorEl={anchorEl3}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorEl3)}
-          onClose={handleClose3}
-        >
-          <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
-          <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
-          <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
-        </Menu>
+            id="menu-appbar1"
+            anchorEl={anchorEl3}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl3)}
+            onClose={handleClose3}
+          >
+            <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
+            <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
+            <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
+          </Menu>
         </ListItem>
 
         <ListItem disablePadding>
@@ -183,6 +187,7 @@ function DrawerAppBar(props) {
           >
             FFR Logo
           </Typography>
+          <ManagementMenu is_staff={is_staff} is_admin={is_admin} />
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Link href="/">
               <Button sx={{ color: '#fff' }}>
