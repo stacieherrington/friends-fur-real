@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react'
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -11,7 +12,7 @@ import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 
 export default function AppCheckbox() {
-  const [checkboxValues, setCheckboxValues] = React.useState({
+  const [checkboxValues, setCheckboxValues] = useState({
     has_small_children: false,
     has_dogs: false,
     has_cats: false,
@@ -36,7 +37,7 @@ export default function AppCheckbox() {
     agrees_to_terms,
     residence_owned,
   } = checkboxValues;
-
+  
   const error = [wants_prepproval, agrees_to_terms].filter((v) => v).length < 1;
   const smokeLabel = smoke_free_home ? "non-smoker" : `smoker`;
   return (

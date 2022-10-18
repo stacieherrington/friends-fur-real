@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
 import { MuiTelInput } from "mui-tel-input";
 import AppCheckbox from "./appCheckbox";
-import SendSharpIcon from '@mui/icons-material/SendSharp';
+import SendSharpIcon from "@mui/icons-material/SendSharp";
 
 function PhoneNumber() {
   const [phone, setPhone] = useState("");
@@ -34,12 +34,16 @@ function PhoneNumber() {
 
 function ResidenceSelector() {
   const residences = [
-    { value: "Single Family", label: "Single Family" },
+    { value: "Single Family Home", label: "Single Family Home" },
+    {
+      value: "Single Family w/ large yard",
+      label: "Single Family w/ large yard",
+    },
     { value: "Apartment", label: "Apartment" },
     { value: "Townhouse", label: "Townhouse" },
     { value: "Condo", label: "Condo" },
   ];
-  const [residenceType, setResidenceType] = React.useState("");
+  const [residenceType, setResidenceType] = useState("");
   const handleSelect = (event) => {
     setResidenceType(event.target.value);
   };
@@ -64,28 +68,127 @@ function ResidenceSelector() {
 const theme = createTheme();
 
 export default function ApplicationForm() {
-  // const [first_name, setFirst_name] = useState("");
-  // const [last_name, setLast_name] = useState("");
+  const [application, setApplication] = useState({
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    date_ready: "",
+    landlord_restrictions: "",
+    has_small_children: "",
+    has_dogs: "",
+    has_cats: "",
+    smoke_free_home: "",
+    residence_owned: "",
+    residence_type: [],
+  });
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
   // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [date_ready, setDate_ready] = useState("");
+  // const [dateReady, setDateReady] = useState('');
+  // const [landlordRestrictions, setLandlordRestrictions] = useState("");
+  // const [residenceType, setResidenceType] = useState("");
+  // const [hasSmallChildren, setHasSmallChildren] = useState("");
+  // const [hasDogs, setHasDogs] = useState("");
+  // const [hasCats, setHasCats] = useState("");
+  // const [smokeFreeHome, setSmokeFreeHome] = useState("");
+  // const [residenceOwned, setResidenceOwned] = useState("");
+  const handleInputChange = (event) => {
+    setApplication({ ...application, [event.target.name]: event.target.value });
+  };
+
+  const handleReset = () => {
+    setApplication({
+      first_name: "",
+      last_name: "",
+      phone_number: "",
+      date_ready: "",
+      landlord_restrictions: "",
+      has_small_children: "",
+      has_dogs: "",
+      has_cats: "",
+      smoke_free_home: "",
+      residence_owned: "",
+      residence_type: [],
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      first_name: data.get("first_name"),
-      last_name: data.get("last_name"),
-      phone_number: data.get("phoneNumber"),
-      date_ready: data.get("date_ready"),
-      landlord_restrictions: data.get("landlord_restrictions"),
-      residence_type: data.get("residence_type"),
-      has_dogs: data.get("has_dogs"),
-      has_cats: data.get("has_cats"),
-      smoker: data.get("smoker"),
-      has_small_children: data.get("has_small_children"),
-      residence_owned: data.get("residence_owned"),
-    });
+    const applicationUrl = "http://localhost:8000/api/applications/";
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify({}),
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(applicationUrl, fetchConfig)
+      .then((res) => res.json())
+      .catch((event) => console.log("post error", event));
+    handleReset();
   };
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  // const [dateReady, setDateReady] = useState('');
+  // const [landlordRestrictions, setLandlordRestrictions] = useState("");
+  // const [residenceType, setResidenceType] = useState("");
+  // const [hasSmallChildren, setHasSmallChildren] = useState("");
+  // const [hasDogs, setHasDogs] = useState("");
+  // const [hasCats, setHasCats] = useState("");
+  // const [smokeFreeHome, setSmokeFreeHome] = useState("");
+  // const [residenceOwned, setResidenceOwned] = useState("");
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const applicationUrl = "http://localhost:8000/api/applications/";
+  //   const fetchConfig = {
+  //     method: "post",
+  //     body: JSON.stringify({
+  //       first_name: firstName,
+  //       last_name: lastName,
+  //       phone_number: phoneNumber,
+  //       date_ready: dateReady,
+  //       landlord_restrictions: landlordRestrictions,
+  //       has_small_children: hasSmallChildren,
+  //       has_dogs: hasDogs,
+  //       has_cats: hasCats,
+  //       smoke_free_home: smokeFreeHome,
+  //       residence_owned: residenceOwned,
+  //       residence_type: residenceType,
+  //     }),
+  //     headers: { "Content-Type": "application/json" },
+  //   };
+  //   fetch(applicationUrl, fetchConfig)
+  //     .then((res) => res.json())
+  //     .catch((event) => console.log("post error", event));
+  //   setFirstName("");
+  //   setLastName("");
+  //   setPhoneNumber("");
+  //   setLandlordRestrictions("");
+  //   setHasSmallChildren("");
+  //   setHasDogs("");
+  //   setHasCats("");
+  //   setSmokeFreeHome("");
+  //   setResidenceOwned("");
+  //   setResidenceType("");
+  // };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     first_name: data.get("first_name"),
+  //     last_name: data.get("last_name"),
+  //     phone_number: data.get("phoneNumber"),
+  //     date_ready: data.get("date_ready"),
+  //     landlord_restrictions: data.get("landlord_restrictions"),
+  //     residence_type: data.get("residence_type"),
+  //     has_dogs: data.get("has_dogs"),
+  //     has_cats: data.get("has_cats"),
+  //     smoker: data.get("smoker"),
+  //     has_small_children: data.get("has_small_children"),
+  //     residence_owned: data.get("residence_owned"),
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -110,6 +213,8 @@ export default function ApplicationForm() {
               margin='normal'
               required
               fullWidth
+              onChange={handleInputChange}
+              value={application.first_name}
               id='first_name'
               placeholder='First Name'
               name='first_name'
@@ -120,6 +225,8 @@ export default function ApplicationForm() {
               margin='normal'
               required
               fullWidth
+              onChange={handleInputChange}
+              value={application.last_name}
               name='last_name'
               placeholder='Last Name'
               type='text'
@@ -131,6 +238,8 @@ export default function ApplicationForm() {
               margin='normal'
               required
               fullWidth
+              onChange={handleInputChange}
+              value={application.date_ready}
               name='date_ready'
               placeholder='Date Ready'
               type='date'
@@ -141,6 +250,8 @@ export default function ApplicationForm() {
               margin='normal'
               required
               fullWidth
+              onChange={handleInputChange}
+              value={application.landlord_restrictions}
               multiline
               maxRows={4}
               name='landlord_restrictions'
@@ -158,7 +269,7 @@ export default function ApplicationForm() {
               variant='outlined'
               sx={{ mt: 3, mb: 2 }}
               color='success'
-              endIcon={<SendSharpIcon/>}
+              endIcon={<SendSharpIcon />}
             >
               Submit
             </Button>
