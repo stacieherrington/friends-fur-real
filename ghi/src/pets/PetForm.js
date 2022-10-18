@@ -96,43 +96,60 @@ export default function SignUpForm() {
                     value={fields.name}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
+                    select
                     required
                     fullWidth
                     id="type"
-                    label="Type"
+                    label="Select"
                     name="type"
                     onChange={handleChange}
                     value={fields.type}
-                  />
+                    helperText="Please select type"
+                  >
+                  <MenuItem value="dog">
+                      dog
+                    </MenuItem>
+                    <MenuItem value="cat">
+                      cat
+                    </MenuItem>
+                    <MenuItem value="other">
+                      other
+                    </MenuItem>
+                  </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
                     id="breed"
                     label="Breed"
                     name="breed"
+                    onChange={handleChange}
+                    value={fields.breed}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
                     type={"number"}
-                    onChange={(event) =>
-                        event.target.value < 0
-                            ? (event.target.value = 0)
-                            : event.target.value
-                    }
-                    required
+                    onChange={(event) => {
+                        if (event.target.value < 0) {
+                            event.target.value = 0;
+                          }
+                          handleChange(event);
+                    }}
                     fullWidth
                     id="age"
                     label="Age"
                     name="age"
+                    value={fields.age}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    required
+                    fullWidth
                     select
                     label="Select"
                     value={fields.sex}
@@ -147,6 +164,66 @@ export default function SignUpForm() {
                       male
                     </MenuItem>
                   </TextField>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    select
+                    label="Select"
+                    value={fields.size}
+                    name="size"
+                    onChange={handleChange}
+                    helperText="Please select size"
+                  >
+                    <MenuItem value="small">
+                      small
+                    </MenuItem>
+                    <MenuItem value="medium">
+                      medium
+                    </MenuItem>
+                    <MenuItem value="large">
+                      large
+                    </MenuItem>
+                  </TextField>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type={"number"}
+                    onChange={(event) => {
+                        if (event.target.value < 0) {
+                            event.target.value = 0;
+                          }
+                          handleChange(event);
+                    }}
+                    value={fields.weight}
+                    fullWidth
+                    id="weight"
+                    label="Weight"
+                    name="weight"
+                  />
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <TextField
+                    // type="url"
+                    required
+                    fullWidth
+                    id="pictures"
+                    label="Picture URL"
+                    name="pictures"
+                    onChange={handleChange}
+                    value={fields.pictures}
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="color"
+                    label="Color"
+                    name="primary_color"
+                    onChange={handleChange}
+                    value={fields.primary_color}
+                  />
                 </Grid>
               </Grid>
               <Button
