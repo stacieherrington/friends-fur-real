@@ -1,42 +1,36 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
-import { InputLabel, MenuItem } from '@mui/material';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import SendIcon from '@mui/icons-material/Send';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
 
 
 export default function StoryForm() {
-  const [petsData, setPets] = useState([])
-  const [pet, setPet] = useState('')
+
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [storyError, setStoryError] = useState(false)
 
-  const fetchPet = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
-    const response = await fetch(url)
-    const petsJson = await response.json()
-    setPets(petsJson.pets)
-    console.log("PETS", petsJson.pets)
-  }
-  useEffect(() => {
-    fetchPet()
-  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setStory(event.target.value);
-
+    const url = `${process.env.REACT_APP_API_HOST}/api/applications/{application_id}/story/`;
+    const data = { title, story };
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    })
+    if (response.ok) {
+      console.log('YAY!')
+    }
     setTitleError(false)
     setStoryError(false)    
     if (title == '') {
@@ -47,9 +41,6 @@ export default function StoryForm() {
     }
   };
 
-  const handleChange = (event) => {
-    setPet(event.target.value);
-  };
 
   return (
     <>
@@ -63,17 +54,6 @@ export default function StoryForm() {
             <Typography component="h1" variant="h4" sx={{ py: 2, color: "#CFE0FB" }}>
               Share your story
             </Typography>
-            <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="select-pet">Select a pet</InputLabel>
-              <Select onChange={handleChange} id="select" value={pet}>
-                {petsData.map((pet) => (
-                  <MenuItem key={pet.id} value={pet.name}>
-                    {pet.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <p></p>
             <TextField
               onChange={(event) => setTitle(event.target.value)}
               label="Title"
@@ -109,7 +89,7 @@ export default function StoryForm() {
             variant="outlined"
             sx={{ mb: 2 }}
             color="primary"
-            endIcon={<SendIcon />}
+            endIcon={<SendRoundedIcon />}
           >
             Submit story
           </Button>
