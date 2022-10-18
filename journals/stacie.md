@@ -1,3 +1,14 @@
+10/17/2022
+
+Changed Pet List to use Cards. Got Add Pet form working. Logout button on navbar
+now works.
+
+
+10/14/2022
+
+Continued to learn React MUI.
+
+
 10/13/2022
 
 Today I fixed the geospatial query. I learned the problem was something missing
