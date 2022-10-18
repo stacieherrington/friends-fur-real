@@ -1,14 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from models.application import ApplicationOut
-from models.success_story import SuccessStoryOut  # , Optional
 from models.rescue import Address, Location
-from models.pet import PetOut
-
-# from models.pet import PetOut
-# from models.success_story import SuccessStoryOut
-# from models.adoption_application import ApplicationOut
-# from pydantic_model import PydanticObjectId
 
 
 class SessionOut(BaseModel):
@@ -17,36 +9,48 @@ class SessionOut(BaseModel):
 
 
 class AccountIn(BaseModel):
-    email: str | None
-    password: str | None
+    email: str
+    password: str
+    address: Address
 
 
 class Account(AccountIn):
+    email: str
     id: str
+    first_name: str | None
+    last_name: str | None
+    picture: str | None
     roles: List[str]
+    rescue_id: str | None
+    address: Address | None
+    location: Location | None
 
 
 class AccountOut(BaseModel):
     email: str
     id: str
-    roles: List[str]
-
-
-class AccountDisplay(BaseModel):
     first_name: str | None
     last_name: str | None
-    address: Address | None
     picture: str | None
-    applications: List[ApplicationOut] | None
-    favorites: List[PetOut] | None
-    adopted_pets: List[PetOut] | None
-    success_stories: List[SuccessStoryOut] | None
+    roles: List[str]
+    rescue_id: str | None
+    address: Address | None
     location: Location | None
 
 
-class AccountUpdate(AccountDisplay):
-    # email: str | None
-    password: str | None
+class AccountDisplay(BaseModel):
+    email: str
+    first_name: str | None
+    last_name: str | None
+    picture: str | None
+    address: Address | None
+
+
+class AccountUpdate(BaseModel):
+    first_name: str | None
+    last_name: str | None
+    picture: str | None
+    address: Address | None
 
 
 class AccountList(BaseModel):

@@ -74,7 +74,7 @@ export default function SignUpForm() {
                     required
                     fullWidth
                     id="zip_code"
-                    label="zip_code"
+                    label="ZIP Code"
                     name="zip_code"
                     autoComplete="zip-code"
                   />

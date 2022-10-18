@@ -52,14 +52,12 @@ not_authorized = HTTPException(
 @router.get(
     "/token/",
     response_model=AccountToken | None,
-    tags=[
-        "Token Authorization",
-    ],
 )
 async def get_token(
     request: Request,
     account: Account = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
+    # this line is to check if the user is logined
     if account and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
@@ -70,6 +68,7 @@ async def get_token(
 
 @router.post(
     "/api/accounts/",
+    description="create an account, form.address.zip_code is required!!!",
     response_model=AccountToken | HttpError,
     tags=["Accounts"],
 )
@@ -95,19 +94,21 @@ async def create_account(
 
 @router.delete(
     "/api/sessions/{account_id}/",
-    tags=["Token Authorization"],
 )
 async def delete_session(
     account_id: str,
+    # here is how to check current_account data/roles from back end 1
     account: dict = Depends(authenticator.get_current_account_data),
     repo: SessionQueries = Depends(),
 ) -> bool:
+    # here is how to check current_account data/roles from back end 2
     if "base" not in account["roles"]:
         raise not_authorized
     repo.delete_sessions(account_id)
     return True
 
 
+# IDK if we need this:
 @router.get(
     "/api/accounts/",
     response_model=AccountList,
@@ -120,31 +121,72 @@ async def list_accounts(
 
 
 @router.get(
-    "/api/accounts/{id}/",
+    "/api/manage/staff/",
+    tags=["Accounts", "management"],
+    response_model=AccountList,
+    summary="List Rescue staff ----> management",
+    description="* admin required! list all the staff for rescue admin by rescue_id, will auto check if logined account is 'admin', will auto get admin's rescue_id and only display staff belone to the rescue! ",
+)
+async def list_accounts(
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # 1. check if "admin" in "roles":
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # 2. get rescue_id from admin account:
+    rescue_id = account["rescue_id"]
+    # 3. return the list of staff by rescue_id:
+    return AccountList(accounts=queries.list_accounts_by_rescue_id(rescue_id))
+
+
+@router.get(
+    "/api/accounts/profile/",
     response_model=AccountDisplay,
+    summary="Detail Current Logined Account",
+    description="display on account profile page,can use PATCH /api/accounts/{account_id} to update",
     tags=["Accounts"],
 )
-def single_account(id: str, queries: AccountQueries = Depends()):
-    account = queries.single_account(id)
-    if account:
-        return account
+async def single_account(
+    request: Request,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # check if logined:
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
     else:
-        raise HTTPException(404, f"This Account id: {id} does not exist")
+        raise not_authorized
+
+    response = queries.single_account(account_id)
+    if response:
+        return response
+    else:
+        raise HTTPException(
+            404, f"This Account id: {account_id} does not exist"
+        )
 
 
 @router.patch(
-    "/api/accounts/{id}/",
+    "/api/accounts/profile/",
     response_model=AccountDisplay,
+    summary="Update Current Logined Account",
+    description="allowed logined user to update personal detail in account profile page.(Don't Change Email! CAN NOT change password yet!)",
     tags=["Accounts"],
 )
 def update_account(
-    id: str,
+    request: Request,
     data: AccountUpdate,
+    account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # ensure password will be hashed
-    # data.password = pwd_context.hash(data.password)
-    response = queries.update_account(id, data)
+    # for change password: need to check old passwrod, need a way to decode hashed password -> ensure password will be hashed -> data.password = pwd_context.hash(data.password)
+    # check if logined:
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+    response = queries.update_account(account_id, data)
     if response:
         return response
     else:
@@ -152,11 +194,23 @@ def update_account(
 
 
 @router.patch(
-    "/api/accounts/promote/{id}/",
-    tags=["Accounts"],
+    "/api/accounts/promote/{email}/",
+    summary="Promote an account as a staff by email ----> management",
+    description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(aotu use same rescue_id of the admin)",
+    tags=["Accounts", "management"],
 )
-async def promote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.promote_account(id)
+async def promote_account(
+    email: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # 1. check if "admin" in "roles":
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # 2. get rescue_id from current admin account:
+    rescue_id = account["rescue_id"]
+    # 3. promote account by using email and rescue_id:
+    response = queries.promote_account(email, rescue_id)
     if response:
         return response
     else:
@@ -164,27 +218,41 @@ async def promote_account(id: str, queries: AccountQueries = Depends()):
 
 
 @router.patch(
-    "/api/accounts/demote/{id}/",
-    tags=["Accounts"],
+    "/api/accounts/demote/{email}/",
+    summary="Demote an account as a staff by email ----> management",
+    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belone to this admin's rescue",
+    tags=["Accounts", "management"],
 )
-async def demote_account(id: str, queries: AccountQueries = Depends()):
-    response = queries.demote_account(id)
+async def demote_account(
+    email: str,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    # 1. check if "admin" in current account 'roles':
+    if "admin" not in account["roles"]:
+        raise not_authorized
+    # get rescue_id from current account data:
+    rescue_id = account["rescue_id"]
+    response = queries.demote_account(email, rescue_id)
     if response:
         return response
     else:
-        raise HTTPException(404, "Cannot promote-- Invalid Account ")
+        raise HTTPException(404, "Cannot deomote-- Invalid Account ")
 
 
+# Can you move this localize function under queries.account.py?
+# Make it one function when you call it pass in an account_id
+# so we can use it anywhere we could by just call import can call it?
 @router.patch(
-    "/api/accounts/localize/{id}/",
+    "/api/accounts/{account_id}/localize/",
     tags=["Accounts"],
 )
 async def localize_account(
-    id: str,
+    account_id: str,
     queries: AccountQueries = Depends(),
     address_service: Nominatim = Depends(),
 ):
-    account = queries.get_account_dict(id)
+    account = queries.get_account_dict(account_id)
     address = account["address"]
     address_string = address["address_one"]
     if address["address_two"] is not None:
@@ -193,7 +261,9 @@ async def localize_account(
     query = address_string.replace(" ", "+")
     location = address_service.location_from_address(query)
     if location is None:
-        address_string = f"{address['city']}, {address['state']}, {address['zip_code']}"
+        address_string = (
+            f"{address['city']}, {address['state']}, {address['zip_code']}"
+        )
         query = address_string.replace(" ", "+")
         location = address_service.location_from_address(query)
     response = queries.set_account_location(account, location)

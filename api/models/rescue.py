@@ -3,16 +3,19 @@ from typing import List
 
 from models.pet import PetOut
 
+
 class Location(BaseModel):
     type: str | None
     coordinates: List[float] | None
+
 
 class Address(BaseModel):
     address_one: str | None
     address_two: str | None
     city: str | None
     state: str | None
-    zip_code: str | None
+    zip_code: str
+
 
 class RescueIn(BaseModel):
     name: str
@@ -20,15 +23,12 @@ class RescueIn(BaseModel):
     address: Address | None
     logo: str | None
     picture: str | None
-    rescue_admin: str | None  # Replace with Account
-    pets: List[PetOut] | None
-    staff: List[str] | None  # Replace with List[Account]
-    approved_adopters: List[str] | None  # Replace with List[Account]
-    location: Location | None
+    admin_email: str
 
 
 class RescueOut(RescueIn):
     id: str | None
+    location: Location | None
 
 
 class RescuesList(BaseModel):

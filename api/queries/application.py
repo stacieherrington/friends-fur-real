@@ -11,13 +11,14 @@ from .pet import PetQueries
 
 class ApplicationQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "adoption_applications"
+    COLLECTION = "applications"
 
-    def create_application(self, app: ApplicationIn):
+    def create_application(self, app: ApplicationIn, account_id):
         app = app.dict()
+        app["account_id"] = account_id
         # check if the account_id has an application based on the same pet_id:
         record = self.collection.find_one(
-            {"pet_id": app["pet_id"], "account_id": app["account_id"]}
+            {"pet_id": app["pet_id"], "account_id": account_id}
         )
         if not record:
             insert_result = self.collection.insert_one(app)
@@ -47,7 +48,10 @@ class ApplicationQueries(Queries):
 
     def approve_application(self, application_id) -> ApplicationOut:
         # 1. check if there is an approved applicaiton with the same pet_id
-        pet_id = self.detail_application(application_id).pet_id
+        pet = self.detail_application(application_id)
+        if not pet:
+            return None  # handle not find that application_id
+        pet_id = pet.pet_id
         has_approved_app = self.collection.find_one(
             {"pet_id": pet_id, "status": "Approved"}
         )
@@ -85,9 +89,12 @@ class ApplicationQueries(Queries):
         return ApplicationOut(**result, id=application_id)
 
     def delete_application(self, application_id):
-        delete_result = self.collection.delete_one(
-            filter={"_id": ObjectId(application_id)}
-        )
+        try:
+            delete_result = self.collection.delete_one(
+                filter={"_id": ObjectId(application_id)}
+            )
+        except:
+            return {"message": "this application id is not exist!"}
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
@@ -102,3 +109,19 @@ class ApplicationQueries(Queries):
             return None
         if app:
             return ApplicationOut(**app, id=application_id)
+
+    def current_account_id_match_application(
+        self, application_id, current_account_id
+    ) -> bool:
+        application = self.detail_application(application_id)
+        if application:
+            return application.dict()["account_id"] == current_account_id
+        return False
+
+    def current_staff_rescue_id_match_application(
+        self, application_id, current_staff_rescue_id
+    ) -> bool:
+        application = self.detail_application(application_id)
+        if application:
+            return application.dict()["rescue_id"] == current_staff_rescue_id
+        return False

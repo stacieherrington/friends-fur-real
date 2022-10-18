@@ -1,11 +1,9 @@
 from typing import Literal
 from pydantic import BaseModel
 from typing import List
-from models.pet import PetOut
+
 
 class SuccessStoryIn(BaseModel):
-    pet: PetOut
-    account: object | None  # account not made yet
     title: str | None
     story: str | None
     picture: str | None
@@ -18,6 +16,10 @@ class SuccessStoryIn(BaseModel):
 
 class SuccessStoryOut(SuccessStoryIn):
     id: str
+    application_id: str | None
+    pet_id: str | None
+    rescue_id: str | None
+    account_id: str | None
 
 
 class SuccessStoryList(BaseModel):
