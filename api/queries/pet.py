@@ -10,7 +10,7 @@ from .accounts import AccountQueries
 
 class PetQueries(Queries):
     DB_NAME = "fur"
-    COLLECTION = "pet"
+    COLLECTION = "pets"
 
     def get_pet(self, id) -> PetOut:
         try:
@@ -22,9 +22,10 @@ class PetQueries(Queries):
             return None
         return PetOut(**pet, id=str(id))
 
-    def create_pet(self, pet: PetIn) -> PetOut:
+    def create_pet(self, pet: PetIn, rescue_id) -> PetOut:
         pet = pet.dict()
         pet["is_adopted"] = False
+        pet["rescue_id"] = rescue_id
         insert_result = self.collection.insert_one(pet)
         # the insert_result have acknowledged(True/ False), and inserted_id(ObjectID of the new pet)
         if insert_result.acknowledged:
@@ -32,7 +33,7 @@ class PetQueries(Queries):
 
     def list_pets(self) -> List[PetOut]:
         # now return all the pet, need working on sort by distance later?
-        result = self.collection.find({})
+        result = self.collection.find({"is_adopted": False})
         pets = []
         for pet in result:
             pet["id"] = str(pet["_id"])
@@ -40,7 +41,10 @@ class PetQueries(Queries):
         return pets
 
     def delete_pet(self, id):
-        delete_result = self.collection.delete_one({"_id": ObjectId(id)})
+        try:
+            delete_result = self.collection.delete_one({"_id": ObjectId(id)})
+        except:
+            return
         # delete result has delete_result.deleted_count(ing), and delete_result.acknowledged(bool)
         if delete_result:
             return {"message": "pet has been deleted!"}
@@ -56,7 +60,6 @@ class PetQueries(Queries):
         except:
             return None
         if pet:
-
             return PetOut(**pet, id=str(id))
 
     def get_three_random_pets(self) -> List[PetOut]:
@@ -82,3 +85,9 @@ class PetQueries(Queries):
             filter={"_id": ObjectId(pet_id)},
             update={"$set": {"is_adopted": True}},
         )
+
+    def rescue_own_pet(self, pet_id, rescue_id) -> bool:
+        pet = self.get_pet(pet_id)
+        if pet:
+            return pet.dict["rescue_id"] == rescue_id
+        return False

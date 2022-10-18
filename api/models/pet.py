@@ -11,7 +11,7 @@ class PetIn(BaseModel):
     size: str | None
     description: str | None
     weight: int | None  # str ?
-    pictures: List[str] | None
+    pictures: str | None
     primary_color: str | None
     ok_with_dogs: bool | None
     ok_with_cats: bool | None
@@ -22,7 +22,6 @@ class PetIn(BaseModel):
     special_needs: bool | None
     is_adopted: bool | None
     rescue_id: str | None
-    story_id: str | None
 
 
 class PetOut(PetIn):

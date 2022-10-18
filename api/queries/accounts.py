@@ -52,11 +52,18 @@ class AccountQueries(Queries):
             accts.append(AccountOut(**acct))
         return accts
 
+    def list_accounts_by_rescue_id(self, rescue_id) -> AccountList:
+        accounts = self.collection.find(
+            {"rescue_id": rescue_id, "roles": "staff"}
+        )
+        accts = []
+        for acct in accounts:
+            acct["id"] = str(acct["_id"])
+            accts.append(AccountOut(**acct))
+        return accts
+
     def single_account(self, id) -> AccountDisplay:
-        try:
-            acct = self.collection.find_one({"_id": ObjectId(id)})
-        except:
-            return None
+        acct = self.collection.find_one({"_id": ObjectId(id)})
         if not acct:
             return None
         return AccountDisplay(**acct)
@@ -64,14 +71,13 @@ class AccountQueries(Queries):
     def get_account_dict(self, id) -> dict[str, Any]:
         return self.collection.find_one({"_id": ObjectId(id)})
 
-    def update_account(self, id, data) -> AccountUpdate:
-        try:
-            acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
-                {"$set": data.dict(exclude_unset=True)},
-                return_document=ReturnDocument.AFTER,
-            )
-        except:
+    def update_account(self, id, data) -> AccountDisplay:
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(id)},
+            {"$set": data.dict(exclude_unset=True)},
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
             return None
         return AccountDisplay(**acct)
 
@@ -85,30 +91,41 @@ class AccountQueries(Queries):
             self.collection.delete_one({"_id": id})
             return {"message": f"Account {id} has been deleted!"}
 
-    def promote_account(self, id) -> AccountOut:
-        try:
-            acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
-                {"$addToSet": {"roles": "staff"}},
-                return_document=ReturnDocument.AFTER,
-            )
-        except:
+    def promote_account(self, email, rescue_id) -> AccountOut:
+        # find_ond_and_update not raise error, return None, before or after document
+        acct = self.collection.find_one_and_update(
+            {"email": email},
+            {
+                "$addToSet": {"roles": "staff"},
+                "$set": {"rescue_id": rescue_id},
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
             return None
-        SessionQueries().delete_sessions(account_id=id)
-        return AccountOut(**acct, id=id)
+        # kick off the user
+        acct["id"] = str(acct["_id"])
+        SessionQueries().delete_sessions(account_id=acct["id"])
+        return AccountOut(**acct)
 
-    def demote_account(self, id) -> AccountOut:
-        try:
-            acct = self.collection.find_one_and_update(
-                {"_id": ObjectId(id)},
-                {"$pull": {"roles": "staff"}},
-                return_document=ReturnDocument.AFTER,
-            )
-        except:
+    def demote_account(self, email, rescue_id) -> AccountOut:
+        #
+        acct = self.collection.find_one_and_update(
+            {"email": email, "rescue_id": rescue_id},
+            {
+                "$pull": {"roles": "staff"},
+                "$unset": {"rescue_id": rescue_id},
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
             return None
-        SessionQueries().delete_sessions(account_id=id)
-        return AccountOut(**acct, id=id)
+        # kick off the user
+        acct["id"] = str(acct["_id"])
+        SessionQueries().delete_sessions(account_id=acct["id"])
+        return AccountOut(**acct)
 
+    # here:
     def set_account_location(
         self, acct: dict, location: dict
     ) -> AccountDisplay:

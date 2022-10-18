@@ -32,6 +32,22 @@ class ApplicationIn(BaseModel):
 #     pet: PetOut | None
 
 
+class ApplicationUpdate(BaseModel):
+    first_name: str | None
+    last_name: str | None
+    address: Address | None
+    phone_number: str | None
+    has_small_children: bool | None
+    has_dogs: bool | None
+    has_cats: bool | None
+    residence_type: str | None
+    residence_owned: str | None
+    landlord_restrictions: str | None
+    date_ready: str | None
+    wants_preapproval: bool | None
+    agrees_to_terms: bool | None
+
+
 class ApplicationOut(ApplicationIn):
     id: str
 

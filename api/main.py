@@ -5,7 +5,7 @@ from routers import (
     pet,
     application,
     rescue,
-    success_story,
+    story,
     accounts,
     auth,
 )
@@ -38,7 +38,7 @@ app.add_middleware(
 
 app.include_router(pet.router)
 app.include_router(rescue.router)
-app.include_router(success_story.router)
+app.include_router(story.router)
 app.include_router(application.router)
 app.include_router(auth.authenticator.router)
 app.include_router(accounts.router)
