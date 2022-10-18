@@ -6,6 +6,7 @@ import ApplicationList from './applications/ApplicationsList';
 import HomePage from './Homepage';
 import LoginForm from './Login/Login'
 import SignUpForm from './Signup/Signup';
+import StoryForm from './components/StoryForm';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/applications" element={<ApplicationList />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/stories/new" element={<StoryForm />} />
           </Routes>
         </div>
       </BrowserRouter>
