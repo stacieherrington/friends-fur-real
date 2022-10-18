@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 
 export default function AppCheckbox() {
   const [checkboxValues, setCheckboxValues] = React.useState({
@@ -37,7 +38,7 @@ export default function AppCheckbox() {
   } = checkboxValues;
 
   const error = [wants_prepproval, agrees_to_terms].filter((v) => v).length < 1;
-
+  const smokeLabel = smoke_free_home ? "non-smoker" : `smoker`;
   return (
     <>
       <Box sx={{ display: "flex", m: 3 }}>
@@ -74,8 +75,7 @@ export default function AppCheckbox() {
                   checkedIcon={<SmokeFreeSharpIcon color='success' />}
                 />
               }
-              label='Smoke Free Home'
-            //   ({...checkboxValues.smoke_free_home}? label='Smoke free' : label='smoker')
+              label={smokeLabel}
             />
           </FormGroup>
         </FormControl>
@@ -94,7 +94,6 @@ export default function AppCheckbox() {
               }
               label='Have small children'
             />
-
             <FormControlLabel
               control={
                 <Checkbox
@@ -135,7 +134,7 @@ export default function AppCheckbox() {
                 name='agrees_to_terms'
               />
             }
-            label='I have read and accept the Terms and Conditions* *'
+            label='I agree to the Terms and Conditions* *'
           />
         </FormControl>
       </Box>
