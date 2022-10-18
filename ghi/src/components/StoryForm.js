@@ -6,9 +6,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
-import { createFilterOptions, InputLabel, MenuItem } from '@mui/material';
+import { InputLabel, MenuItem } from '@mui/material';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import SendIcon from '@mui/icons-material/Send';
 
 
 
@@ -22,7 +23,7 @@ export default function StoryForm() {
   const [storyError, setStoryError] = useState(false)
 
   const fetchPet = async () => {
-    const url = 'http://localhost:8000/api/pets/';
+    const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
     const response = await fetch(url)
     const petsJson = await response.json()
     setPets(petsJson.pets)
@@ -32,22 +33,22 @@ export default function StoryForm() {
     fetchPet()
   }, []);
 
-  const handleChange = (event) => {
-    setPet(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new story(event.currentTarget);
-    setTitleError(false)
-    setStoryError(false)
+    setStory(event.target.value);
 
+    setTitleError(false)
+    setStoryError(false)    
     if (title == '') {
       setTitleError(true)
     }
     if (story == '') {
       setStoryError(true)
     }
+  };
+
+  const handleChange = (event) => {
+    setPet(event.target.value);
   };
 
   return (
@@ -63,7 +64,7 @@ export default function StoryForm() {
               Share your story
             </Typography>
             <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="demo-select-small">Select a pet</InputLabel>
+              <InputLabel id="select-pet">Select a pet</InputLabel>
               <Select onChange={handleChange} id="select" value={pet}>
                 {petsData.map((pet) => (
                   <MenuItem key={pet.id} value={pet.name}>
@@ -76,6 +77,7 @@ export default function StoryForm() {
             <TextField
               onChange={(event) => setTitle(event.target.value)}
               label="Title"
+              value={title}
               id="title"
               name="title"
               variant="outlined"
@@ -85,21 +87,10 @@ export default function StoryForm() {
               sx={{ marginBottom: 3 }}
               error={titleError}
             />
-
-            {/* <Autocomplete
-              id="pet_id"
-              options={petsData}
-              getOptionLabel={(option) => option.pet_name}
-              filterOptions={filterOptions}
-              sx={{ width: "auto", paddingBottom: 2 }}
-              size="small"
-              renderInput={(params) => <TextField {...params} label="Choose pet" />}
-            /> */}
-
-
             <TextField
               onChange={(event) => setStory(event.target.value)}
               label="Story"
+              value={story}
               id="story"
               name="story"
               variant="outlined"
@@ -118,6 +109,7 @@ export default function StoryForm() {
             variant="outlined"
             sx={{ mb: 2 }}
             color="primary"
+            endIcon={<SendIcon />}
           >
             Submit story
           </Button>
