@@ -81,3 +81,6 @@ It's my first time ever trying mui. It's been fun learning mui and how similar a
 Today I continued working on the front-end templates. I added a filter option on our application list table. To be able to filter though any submitted, declined, and approved applications. I also worked on our Signin template. 
 
 
+## October 17, 2022
+
+Today I worked on the Signup form template. I also  started working on the story form with an "option" to select a pet for the story. Spent a lot of time learning and watching videos on MUI. It has been challenging to create all the components while learning how to utilize MUI at the same time since I have only been using bootstrap before this. 
