@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,26 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import { MuiTelInput } from "mui-tel-input";
 import AppCheckbox from "./appCheckbox";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
-
-function PhoneNumber() {
-  const [phone, setPhone] = useState("");
-
-  const handleChange = (newPhone) => {
-    setPhone(newPhone);
-  };
-  return (
-    <MuiTelInput
-      value={phone}
-      placeholder='Phone Number'
-      onChange={handleChange}
-      onlyCountries={["US"]}
-      fullWidth
-    />
-  );
-}
+import { MuiTelInput } from "mui-tel-input";
 
 function ResidenceSelector() {
   const residences = [
@@ -58,7 +41,7 @@ function ResidenceSelector() {
     >
       {residences.map((option) => (
         <MenuItem key={option.value} value={option.value}>
-          {option.label}
+          {option.value}
         </MenuItem>
       ))}
     </TextField>
@@ -71,8 +54,8 @@ export default function ApplicationForm() {
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
-    phone_number: "",
     date_ready: "",
+    phone_number: "",
     landlord_restrictions: "",
     has_small_children: "",
     has_dogs: "",
@@ -81,27 +64,16 @@ export default function ApplicationForm() {
     residence_owned: "",
     residence_type: [],
   });
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [dateReady, setDateReady] = useState('');
-  // const [landlordRestrictions, setLandlordRestrictions] = useState("");
-  // const [residenceType, setResidenceType] = useState("");
-  // const [hasSmallChildren, setHasSmallChildren] = useState("");
-  // const [hasDogs, setHasDogs] = useState("");
-  // const [hasCats, setHasCats] = useState("");
-  // const [smokeFreeHome, setSmokeFreeHome] = useState("");
-  // const [residenceOwned, setResidenceOwned] = useState("");
+
   const handleInputChange = (event) => {
     setApplication({ ...application, [event.target.name]: event.target.value });
   };
-
   const handleReset = () => {
     setApplication({
       first_name: "",
       last_name: "",
-      phone_number: "",
       date_ready: "",
+      phone_number: "",
       landlord_restrictions: "",
       has_small_children: "",
       has_dogs: "",
@@ -111,13 +83,12 @@ export default function ApplicationForm() {
       residence_type: [],
     });
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const applicationUrl = "http://localhost:8000/api/applications/";
     const fetchConfig = {
       method: "post",
-      body: JSON.stringify({}),
+      body: JSON.stringify({ ...application }),
       headers: { "Content-Type": "application/json" },
     };
     fetch(applicationUrl, fetchConfig)
@@ -125,71 +96,10 @@ export default function ApplicationForm() {
       .catch((event) => console.log("post error", event));
     handleReset();
   };
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [dateReady, setDateReady] = useState('');
-  // const [landlordRestrictions, setLandlordRestrictions] = useState("");
-  // const [residenceType, setResidenceType] = useState("");
-  // const [hasSmallChildren, setHasSmallChildren] = useState("");
-  // const [hasDogs, setHasDogs] = useState("");
-  // const [hasCats, setHasCats] = useState("");
-  // const [smokeFreeHome, setSmokeFreeHome] = useState("");
-  // const [residenceOwned, setResidenceOwned] = useState("");
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const applicationUrl = "http://localhost:8000/api/applications/";
-  //   const fetchConfig = {
-  //     method: "post",
-  //     body: JSON.stringify({
-  //       first_name: firstName,
-  //       last_name: lastName,
-  //       phone_number: phoneNumber,
-  //       date_ready: dateReady,
-  //       landlord_restrictions: landlordRestrictions,
-  //       has_small_children: hasSmallChildren,
-  //       has_dogs: hasDogs,
-  //       has_cats: hasCats,
-  //       smoke_free_home: smokeFreeHome,
-  //       residence_owned: residenceOwned,
-  //       residence_type: residenceType,
-  //     }),
-  //     headers: { "Content-Type": "application/json" },
-  //   };
-  //   fetch(applicationUrl, fetchConfig)
-  //     .then((res) => res.json())
-  //     .catch((event) => console.log("post error", event));
-  //   setFirstName("");
-  //   setLastName("");
-  //   setPhoneNumber("");
-  //   setLandlordRestrictions("");
-  //   setHasSmallChildren("");
-  //   setHasDogs("");
-  //   setHasCats("");
-  //   setSmokeFreeHome("");
-  //   setResidenceOwned("");
-  //   setResidenceType("");
-  // };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     first_name: data.get("first_name"),
-  //     last_name: data.get("last_name"),
-  //     phone_number: data.get("phoneNumber"),
-  //     date_ready: data.get("date_ready"),
-  //     landlord_restrictions: data.get("landlord_restrictions"),
-  //     residence_type: data.get("residence_type"),
-  //     has_dogs: data.get("has_dogs"),
-  //     has_cats: data.get("has_cats"),
-  //     smoker: data.get("smoker"),
-  //     has_small_children: data.get("has_small_children"),
-  //     residence_owned: data.get("residence_owned"),
-  //   });
-  // };
-
+  // function InputFields(){
+  // return(<></>)}
+console.log(application)
   return (
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
@@ -215,9 +125,10 @@ export default function ApplicationForm() {
               fullWidth
               onChange={handleInputChange}
               value={application.first_name}
+              type='text'
               id='first_name'
-              placeholder='First Name'
               name='first_name'
+              placeholder='First Name'
               autoComplete='current-first-name'
               autoFocus
             />
@@ -227,13 +138,23 @@ export default function ApplicationForm() {
               fullWidth
               onChange={handleInputChange}
               value={application.last_name}
-              name='last_name'
-              placeholder='Last Name'
               type='text'
               id='last_name'
+              name='last_name'
+              placeholder='Last Name'
               autoComplete='current-last-name'
             />
-            <PhoneNumber />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              placeholder='Phone Number'
+              onChange={handleInputChange}
+              value={application.phone_number}
+              type='text'
+              name='phone_number'
+              id='phone_number'
+            />
             <TextField
               margin='normal'
               required

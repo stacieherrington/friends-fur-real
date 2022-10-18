@@ -9,7 +9,6 @@ import Checkbox from "@mui/material/Checkbox";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 
 export default function AppCheckbox() {
   const [checkboxValues, setCheckboxValues] = useState({
