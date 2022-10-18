@@ -16,25 +16,55 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link } from '@mui/material';
 
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
 
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const [anchorEl3, setAnchorEl3] = React.useState(null);
 
 
+
+
+  const handleMenu1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+
+  const handleMenu2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMenu3 = (event) => {
+    setAnchorEl3(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };
+
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+
+  const handleClose3 = () => {
+    setAnchorEl3(null);
+  };
+
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -42,17 +72,79 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        FFR Logo
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        <Link href="/">
+          <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
-        ))}
+        </Link>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleMenu3} sx={{ textAlign: 'center' }}>
+            <ListItemText primary={"Rescues"} />
+          </ListItemButton>
+          <Menu
+          id="menu-appbar1"
+          anchorEl={anchorEl3}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl3)}
+          onClose={handleClose3}
+        >
+          <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
+          <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
+          <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
+        </Menu>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleMenu} sx={{ textAlign: 'center' }}>
+            <ListItemText primary={"Adopters"} />
+          </ListItemButton>
+        </ListItem>
+        <Menu
+          id="menu-appbar2"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>Adopter Link 1</MenuItem>
+          <MenuItem onClick={handleClose}>Adopter Link 2</MenuItem>
+        </Menu>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <Link href="/signup">
+              <ListItemText primary={"Signup"} />
+            </Link>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }}>
+            <Link href="/login">
+              <ListItemText primary={"Login"} />
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -77,45 +169,82 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            FFR Logo
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+            <Link href="/">
+              <Button sx={{ color: '#fff' }}>
+                {"Home"}
               </Button>
-            ))}
+            </Link>
+            <Button onClick={handleMenu1} sx={{ color: '#fff' }}>
+              {"Rescues"}
+            </Button>
+            <Menu
+              id="menu-appbar3"
+              anchorEl={anchorEl1}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl1)}
+              onClose={handleClose1}
+            >
+              <MenuItem onClick={handleClose1}>Rescue Link 1</MenuItem>
+              <MenuItem onClick={handleClose1}>Rescue Link 2</MenuItem>
+            </Menu>
+            <Button onClick={handleMenu2} sx={{ color: '#fff' }}>
+              {"Adopters"}
+            </Button>
+            <Menu
+              id="menu-appbar4"
+              anchorEl={anchorEl2}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl2)}
+              onClose={handleClose2}
+            >
+              <MenuItem onClick={handleClose2}>Adopters Link 1</MenuItem>
+              <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
+            </Menu>
+            <Link href="/signup">
+              <Button sx={{ color: '#fff' }}>
+                {"Signup"}
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button sx={{ color: '#fff' }}>
+                {"Login"}
+              </Button>
+            </Link>
+            <Button sx={{ color: '#fff' }}>
+              {"Logout"}
+            </Button>
           </Box>
           <div>
-        <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-        <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-              </div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              // onClick={}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Box component="nav">
