@@ -11,7 +11,7 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
 
-export default function StoryForm() {
+export default function StoryForm(application_id) {
 
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
@@ -23,7 +23,7 @@ export default function StoryForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/applications/{application_id}/story/`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/applications/${application_id}/story/`;
     const data = { title, story, picture };
     const response = await fetch(url, {
       method: 'POST',
