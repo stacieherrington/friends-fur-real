@@ -1,192 +1,3 @@
-// import * as React from "react";
-// import { useState } from "react";
-// import Avatar from "@mui/material/Avatar";
-// import Button from "@mui/material/Button";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import TextField from "@mui/material/TextField";
-// import MenuItem from "@mui/material/MenuItem";
-// import Box from "@mui/material/Box";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-// import Typography from "@mui/material/Typography";
-// import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import Copyright from "../components/Copyright";
-// import AppCheckbox from "./appCheckbox";
-// import SendSharpIcon from "@mui/icons-material/SendSharp";
-
-// const theme = createTheme();
-
-// export default function ApplicationForm() {
-//   const residences = [
-//     { name: "Single Family Home" },
-//     { name: "Single Family w/ large yard" },
-//     { name: "Apartment" },
-//     { name: "Townhouse" },
-//     { name: "Condo" },
-//   ];
-//   const [firstName, setFirstName] = useState("");
-//   const [lastName, setLastName] = useState("");
-//   const [dateReady, setDateReady] = useState("");
-//   const [phoneNumber, setPhoneNumber] = useState("");
-//   const [landlordRestrictions, setLandlordRestrictions] = useState("");
-//   const [smallChildren, setSmallChildren] = useState("");
-//   const [dogs, setDogs] = useState("");
-//   const [cats, setCats] = useState("");
-//   const [smokeFree, setSmokeFree] = useState("");
-//   const [residenceOwned, setResidenceOwned] = useState("");
-//   const [residenceType, setResidenceType] = useState("");
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-
-//     fetch(`${process.env.REACT_APP_API_HOST}/api/applications`, {
-//       method: "post",
-//       credentials: "include",
-//       body: JSON.stringify({
-//         first_name: firstName,
-//         last_name: lastName,
-//         date_ready: dateReady,
-//         phone_number: phoneNumber,
-//         landlord_restrictions: landlordRestrictions,
-//         has_small_children: smallChildren,
-//         has_dogs: dogs,
-//         has_cats: cats,
-//         smoke_free_home: smokeFree,
-//         residence_owned: residenceOwned,
-//         residence_type: residenceType,
-//       }),
-//       headers: { "Content-Type": "application/json" },
-//     })
-//       .then((res) => res.json())
-//       .catch((event) => console.log("post error", event));
-//     setFirstName("");
-//     setLastName("");
-//     setDateReady("");
-//     setPhoneNumber("");
-//     setLandlordRestrictions("");
-//     setSmallChildren("");
-//     setDogs("");
-//     setCats("");
-//     setSmokeFree("");
-//     setResidenceOwned("");
-//     setResidenceType("");
-//   };
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <Container component='main' maxWidth='xs'>
-//         <CssBaseline />
-//         <Box
-//           sx={{
-//             marginTop: 8,
-//             display: "flex",
-//             flexDirection: "column",
-//             alignItems: "center",
-//           }}
-//         >
-//           <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
-//             <LockOutlinedIcon />
-//           </Avatar>
-//           <Typography component='h1' variant='h5'>
-//             Application Form
-//           </Typography>
-//           <Box component='form' onSubmit={handleSubmit} noValidate>
-//             <TextField
-//               margin='normal'
-//               required
-//               fullWidth
-//               onChange={(e) => setFirstName(e.target.value)}
-//               value={firstName}
-//               type='text'
-//               id='first_name'
-//               name='first_name'
-//               placeholder='First Name'
-//               autoComplete='current-first-name'
-//               autoFocus
-//             />
-//             <TextField
-//               margin='normal'
-//               required
-//               fullWidth
-//               onChange={(e) => setLastName(e.target.value)}
-//               value={lastName}
-//               type='text'
-//               id='last_name'
-//               name='last_name'
-//               placeholder='Last Name'
-//               autoComplete='current-last-name'
-//             />
-//             <TextField
-//               margin='normal'
-//               required
-//               fullWidth
-//               placeholder='Phone Number'
-//               onChange={(e) => setPhoneNumber(e.target.value)}
-//               value={phoneNumber}
-//               type='text'
-//               name='phone_number'
-//               id='phone_number'
-//             />
-//             <TextField
-//               margin='normal'
-//               required
-//               fullWidth
-//               onChange={(e) => setDateReady(e.target.value)}
-//               value={dateReady}
-//               name='date_ready'
-//               placeholder='Date Ready'
-//               type='date'
-//               id='date_ready'
-//               autoComplete='current-date'
-//             />
-//             <TextField
-//               margin='normal'
-//               required
-//               fullWidth
-//               onChange={(e) => setLandlordRestrictions(e.target.value)}
-//               value={landlordRestrictions}
-//               multiline
-//               maxRows={4}
-//               name='landlord_restrictions'
-//               placeholder='Landlord Restrictions'
-//               type='text'
-//               id='landlord_restrictions'
-//               autoComplete='current-landlord-restrictions'
-//             />
-//             <TextField
-//               id='outlined-select-residence'
-//               select
-//               fullWidth
-//               label='Residence Type'
-//               onChange={(e) => setResidenceType(e.target.value)}
-//               value={residenceType}
-//             >
-//               {residences.map((event) => (
-//                 <MenuItem key={event.name} value={event.name}>
-//                   {event.name}
-//                 </MenuItem>
-//               ))}
-//             </TextField>
-//             <AppCheckbox />
-
-//             <Button
-//               type='submit'
-//               fullWidth
-//               variant='outlined'
-//               sx={{ mt: 3, mb: 2 }}
-//               color='success'
-//               endIcon={<SendSharpIcon />}
-//             >
-//               Submit
-//             </Button>
-//           </Box>
-//         </Box>
-//         <Copyright sx={{ mt: 10, mb: 4 }} />
-//       </Container>
-//     </ThemeProvider>
-//   );
-// }
-
 import * as React from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
@@ -194,16 +5,25 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import AppCheckbox from "./appCheckbox";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
+import Box from "@mui/material/Box";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
+import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
+import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 
-function ResidenceSelector() {
+const theme = createTheme();
+
+export default function ApplicationForm() {
   const residences = [
     { name: "Single Family Home" },
     { name: "Single Family w/ large yard" },
@@ -211,80 +31,67 @@ function ResidenceSelector() {
     { name: "Townhouse" },
     { name: "Condo" },
   ];
-  const [residenceType, setResidenceType] = useState("");
-  const handleSelect = (event) => {
-    setResidenceType(event.target.value);
-  };
-  return (
-    <TextField
-      id='outlined-select-residence'
-      select
-      fullWidth
-      label='Residence Type'
-      onChange={handleSelect}
-      value={residenceType}
-    >
-      {residences.map((event) => (
-        <MenuItem key={event.name} value={event.name}>
-          {event.name}
-        </MenuItem>
-      ))}
-    </TextField>
-  );
-}
 
-const theme = createTheme();
-
-export default function ApplicationForm() {
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
     date_ready: "",
     phone_number: "",
     landlord_restrictions: "",
-    has_small_children: "",
-    has_dogs: "",
-    has_cats: "",
-    smoke_free_home: "",
-    residence_owned: "",
     residence_type: "",
   });
 
+  const [boolValues, setBoolValues] = useState({
+    has_small_children: false,
+    has_dogs: false,
+    has_cats: false,
+    wants_prepproval: false,
+    agrees_to_terms: false,
+    residence_owned: false,
+    smoke_free_home: true,
+  });
+  const handleCheckbox = (event) => {
+    setBoolValues({
+      ...boolValues,
+      [event.target.name]: event.target.checked,
+    });
+  };
   const handleInputChange = (event) => {
     setApplication({ ...application, [event.target.name]: event.target.value });
   };
+
   const handleReset = () => {
-    setApplication({
-      first_name: "",
-      last_name: "",
-      date_ready: "",
-      phone_number: "",
-      landlord_restrictions: "",
-      has_small_children: "",
-      has_dogs: "",
-      has_cats: "",
-      smoke_free_home: "",
-      residence_owned: "",
-      residence_type: "",
-    });
+    setApplication(application);
+    setBoolValues(boolValues);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const applicationUrl = "http://localhost:8000/api/applications/";
-    const fetchConfig = {
+    fetch(`${process.env.REACT_APP_API_HOST}/api/applications`, {
       method: "post",
-      body: JSON.stringify(application),
+      credentials: "include",
+      body: JSON.stringify({
+        ...application,
+        ...boolValues,
+      }),
       headers: { "Content-Type": "application/json" },
-    };
-    fetch(applicationUrl, fetchConfig)
+    })
       .then((res) => res.json())
       .catch((event) => console.log("post error", event));
     handleReset();
   };
 
-  // function InputFields(){
-  // return(<></>)}
-  console.log(application);
+  const {
+    has_small_children,
+    smoke_free_home,
+    has_dogs,
+    has_cats,
+    wants_prepproval,
+    agrees_to_terms,
+    residence_owned,
+  } = boolValues;
+
+  const error = [agrees_to_terms].filter((v) => v).length < 1;
+  const smokeLabel = smoke_free_home ? "non-smoker" : `smoker`;
   return (
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
@@ -367,8 +174,118 @@ export default function ApplicationForm() {
               autoComplete='current-landlord-restrictions'
             />
 
-            <ResidenceSelector />
-            <AppCheckbox />
+            <TextField
+              id='outlined-select-residence'
+              select
+              fullWidth
+              name='residence_type'
+              label='Residence Type'
+              onChange={handleInputChange}
+              value={application.residence_type}
+            >
+              {residences.map((event) => (
+                <MenuItem key={event.name} value={event.name}>
+                  {event.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Box sx={{ display: "flex", m: 3 }}>
+              <FormControl component='fieldset' variant='standard'>
+                <FormLabel component='legend'>Select all that apply:</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={has_dogs}
+                        onChange={handleCheckbox}
+                        name='has_dogs'
+                      />
+                    }
+                    label='Own dogs'
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={has_cats}
+                        onChange={handleCheckbox}
+                        name='has_cats'
+                      />
+                    }
+                    label='Own cats'
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={smoke_free_home}
+                        onChange={handleCheckbox}
+                        name='smoke_free_home'
+                        icon={<SmokingRoomsSharpIcon color='error' />}
+                        checkedIcon={<SmokeFreeSharpIcon color='success' />}
+                      />
+                    }
+                    label={smokeLabel}
+                  />
+                </FormGroup>
+              </FormControl>
+              <FormControl component='fieldset' variant='standard'>
+                <FormLabel component='legend'>
+                  <br></br>
+                </FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={has_small_children}
+                        onChange={handleCheckbox}
+                        name='has_small_children'
+                      />
+                    }
+                    label='Have small children'
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={residence_owned}
+                        onChange={handleCheckbox}
+                        name='residence_owned'
+                      />
+                    }
+                    label='Residence Owned'
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={wants_prepproval}
+                        onChange={handleCheckbox}
+                        name='wants_prepproval'
+                      />
+                    }
+                    label='Pre-Approval?'
+                  />
+                </FormGroup>
+              </FormControl>
+            </Box>
+            <Box sx={{ m: 3 }}>
+              <FormControl
+                required
+                error={error}
+                component='fieldset'
+                variant='standard'
+              >
+                <FormLabel>Required*</FormLabel>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checkedIcon={<DoneOutlineSharpIcon color='success' />}
+                      checked={agrees_to_terms}
+                      onChange={handleCheckbox}
+                      name='agrees_to_terms'
+                    />
+                  }
+                  label='I agree to the Terms and Conditions* *'
+                />
+              </FormControl>
+            </Box>
 
             <Button
               type='submit'
