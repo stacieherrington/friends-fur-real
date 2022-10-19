@@ -64,7 +64,7 @@ def delete_pet(
 ):
     if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
-    elif queries.rescue_own_pet(pet_id, account["rescue_id"]):
+    elif not queries.rescue_own_pet(pet_id, account["rescue_id"]):
         raise not_authorized
     response = queries.delete_pet(pet_id)
     if response:

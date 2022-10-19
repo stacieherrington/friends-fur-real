@@ -5,8 +5,28 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
 export default function PetCard(props) {
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  async function handleDelete(id) {
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE'});
+    if (response.ok) {
+    }
+  }
 
   return (
     <Card sx={{ maxWidth: 250 }}>
@@ -31,7 +51,25 @@ export default function PetCard(props) {
       <CardActions>
         {/* Only show this for staff/admin role */}
         <Button size="small">Update</Button>
-        <Button size="small">Delete</Button>
+        <Button size="small" onClick={handleClickOpen}>Delete</Button>
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this pet?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} autoFocus>Cancel</Button>
+            <Button onClick={(id) => {handleClose(); handleDelete(id)}}>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </CardActions>
     </Card>
   );
