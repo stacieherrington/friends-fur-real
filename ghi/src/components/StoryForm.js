@@ -11,20 +11,18 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
 
-export default function StoryForm(application_id) {
+export default function StoryForm() {
 
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
-  const [picture, setPicture] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [storyError, setStoryError] = useState(false)
-  const [pictureError, setPictureError] = useState(false)
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/applications/${application_id}/story/`;
-    const data = { title, story, picture };
+    const url = `${process.env.REACT_APP_API_HOST}/api/applications/{application_id}/story/`;
+    const data = { title, story };
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -35,15 +33,11 @@ export default function StoryForm(application_id) {
     }
     setTitleError(false)
     setStoryError(false)
-    setPictureError(false)
     if (title == '') {
       setTitleError(true)
     }
     if (story == '') {
       setStoryError(true)
-    }
-    if (picture == '') {
-      setPictureError(true)
     }
   };
 
@@ -87,19 +81,6 @@ export default function StoryForm(application_id) {
               multiline
               rows={5}
               error={storyError}
-            />
-             <TextField
-              onChange={(event) => setPicture(event.target.value)}
-              label="A recent picture URL"
-              value={picture}
-              id="picture"
-              name="picture"
-              variant="outlined"
-              size="small"
-              color="primary"
-              fullWidth
-              required
-              error={pictureError}
             />
           </Box>
           <Button
