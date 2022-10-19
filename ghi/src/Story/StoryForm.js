@@ -7,37 +7,44 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { useParams } from "react-router-dom";
 
 
 
 
 export default function StoryForm() {
-
+  const { applicationId } = useParams()
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
+  const [picture, setPicture] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [storyError, setStoryError] = useState(false)
+  const [pictureError, setPictureError] = useState(false)
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/applications/{application_id}/story/`;
-    const data = { title, story };
+    const url = `${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}/story/`;
+    const data = { title, story, picture };
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     })
+    console.log(data)
     if (response.ok) {
       console.log('YAY!')
     }
     setTitleError(false)
-    setStoryError(false)    
+    setStoryError(false)
     if (title == '') {
       setTitleError(true)
     }
     if (story == '') {
       setStoryError(true)
+    }
+    if (picture == '') {
+      setPictureError(true)
     }
   };
 
@@ -46,9 +53,8 @@ export default function StoryForm() {
     <>
       <Container
         sx={{
-          maxWidth: 500
+          width: 'fit-content'
         }}>
-
         <Box component="form" onSubmit={handleSubmit} noValidate >
           <Box sx={{ paddingTop: 6, paddingBottom: 5 }}>
             <Typography component="h1" variant="h4" sx={{ py: 2, color: "#CFE0FB" }}>
@@ -81,6 +87,19 @@ export default function StoryForm() {
               multiline
               rows={5}
               error={storyError}
+            />
+            <TextField
+              onChange={(event) => setPicture(event.target.value)}
+              label="A recent picture URL"
+              value={picture}
+              id="picture"
+              name="picture"
+              variant="outlined"
+              size="small"
+              color="primary"
+              fullWidth
+              required
+              error={pictureError}
             />
           </Box>
           <Button
