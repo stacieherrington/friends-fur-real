@@ -35,10 +35,19 @@ export default function ApplicationForm() {
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
-    date_ready: "",
+    address: {},
     phone_number: "",
+    date_ready: "",
     landlord_restrictions: "",
     residence_type: "",
+  });
+
+  const [address, setAddress] = useState({
+    address_one: "",
+    address_two: "",
+    city: "",
+    state: "",
+    zip_code: "",
   });
 
   const [boolValues, setBoolValues] = useState({
@@ -59,14 +68,17 @@ export default function ApplicationForm() {
   const handleInputChange = (event) => {
     setApplication({ ...application, [event.target.name]: event.target.value });
   };
-
+  const handleAddress = (event) => {
+    setAddress({ ...address, [event.target.name]: event.target.value });
+  };
   const handleReset = () => {
     setApplication(application);
     setBoolValues(boolValues);
+    setAddress(address);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_HOST}/api/applications`, {
+    fetch(`${process.env.REACT_APP_API_HOST}/api/applications/`, {
       method: "post",
       credentials: "include",
       body: JSON.stringify({
@@ -120,7 +132,7 @@ export default function ApplicationForm() {
               type='text'
               id='first_name'
               name='first_name'
-              placeholder='First Name'
+              label='First Name'
               autoComplete='current-first-name'
               autoFocus
             />
@@ -133,14 +145,69 @@ export default function ApplicationForm() {
               type='text'
               id='last_name'
               name='last_name'
-              placeholder='Last Name'
+              label='Last Name'
               autoComplete='current-last-name'
             />
             <TextField
               margin='normal'
               required
               fullWidth
-              placeholder='Phone Number'
+              label='Address One'
+              onChange={handleAddress}
+              value={address.address_one}
+              type='text'
+              name='address_one'
+              id='address_one'
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='Address Two'
+              onChange={handleAddress}
+              value={address.address_two}
+              type='text'
+              name='address_two'
+              id='address_two'
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='City'
+              onChange={handleAddress}
+              value={address.city}
+              type='text'
+              name='city'
+              id='city'
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='State'
+              onChange={handleAddress}
+              value={address.state}
+              type='text'
+              name='state'
+              id='state'
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='Zip Code'
+              onChange={handleAddress}
+              value={address.zip_code}
+              type='text'
+              name='zip_code'
+              id='zip_code'
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='Phone Number'
               onChange={handleInputChange}
               value={application.phone_number}
               type='text'
@@ -154,7 +221,6 @@ export default function ApplicationForm() {
               onChange={handleInputChange}
               value={application.date_ready}
               name='date_ready'
-              placeholder='Date Ready'
               type='date'
               id='date_ready'
               autoComplete='current-date'
@@ -168,7 +234,7 @@ export default function ApplicationForm() {
               multiline
               maxRows={4}
               name='landlord_restrictions'
-              placeholder='Landlord Restrictions'
+              label='Landlord Restrictions'
               type='text'
               id='landlord_restrictions'
               autoComplete='current-landlord-restrictions'
