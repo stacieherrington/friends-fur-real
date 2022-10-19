@@ -7,12 +7,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { useParams } from "react-router-dom";
 
 
 
 
 export default function StoryForm() {
-
+  const { applicationId } = useParams()
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
   const [picture, setPicture] = useState('')
@@ -23,13 +24,14 @@ export default function StoryForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/applications/{application_id}/story/`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}/story/`;
     const data = { title, story, picture };
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     })
+    console.log(data)
     if (response.ok) {
       console.log('YAY!')
     }

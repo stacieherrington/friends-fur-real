@@ -28,7 +28,7 @@ function App() {
             <Route path="/pets/create" element={<PetForm />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/stories/new" element={<StoryForm />} />
+            <Route path="applications/:applicationId/stories/new" element={<StoryForm />} />
             <Route path="/stories/:storyId" element={<StoryDetail />} />
           </Routes>
         </div>
