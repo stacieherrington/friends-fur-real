@@ -9,6 +9,7 @@ import LoginForm from './Login/Login';
 import PetsList from './pets/PetsList';
 import Signup from './Signup/Signup';
 import PetForm from './pets/PetForm';
+import ManageStaffPage from './Manage/ManageStaffPage';
 
 function App() {
 
@@ -24,8 +25,10 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/pets" element={<PetsList />} />
             <Route path="/pets/create" element={<PetForm />} />
-            <Route path="/signup" element = {<Signup />} />
-            <Route path="/login" element = {<LoginForm />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/manage/staff" element={<ManageStaffPage />} />
+
           </Routes>
         </div>
       </BrowserRouter>

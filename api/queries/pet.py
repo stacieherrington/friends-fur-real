@@ -89,5 +89,5 @@ class PetQueries(Queries):
     def rescue_own_pet(self, pet_id, rescue_id) -> bool:
         pet = self.get_pet(pet_id)
         if pet:
-            return pet.dict["rescue_id"] == rescue_id
+            return pet.dict()["rescue_id"] == rescue_id
         return False
