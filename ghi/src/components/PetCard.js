@@ -13,7 +13,7 @@ export default function PetCard(props) {
       {props.pictures && props.pictures.length?<CardMedia
         component="img"
         height="200"
-        image={props.pictures[0]}
+        image={props.pictures}
         alt={props.breed}
       />: null}
       <CardContent>

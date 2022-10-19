@@ -27,7 +27,7 @@ function PetsList(props) {
       loadPets(setPetsList);
     }
   }
-// pets list is returning as a table right now but needs to be mapped over the Card component
+
   return (
     <div className="px-4 my-5 text-center">
       <Grid container spacing={3}>
