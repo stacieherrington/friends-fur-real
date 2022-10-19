@@ -1,6 +1,6 @@
 10/18/2022
 
-Finished Add Pet form. Helped Kate with story detail page.
+Finished Add Pet form. Tested Gary's new APIs. Helped Kate with story detail page.
 
 
 
