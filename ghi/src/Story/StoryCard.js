@@ -17,10 +17,10 @@ export default function StoryCard(props) {
       />: null}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Ozzy
+          {props.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Amet volutpat consequat mauris nunc congue nisi vitae suscipit.
+          {props.story}
         </Typography>
       </CardContent>
       <CardActions>
