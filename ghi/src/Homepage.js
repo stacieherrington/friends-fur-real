@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SearchBar from './components/SearchBar';
-import PetCard from './components/PetCard';
+import PetCard from './pets/PetCard';
 import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
 import {useState, useEffect} from 'react';
@@ -39,7 +39,7 @@ function HomePage(props) {
             />
           </div>
           <div className="container-fluid py-5">
-            <h1 className="display-5 fw-bold">Pet Highlights</h1>
+            <h1 className="display-5 fw-bold">Featured Friends</h1>
             <div className="py-3">
               <Grid container spacing={3}>
               {petsList.map((pet) => (
@@ -51,7 +51,7 @@ function HomePage(props) {
             </div>
           </div>
           <div className="container-fluid py-1">
-            <h1 className="display-5 fw-bold">Success Stories</h1>
+            <h1 className="display-5 fw-bold">Happy Tails</h1>
             <div className="py-3">
               <StoryCard />
             </div>

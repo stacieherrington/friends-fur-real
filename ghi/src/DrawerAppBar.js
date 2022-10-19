@@ -191,13 +191,11 @@ function DrawerAppBar(props) {
             FFR Logo
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Link href="/">
-              <Button sx={{ color: '#fff' }}>
-                {"Home"}
-              </Button>
-            </Link>
+            <Button href="/" sx={{ color: '#fff' }}>
+              Home
+            </Button>
             <Button onClick={handleMenu1} sx={{ color: '#fff' }}>
-              {"Rescues"}
+              Rescues
             </Button>
             <Menu
               id="menu-appbar3"
@@ -218,7 +216,7 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose1}>Rescue Link 2</MenuItem>
             </Menu>
             <Button onClick={handleMenu2} sx={{ color: '#fff' }}>
-              {"Adopters"}
+              Adopters
             </Button>
             <Menu
               id="menu-appbar4"
@@ -238,16 +236,12 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose2}>Adopters Link 1</MenuItem>
               <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
             </Menu>
-            <Link href="/signup">
-              <Button sx={{ color: '#fff' }}>
-                {"Signup"}
+              <Button href="/signup" sx={{ color: '#fff' }}>
+                Signup
               </Button>
-            </Link>
-            <Link href="/login">
-              <Button sx={{ color: '#fff' }}>
-                Login
-              </Button>
-            </Link>
+            <Button href="/login" sx={{ color: '#fff' }}>
+              Login
+            </Button>
             <Button href="/login" sx={{ color: '#fff' }} onClick={logout}>
               Logout
             </Button>
