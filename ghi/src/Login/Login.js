@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,19 +12,26 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
-
+import { useNavigate } from "react-router-dom";
 
 
 const theme = createTheme();
-
 export default function LoginForm() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const loginUrl = `${process.env.REACT_APP_API_HOST}/token`;
+    const fetchConfig = {
+      method: 'post',
+      body: data,
+      credentials: "include",
+    };
+    const response = await fetch(loginUrl, fetchConfig);
+    if (response.ok) { console.log("yes!"); return navigate("/"); }
+    else {
+      console.error(response)
+    }
   };
 
   return (
@@ -45,26 +53,16 @@ export default function LoginForm() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            <TextField margin="normal"
+              required fullWidth id="email"
+              label="Email Address" name="username"
+              autoComplete="email" autoFocus />
+
+            <TextField margin="normal" required
+              fullWidth name="password" label="Password"
+              type="password" id="password"
+              autoComplete="current-password" />
+
             <Button
               type="submit"
               fullWidth
@@ -74,6 +72,7 @@ export default function LoginForm() {
             >
               Sign In
             </Button>
+
             <Grid container>
               <Grid item>
                 <Link href="/signup" variant="body2">
