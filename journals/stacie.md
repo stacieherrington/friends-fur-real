@@ -1,3 +1,9 @@
+10/18/2022
+
+Finished Add Pet form. Helped Kate with story detail page.
+
+
+
 10/17/2022
 
 Changed Pet List to use Cards. Got Add Pet form working. Logout button on navbar
