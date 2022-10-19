@@ -12,6 +12,7 @@ class ApplicationIn(BaseModel):
     has_small_children: bool | None
     has_dogs: bool | None
     has_cats: bool | None
+    smoke_free_home: bool | None
     residence_type: str | None
     residence_owned: str | None
     landlord_restrictions: str | None

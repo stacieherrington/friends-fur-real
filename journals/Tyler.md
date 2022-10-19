@@ -28,4 +28,16 @@
 
 ## October 11 2022
 - I spent a lot of time trying to fix a small error on implementing jwtdown_fastapi instead of utilizing from jose import jwt.  It all paid off at the end though and now we're about to ensure users are logged out both during promotion and demotion of roles.
-- 
+
+## October 12 2022
+- I finalized the integration of jwtdown_fastapi with the added sessions.  I really wish we would have used a different authenticator overall instead of the one built for us to use.  The interworkings of the jwtdown_fastapi are far inferior to a lot of other authentication.  I don't really know why we still dont have refresh tokens.
+
+## October 13-16 2022
+-  I worked on setting up a redux store for the first time over these days.  It was a lot of work and I wasn't really sure how to go about it.  I started off by setting up what I could but also trying to make the propery querys and mutations for each of our 33 endpoints.  I have all of the query endpoints set up and working properly, but we don't have enough front end setup yet.  
+-  October 14 we were notified by a teammate that because there was absolutely NO other way, they were working on completely changing everyones backend code that they had written. As of October 16th we have 46 api endpoints, and I was told that all we need is a token from the store.  I'm not happy that I spent so much time setting up the store, which was wanted by everyone from the start, only to be told we only need to have a token available.  We'll see going forward about the use of the store, because we don't need to have the entire back-end handle everything.  The front-end shouldn't handle everything, but its plenty capable of handling more way more than it's currently going to be used for.
+
+## October 17-18 2022
+- I quickly made the desired limited redux store but haven't pushed it into main.  As of now it needs 1 endpoint; I have a branch with around 36 endpoints all query endpoints working properly, I have yet to test mutations because my branch did not have front-end components
+- I mostly worked on the application form which by the end of Oct 18, is fully functioning. It's a very large form and a lot of fields.  I experimented with using FormData() instead of useState().  It makes a lot of sense considering useState() just gets reset upon submission.  There's a lot that goes into trying to make a form with state VS FormData() but I was not able to get all fields to successfully carry over upon submission. 
+- I also experimented with modals.  If all goes well, I should be able to make any form a modal instead of having it live on it's own page. This may require more redux endpoints though, but we'll see going forward.
+
