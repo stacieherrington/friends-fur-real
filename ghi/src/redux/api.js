@@ -41,9 +41,7 @@ export const apiSlice = createApi({
           formData = new FormData(info);
         } else {
           formData = new FormData();
-          formData.append("email", info.email);
-          formData.append("password", info.password);
-          formData.append("zipcode", info.zipcode);
+          formData.append("username", info.email.value);
         }
         return {
           url: "/token",

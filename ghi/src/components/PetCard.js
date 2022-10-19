@@ -5,8 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import ApplicationForm from '../applications/ApplicationForm';
 export default function PetCard(props) {
+  const {id, rescue_id, pictures, name} = props
+
 
   return (
     <Card sx={{ maxWidth: 250 }}>
@@ -26,7 +28,7 @@ export default function PetCard(props) {
       </CardContent>
       <CardActions>
         <Button size="small">More Info</Button>
-        <Button size="small">Adopt</Button>
+        <ApplicationForm/>
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}
