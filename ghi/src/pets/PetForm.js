@@ -17,12 +17,13 @@ import Copyright from '../components/Copyright';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { json } from 'react-router-dom';
+import { FormGroup } from '@mui/material';
 
 
 const theme = createTheme();
 
 
-export default function SignUpForm() {
+export default function PetForm() {
   const [fields, setFields] = useState({
     "name": "",
     "type": "",
@@ -34,13 +35,13 @@ export default function SignUpForm() {
     "weight": "",
     "pictures": [],
     "primary_color": "",
-    "ok_with_dogs": true,
-    "ok_with_cats": true,
-    "shots_up_to_date": true,
-    "ok_with_kids": true,
-    "spayed_neutered": true,
-    "house_trained": true,
-    "special_needs": true,
+    "ok_with_dogs": false,
+    "ok_with_cats": false,
+    "shots_up_to_date": false,
+    "ok_with_kids": false,
+    "spayed_neutered": false,
+    "house_trained": false,
+    "special_needs": false,
   });
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -60,7 +61,11 @@ export default function SignUpForm() {
     }
   };
   const handleChange = (event) => {
-    const update = {...fields, [event.target.name]: event.target.value};
+    let {name, type, value, checked} = event.target;
+    if (type === "checkbox") {
+      value = checked;
+    }
+    const update = {...fields, [name]: value};
     setFields(update);
   };
 
@@ -96,43 +101,60 @@ export default function SignUpForm() {
                     value={fields.name}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
+                    select
                     required
                     fullWidth
                     id="type"
-                    label="Type"
+                    label="Select"
                     name="type"
                     onChange={handleChange}
                     value={fields.type}
-                  />
+                    helperText="Please select type"
+                  >
+                  <MenuItem value="dog">
+                      dog
+                    </MenuItem>
+                    <MenuItem value="cat">
+                      cat
+                    </MenuItem>
+                    <MenuItem value="other">
+                      other
+                    </MenuItem>
+                  </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
                     id="breed"
                     label="Breed"
                     name="breed"
+                    onChange={handleChange}
+                    value={fields.breed}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
                     type={"number"}
-                    onChange={(event) =>
-                        event.target.value < 0
-                            ? (event.target.value = 0)
-                            : event.target.value
-                    }
-                    required
+                    onChange={(event) => {
+                        if (event.target.value < 0) {
+                            event.target.value = 0;
+                          }
+                          handleChange(event);
+                    }}
                     fullWidth
                     id="age"
                     label="Age"
                     name="age"
+                    value={fields.age}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    required
+                    fullWidth
                     select
                     label="Select"
                     value={fields.sex}
@@ -147,6 +169,130 @@ export default function SignUpForm() {
                       male
                     </MenuItem>
                   </TextField>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    select
+                    label="Select"
+                    value={fields.size}
+                    name="size"
+                    onChange={handleChange}
+                    helperText="Please select size"
+                  >
+                    <MenuItem value="small">
+                      small
+                    </MenuItem>
+                    <MenuItem value="medium">
+                      medium
+                    </MenuItem>
+                    <MenuItem value="large">
+                      large
+                    </MenuItem>
+                  </TextField>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type={"number"}
+                    onChange={(event) => {
+                        if (event.target.value < 0) {
+                            event.target.value = 0;
+                          }
+                          handleChange(event);
+                    }}
+                    value={fields.weight}
+                    fullWidth
+                    id="weight"
+                    label="Weight"
+                    name="weight"
+                  />
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <TextField
+                    // type="url"
+                    required
+                    fullWidth
+                    id="pictures"
+                    label="Picture URL"
+                    name="pictures"
+                    onChange={handleChange}
+                    value={fields.pictures}
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="color"
+                    label="Color"
+                    name="primary_color"
+                    onChange={handleChange}
+                    value={fields.primary_color}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_dogs}
+                      name="ok_with_dogs"
+                    />}
+                      label="Ok with dogs" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_cats}
+                      name="ok_with_cats"/>
+                      } label="Ok with cats" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_kids}
+                      name="ok_with_kids"/>
+                      } label="Ok with children" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.shots_up_to_date}
+                      name="shots_up_to_date"
+                    />} label="Shots up to date" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.spayed_neutered}
+                      name="spayed_neutered"
+                     />} label="Spayed or neutered" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                    onChange={handleChange}
+                      checked={fields.house_trained}
+                      name="house_trained"
+                     />} label="House-trained" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.special_needs}
+                      name="special_needs"
+                     />} label="Special needs" />
+                  </FormGroup>
                 </Grid>
               </Grid>
               <Button
