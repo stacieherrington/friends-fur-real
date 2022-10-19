@@ -9,7 +9,8 @@ import LoginForm from './Login/Login';
 import PetsList from './pets/PetsList';
 import Signup from './Signup/Signup';
 import PetForm from './pets/PetForm';
-import StoryForm from './components/StoryForm';
+import StoryForm from './Story/StoryForm';
+import StoryDetail from './Story/StoryDetail';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/stories/new" element={<StoryForm />} />
+            <Route path="/stories/:storyId" element={<StoryDetail />} />
           </Routes>
         </div>
       </BrowserRouter>
