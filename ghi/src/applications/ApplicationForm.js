@@ -49,7 +49,7 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
     { name: "Townhouse" },
     { name: "Condo" },
   ];
-  // console.log(pet_id, rescue_id, name, petPicture);
+  console.log(pet_id, rescue_id, name, petPicture);
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
