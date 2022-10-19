@@ -157,6 +157,13 @@ function DrawerAppBar(props) {
             </Link>
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }} onClick={logout}>
+            <Link href="/login">
+              <ListItemText primary={"Logout"} />
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -241,7 +248,7 @@ function DrawerAppBar(props) {
                 Login
               </Button>
             </Link>
-            <Button sx={{ color: '#fff' }} onClick={logout}>
+            <Button href="/login" sx={{ color: '#fff' }} onClick={logout}>
               Logout
             </Button>
           </Box>
