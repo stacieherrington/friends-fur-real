@@ -17,12 +17,13 @@ import Copyright from '../components/Copyright';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { json } from 'react-router-dom';
+import { FormGroup } from '@mui/material';
 
 
 const theme = createTheme();
 
 
-export default function SignUpForm() {
+export default function PetForm() {
   const [fields, setFields] = useState({
     "name": "",
     "type": "",
@@ -34,13 +35,13 @@ export default function SignUpForm() {
     "weight": "",
     "pictures": [],
     "primary_color": "",
-    "ok_with_dogs": true,
-    "ok_with_cats": true,
-    "shots_up_to_date": true,
-    "ok_with_kids": true,
-    "spayed_neutered": true,
-    "house_trained": true,
-    "special_needs": true,
+    "ok_with_dogs": false,
+    "ok_with_cats": false,
+    "shots_up_to_date": false,
+    "ok_with_kids": false,
+    "spayed_neutered": false,
+    "house_trained": false,
+    "special_needs": false,
   });
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -60,7 +61,11 @@ export default function SignUpForm() {
     }
   };
   const handleChange = (event) => {
-    const update = {...fields, [event.target.name]: event.target.value};
+    let {name, type, value, checked} = event.target;
+    if (type === "checkbox") {
+      value = checked;
+    }
+    const update = {...fields, [name]: value};
     setFields(update);
   };
 
@@ -224,6 +229,70 @@ export default function SignUpForm() {
                     onChange={handleChange}
                     value={fields.primary_color}
                   />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_dogs}
+                      name="ok_with_dogs"
+                    />}
+                      label="Ok with dogs" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_cats}
+                      name="ok_with_cats"/>
+                      } label="Ok with cats" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.ok_with_kids}
+                      name="ok_with_kids"/>
+                      } label="Ok with children" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.shots_up_to_date}
+                      name="shots_up_to_date"
+                    />} label="Shots up to date" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.spayed_neutered}
+                      name="spayed_neutered"
+                     />} label="Spayed or neutered" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                    onChange={handleChange}
+                      checked={fields.house_trained}
+                      name="house_trained"
+                     />} label="House-trained" />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox
+                      onChange={handleChange}
+                      checked={fields.special_needs}
+                      name="special_needs"
+                     />} label="Special needs" />
+                  </FormGroup>
                 </Grid>
               </Grid>
               <Button
