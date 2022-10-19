@@ -28,6 +28,13 @@ export default function PetCard(props) {
     }
   }
 
+  async function handleDelete(id) {
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE'});
+    if (response.ok) {
+      // loadPets(setPetsList);
+    }
+  }
+
   return (
     <Card sx={{ maxWidth: 250 }}>
       {props.pictures && props.pictures.length?<CardMedia

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from models.pet import PetOut, PetIn, PetsList
+from models.pet import PetOut, PetIn, PetsList, PetUpdate
 from queries.pet import PetQueries
 from .auth import authenticator
 
@@ -73,16 +73,16 @@ def delete_pet(
         raise HTTPException(404, "this pet id does not exist!")
 
 
-@router.put("/api/pets/{pet_id}/", response_model=PetOut)
+@router.patch("/api/pets/{pet_id}/", response_model=PetOut)
 def update_pet(
     pet_id: str,
-    data: PetIn,
+    data: PetUpdate,
     queries: PetQueries = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
     if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
-    elif queries.rescue_own_pet(pet_id, account["rescue_id"]):
+    elif not queries.rescue_own_pet(pet_id, account["rescue_id"]):
         raise not_authorized
     response = queries.update_pet(pet_id, data)
     if response:
