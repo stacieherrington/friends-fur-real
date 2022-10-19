@@ -21,9 +21,11 @@ function PetsList(props) {
   }, [])
 
 
-  async function deletePet(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE'});
+  async function handleDelete(id) {
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
+    console.log(id)
     if (response.ok) {
+      console.log("Success!")
       loadPets(setPetsList);
     }
   }
@@ -33,7 +35,7 @@ function PetsList(props) {
       <Grid container spacing={3}>
       {petsList.map((pet) => (
         <Grid xs item key={pet.id}>
-          <PetCard {...pet} />
+          <PetCard  handleDelete={handleDelete} {...pet}/>
         </Grid>
       ))}
       </Grid>

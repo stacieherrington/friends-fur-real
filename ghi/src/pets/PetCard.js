@@ -21,14 +21,7 @@ export default function PetCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
-    console.log(id)
-    if (response.ok) {
-      console.log("Success!")
-    }
-  }
+  console.log(props)
 
   return (
     <Card sx={{ maxWidth: 250 }}>
@@ -67,7 +60,7 @@ export default function PetCard(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>Cancel</Button>
-            <Button onClick={() => {handleClose(); handleDelete(props.id)}}>
+            <Button onClick={() => {handleClose(); props.handleDelete(props.id)}}>
               Delete
             </Button>
           </DialogActions>
