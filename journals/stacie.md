@@ -1,3 +1,10 @@
+10/19/2022
+
+Made add pet form work with new APIs. Added picture to story form. Made delete
+button on pet card work. Made miscellaneous fixes to navbar, homepage, pets list.
+
+
+
 10/18/2022
 
 Finished Add Pet form. Tested Gary's new APIs. Helped Kate with story detail page.
