@@ -2,11 +2,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSignupMutation } from "./api";
 import { preventDefault } from "./utility";
-import {
-  showModal,
-  updateField,
-  SIGNUP_MODAL,
-} from "./store/endpoints/accountSlice";
+import { showModal, updateField, SIGNUP_MODAL } from "./accountSlice";
 import Notification from "./Notification";
 
 export default function SignupModal() {

@@ -5,6 +5,7 @@ import DrawerAppBar from "./DrawerAppBar";
 import ApplicationList from "./applications/ApplicationsList";
 import HomePage from "./Homepage";
 // import NavBar from './nav';
+import ApplicationForm from './applications/ApplicationForm'
 import LoginForm from "./Login/Login";
 import PetsList from "./pets/PetsList";
 import Signup from "./Signup/Signup";
@@ -21,7 +22,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/applications' element={<ApplicationList />} />
-            <Route path='/applications/new' element={<ApplicationList />} />
+            <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/create' element={<PetForm />} />

@@ -38,7 +38,7 @@ const style = {
   overflow: "auto",
 };
 
-export default function ApplicationForm() {
+export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -49,7 +49,7 @@ export default function ApplicationForm() {
     { name: "Townhouse" },
     { name: "Condo" },
   ];
-
+  console.log(pet_id, rescue_id, name, petPicture);
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
@@ -81,6 +81,8 @@ export default function ApplicationForm() {
   };
   const handleSubmit = (e) => {
     e.preDefault();
+    application["pet_id"] = [pet_id];
+    application["rescue_id"] = [rescue_id];
     fetch(`${process.env.REACT_APP_API_HOST}/api/applications/`, {
       method: "post",
       credentials: "include",
@@ -126,7 +128,6 @@ export default function ApplicationForm() {
   //   // let label = e.split('_')
   //   // let autoCompelte = 'autocomplete'
 
- 
   //   return (
   //     <>
   //     {application.map((e)=>(
@@ -173,7 +174,6 @@ export default function ApplicationForm() {
                 Adoption Application Form
               </Typography>
               <Box component='form' onSubmit={handleSubmit} noValidate>
-           
                 <TextField
                   margin='normal'
                   required
