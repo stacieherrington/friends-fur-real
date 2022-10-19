@@ -23,15 +23,10 @@ export default function PetCard(props) {
   };
 
   async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE'});
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
+    console.log(id)
     if (response.ok) {
-    }
-  }
-
-  async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE'});
-    if (response.ok) {
-      // loadPets(setPetsList);
+      console.log("Success!")
     }
   }
 
@@ -72,7 +67,7 @@ export default function PetCard(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>Cancel</Button>
-            <Button onClick={(id) => {handleClose(); handleDelete(id)}}>
+            <Button onClick={() => {handleClose(); handleDelete(props.id)}}>
               Delete
             </Button>
           </DialogActions>
