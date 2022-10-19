@@ -12,6 +12,7 @@ import PetForm from "./pets/PetForm";
 import StoryForm from "./Story/StoryForm";
 import StoryDetail from "./Story/StoryDetail";
 import ApplicationForm from "./applications/ApplicationForm";
+import ManageStaffPage from './Manage/ManageStaffPage';
 
 function App() {
   return (
@@ -28,9 +29,9 @@ function App() {
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<LoginForm />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />
             <Route path='/stories/:storyId' element={<StoryDetail />} />
+            <Route path="/manage/staff" element={<ManageStaffPage />} />
           </Routes>
         </div>
       </BrowserRouter>
