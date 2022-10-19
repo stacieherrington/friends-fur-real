@@ -35,22 +35,15 @@ export default function ApplicationForm() {
   const [application, setApplication] = useState({
     first_name: "",
     last_name: "",
-    address: {},
-    phone_number: "",
-    date_ready: "",
-    landlord_restrictions: "",
-    residence_type: "",
-  });
-
-  const [address, setAddress] = useState({
     address_one: "",
     address_two: "",
     city: "",
     state: "",
     zip_code: "",
-  });
-
-  const [boolValues, setBoolValues] = useState({
+    phone_number: "",
+    date_ready: "",
+    landlord_restrictions: "",
+    residence_type: "",
     has_small_children: false,
     has_dogs: false,
     has_cats: false,
@@ -59,22 +52,14 @@ export default function ApplicationForm() {
     residence_owned: false,
     smoke_free_home: true,
   });
-  const handleCheckbox = (event) => {
-    setBoolValues({
-      ...boolValues,
-      [event.target.name]: event.target.checked,
-    });
-  };
+
   const handleInputChange = (event) => {
-    setApplication({ ...application, [event.target.name]: event.target.value });
-  };
-  const handleAddress = (event) => {
-    setAddress({ ...address, [event.target.name]: event.target.value });
+    let { name, type, value, checked } = event.target;
+    type === "checkbox" ? (value = checked) : (value = value);
+    setApplication({ ...application, [name]: value });
   };
   const handleReset = () => {
     setApplication(application);
-    setBoolValues(boolValues);
-    setAddress(address);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -83,7 +68,6 @@ export default function ApplicationForm() {
       credentials: "include",
       body: JSON.stringify({
         ...application,
-        ...boolValues,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -93,6 +77,17 @@ export default function ApplicationForm() {
   };
 
   const {
+    first_name,
+    last_name,
+    address_one,
+    address_two,
+    city,
+    state,
+    zip_code,
+    phone_number,
+    date_ready,
+    landlord_restrictions,
+    residence_type,
     has_small_children,
     smoke_free_home,
     has_dogs,
@@ -100,7 +95,7 @@ export default function ApplicationForm() {
     wants_prepproval,
     agrees_to_terms,
     residence_owned,
-  } = boolValues;
+  } = application;
 
   const error = [agrees_to_terms].filter((v) => v).length < 1;
   const smokeLabel = smoke_free_home ? "non-smoker" : `smoker`;
@@ -120,7 +115,7 @@ export default function ApplicationForm() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Application Form
+            Adoption Application Form
           </Typography>
           <Box component='form' onSubmit={handleSubmit} noValidate>
             <TextField
@@ -128,7 +123,7 @@ export default function ApplicationForm() {
               required
               fullWidth
               onChange={handleInputChange}
-              value={application.first_name}
+              value={first_name}
               type='text'
               id='first_name'
               name='first_name'
@@ -141,7 +136,7 @@ export default function ApplicationForm() {
               required
               fullWidth
               onChange={handleInputChange}
-              value={application.last_name}
+              value={last_name}
               type='text'
               id='last_name'
               name='last_name'
@@ -153,8 +148,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               label='Address One'
-              onChange={handleAddress}
-              value={address.address_one}
+              onChange={handleInputChange}
+              value={address_one}
               type='text'
               name='address_one'
               id='address_one'
@@ -164,8 +159,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               label='Address Two'
-              onChange={handleAddress}
-              value={address.address_two}
+              onChange={handleInputChange}
+              value={address_two}
               type='text'
               name='address_two'
               id='address_two'
@@ -175,8 +170,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               label='City'
-              onChange={handleAddress}
-              value={address.city}
+              onChange={handleInputChange}
+              value={city}
               type='text'
               name='city'
               id='city'
@@ -186,8 +181,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               label='State'
-              onChange={handleAddress}
-              value={address.state}
+              onChange={handleInputChange}
+              value={state}
               type='text'
               name='state'
               id='state'
@@ -197,8 +192,8 @@ export default function ApplicationForm() {
               required
               fullWidth
               label='Zip Code'
-              onChange={handleAddress}
-              value={address.zip_code}
+              onChange={handleInputChange}
+              value={zip_code}
               type='text'
               name='zip_code'
               id='zip_code'
@@ -209,7 +204,7 @@ export default function ApplicationForm() {
               fullWidth
               label='Phone Number'
               onChange={handleInputChange}
-              value={application.phone_number}
+              value={phone_number}
               type='text'
               name='phone_number'
               id='phone_number'
@@ -219,7 +214,7 @@ export default function ApplicationForm() {
               required
               fullWidth
               onChange={handleInputChange}
-              value={application.date_ready}
+              value={date_ready}
               name='date_ready'
               type='date'
               id='date_ready'
@@ -230,7 +225,7 @@ export default function ApplicationForm() {
               required
               fullWidth
               onChange={handleInputChange}
-              value={application.landlord_restrictions}
+              value={landlord_restrictions}
               multiline
               maxRows={4}
               name='landlord_restrictions'
@@ -247,7 +242,7 @@ export default function ApplicationForm() {
               name='residence_type'
               label='Residence Type'
               onChange={handleInputChange}
-              value={application.residence_type}
+              value={residence_type}
             >
               {residences.map((event) => (
                 <MenuItem key={event.name} value={event.name}>
@@ -263,7 +258,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={has_dogs}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='has_dogs'
                       />
                     }
@@ -273,7 +268,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={has_cats}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='has_cats'
                       />
                     }
@@ -283,7 +278,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={smoke_free_home}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='smoke_free_home'
                         icon={<SmokingRoomsSharpIcon color='error' />}
                         checkedIcon={<SmokeFreeSharpIcon color='success' />}
@@ -302,7 +297,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={has_small_children}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='has_small_children'
                       />
                     }
@@ -312,7 +307,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={residence_owned}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='residence_owned'
                       />
                     }
@@ -322,7 +317,7 @@ export default function ApplicationForm() {
                     control={
                       <Checkbox
                         checked={wants_prepproval}
-                        onChange={handleCheckbox}
+                        onChange={handleInputChange}
                         name='wants_prepproval'
                       />
                     }
@@ -344,7 +339,7 @@ export default function ApplicationForm() {
                     <Checkbox
                       checkedIcon={<DoneOutlineSharpIcon color='success' />}
                       checked={agrees_to_terms}
-                      onChange={handleCheckbox}
+                      onChange={handleInputChange}
                       name='agrees_to_terms'
                     />
                   }
