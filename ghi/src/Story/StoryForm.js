@@ -32,7 +32,7 @@ export default function StoryForm() {
       console.log('YAY!')
     }
     setTitleError(false)
-    setStoryError(false)    
+    setStoryError(false)
     if (title == '') {
       setTitleError(true)
     }
@@ -46,9 +46,8 @@ export default function StoryForm() {
     <>
       <Container
         sx={{
-          maxWidth: 500
+          width: 'fit-content'
         }}>
-
         <Box component="form" onSubmit={handleSubmit} noValidate >
           <Box sx={{ paddingTop: 6, paddingBottom: 5 }}>
             <Typography component="h1" variant="h4" sx={{ py: 2, color: "#CFE0FB" }}>
