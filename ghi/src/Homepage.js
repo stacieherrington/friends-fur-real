@@ -1,7 +1,7 @@
 import * as React from 'react';
 import SearchBar from './components/SearchBar';
 import PetCard from './components/PetCard';
-import StoryCard from './components/StoryCard'
+import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
 import {useState, useEffect} from 'react';
 import Grid from '@mui/material/Grid';

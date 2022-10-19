@@ -35,7 +35,6 @@ export default function StoryForm(application_id) {
     }
     setTitleError(false)
     setStoryError(false)
-    setPictureError(false)
     if (title == '') {
       setTitleError(true)
     }
@@ -52,9 +51,8 @@ export default function StoryForm(application_id) {
     <>
       <Container
         sx={{
-          maxWidth: 500
+          width: 'fit-content'
         }}>
-
         <Box component="form" onSubmit={handleSubmit} noValidate >
           <Box sx={{ paddingTop: 6, paddingBottom: 5 }}>
             <Typography component="h1" variant="h4" sx={{ py: 2, color: "#CFE0FB" }}>
@@ -88,7 +86,7 @@ export default function StoryForm(application_id) {
               rows={5}
               error={storyError}
             />
-             <TextField
+            <TextField
               onChange={(event) => setPicture(event.target.value)}
               label="A recent picture URL"
               value={picture}

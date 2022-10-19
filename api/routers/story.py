@@ -69,8 +69,8 @@ def get_three_random_stories(queries: SuccessStoryQueries = Depends()):
     description="Detail a Story by story_id",
     response_model=SuccessStoryOut,
 )
-def get_story(id: str, queries: SuccessStoryQueries = Depends()):
-    response = queries.get_story(id)
+def get_story(story_id: str, queries: SuccessStoryQueries = Depends()):
+    response = queries.get_story(story_id)
     if response:
         return response
     else:
