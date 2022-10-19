@@ -33,7 +33,7 @@ export default function PetForm() {
     "size": "",
     "description": "",
     "weight": "",
-    "pictures": [],
+    "pictures": "",
     "primary_color": "",
     "ok_with_dogs": false,
     "ok_with_cats": false,
@@ -208,10 +208,9 @@ export default function PetForm() {
                     name="weight"
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
+                <Grid item xs={12}>
                   <TextField
-                    // type="url"
-                    required
+                    type="url"
                     fullWidth
                     id="pictures"
                     label="Picture URL"
@@ -219,7 +218,7 @@ export default function PetForm() {
                     onChange={handleChange}
                     value={fields.pictures}
                   />
-                </Grid> */}
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
