@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from models.pet import PetOut, PetIn, PetsList
+from models.pet import PetOut, PetIn, PetsList, PetUpdate
 from queries.pet import PetQueries
 from .auth import authenticator
 
@@ -76,7 +76,7 @@ def delete_pet(
 @router.patch("/api/pets/{pet_id}/", response_model=PetOut)
 def update_pet(
     pet_id: str,
-    data: PetIn,
+    data: PetUpdate,
     queries: PetQueries = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
