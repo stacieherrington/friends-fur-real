@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,19 +11,25 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import { useGetTokenQuery } from "../redux/api";
+import { useSignupMutation } from "../redux/api";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignUpForm() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const navigate = useNavigate();
+  const [signup, { error, isLoading: signupLoading, data: signupData }] =
+    useSignupMutation();
 
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    signup(e.target);
+    debugger
   };
+  if (signupData) {
+    navigate("/");
+  }
 
   return (
     <>

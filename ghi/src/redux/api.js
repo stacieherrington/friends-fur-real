@@ -38,10 +38,9 @@ export const apiSlice = createApi({
       query: (info) => {
         let formData = null;
         if (info instanceof HTMLElement) {
-          formData = new FormData(info);
-        } else {
           formData = new FormData();
           formData.append("username", info.email.value);
+          formData.append("password", info.password.value);
         }
         return {
           url: "/token",
@@ -52,6 +51,7 @@ export const apiSlice = createApi({
       },
       providesTags: ["Account"],
       invalidatesTags: (result) => {
+        console.log(result);
         return (result && ["Token"]) || [];
       },
       async onQueryStarted(arg, { dispatch, queryFufilled }) {
