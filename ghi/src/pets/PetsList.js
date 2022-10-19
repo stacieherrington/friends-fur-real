@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import PetCard from '../components/PetCard';
+import PetCard from './PetCard';
 import Grid from '@mui/material/Grid';
 
 
