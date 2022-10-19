@@ -6,15 +6,15 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function StoryCard() {
+export default function StoryCard(props) {
   return (
     <Card sx={{ maxWidth: 250 }}>
-      <CardMedia
+    {props.pictures && props.pictures.length?<CardMedia
         component="img"
         height="200"
-        image="images/pit-dog.jpg"
-        alt="Pitbull"
-      />
+        image={props.picture}
+        alt="pet"
+      />: null}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Ozzy
