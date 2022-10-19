@@ -12,6 +12,7 @@ import PetForm from "./pets/PetForm";
 import StoryForm from "./Story/StoryForm";
 import StoryDetail from "./Story/StoryDetail";
 import ApplicationForm from "./applications/ApplicationForm";
+import StoriesList from "./Story/StoriesList";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path='/login' element={<LoginForm />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />
             <Route path='/stories/:storyId' element={<StoryDetail />} />
+            <Route path='/stories' element={<StoriesList />} />
           </Routes>
         </div>
       </BrowserRouter>
