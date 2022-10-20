@@ -84,10 +84,24 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [{ type: "Account", id: "LIST" }],
     }),
+    listPets: builder.query({
+      query: () => `/api/pets`,
+      providesTags: (result) =>
+        result ? result.map(({ id }) => ({ type: "Pet", id: id })) : ["Pet"],
+    }),
+    deletePet: builder.mutation({
+      query: (petId) => ({
+        method: "DELETE",
+        url: `/api/pets/${petId}`,
+      }),
+      invalidatesTags: (result, error, petId) => [{ type: "Pet", id: petId }],
+    }),
   }),
 });
 
 export const {
+  useListPetsQuery,
+  useDeletePetMutation,
   useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
