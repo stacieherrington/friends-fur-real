@@ -84,3 +84,17 @@ Today I continued working on the front-end templates. I added a filter option on
 ## October 17, 2022
 
 Today I worked on the Signup form template. I also  started working on the story form with an "option" to select a pet for the story. Spent a lot of time learning and watching videos on MUI. It has been challenging to create all the components while learning how to utilize MUI at the same time since I have only been using bootstrap before this. 
+
+
+## October 18, 2022
+
+Today finished working the story form. I then started working ont he story detail page and worked on it's functionality. 
+
+I got stuck at one point with figuring out how to pull out the story data by a specific id. Took a lot of searching on google and some help from fellow students, and finally was able to get it to work, which was nice! 
+
+
+## October 19, 2022
+
+Today I finished working on the story detail page. I created story lists page and got the list of story cards to render on the page. I made some modifications on the story card, and some styling changes on our page. 
+
+As I was working on the story list page, I had discovered how to truncate a long string. The story now fits  the story card without stretching it all the way. It was pretty cool to figure out how to do that. 

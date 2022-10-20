@@ -39,9 +39,7 @@ export default function StoryCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`${props.id}`}>
-          <Button size="small">Read More</Button>
-        </Link>
+          <Button href={`${props.id}`} size="small">Read More</Button>
       </CardActions>
     </Card>
   );
