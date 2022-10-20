@@ -18,32 +18,50 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link, Avatar } from '@mui/material';
 import ManagementMenu from './Manage/ManagementMenu';
+import { useEffect, useState } from 'react';
 
 const drawerWidth = 240;
 
-async function logout() {
-  const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
-    method: 'DELETE',
-    credentials: "include",
-  });
-  if (response.ok) {
-    console.log("logged out")
-  } else {
-    console.error(response)
-  }
-}
-
 function DrawerAppBar(props) {
-  let { is_admin, is_staff, is_base } = props;
-  is_staff = true;
-  is_admin = false;
-  is_base = false;
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorEl1, setAnchorEl1] = React.useState(null);
   const [anchorEl2, setAnchorEl2] = React.useState(null);
   const [anchorEl3, setAnchorEl3] = React.useState(null);
+
+  const { roles, setRoles } = props;
+
+  // const [roles, setRoles] = useState([]);
+  // useEffect(() => {
+  //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
+  //   const fetchConfig = {
+  //     method: 'get',
+  //     credentials: "include",
+  //   }
+  //   fetch(checkTokenUrl, fetchConfig)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if (data) {
+  //         setRoles(data.account.roles);
+  //       }
+  //     })
+  //     .catch(e => console.error(e));
+  //   console.log(roles.includes("staff"));
+  // }, [])
+
+  const logout = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+      method: 'DELETE',
+      credentials: "include",
+    });
+    if (response.ok) {
+      setRoles([]);
+      console.log("logged out");
+    } else {
+      console.error(response)
+    }
+  }
 
 
 
@@ -198,7 +216,7 @@ function DrawerAppBar(props) {
               sx={{ width: 60, height: 60 }}
             />
           </Typography>
-          <ManagementMenu is_staff={is_staff} is_admin={is_admin} />
+          <ManagementMenu is_staff={roles.includes("staff")} is_admin={roles.includes("admin")} />
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Button href="/" sx={{ color: '#fff' }}>
               Home
