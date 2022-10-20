@@ -16,7 +16,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Link } from '@mui/material';
+import { Link, Avatar } from '@mui/material';
 import ManagementMenu from './Manage/ManagementMenu';
 
 const drawerWidth = 240;
@@ -176,7 +176,7 @@ function DrawerAppBar(props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
+      <AppBar component="nav" sx={{ backgroundColor: '#294C60' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -192,7 +192,11 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            FFR Logo
+            <Avatar
+              alt="Cute Logo"
+              src="images/cute-icon.png"
+              sx={{ width: 60, height: 60 }}
+            />
           </Typography>
           <ManagementMenu is_staff={is_staff} is_admin={is_admin} />
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>

@@ -12,6 +12,7 @@ import PetForm from "./pets/PetForm";
 import StoryForm from "./Story/StoryForm";
 import StoryDetail from "./Story/StoryDetail";
 import ApplicationForm from "./applications/ApplicationForm";
+import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <BrowserRouter>
         <DrawerAppBar />
         {/* <NavBar /> */}
-        <div className='container py-5'>
+        <div className='container pt-2 pb-0 mb-0'>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/applications' element={<ApplicationList />} />
@@ -31,6 +32,7 @@ function App() {
             <Route path='/signup' element={<Signup />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />
             <Route path='/stories/:storyId' element={<StoryDetail />} />
+            <Route path='/stories' element={<StoriesList />} />
             <Route path="/manage/staff" element={<ManageStaffPage />} />
           </Routes>
         </div>

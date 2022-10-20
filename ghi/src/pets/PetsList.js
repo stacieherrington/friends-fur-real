@@ -31,7 +31,7 @@ function PetsList(props) {
   }
 
   return (
-    <div className="px-4 my-5 text-center">
+    <div className="px-4 my-5 text-center pt-5">
       <Grid container spacing={3}>
       {petsList.map((pet) => (
         <Grid xs item key={pet.id}>
