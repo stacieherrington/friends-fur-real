@@ -9,9 +9,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-
+import SliceAppForm from "../applications/SliceAppForm";
 export default function PetCard(props) {
-
+  
+  const { id, rescue_id, pictures, name } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -41,7 +42,7 @@ export default function PetCard(props) {
       </CardContent>
       <CardActions>
         <Button size="small">More Info</Button>
-        <Button size="small">Adopt</Button>
+        <SliceAppForm pet_id={id} rescue_id={rescue_id}/>
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}
