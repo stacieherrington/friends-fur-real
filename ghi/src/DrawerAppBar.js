@@ -1,67 +1,69 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Link, Avatar } from '@mui/material';
-import ManagementMenu from './Manage/ManagementMenu';
-import { useEffect, useState } from 'react';
+import * as React from "react";
+import PropTypes from "prop-types";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Link, Avatar } from "@mui/material";
+import ManagementMenu from "./Manage/ManagementMenu";
+import { useEffect, useState } from "react";
+import { useGetTokenQuery } from "./redux/api";
+import { useLogoutMutation } from "./redux/api";
 
 const drawerWidth = 240;
 
-function DrawerAppBar(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
-  const [anchorEl3, setAnchorEl3] = React.useState(null);
+// function DrawerAppBar(props) {
+//   const { window } = props;
+//   const [mobileOpen, setMobileOpen] = React.useState(false);
+//   const [anchorEl, setAnchorEl] = React.useState(null);
+//   const [anchorEl1, setAnchorEl1] = React.useState(null);
+//   const [anchorEl2, setAnchorEl2] = React.useState(null);
+//   const [anchorEl3, setAnchorEl3] = React.useState(null);
 
-  const { roles, setRoles } = props;
+//   const { roles, setRoles } = props;
 
-  // const [roles, setRoles] = useState([]);
-  // useEffect(() => {
-  //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
-  //   const fetchConfig = {
-  //     method: 'get',
-  //     credentials: "include",
-  //   }
-  //   fetch(checkTokenUrl, fetchConfig)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (data) {
-  //         setRoles(data.account.roles);
-  //       }
-  //     })
-  //     .catch(e => console.error(e));
-  //   console.log(roles.includes("staff"));
-  // }, [])
+//   // const [roles, setRoles] = useState([]);
+//   // useEffect(() => {
+//   //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
+//   //   const fetchConfig = {
+//   //     method: 'get',
+//   //     credentials: "include",
+//   //   }
+//   //   fetch(checkTokenUrl, fetchConfig)
+//   //     .then(res => res.json())
+//   //     .then(data => {
+//   //       if (data) {
+//   //         setRoles(data.account.roles);
+//   //       }
+//   //     })
+//   //     .catch(e => console.error(e));
+//   //   console.log(roles.includes("staff"));
+//   // }, [])
 
-  const logout = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
-      method: 'DELETE',
-      credentials: "include",
-    });
-    if (response.ok) {
-      setRoles([]);
-      console.log("logged out");
-    } else {
-      console.error(response)
-    }
-  }
+//   const logout = async () => {
+//     const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+//       method: 'DELETE',
+//       credentials: "include",
+//     });
+//     if (response.ok) {
+//       setRoles([]);
+//       console.log("logged out");
+//     } else {
+//       console.error(response)
+//     }
+//   }
 
 function DrawerAppBar(props) {
   const {
@@ -133,24 +135,24 @@ function DrawerAppBar(props) {
             <ListItemText primary={"Rescues"} />
           </ListItemButton>
           <Menu
-              id='menu-appbar1'
-              anchorEl={anchorEl3}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl3)}
-              onClose={handleClose3}
-            >
-              <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
-              <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
-              <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
-            </Menu>
+            id='menu-appbar1'
+            anchorEl={anchorEl3}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl3)}
+            onClose={handleClose3}
+          >
+            <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
+            <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
+            <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
+          </Menu>
         </ListItem>
 
         <ListItem disablePadding>
@@ -206,7 +208,7 @@ function DrawerAppBar(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar component='nav' sx={{ backgroundColor: '#294C60' }}>
+      <AppBar component='nav' sx={{ backgroundColor: "#294C60" }}>
         <Toolbar>
           <IconButton
             color='inherit'
@@ -223,17 +225,20 @@ function DrawerAppBar(props) {
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             <Avatar
-              alt="Cute Logo"
-              src="images/cute-icon.png"
+              alt='Cute Logo'
+              src='images/cute-icon.png'
               sx={{ width: 60, height: 60 }}
             />
           </Typography>
-          <ManagementMenu is_staff={roles.includes("staff")} is_admin={roles.includes("admin")} />
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button href="/" sx={{ color: '#fff' }}>
+          {/* <ManagementMenu
+            is_staff={roles.includes("staff")}
+            is_admin={roles.includes("admin")}
+          /> */}
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Button href='/' sx={{ color: "#fff" }}>
               Home
             </Button>
-            <Button onClick={handleMenu1} sx={{ color: '#fff' }}>
+            <Button onClick={handleMenu1} sx={{ color: "#fff" }}>
               Rescues
             </Button>
             <Menu

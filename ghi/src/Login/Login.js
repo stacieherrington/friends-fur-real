@@ -14,6 +14,7 @@ import Copyright from "../components/Copyright";
 import { useLoginMutation } from "../redux/api";
 import { useNavigate } from "react-router-dom";
 
+
 const theme = createTheme();
 
 export default function LoginForm(props) {
@@ -21,7 +22,6 @@ export default function LoginForm(props) {
   const [login, { isSuccess }] = useLoginMutation();
 
   const { setRefresh } = props;
-  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     login(event.target);
