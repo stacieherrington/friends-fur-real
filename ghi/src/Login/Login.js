@@ -18,14 +18,13 @@ const theme = createTheme();
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [login, { error, isLoading: loginLoading, data: loginData }] =
-    useLoginMutation();
+  const [login, { isSuccess }] = useLoginMutation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     login(event.target);
   };
-  if (loginData) {
+  if (isSuccess) {
     setTimeout(() => {
       navigate("/");
     }, 0);
