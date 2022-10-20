@@ -53,3 +53,36 @@ Today, Worked on:
     2. add list applications by account_id and list applications by rescue_id for user to view on profile page and rescue admin staff to review
     3. add api to approve an application by application_id, will auto check if there is an application is approved for the same pet_id, if yes, auto reject; if no auto reject all other applications for the same pet_id and change target pet is_adopted to True
     4. add api to reject an application by application_id
+
+## Oct 15, 2022
+Today, Worked on:
+- refactory on apis for:
+- Account:
+    1. add api /api/manage/staffs/ to list all the staff accounts if current login-ed account is “admin” based on the admin’s rescue_id .
+    2. change detail/update apis to GET/PATCH /api/accounts/profile/. This two APIs now check if a user is login-ed, only display detail/ allowed to update only if login-ed.
+    3. for promote/demote APIs, this two APIs will auto check if the current user is login-ed and is “admin”. now using email to promote and demote
+
+## Oct 16, 2022
+Today, Worked on:
+- refactory on api for:
+- Story:
+    1. change create story api url to POST:  /api/applications/{application_id}/story/, because a story is only related on an approved application. auto check current user match the application’s account_id.
+    2. change list stories to list all the approved stories.
+    3. random list 3 stories use sample aggregate, and random list 3 approved stories for home page to display
+    4. update(PATCH)/delete a story by story_id now auto check if the current logged in user is the owner of the story. update api will check the status of story is submitted, if approved or rejected will not allowed.
+    5. GET: /api/rescue/{rescue_id}/stories/ now list all the approved stories for a rescue_id, can use it as filter on base user story list page.
+    6. GET: /api/manage/stories/  list all the stories for review by admin/staff by the staff’s/admin’s rescue_id.
+    7. PATCH: approve / reject story by story_id now auto check current user is related rescue’s staff/admin.
+    8. GET: /api/accounts/profile/stories/ list all stories for current logged in user. can display on account profile page.
+
+## Oct 17, 2022
+Today, Worked on:
+- All the APIs are done and regrouped with a new tag name “management” holds all the apis for rescue admin/staff. did not  merge yet. just test all the apis from create account ,create rescue(auto set admin), create pet , submit application, approve/ reject applications, create story base on an approved application, approve/reject stories. update application/story. promote/demote staff … all works good. not merged yet. everything is on branch 39. ready to merge.
+- setup mengodb init location-index when first time create docker volumn, and build docker compose.
+- create an namagement dropdown menu for rescue/staff
+
+## Oct 18, 2022
+- fixed api bug when update a pet.
+- login page works
+- use a refresh state to force Navbar rerender after logged in and redirect to homePage
+- conditional rendering management dropdown menu based on roles of current logged in user
