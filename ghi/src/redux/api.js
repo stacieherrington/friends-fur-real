@@ -64,7 +64,7 @@ export const apiSlice = createApi({
       query: () => ({
         url: "/token",
         method: "delete",
-        credentials: "include,",
+        credentials: "include",
       }),
       invalidatesTags: ["Account", "Token"],
     }),

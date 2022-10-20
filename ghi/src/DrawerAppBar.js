@@ -18,25 +18,30 @@ import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "@mui/material";
 import { useGetTokenQuery } from "./redux/api";
+import { useLogoutMutation } from "./redux/api";
 
 const drawerWidth = 240;
 
-async function logout() {
-  const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-  if (response.ok) {
-    console.log("logged out");
-  } else {
-    console.error(response);
-  }
-}
+// async function logout() {
+//   const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
+//     method: "DELETE",
+//     credentials: "include",
+//   });
+//   if (response.ok) {
+//     console.log("logged out");
+//   } else {
+//     console.error(response);
+//   }
+// }
 
 function DrawerAppBar(props) {
-  const { data, error, isLoading } = useGetTokenQuery();
+  const {
+    data: tokenData,
+    error: tokenError,
+    isLoading: tokenLoading,
+  } = useGetTokenQuery();
+  const [logout, { data: logoutData }] = useLogoutMutation();
 
-  console.log(data);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -236,7 +241,7 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose2}>Adopters Link 1</MenuItem>
               <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
             </Menu>
-            {data ? (
+            {tokenData ? (
               <Button href='/login' sx={{ color: "#fff" }} onClick={logout}>
                 Logout
               </Button>
