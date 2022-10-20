@@ -25,7 +25,7 @@ function HomePage(props) {
 
   return (
     <>
-      <div className="px-4 my-5 text-center">
+      <div className="px-4 my-5 pt-5 text-center">
         <SearchBar />
         <div className="py-3">
           <h1 className="display-3 fw-bold">FriendsFurReal</h1>

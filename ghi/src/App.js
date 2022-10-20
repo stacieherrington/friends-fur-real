@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <DrawerAppBar />
         {/* <NavBar /> */}
-        <div className='container py-5'>
+        <div className='container pt-2 pb-0 mb-0'>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/applications' element={<ApplicationList />} />

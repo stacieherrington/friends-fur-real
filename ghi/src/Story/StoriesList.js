@@ -14,7 +14,7 @@ async function loadStories(setStoriesList) {
 }
 
 function StoriesList(props) {
-  const [StoriesList, setStoriesList] = useState([]);
+  const [storiesList, setStoriesList] = useState([]);
   useEffect(() => {
     loadStories(setStoriesList);
   }, [])
@@ -28,9 +28,9 @@ function StoriesList(props) {
   }
 
   return (
-    <div className="px-4 my-5 text-center">
+    <div className="px-4 my-5 text-center pt-5" >
       <Grid container spacing={3}>
-        {StoriesList.map((story) => (
+        {storiesList.map((story) => (
           <Grid xs item key={story.id}>
             <StoryCard {...story} />
           </Grid>

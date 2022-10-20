@@ -26,11 +26,11 @@ export default function StoryDetail() {
 
   return (
     <>
-      <Box fixed sx={{ mt: '8%', py: 10, alignSelf: 'center', backgroundColor: '#FFEFD3', height: 'max-content', alignContent: 'center' }}>
-        <Box sx={{ marginX: '2%', height: '100%', padding: 2, border: '1px solid grey' }} align='center'>
-          <img src="../images/pit-dog.jpg" width="50%" alt="pet" />
+      <Box fixed sx={{ mt: '5%', mb: 5, py: 4, alignSelf: 'center', backgroundColor: '#FFEFD3', height: 'max-content', alignContent: 'center' }}>
+        <Box sx={{ marginX: '2%', height: '100%', padding: 2 }} align='center'>
+          {story.picture ? <img src={story.picture} width="50%" alt="pet" /> : null}
           <hr class="solid" />
-          <Typography sx={{ mb: 1.5, fontSize: 25, fontWeight: 'bold', textAlign: 'justify' }} color="secondary">
+          <Typography sx={{ mb: 1.5, fontSize: 25, fontWeight: 'bold', textAlign: 'justify' }} color="#FF9633">
             {story.title}
           </Typography>
           <Typography variant="body2" sx={{ textAlign: 'justify' }}>
