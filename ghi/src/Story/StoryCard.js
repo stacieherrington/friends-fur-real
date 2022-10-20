@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 export default function StoryCard(props) {
   return (
-    <Card sx={{ maxWidth: 400, maxHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center', flexBasis: '50%' }}>
+    <Card sx={{ maxHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center', flexBasis: '50%' }}>
       {props.picture ? <CardMedia
         component="img"
         height="180"

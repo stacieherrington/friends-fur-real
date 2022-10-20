@@ -21,7 +21,7 @@ export default function PetCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(props)
+
 
   return (
     <Card>

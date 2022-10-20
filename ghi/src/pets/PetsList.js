@@ -1,7 +1,7 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PetCard from './PetCard';
-import Grid from '@mui/material/Grid';
+import { Grid, Box, Typography } from '@mui/material/';
 
 
 async function loadPets(setPetsList) {
@@ -22,7 +22,7 @@ function PetsList(props) {
 
 
   async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, { method: 'DELETE', credentials: "include" });
     console.log(id)
     if (response.ok) {
       console.log("Success!")
@@ -31,15 +31,16 @@ function PetsList(props) {
   }
 
   return (
-    <div className="px-4 my-5 text-center pt-5">
-      <Grid container spacing={3}>
-      {petsList.map((pet) => (
-        <Grid xs item key={pet.id}>
-          <PetCard  handleDelete={handleDelete} {...pet}/>
-        </Grid>
-      ))}
+    <Box sx={{ flexGrow: 1, py: 4 }}>
+      <Typography variant='h3' align='center' sx={{ py: 3, fontWeight: 'bold' }}>Pet List Page</Typography>
+      <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+        {petsList.map((pet) => (
+          <Grid item xs={4} sm={4} md={4} key={pet.id}>
+            <PetCard handleDelete={handleDelete} {...pet} />
+          </Grid>
+        ))}
       </Grid>
-    </div>
+    </Box>
   );
 }
 
