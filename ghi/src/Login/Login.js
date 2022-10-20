@@ -21,13 +21,14 @@ export default function LoginForm() {
   const [login, { error, isLoading: loginLoading, data: loginData }] =
     useLoginMutation();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(e.target);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login(event.target);
   };
-
   if (loginData) {
-    navigate("/");
+    setTimeout(() => {
+      navigate("/");
+    }, 0);
   }
 
   return (

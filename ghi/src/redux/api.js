@@ -51,7 +51,6 @@ export const apiSlice = createApi({
       },
       providesTags: ["Account"],
       invalidatesTags: (result) => {
-        console.log(result);
         return (result && ["Token"]) || [];
       },
       async onQueryStarted(arg, { dispatch, queryFufilled }) {
