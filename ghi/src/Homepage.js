@@ -3,8 +3,9 @@ import SearchBar from './components/SearchBar';
 import PetCard from './pets/PetCard';
 import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
+import { Paper, Typography, Box } from "@mui/material"
 
 
 async function loadThreePets(setPetsList) {
@@ -24,7 +25,7 @@ function HomePage(props) {
   }, [])
 
   async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, { method: 'DELETE', credentials: "include" });
     console.log(id)
     if (response.ok) {
       console.log("Success!")
@@ -47,24 +48,27 @@ function HomePage(props) {
               shape="rounded"
             />
           </div>
-          <div className="container-fluid py-5">
-            <h1 className="display-5 fw-bold">Featured Friends</h1>
-            <div className="py-3">
-              <Grid container spacing={3}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Featured Friends</Typography>
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               {petsList.map((pet) => (
-                <Grid xs item key={pet.id}>
+                <Grid item xs={4} sm={4} md={4}>
                   <PetCard handleDelete={handleDelete} {...pet} />
                 </Grid>
               ))}
-              </Grid>
-            </div>
-          </div>
-          <div className="container-fluid py-1">
-            <h1 className="display-5 fw-bold">Happy Tails</h1>
-            <div className="py-3">
-              <StoryCard />
-            </div>
-          </div>
+            </Grid>
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy</Typography>
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+              {petsList.map((pet) => (
+                <Grid item xs={4} sm={4} md={4}>
+                  {/* <PetCard handleDelete={handleDelete} {...pet} /> */}
+                  <StoryCard />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </div>
       </div >
       <Copyright sx={{ mt: 10, mb: 4 }} />
