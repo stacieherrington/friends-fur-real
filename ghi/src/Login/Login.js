@@ -16,7 +16,9 @@ import { useNavigate } from "react-router-dom";
 
 
 const theme = createTheme();
-export default function LoginForm() {
+
+export default function LoginForm(props) {
+  const { setRefresh } = props;
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +30,10 @@ export default function LoginForm() {
       credentials: "include",
     };
     const response = await fetch(loginUrl, fetchConfig);
-    if (response.ok) { console.log("yes!"); return navigate("/"); }
+    if (response.ok) {
+      setRefresh(n => n + 1);
+      return navigate("/");
+    }
     else {
       console.error(response)
     }
