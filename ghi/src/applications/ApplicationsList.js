@@ -9,17 +9,23 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import { useState, useEffect } from 'react';
+import { useGetTokenQuery } from "./redux/api";
+import { useLogoutMutation } from "./redux/api";
 
 
-function createData(name, email, pet, status, application_detail) {
-  return { name, email, pet, status, application_detail };
-}
 
-const rows = [
-  createData('John Wick', 'jwick@email.com', 'pet_name', 'status', 'application_id'),
-  createData('John Wick', 'jwick@email.com', 'pet_name', 'submitted', 'application_id'),
-  createData('John Wick', 'jwick@email.com', 'pet_name', 'status', 'application_id'),
-];
+
+export const loadApplications = async () => {
+  const {
+    data: tokenData,
+    error: tokenError,
+    isLoading: tokenLoading,
+  } = useGetTokenQuery();
+  const [logout, { data: logoutData }] = useLogoutMutation();
+
+  console.log(tokenData)
+
 
 const filterOptions = createFilterOptions({
   matchFrom: 'start',
@@ -33,9 +39,8 @@ const ApplicationStatus = [
 ];
 
 
-export default function ApplicationList() {
   return (
-    <Container sx={{ padding: 0 }} >
+    <Container sx={{ paddingTop: 10 }} >
       <h1>Application Lists</h1>
 
       <TableContainer component={Paper}>
@@ -49,38 +54,39 @@ export default function ApplicationList() {
             "& th": {
               fontSize: "1rem",
               fontWeight: 'bold',
-              textAlign: 'center'
+              textAlign: 'center',
+              padding: 1,
             },
           }}
           >
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Pet Name</TableCell>
-              <TableCell >
+              <TableCell>Pet</TableCell>
+              <TableCell>      
                 <Autocomplete
                   id="application-filter"
                   options={ApplicationStatus}
                   size="small"
                   sx={{ width: 'auto' }}
-                  getOptionLabel={(option) => option.status}
+                  getOptionLabel={(props) => props.status}
                   filterOptions={filterOptions}
-                  renderInput={(params) => <TextField {...params} label="Filter Status" />} />
+                  renderInput={(status) => <TextField {...status} label="Filter Status" />} />
               </TableCell>
               <TableCell>Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {applicationsList.map((application) => (
               <TableRow
-                key={row.name}
+                key={props.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">{row.name}</TableCell>
-                <TableCell align="center">{row.email}</TableCell>
-                <TableCell align="center">{row.pet}</TableCell>
-                <TableCell align="center">{row.status}</TableCell>
-                <TableCell align="center">{row.application_detail}</TableCell>
+                <TableCell component="th" scope="row">{application.name}</TableCell>
+                <TableCell align="center">{application.email}</TableCell>
+                <TableCell align="center">{application.pet}</TableCell>
+                <TableCell align="center">{application.status}</TableCell>
+                <TableCell align="center">{application.application_detail}</TableCell>
               </TableRow>
             ))}
           </TableBody>

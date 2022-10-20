@@ -32,7 +32,12 @@ function PetsList(props) {
 
   return (
     <Box sx={{ flexGrow: 1, py: 4 }}>
-      <Typography variant='h3' align='center' sx={{ py: 3, fontWeight: 'bold' }}>Pet List Page</Typography>
+      <Typography
+        variant='h3'
+        align='center'
+        sx={{ py: 4, fontWeight: 'bold' }} >
+        Find your FURiend!
+      </Typography>
       <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
         {petsList.map((pet) => (
           <Grid item xs={4} sm={4} md={4} key={pet.id}>
