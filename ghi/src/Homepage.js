@@ -3,8 +3,9 @@ import SearchBar from './components/SearchBar';
 import PetCard from './pets/PetCard';
 import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
+import { Paper, Typography, Box } from "@mui/material"
 
 
 async function loadThreePets(setPetsList) {
@@ -16,15 +17,26 @@ async function loadThreePets(setPetsList) {
     console.error(response);
   }
 }
+async function loadThreeStories(setStoriesList) {
+  const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/stories/random/`);
+  if (response.ok) {
+    const data = await response.json();
+    setStoriesList(data.stories);
+  } else {
+    console.error(response);
+  }
+}
 
 function HomePage(props) {
   const [petsList, setPetsList] = useState([]);
+  const [storiesList, setStoriesList] = useState([]);
   useEffect(() => {
     loadThreePets(setPetsList);
+    loadThreeStories(setStoriesList);
   }, [])
 
   async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, {method: 'DELETE', credentials: "include"});
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, { method: 'DELETE', credentials: "include" });
     console.log(id)
     if (response.ok) {
       console.log("Success!")
@@ -47,24 +59,27 @@ function HomePage(props) {
               shape="rounded"
             />
           </div>
-          <div className="container-fluid py-5">
-            <h1 className="display-5 fw-bold">Featured Friends</h1>
-            <div className="py-3">
-              <Grid container spacing={3}>
+
+          <Box sx={{ flexGrow: 1 }}> {/* random pet list */}
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Featured Friends</Typography>
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               {petsList.map((pet) => (
-                <Grid xs item key={pet.id}>
+                <Grid item xs={4} sm={4} md={4} key={pet.id}>
                   <PetCard handleDelete={handleDelete} {...pet} />
                 </Grid>
               ))}
-              </Grid>
-            </div>
-          </div>
-          <div className="container-fluid py-1">
-            <h1 className="display-5 fw-bold">Happy Tails</h1>
-            <div className="py-3">
-              <StoryCard />
-            </div>
-          </div>
+            </Grid>
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>  {/* random story list */}
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy</Typography>
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+              {storiesList.map((story) => (
+                <Grid item xs={4} sm={4} md={4} key={story.id}>
+                  <StoryCard {...story} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </div>
       </div >
       <Copyright sx={{ mt: 10, mb: 4 }} />

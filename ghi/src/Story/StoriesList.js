@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import StoryCard from './StoryCard';
+import { Box, Typography } from "@mui/material";
 
 
 async function loadStories(setStoriesList) {
@@ -28,15 +29,16 @@ function StoriesList(props) {
   }
 
   return (
-    <div className="px-4 my-5 text-center pt-5" >
-      <Grid container spacing={3}>
+    <Box sx={{ flexGrow: 1, py: 4 }}>
+      <Typography variant='h3' align='center' sx={{ py: 3, fontWeight: 'bold' }}>Pet List Page</Typography>
+      <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
         {storiesList.map((story) => (
-          <Grid xs item key={story.id}>
+          <Grid item xs={4} sm={4} md={4} key={story.id}>
             <StoryCard {...story} />
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Box>
   );
 }
 

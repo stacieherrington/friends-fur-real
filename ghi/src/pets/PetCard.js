@@ -21,16 +21,16 @@ export default function PetCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(props)
+
 
   return (
-    <Card sx={{ maxWidth: 250 }}>
-      {props.pictures && props.pictures.length?<CardMedia
+    <Card>
+      {props.pictures && props.pictures.length ? <CardMedia
         component="img"
         height="200"
         image={props.pictures}
         alt={props.breed}
-      />: null}
+      /> : null}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {props.name}
@@ -47,7 +47,7 @@ export default function PetCard(props) {
         {/* Only show this for staff/admin role */}
         <Button size="small">Update</Button>
         <Button size="small" onClick={handleClickOpen}>Delete</Button>
-          <Dialog
+        <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
@@ -60,7 +60,7 @@ export default function PetCard(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} autoFocus>Cancel</Button>
-            <Button onClick={() => {handleClose(); props.handleDelete(props.id)}}>
+            <Button onClick={() => { handleClose(); props.handleDelete(props.id) }}>
               Delete
             </Button>
           </DialogActions>
