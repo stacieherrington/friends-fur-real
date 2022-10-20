@@ -21,7 +21,7 @@ import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Modal from "@mui/material/Modal";
-import { useAddApplicationMutation } from "../redux/endpoints/api";
+import { useAddApplicationMutation } from "../redux/api";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../redux/slices/applicationSlice";
