@@ -1,21 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { clearForm } from "./accountSlice";
+import { clearForm } from "../slices/accountSlice";
 
-export const apiSlice = createApi({
-  reducerPath: "app",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_HOST,
-    prepareHeaders: (headers, { getState }) => {
-      const selector = apiSlice.endpoints.getToken.select();
-      const { data: tokenData } = selector(getState());
-      if (tokenData && tokenData.access_token) {
-        headers.set("Authorization", `Bearer ${tokenData.access_token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ["Account", "Token"],
-  endpoints: (builder) => ({
+export function authEndpoints(builder) {
+  return {
     signup: builder.mutation({
       query: (data) => ({
         url: "/api/accounts/",
@@ -84,14 +70,5 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [{ type: "Account", id: "LIST" }],
     }),
-  }),
-});
-
-export const {
-  useSignupMutation,
-  useLoginMutation,
-  useLogoutMutation,
-  useGetTokenQuery,
-  useDeleteSessionsMutation,
-  useAddAccountMutation,
-} = apiSlice;
+  };
+}

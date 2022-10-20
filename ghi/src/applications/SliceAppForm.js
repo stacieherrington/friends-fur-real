@@ -21,8 +21,12 @@ import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Modal from "@mui/material/Modal";
-
-
+import { useAddApplicationMutation } from "../redux/endpoints/api";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateField } from "../redux/slices/applicationSlice";
+import { preventDefault } from "../redux/utility";
 
 const theme = createTheme();
 
@@ -39,66 +43,20 @@ const style = {
   mt: 3,
   overflow: "auto",
 };
+const residences = [
+  { name: "Single Family Home" },
+  { name: "Single Family w/ large yard" },
+  { name: "Apartment" },
+  { name: "Townhouse" },
+  { name: "Condo" },
+];
 
 export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const residences = [
-    { name: "Single Family Home" },
-    { name: "Single Family w/ large yard" },
-    { name: "Apartment" },
-    { name: "Townhouse" },
-    { name: "Condo" },
-  ];
-  // console.log(pet_id, rescue_id, name, petPicture);
-  const [application, setApplication] = useState({
-    first_name: "",
-    last_name: "",
-    address_one: "",
-    address_two: "",
-    city: "",
-    state: "",
-    zip_code: "",
-    phone_number: "",
-    date_ready: "",
-    landlord_restrictions: "",
-    residence_type: "",
-    has_small_children: false,
-    has_dogs: false,
-    has_cats: false,
-    wants_preapproval: false,
-    agrees_to_terms: false,
-    residence_owned: false,
-    smoke_free_home: true,
-  });
-
-  const handleInputChange = (e) => {
-    let { name, type, value, checked } = e.target;
-    type === "checkbox" ? (value = checked) : (value = value);
-    setApplication({ ...application, [name]: value });
-  };
-  const handleReset = () => {
-    setApplication(application);
-  };
-  const handleSubmit = (e) => {
-    e.preDefault();
-    application["pet_id"] = [pet_id];
-    application["rescue_id"] = [rescue_id];
-    fetch(`${process.env.REACT_APP_API_HOST}/api/applications/`, {
-      method: "post",
-      credentials: "include",
-      body: JSON.stringify({
-        ...application,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .catch((e) => console.log("post error", e));
-    handleReset();
-    handleClose();
-  };
-
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const {
     first_name,
     last_name,
@@ -118,37 +76,15 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
     wants_preapproval,
     agrees_to_terms,
     residence_owned,
-  } = application;
-
+  } = useSelector((state) => state.application);
+  const [application, { isSuccess }] = useAddApplicationMutation();
+  const field = useCallback(
+    (e) =>
+      dispatch(updateField({ field: e.target.name, value: e.target.value })),
+    [dispatch]
+  );
   const error = [agrees_to_terms].filter((v) => v).length < 1;
-  const smokeLabel = smoke_free_home ? "non-smoker" : `smoker`;
 
-  // function FieldTest(){
-  //   // let value = 'value'
-  //   // let name = 'name'
-  //   // let id = 'id'
-  //   // let label = e.split('_')
-  //   // let autoCompelte = 'autocomplete'
-
-  //   return (
-  //     <>
-  //     {application.map((e)=>(
-  //       <TextField
-  //         margin='normal'
-  //         required
-  //         fullWidth
-  //         onChange={handleInputChange}
-  //         value={e.target}
-  //         type='text'
-  //         id={e.target}
-  //         name={e.target}
-  //         label={e.target.split('-')}
-  //         autoComplete='current-first-name'
-  //         autoFocus
-  //       />))}
-  //     </>
-  //   );
-  // };
   return (
     <ThemeProvider theme={theme}>
       <Button onClick={handleOpen}>Adopt me!</Button>
@@ -176,15 +112,38 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
               </Typography>
-              <Box component='form' onSubmit={handleSubmit} noValidate>
+              <Box
+                component='form'
+                onSubmit={preventDefault(application, () => ({
+                  first_name,
+                  last_name,
+                  address_one,
+                  address_two,
+                  city,
+                  state,
+                  zip_code,
+                  phone_number,
+                  date_ready,
+                  landlord_restrictions,
+                  residence_type,
+                  has_small_children,
+                  smoke_free_home,
+                  has_dogs,
+                  has_cats,
+                  wants_preapproval,
+                  agrees_to_terms,
+                  residence_owned,
+  
+                }))}
+                noValidate
+              >
                 <TextField
                   margin='normal'
                   required
                   fullWidth
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={first_name}
                   type='text'
-                  id='first_name'
                   name='first_name'
                   label='First Name'
                   autoComplete='current-first-name'
@@ -194,10 +153,9 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                   margin='normal'
                   required
                   fullWidth
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={last_name}
                   type='text'
-                  id='last_name'
                   name='last_name'
                   label='Last Name'
                   autoComplete='current-last-name'
@@ -207,89 +165,80 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                   required
                   fullWidth
                   label='Address One'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={address_one}
                   type='text'
                   name='address_one'
-                  id='address_one'
                 />
                 <TextField
                   margin='normal'
                   fullWidth
                   label='Address Two'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={address_two}
                   type='text'
                   name='address_two'
-                  id='address_two'
                 />
                 <TextField
                   margin='normal'
                   required
                   fullWidth
                   label='City'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={city}
                   type='text'
                   name='city'
-                  id='city'
                 />
                 <TextField
                   margin='normal'
                   required
                   fullWidth
                   label='State'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={state}
                   type='text'
                   name='state'
-                  id='state'
                 />
                 <TextField
                   margin='normal'
                   required
                   fullWidth
                   label='Zip Code'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={zip_code}
                   type='text'
                   name='zip_code'
-                  id='zip_code'
                 />
                 <TextField
                   margin='normal'
                   required
                   fullWidth
                   label='Phone Number'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={phone_number}
                   type='text'
                   name='phone_number'
-                  id='phone_number'
                 />
                 <TextField
                   margin='normal'
                   required
                   fullWidth
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={date_ready}
                   name='date_ready'
                   type='date'
-                  id='date_ready'
                   autoComplete='current-date'
                 />
                 <TextField
                   margin='normal'
-                  required
                   fullWidth
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={landlord_restrictions}
                   multiline
                   maxRows={4}
                   name='landlord_restrictions'
                   label='Landlord Restrictions'
                   type='text'
-                  id='landlord_restrictions'
                   autoComplete='current-landlord-restrictions'
                 />
 
@@ -299,7 +248,7 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                   fullWidth
                   name='residence_type'
                   label='Residence Type'
-                  onChange={handleInputChange}
+                  onChange={field}
                   value={residence_type}
                 >
                   {residences.map((e) => (
@@ -317,8 +266,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={has_dogs}
-                            onChange={handleInputChange}
+                            value={has_dogs}
+                            onChange={field}
                             name='has_dogs'
                           />
                         }
@@ -327,8 +276,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={has_cats}
-                            onChange={handleInputChange}
+                            value={has_cats}
+                            onChange={field}
                             name='has_cats'
                           />
                         }
@@ -337,14 +286,12 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={smoke_free_home}
-                            onChange={handleInputChange}
+                            value={smoke_free_home}
+                            onChange={field}
                             name='smoke_free_home'
-                            icon={<SmokingRoomsSharpIcon color='error' />}
-                            checkedIcon={<SmokeFreeSharpIcon color='success' />}
                           />
                         }
-                        label={smokeLabel}
+                        label='Smoke free?'
                       />
                     </FormGroup>
                   </FormControl>
@@ -356,8 +303,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={has_small_children}
-                            onChange={handleInputChange}
+                            value={has_small_children}
+                            onChange={field}
                             name='has_small_children'
                           />
                         }
@@ -366,8 +313,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={residence_owned}
-                            onChange={handleInputChange}
+                            value={residence_owned}
+                            onChange={field}
                             name='residence_owned'
                           />
                         }
@@ -376,8 +323,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={wants_preapproval}
-                            onChange={handleInputChange}
+                            value={wants_preapproval}
+                            onChange={field}
                             name='wants_preapproval'
                           />
                         }
@@ -398,8 +345,8 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                       control={
                         <Checkbox
                           checkedIcon={<DoneOutlineSharpIcon color='success' />}
-                          checked={agrees_to_terms}
-                          onChange={handleInputChange}
+                          value={agrees_to_terms}
+                          onChange={field}
                           name='agrees_to_terms'
                         />
                       }

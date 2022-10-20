@@ -37,6 +37,7 @@ export default function ApplicationList() {
   return (
     <Container sx={{ padding: 0 }} >
       <h1>Application Lists</h1>
+
       <TableContainer component={Paper}>
         <Table sx={{
           width: "fit-content 100%",
