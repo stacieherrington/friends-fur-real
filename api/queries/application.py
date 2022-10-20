@@ -16,6 +16,7 @@ class ApplicationQueries(Queries):
     def create_application(self, app: ApplicationIn, account_id):
         app = app.dict()
         app["account_id"] = account_id
+        app["status"] = "Submitted"
         # check if the account_id has an application based on the same pet_id:
         record = self.collection.find_one(
             {"pet_id": app["pet_id"], "account_id": account_id}

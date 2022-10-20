@@ -18,52 +18,12 @@ import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, Avatar } from "@mui/material";
 import ManagementMenu from "./Manage/ManagementMenu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
 
 const drawerWidth = 240;
 
-// function DrawerAppBar(props) {
-//   const { window } = props;
-//   const [mobileOpen, setMobileOpen] = React.useState(false);
-//   const [anchorEl, setAnchorEl] = React.useState(null);
-//   const [anchorEl1, setAnchorEl1] = React.useState(null);
-//   const [anchorEl2, setAnchorEl2] = React.useState(null);
-//   const [anchorEl3, setAnchorEl3] = React.useState(null);
-
-//   const { roles, setRoles } = props;
-
-//   // const [roles, setRoles] = useState([]);
-//   // useEffect(() => {
-//   //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
-//   //   const fetchConfig = {
-//   //     method: 'get',
-//   //     credentials: "include",
-//   //   }
-//   //   fetch(checkTokenUrl, fetchConfig)
-//   //     .then(res => res.json())
-//   //     .then(data => {
-//   //       if (data) {
-//   //         setRoles(data.account.roles);
-//   //       }
-//   //     })
-//   //     .catch(e => console.error(e));
-//   //   console.log(roles.includes("staff"));
-//   // }, [])
-
-//   const logout = async () => {
-//     const response = await fetch(`${process.env.REACT_APP_API_HOST}/token`, {
-//       method: 'DELETE',
-//       credentials: "include",
-//     });
-//     if (response.ok) {
-//       setRoles([]);
-//       console.log("logged out");
-//     } else {
-//       console.error(response)
-//     }
-//   }
 
 function DrawerAppBar(props) {
   const {
@@ -230,10 +190,9 @@ function DrawerAppBar(props) {
               sx={{ width: 60, height: 60 }}
             />
           </Typography>
-          {/* <ManagementMenu
-            is_staff={roles.includes("staff")}
-            is_admin={roles.includes("admin")}
-          /> */}
+          {tokenData ? (
+            <ManagementMenu is_staff={tokenData.account.roles.includes('staff')} is_admin={tokenData.account.roles.includes('admin')} />) : null
+          }
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button href='/' sx={{ color: "#fff" }}>
               Home
