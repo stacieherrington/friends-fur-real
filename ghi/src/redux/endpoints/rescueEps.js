@@ -1,4 +1,4 @@
-export function rescueEndpoints(builder) {
+export function RescueEndpoints(builder) {
   return {
     addRescue: builder.mutation({
       query: (form) => {
@@ -19,17 +19,24 @@ export function rescueEndpoints(builder) {
     }),
     listRescues: builder.query({
       query: () => `/api/rescues/`,
-      providesTags: (result) =>
-        result ? result.map(({ id }) => ({ type: "Rescue", id })) : ["Rescue"],
+      providesTags: (data) => {
+        const tags = [{ type: "Rescue", id: "LIST" }];
+        if (!data || !data.rescues) return tags;
+        const { rescues } = data;
+        if (rescues) {
+          tags.concat(...rescues.map(({ id }) => ({ type: "Rescue", id })));
+        }
+        return tags;
+      },
     }),
     getRescue: builder.query({
-      query: (rescueId) => `/api/rescue/${rescueId}/`,
-      providesTags: (result, error, id) => [{ type: "Rescue", id }],
+      query: (rescueId) => `/api/rescues/${rescueId}/`,
+      // providesTags: (rescue) => [{ type: "Rescue", id: rescue.id }],
     }),
     putRescue: builder.mutation({
       query: (rescueId) => ({
         method: "PUT",
-        url: `/api/rescue/${rescueId}/`,
+        url: `/api/rescues/${rescueId}/`,
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },
@@ -38,7 +45,7 @@ export function rescueEndpoints(builder) {
     deleteRescue: builder.mutation({
       query: (rescueId) => ({
         method: "DELETE",
-        url: `/api/rescue/${rescueId}/`,
+        url: `/api/rescues/${rescueId}/`,
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },

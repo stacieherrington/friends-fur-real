@@ -1,6 +1,6 @@
 import { clearForm } from "../slices/accountSlice";
 
-export function authEndpoints(builder) {
+export function AuthEndpoints(builder) {
   return {
     signup: builder.mutation({
       query: (data) => ({
