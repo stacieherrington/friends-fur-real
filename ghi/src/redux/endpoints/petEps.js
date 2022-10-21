@@ -37,6 +37,7 @@ export function PetEndpoints(builder) {
       query: (petId, ...put) => ({
         method: "put",
         url: `/api/pets/${petId}/`,
+        credentials:'include',
         body: put,
       }),
       invalidatesTags: (pet) => [{ type: "Pet", id: pet.id }],

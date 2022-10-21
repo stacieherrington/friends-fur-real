@@ -67,6 +67,7 @@ export function AuthEndpoints(builder) {
       query: (account_id) => ({
         method: "DELETE",
         url: `/api/sessions/${account_id}/`,
+        credentials:'include',
       }),
       invalidatesTags: [{ type: "Account", id: "LIST" }],
     }),

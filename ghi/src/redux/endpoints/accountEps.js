@@ -38,8 +38,9 @@ export function AccountEndpoints(builder) {
         method: "PATCH",
         url: `/api/accounts/${allAccountSliceId}`,
         body: patch,
+        credentials:'include',
       }),
-      providesTags: (account) => [{ type: "Account", id: account.id }],
+
       invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     }),
     patchPromoteAccount: builder.mutation({
@@ -47,8 +48,8 @@ export function AccountEndpoints(builder) {
         method: "PATCH",
         url: `/api/accounts/promote/${allAccountSliceId}/`,
         body: patch,
+        credentials:'include',
       }),
-      providesTags: (account) => [{ type: "Account", id: account.id }],
       invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     }),
     patchDemoteAccount: builder.mutation({
@@ -56,8 +57,8 @@ export function AccountEndpoints(builder) {
         method: "PATCH",
         url: `/api/accounts/demote/${allAccountSliceId}/`,
         body: patch,
+        credentials:'include',
       }),
-      providesTags: (account) => [{ type: "Account", id: account.id }],
       invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     }),
     patchLocalizeAccount: builder.mutation({
@@ -65,8 +66,8 @@ export function AccountEndpoints(builder) {
         method: "PATCH",
         url: `/api/accounts/localize/${allAccountSliceId}/`,
         body: patch,
+        credentials:'include',
       }),
-      providesTags: (account) => [{ type: "Account", id: account.id }],
       invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     }),
   };

@@ -47,6 +47,7 @@ export function SuccessStoryEndpoints(builder) {
       query: (successStoryId) => ({
         method: "PATCH",
         url: `/api/stories/${successStoryId}/`,
+        credentials: "include",
       }),
       invalidatesTags: (result, error, successStoryId) => [
         { type: "SuccessStory", id: successStoryId },
@@ -56,6 +57,7 @@ export function SuccessStoryEndpoints(builder) {
       query: (successStoryId) => ({
         method: "DELETE",
         url: `/api/stories/${successStoryId}/`,
+        credentials: "include",
       }),
       invalidatesTags: (result, error, successStoryId) => [
         { type: "SuccessStory", id: successStoryId },

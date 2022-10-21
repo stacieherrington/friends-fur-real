@@ -66,6 +66,7 @@ export function ApplicationEndpoints(builder) {
       query: (applicationId) => ({
         method: "PATCH",
         url: `/api/applications/${applicationId}/`,
+        credentials:'include',
       }),
       invalidateTags: (application) => [
         { type: "Application", id: application.id },
@@ -75,6 +76,7 @@ export function ApplicationEndpoints(builder) {
       query: (applicationId) => ({
         method: "PATCH",
         url: `/api/applications/${applicationId}/approve/`,
+        credentials:'include',
       }),
       invalidateTags: (application) => [
         { type: "Application", id: application.id },
@@ -84,6 +86,7 @@ export function ApplicationEndpoints(builder) {
       query: (applicationId) => ({
         method: "PATCH",
         url: `/api/applications/${applicationId}/reject/`,
+        credentials:'include',
       }),
       invalidateTags: (application) => [
         { type: "Application", id: application.id },
@@ -93,6 +96,7 @@ export function ApplicationEndpoints(builder) {
       query: (applicationId) => ({
         method: "DELETE",
         url: `/api/applications/${applicationId}/`,
+        credentials:'include',
       }),
       invalidateTags: (application) => [
         { type: "Application", id: application.id },

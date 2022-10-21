@@ -37,6 +37,7 @@ export function RescueEndpoints(builder) {
       query: (rescueId) => ({
         method: "PUT",
         url: `/api/rescues/${rescueId}/`,
+        credentials:'include',
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },
@@ -46,6 +47,7 @@ export function RescueEndpoints(builder) {
       query: (rescueId) => ({
         method: "DELETE",
         url: `/api/rescues/${rescueId}/`,
+        credentials:'include',
       }),
       invalidatesTags: (result, error, rescueId) => [
         { type: "Rescue", id: rescueId },
