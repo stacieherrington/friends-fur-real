@@ -19,6 +19,20 @@ export function PetEndpoints(builder) {
     }),
     listPets: builder.query({
       query: () => `/api/pets/`,
+      transformResponse: (response, meta, arg) => response.pets,
+      providesTags: (data) => {
+        const tags = [{ type: "Pet", id: "LIST" }];
+        if (!data || !data.pets) return tags;
+        const { pets } = data;
+        if (pets) {
+          tags.concat(...pets.map(({ id }) => ({ type: "Pet", id })));
+        }
+        return tags;
+      },
+    }),
+    getThreePets: builder.query({
+      query: () => `/api/random/pets/`,
+      transformResponse: (response, meta, arg) => response.pets,
       providesTags: (data) => {
         const tags = [{ type: "Pet", id: "LIST" }];
         if (!data || !data.pets) return tags;

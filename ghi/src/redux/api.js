@@ -61,6 +61,7 @@ export const {
   useDeleteApplicationMutation,
   useAddPetMutation,
   useListPetsQuery,
+  useGetThreePetsQuery,
   useGetPetQuery,
   usePutPetMutation,
   useDeletePetMutation,

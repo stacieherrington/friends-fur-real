@@ -10,9 +10,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
+import { useDeletePetMutation } from "../redux/api";
+
+
+
 export default function PetCard(props) {
-  const { id, rescue_id, pictures, name } = props;
+  const { id, rescue_id, pictures, name } = props.pet;
   const [open, setOpen] = React.useState(false);
+  const [deletePet, {data, error, isLoading}] = useDeletePetMutation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,20 +29,20 @@ export default function PetCard(props) {
 
   return (
     <Card>
-      {props.pictures && props.pictures.length ? (
+      {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
           height='200'
-          image={props.pictures}
-          alt={props.breed}
+          image={props.pet.pictures}
+          alt={props.pet.breed}
         />
       ) : null}
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
-          {props.name}
+          {props.pet.name}
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          {props.description}
+          {props.pet.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -68,7 +73,7 @@ export default function PetCard(props) {
             <Button
               onClick={() => {
                 handleClose();
-                props.handleDelete(props.id);
+                deletePet(props.pet.id);
               }}
             >
               Delete
