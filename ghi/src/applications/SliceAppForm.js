@@ -21,8 +21,7 @@ import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Modal from "@mui/material/Modal";
-import { useAddApplicationMutation } from "../redux/endpoints/api";
-import { useNavigate } from "react-router-dom";
+import { useAddApplicationMutation } from "../redux/api";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../redux/slices/applicationSlice";
@@ -51,12 +50,12 @@ const residences = [
   { name: "Condo" },
 ];
 
-export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
+export default function ApplicationForm(props) {
+  const { pet_id, rescue_id } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const {
     first_name,
     last_name,
@@ -76,6 +75,7 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
     wants_preapproval,
     agrees_to_terms,
     residence_owned,
+    status,
   } = useSelector((state) => state.application);
   const [application, { isSuccess }] = useAddApplicationMutation();
   const field = useCallback(
@@ -85,6 +85,11 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
   );
   const error = [agrees_to_terms].filter((v) => v).length < 1;
 
+  if (isSuccess) {
+    setTimeout(() => {
+      handleClose();
+    }, 0);
+  }
   return (
     <ThemeProvider theme={theme}>
       <Button onClick={handleOpen}>Adopt me!</Button>
@@ -117,11 +122,7 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                 onSubmit={preventDefault(application, () => ({
                   first_name,
                   last_name,
-                  address_one,
-                  address_two,
-                  city,
-                  state,
-                  zip_code,
+                  address: { address_one, address_two, city, state, zip_code },
                   phone_number,
                   date_ready,
                   landlord_restrictions,
@@ -133,7 +134,9 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                   wants_preapproval,
                   agrees_to_terms,
                   residence_owned,
-  
+                  pet_id: pet_id,
+                  rescue_id: rescue_id,
+                  status,
                 }))}
                 noValidate
               >
@@ -287,11 +290,14 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                         control={
                           <Checkbox
                             value={smoke_free_home}
+                            defaultChecked
                             onChange={field}
                             name='smoke_free_home'
+                            icon={<SmokingRoomsSharpIcon color='error' />}
+                            checkedIcon={<SmokeFreeSharpIcon color='success' />}
                           />
                         }
-                        label='Smoke free?'
+                        label='Smoker?'
                       />
                     </FormGroup>
                   </FormControl>

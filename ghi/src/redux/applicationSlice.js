@@ -19,6 +19,7 @@ const initialState = {
   agrees_to_terms: false,
   residence_owned: false,
   smoke_free_home: true,
+  
 };
 
 export const applicationSlice = createSlice({

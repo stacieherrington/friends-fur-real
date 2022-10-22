@@ -1,18 +1,23 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import SliceAppForm from "../applications/SliceAppForm";
+import { useDeletePetMutation } from "../redux/api";
+
+
 
 export default function PetCard(props) {
-
+  const { id, rescue_id, pictures, name } = props.pet;
   const [open, setOpen] = React.useState(false);
+  const [deletePet, {data, error, isLoading}] = useDeletePetMutation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,26 +27,27 @@ export default function PetCard(props) {
     setOpen(false);
   };
 
-
   return (
     <Card>
-      {props.pictures && props.pictures.length ? <CardMedia
-        component="img"
-        height="200"
-        image={props.pictures}
-        alt={props.breed}
-      /> : null}
+      {props.pet.pictures && props.pet.pictures.length ? (
+        <CardMedia
+          component='img'
+          height='200'
+          image={props.pet.pictures}
+          alt={props.pet.breed}
+        />
+      ) : null}
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {props.name}
+        <Typography gutterBottom variant='h5' component='div'>
+          {props.pet.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {props.description}
+        <Typography variant='body2' color='text.secondary'>
+          {props.pet.description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">More Info</Button>
-        <Button size="small">Adopt</Button>
+        <Button size='small'>More Info</Button>
+        <SliceAppForm pet_id={id} rescue_id={rescue_id} />
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}
@@ -50,17 +56,24 @@ export default function PetCard(props) {
         <Dialog
           open={open}
           onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
         >
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id='alert-dialog-description'>
               Are you sure you want to delete this pet?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} autoFocus>Cancel</Button>
-            <Button onClick={() => { handleClose(); props.handleDelete(props.id) }}>
+            <Button onClick={handleClose} autoFocus>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                handleClose();
+                deletePet(props.pet.id);
+              }}
+            >
               Delete
             </Button>
           </DialogActions>
