@@ -48,10 +48,11 @@ export function PetEndpoints(builder) {
       providesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),
     putPet: builder.mutation({
-      query: (petId, ...put) => ({
+      query: ({petId, data}) => (console.log(petId, data) || {
         method: "put",
         url: `/api/pets/${petId}/`,
-        body: put,
+        body: data,
+        credentials: "include",
       }),
       invalidatesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),

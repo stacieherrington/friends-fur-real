@@ -73,7 +73,7 @@ def delete_pet(
         raise HTTPException(404, "this pet id does not exist!")
 
 
-@router.patch("/api/pets/{pet_id}/", response_model=PetOut)
+@router.put("/api/pets/{pet_id}/", response_model=PetOut)
 def update_pet(
     pet_id: str,
     data: PetUpdate,

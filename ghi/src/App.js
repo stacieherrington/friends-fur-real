@@ -50,7 +50,7 @@ function App() {
             <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm setRefresh={setRefresh} />} />
             <Route path='/pets' element={<PetsList />} />
-            <Route path='/pets/:petID' element={<UpdatePet />} />
+            <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />

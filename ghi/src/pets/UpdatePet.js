@@ -13,49 +13,53 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
 import { MenuItem } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormGroup } from '@mui/material';
+import { useParams } from "react-router-dom";
+import { useGetPetQuery, usePutPetMutation } from '../redux/api';
+
 
 
 const theme = createTheme();
 
 
-export default function UpdatePet(props) {
+export default function UpdatePet() {
+  const { petId } = useParams();
+  const { data, isLoading } = useGetPetQuery(petId);
+  const [updatePet] = usePutPetMutation();
   const [fields, setFields] = useState({
-    "name": props.name,
-    "type": props.type,
-    "breed": props.breed,
-    "age": props.age,
-    "sex": props.sex,
-    "size": props.size,
-    "description": props.description,
-    "weight": props.weight,
-    "pictures": props.pictures,
-    "primary_color": props.primary_color,
-    "ok_with_dogs": props.ok_with_dogs,
-    "ok_with_cats": props.ok_with_cats,
-    "shots_up_to_date": props.shots_up_to_date,
-    "ok_with_kids": props.ok_with_kids,
-    "spayed_neutered": props.spayed_neutered,
-    "house_trained": props.house_trained,
-    "special_needs": props.special_needs,
+    "name": "",
+    "type": "",
+    "breed": "",
+    "age": "",
+    "sex": "",
+    "size": "",
+    "description": "",
+    "weight": "",
+    "pictures": "",
+    "primary_color": "",
+    "ok_with_dogs": false,
+    "ok_with_cats": false,
+    "shots_up_to_date": false,
+    "ok_with_kids": false,
+    "spayed_neutered": false,
+    "house_trained": false,
+    "special_needs": false,
   });
+  useEffect(() => {
+    if (data !== undefined) {
+      let pet = {...data}
+      if (pet.pictures === null) {
+        pet.pictures = "";
+      }
+      setFields(pet);
+    }
+  }, [data]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     fields.age = Number.parseInt(fields.age)
     fields.weight = Number.parseInt(fields.weight)
-    const url = `${process.env.REACT_APP_API_HOST}/api/pets/${props.id}`;
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "PATCH",
-      body: JSON.stringify(fields),
-      headers: {"content-type": "application/json"},
-    });
-    if (response.ok) {
-      console.log("Success!")
-    } else {
-      console.error(response)
-    }
+    updatePet({petId, data: fields})
   };
   const handleChange = (event) => {
     let {name, type, value, checked} = event.target;
@@ -89,6 +93,7 @@ export default function UpdatePet(props) {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     id="name"
@@ -100,6 +105,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     select
                     required
                     fullWidth
@@ -123,6 +129,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     id="breed"
@@ -134,6 +141,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
                         if (event.target.value < 0) {
@@ -150,6 +158,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     select
@@ -169,6 +178,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     select
@@ -191,6 +201,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
                         if (event.target.value < 0) {
@@ -207,6 +218,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    disabled={isLoading}
                     type="url"
                     fullWidth
                     id="pictures"
@@ -218,6 +230,7 @@ export default function UpdatePet(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    disabled={isLoading}
                     fullWidth
                     id="color"
                     label="Color"
@@ -229,6 +242,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_dogs}
                       name="ok_with_dogs"
@@ -239,6 +253,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
                       name="ok_with_cats"/>
@@ -248,6 +263,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
                       name="ok_with_kids"/>
@@ -257,6 +273,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.shots_up_to_date}
                       name="shots_up_to_date"
@@ -266,6 +283,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
@@ -275,7 +293,8 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                    onChange={handleChange}
+                      disabled={isLoading}
+                      onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
                      />} label="House-trained" />
@@ -284,6 +303,7 @@ export default function UpdatePet(props) {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
@@ -292,12 +312,13 @@ export default function UpdatePet(props) {
                 </Grid>
               </Grid>
               <Button
+                disabled={isLoading}
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Add Pet
+                Update Pet
               </Button>
             </Box>
           </Box>
