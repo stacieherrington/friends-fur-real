@@ -20,34 +20,34 @@ import { FormGroup } from '@mui/material';
 const theme = createTheme();
 
 
-export default function PetForm() {
+export default function UpdatePet(props) {
   const [fields, setFields] = useState({
-    "name": "",
-    "type": "",
-    "breed": "",
-    "age": "",
-    "sex": "",
-    "size": "",
-    "description": "",
-    "weight": "",
-    "pictures": "",
-    "primary_color": "",
-    "ok_with_dogs": false,
-    "ok_with_cats": false,
-    "shots_up_to_date": false,
-    "ok_with_kids": false,
-    "spayed_neutered": false,
-    "house_trained": false,
-    "special_needs": false,
+    "name": props.name,
+    "type": props.type,
+    "breed": props.breed,
+    "age": props.age,
+    "sex": props.sex,
+    "size": props.size,
+    "description": props.description,
+    "weight": props.weight,
+    "pictures": props.pictures,
+    "primary_color": props.primary_color,
+    "ok_with_dogs": props.ok_with_dogs,
+    "ok_with_cats": props.ok_with_cats,
+    "shots_up_to_date": props.shots_up_to_date,
+    "ok_with_kids": props.ok_with_kids,
+    "spayed_neutered": props.spayed_neutered,
+    "house_trained": props.house_trained,
+    "special_needs": props.special_needs,
   });
   const handleSubmit = async (event) => {
     event.preventDefault();
     fields.age = Number.parseInt(fields.age)
     fields.weight = Number.parseInt(fields.weight)
-    const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/pets/${props.id}`;
     const response = await fetch(url, {
       credentials: "include",
-      method: "POST",
+      method: "PATCH",
       body: JSON.stringify(fields),
       headers: {"content-type": "application/json"},
     });

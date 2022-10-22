@@ -15,9 +15,10 @@ import ApplicationForm from "./applications/ApplicationForm";
 import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 import { useState, useEffect } from "react";
+import UpdatePet from "./pets/UpdatePet";
 
 function App() {
-  // globle roles state for now: 
+  // globle roles state for now:
   const [roles, setRoles] = useState([]);
   const [refresh, setRefresh] = useState(1);
 
@@ -49,6 +50,7 @@ function App() {
             <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm setRefresh={setRefresh} />} />
             <Route path='/pets' element={<PetsList />} />
+            <Route path='/pets/:petID' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />

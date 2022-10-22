@@ -71,7 +71,7 @@ function HomePage(props) {
             </Grid>
           </Box>
           <Box sx={{ flexGrow: 1 }}>  {/* random story list */}
-            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy</Typography>
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy Tails</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               {storiesList.map((story) => (
                 <Grid item xs={4} sm={4} md={4} key={story.id}>

@@ -45,7 +45,7 @@ export default function PetCard(props) {
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}
-        <Button size="small">Update</Button>
+        <Button size="small" href={`/pets/${props.id}`}>Update</Button>
         <Button size="small" onClick={handleClickOpen}>Delete</Button>
         <Dialog
           open={open}
