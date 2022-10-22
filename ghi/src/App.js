@@ -15,39 +15,20 @@ import ApplicationForm from "./applications/ApplicationForm";
 import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 import { useState, useEffect } from "react";
+import ManagePetPage from './Manage/ManagePetPage';
 
 function App() {
-  // globle roles state for now: 
-  const [roles, setRoles] = useState([]);
-  const [refresh, setRefresh] = useState(1);
-
-  useEffect(() => {
-    const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
-    const fetchConfig = {
-      method: 'get',
-      credentials: "include",
-    }
-    fetch(checkTokenUrl, fetchConfig)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          setRoles(data.account.roles);
-        }
-      })
-      .catch(e => console.error(e));
-  }, [refresh])
-
   return (
     <>
       <BrowserRouter>
-        <DrawerAppBar roles={roles} setRoles={setRoles} />
+        <DrawerAppBar />
         {/* <NavBar /> */}
         <div className='container pt-2 pb-0 mb-0'>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/applications' element={<ApplicationList />} />
             <Route path='/applications/new' element={<ApplicationForm />} />
-            <Route path='/login' element={<LoginForm setRefresh={setRefresh} />} />
+            <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
@@ -55,6 +36,7 @@ function App() {
             <Route path='/stories/:storyId' element={<StoryDetail />} />
             <Route path='/stories' element={<StoriesList />} />
             <Route path="/manage/staff" element={<ManageStaffPage />} />
+            <Route path="/manage/pets" element={<ManagePetPage />} />
           </Routes>
         </div>
       </BrowserRouter>
