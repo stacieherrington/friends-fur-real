@@ -33,6 +33,18 @@ export function AccountEndpoints(builder) {
       query: (allAccountSliceId) => `/api/accounts/${allAccountSliceId}/`,
       providesTags: (account) => [{ type: "Account", id: account.id }],
     }),
+    getCurrentAccount: builder.query({
+      query: () => ({
+        url: `/api/accounts/profile/`,
+        credentials: "include",
+      }),
+      providesTags: (account) => {
+        if (account === undefined) {
+          return []
+        }
+        return [{ type: "Account", id: account.id }]
+      },
+    }),
     patchUpdateAccount: builder.mutation({
       query: (allAccountSliceId, ...patch) => ({
         method: "PATCH",

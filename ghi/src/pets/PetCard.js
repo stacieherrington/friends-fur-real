@@ -10,14 +10,16 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
-import { useDeletePetMutation } from "../redux/api";
+import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
 
 
 
 export default function PetCard(props) {
   const { id, rescue_id, pictures, name } = props.pet;
   const [open, setOpen] = React.useState(false);
-  const [deletePet, {data, error, isLoading}] = useDeletePetMutation();
+  const [deletePet] = useDeletePetMutation();
+  const { data, error, isLoading } = useGetCurrentAccountQuery();
+  const isRescuer = data && data.rescue_id === props.pet.rescue_id;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,34 +52,36 @@ export default function PetCard(props) {
         <SliceAppForm pet_id={id} rescue_id={rescue_id} />
       </CardActions>
       <CardActions>
-        {/* Only show this for staff/admin role */}
-        <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-        <Button size="small" onClick={handleClickOpen}>Delete</Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              Are you sure you want to delete this pet?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                handleClose();
-                deletePet(props.pet.id);
-              }}
-            >
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {isRescuer && (
+        <>
+          <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
+          <Button size="small" onClick={handleClickOpen}>Delete</Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='alert-dialog-title'
+            aria-describedby='alert-dialog-description'
+          >
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                Are you sure you want to delete this pet?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  handleClose();
+                  deletePet(props.pet.id);
+                }}
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>)}
       </CardActions>
     </Card>
   );

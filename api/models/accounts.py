@@ -44,6 +44,7 @@ class AccountDisplay(BaseModel):
     last_name: str | None
     picture: str | None
     address: Address | None
+    rescue_id: str | None
 
 
 class AccountUpdate(BaseModel):
