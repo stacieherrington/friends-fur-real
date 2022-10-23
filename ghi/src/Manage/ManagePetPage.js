@@ -38,7 +38,7 @@ function PetsList(props) {
                 <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {petsList.map((pet) => (
                         <Grid item xs={4} sm={4} md={4} key={pet.id}>
-                            <PetCard handleDelete={handleDelete} {...pet} />
+                            <PetCard pet={pet} />
                         </Grid>
                     ))}
                 </Grid>
