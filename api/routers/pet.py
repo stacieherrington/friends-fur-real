@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, Form, File
 from models.pet import PetOut, PetIn, PetsList, PetUpdate
 from queries.pet import PetQueries
 from .auth import authenticator
+from .s3 import upload_to_s3
+
 
 router = APIRouter(tags=["Pets"])
 not_authorized = HTTPException(
@@ -29,13 +31,49 @@ def get_pet(pet_id: str, queries: PetQueries = Depends()):
     tags=["management"],
 )
 def create_pet(
-    pet: PetIn,
+    name: str = Form(),
+    type: str | None = Form(),
+    breed: str | None = Form(),
+    age: int | None = Form(),
+    sex: str | None = Form(),
+    size: str | None = Form(),
+    description: str | None = Form(),
+    weight: int | None = Form(),
+    pictures: UploadFile = File(),
+    primary_color: str | None = Form(),
+    ok_with_dogs: bool | None = Form(),
+    ok_with_cats: bool | None = Form(),
+    shots_up_to_date: bool | None = Form(),
+    ok_with_kids: bool | None = Form(),
+    spayed_neutered: bool | None = Form(),
+    house_trained: bool | None = Form(),
+    special_needs: bool | None = Form(),
     queries: PetQueries = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
     if "staff" not in account["roles"] and "admin" not in account["roles"]:
         raise not_authorized
     rescue_id = account["rescue_id"]
+    pet = PetIn(
+        name=name,
+        type=type,
+        breed=breed,
+        age=age,
+        sex=sex,
+        size=size,
+        description=description,
+        weight=weight,
+        primary_color=primary_color,
+        ok_with_dogs=ok_with_dogs,
+        ok_with_cats=ok_with_cats,
+        shots_up_to_date=shots_up_to_date,
+        ok_with_kids=ok_with_kids,
+        spayed_neutered=spayed_neutered,
+        house_trained=house_trained,
+        special_needs=special_needs,
+        is_adopted=False,
+    )
+    pet.pictures = upload_to_s3(account["id"], pictures.file, pictures.filename)
     response = queries.create_pet(pet, rescue_id)
     if response:
         return response
@@ -73,7 +111,7 @@ def delete_pet(
         raise HTTPException(404, "this pet id does not exist!")
 
 
-@router.patch("/api/pets/{pet_id}/", response_model=PetOut)
+@router.put("/api/pets/{pet_id}/", response_model=PetOut)
 def update_pet(
     pet_id: str,
     data: PetUpdate,

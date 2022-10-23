@@ -1,4 +1,4 @@
-export function successStoryEndpoints(builder) {
+export function SuccessStoryEndpoints(builder) {
   return {
     addSuccessStory: builder.mutation({
       query: (form) => {
@@ -19,30 +19,29 @@ export function successStoryEndpoints(builder) {
     }),
     listSuccessStory: builder.query({
       query: () => `/api/stories/`,
-      providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: "SuccessStory", id }))
-          : ["SuccessStory"],
+      providesTags: (data) => {
+        const tags = [{ type: "SuccessStory", id: "LIST" }];
+        if (!data || !data.stories) return tags;
+        const { stories } = data;
+        if (stories) {
+          tags.concat(
+            ...stories.map(({ id }) => ({ type: "SuccessStory", id }))
+          );
+        }
+        return tags;
+      },
     }),
     getSuccessStory: builder.query({
-      query: (successStoryId) => `/api/pets/{id}/story${successStoryId}/`,
-      providesTags: (result, error, successStoryId) => [
-        { type: "SuccessStory", id: successStoryId },
-      ],
+      query: (petId) => `/api/pets/${petId}/`,
+      providesTags: (result) => [{ type: "SuccessStory", id: result.story_id }],
     }),
     listRescueStories: builder.query({
-      query: () => `/api/rescues/{rescue_id}/stories/`,
-      providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: "SuccessStory", id }))
-          : ["SuccessStory"],
+      query: (rescueId) => `/api/rescues/${rescueId}/stories/`,
+      providesTags: ["SuccessStory"],
     }),
     threeRandomStories: builder.query({
       query: () => `/api/stories/random/`,
-      providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: "SuccessStory", id }))
-          : ["SuccessStory"],
+      providesTags: ["SuccessStory"],
     }),
     patchSuccessStory: builder.mutation({
       query: (successStoryId) => ({

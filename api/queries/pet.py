@@ -6,16 +6,25 @@ from typing import List
 from pymongo import ReturnDocument
 from random import randint
 from .accounts import AccountQueries
+import os
+
+
+AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
 
 
 class PetQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "pets"
 
+    def enrich_pictures(self, pet):
+        if pet["pictures"] and not pet["pictures"].startswith("http") and AWS_HOST:
+            pet["pictures"] = f"{AWS_HOST}/{pet['pictures']}"
+
     def get_pet(self, id) -> PetOut:
         try:
             id = ObjectId(id)
             pet = self.collection.find_one({"_id": id})
+            self.enrich_pictures(pet)
         except:
             return None
         if not pet:
@@ -36,6 +45,7 @@ class PetQueries(Queries):
         result = self.collection.find({"is_adopted": False})
         pets = []
         for pet in result:
+            self.enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
@@ -60,6 +70,7 @@ class PetQueries(Queries):
         except:
             return None
         if pet:
+            self.enrich_pictures(pet)
             return PetOut(**pet, id=str(id))
 
     def get_three_random_pets(self) -> List[PetOut]:
@@ -68,6 +79,7 @@ class PetQueries(Queries):
         )
         pets = []
         for pet in result:
+            self.enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
@@ -76,6 +88,7 @@ class PetQueries(Queries):
         result = self.collection.find({"rescue_id": rescue_id})
         pets = []
         for pet in result:
+            self.enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets

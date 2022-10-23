@@ -11,14 +11,14 @@ import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { useGetTokenQuery } from "../redux/api"
 import { useLogoutMutation } from "../redux/api";
-
+// import {uset}
 
 export default function ApplicationList() {
   const {
     data: tokenData,
     error: tokenError,
     isLoading: tokenLoading,
-  } = useGetTokenQuery(); 
+  } = useGetTokenQuery();
   const [logout, { data: logoutData }] = useLogoutMutation();
   const { data: applications } = useGetTokenQuery("application");
 
@@ -61,7 +61,7 @@ export default function ApplicationList() {
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Pet</TableCell>
-              <TableCell>      
+              <TableCell>
                 <Autocomplete
                   id="application-filter"
                   options={ApplicationStatus}
@@ -76,16 +76,16 @@ export default function ApplicationList() {
           </TableHead>
           <TableBody>
             {/* {applications.map((application) => ( */}
-              <TableRow
+            <TableRow
               // key={application.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
               <TableCell component="th" scope="row">name</TableCell>
               <TableCell align="center">email</TableCell>
               <TableCell align="center">pet</TableCell>
               <TableCell align="center">status</TableCell>
               <TableCell align="center">detail</TableCell>
-              </TableRow>
+            </TableRow>
             {/* ))} */}
           </TableBody>
         </Table>
