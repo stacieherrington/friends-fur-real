@@ -16,6 +16,7 @@ import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 import { useState, useEffect } from "react";
 import UpdatePet from "./pets/UpdatePet";
+import PetDetail from "./pets/PetDetail";
 import ManagePetPage from './Manage/ManagePetPage';
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
             <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
-            <Route path='/pets/:petId' element={<UpdatePet />} />
+            <Route path='/pets/:petId' element={<PetDetail />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />

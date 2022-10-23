@@ -6,42 +6,33 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
-import { Menu, MenuItem } from '@mui/material';
+import { MenuItem } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { json } from 'react-router-dom';
-import { FormGroup, Dialog } from '@mui/material';
+import { FormGroup } from '@mui/material';
+import { useParams } from "react-router-dom";
+import { useGetPetQuery, usePutPetMutation, useGetTokenQuery } from '../redux/api';
 
-// after here
-function SimpleDialog(props) {
-    const { onClose, selectedValue, open } = props;
 
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
 
-    const handleListItemClick = (value) => {
-        onClose(value);
-    };
-
-    return (
-        <Dialog onClose={handleClose} open={open}>
-
-        </Dialog>
-    );
-}
 const theme = createTheme();
 
 
-export default function PetDetail(props) {
-    const { pet_id } = props;
+export default function PetDetail() {
+    const { petId } = useParams();
+    const { data, isLoading } = useGetPetQuery(petId);
+    const {
+        data: tokenData,
+        error: tokenError,
+        isLoading: tokenLoading,
+    } = useGetTokenQuery();
+    const [updatePet] = usePutPetMutation();
+    const [isRescuer, setIsRescuer] = useState(false);
     const [fields, setFields] = useState({
         "name": "",
         "type": "",
@@ -62,35 +53,22 @@ export default function PetDetail(props) {
         "special_needs": false,
     });
     useEffect(() => {
-        const petDetailUrl = `${process.env.REACT_APP_API_HOST}/api/pets/${pet_id}/`;
-        const fetchConfig = {
-            credentials: "include",
-            method: "POST",
-            body: JSON.stringify(fields),
-            headers: { "content-type": "application/json" },
-        };
-        fetch(petDetailUrl, fetchConfig)
-            .then(res => res.json())
-            .then(data => setFields(data))
-            .catch(e => console.error(e))
-    }, [])
-
+        if (data !== undefined) {
+            let pet = { ...data };
+            if (pet.pictures === null) {
+                pet.pictures = "";
+            }
+            setFields(pet);
+            if (tokenData) {
+                setIsRescuer(tokenData.account.rescue_id === data.rescue_id)
+            }
+        }
+    }, [data, tokenData]);
     const handleSubmit = async (event) => {
         event.preventDefault();
         fields.age = Number.parseInt(fields.age)
         fields.weight = Number.parseInt(fields.weight)
-        const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
-        const response = await fetch(url, {
-            credentials: "include",
-            method: "POST",
-            body: JSON.stringify(fields),
-            headers: { "content-type": "application/json" },
-        });
-        if (response.ok) {
-            console.log("Success!")
-        } else {
-            console.error(response)
-        }
+        updatePet({ petId, data: fields })
     };
     const handleChange = (event) => {
         let { name, type, value, checked } = event.target;
@@ -117,13 +95,17 @@ export default function PetDetail(props) {
                         <Avatar sx={{ m: 1, bgcolor: '#CFE0FB' }}>
                             <PetsIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Add a pet
-                        </Typography>
+                        {isRescuer ?
+                            <Typography component="h1" variant="h5">
+                                Update a Pet
+                            </Typography> : <Typography component="h1" variant="h5">
+                                Pet Detail
+                            </Typography>}
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         required
                                         fullWidth
                                         id="name"
@@ -135,6 +117,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         select
                                         required
                                         fullWidth
@@ -158,6 +141,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         required
                                         fullWidth
                                         id="breed"
@@ -169,6 +153,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         type={"number"}
                                         onChange={(event) => {
                                             if (event.target.value < 0) {
@@ -185,6 +170,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         required
                                         fullWidth
                                         select
@@ -204,6 +190,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         required
                                         fullWidth
                                         select
@@ -226,6 +213,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         type={"number"}
                                         onChange={(event) => {
                                             if (event.target.value < 0) {
@@ -242,6 +230,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         type="url"
                                         fullWidth
                                         id="pictures"
@@ -253,6 +242,7 @@ export default function PetDetail(props) {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
+                                        disabled={!isRescuer}
                                         fullWidth
                                         id="color"
                                         label="Color"
@@ -264,6 +254,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.ok_with_dogs}
                                             name="ok_with_dogs"
@@ -274,6 +265,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.ok_with_cats}
                                             name="ok_with_cats" />
@@ -283,6 +275,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.ok_with_kids}
                                             name="ok_with_kids" />
@@ -292,6 +285,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.shots_up_to_date}
                                             name="shots_up_to_date"
@@ -301,6 +295,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.spayed_neutered}
                                             name="spayed_neutered"
@@ -310,6 +305,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.house_trained}
                                             name="house_trained"
@@ -319,6 +315,7 @@ export default function PetDetail(props) {
                                 <Grid item xs={6}>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox
+                                            disabled={!isRescuer}
                                             onChange={handleChange}
                                             checked={fields.special_needs}
                                             name="special_needs"
@@ -326,14 +323,15 @@ export default function PetDetail(props) {
                                     </FormGroup>
                                 </Grid>
                             </Grid>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Add Pet
-                            </Button>
+                            {isRescuer ?
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Update Pet
+                                </Button> : null}
                         </Box>
                     </Box>
                     <Copyright sx={{ mt: 10 }} />

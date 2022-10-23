@@ -48,40 +48,40 @@ export default function PetCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>More Info</Button>
+        <Button size='small' href={`/pets/${props.pet.id}`}>More Info</Button>
         <SliceAppForm pet_id={id} rescue_id={rescue_id} />
       </CardActions>
       <CardActions>
         {isRescuer && (
-        <>
-          <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-          <Button size="small" onClick={handleClickOpen}>Delete</Button>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='alert-dialog-title'
-            aria-describedby='alert-dialog-description'
-          >
-            <DialogContent>
-              <DialogContentText id='alert-dialog-description'>
-                Are you sure you want to delete this pet?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} autoFocus>
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  handleClose();
-                  deletePet(props.pet.id);
-                }}
-              >
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>)}
+          <>
+            <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
+            <Button size="small" onClick={handleClickOpen}>Delete</Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  Are you sure you want to delete this pet?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} autoFocus>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    deletePet(props.pet.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>)}
       </CardActions>
     </Card>
   );

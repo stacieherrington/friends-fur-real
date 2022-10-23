@@ -48,7 +48,7 @@ export default function UpdatePet() {
   });
   useEffect(() => {
     if (data !== undefined) {
-      let pet = {...data}
+      let pet = { ...data }
       if (pet.pictures === null) {
         pet.pictures = "";
       }
@@ -59,14 +59,14 @@ export default function UpdatePet() {
     event.preventDefault();
     fields.age = Number.parseInt(fields.age)
     fields.weight = Number.parseInt(fields.weight)
-    updatePet({petId, data: fields})
+    updatePet({ petId, data: fields })
   };
   const handleChange = (event) => {
-    let {name, type, value, checked} = event.target;
+    let { name, type, value, checked } = event.target;
     if (type === "checkbox") {
       value = checked;
     }
-    const update = {...fields, [name]: value};
+    const update = { ...fields, [name]: value };
     setFields(update);
   };
 
@@ -116,7 +116,7 @@ export default function UpdatePet() {
                     value={fields.type}
                     helperText="Please select type"
                   >
-                  <MenuItem value="dog">
+                    <MenuItem value="dog">
                       dog
                     </MenuItem>
                     <MenuItem value="cat">
@@ -144,10 +144,10 @@ export default function UpdatePet() {
                     disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     fullWidth
                     id="age"
@@ -204,10 +204,10 @@ export default function UpdatePet() {
                     disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     value={fields.weight}
                     fullWidth
@@ -256,8 +256,8 @@ export default function UpdatePet() {
                       disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
-                      name="ok_with_cats"/>
-                      } label="Ok with cats" />
+                      name="ok_with_cats" />
+                    } label="Ok with cats" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -266,8 +266,8 @@ export default function UpdatePet() {
                       disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
-                      name="ok_with_kids"/>
-                      } label="Ok with children" />
+                      name="ok_with_kids" />
+                    } label="Ok with children" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -287,7 +287,7 @@ export default function UpdatePet() {
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
-                     />} label="Spayed or neutered" />
+                    />} label="Spayed or neutered" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -297,7 +297,7 @@ export default function UpdatePet() {
                       onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
-                     />} label="House-trained" />
+                    />} label="House-trained" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -307,7 +307,7 @@ export default function UpdatePet() {
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
-                     />} label="Special needs" />
+                    />} label="Special needs" />
                   </FormGroup>
                 </Grid>
               </Grid>
