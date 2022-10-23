@@ -15,6 +15,8 @@ import Copyright from '../components/Copyright';
 import { MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { FormGroup } from '@mui/material';
+import { useAddPetMutation } from '../redux/api';
+import { Input } from '@mui/material';
 
 
 const theme = createTheme();
@@ -40,22 +42,10 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
+  const [addPet] = useAddPetMutation();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fields.age = Number.parseInt(fields.age)
-    fields.weight = Number.parseInt(fields.weight)
-    const url = `${process.env.REACT_APP_API_HOST}/api/pets`;
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify(fields),
-      headers: {"content-type": "application/json"},
-    });
-    if (response.ok) {
-      console.log("Success!")
-    } else {
-      console.error(response)
-    }
+    addPet(event.target)
   };
   const handleChange = (event) => {
     let {name, type, value, checked} = event.target;
@@ -206,14 +196,11 @@ export default function PetForm() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    type="url"
+                  <Input
+                    type="file"
                     fullWidth
                     id="pictures"
-                    label="Picture URL"
                     name="pictures"
-                    onChange={handleChange}
-                    value={fields.pictures}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -224,6 +211,18 @@ export default function PetForm() {
                     name="primary_color"
                     onChange={handleChange}
                     value={fields.primary_color}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    multiline
+                    fullWidth
+                    id="description"
+                    label="Description"
+                    name="description"
+                    onChange={handleChange}
+                    value={fields.description}
                   />
                 </Grid>
                 <Grid item xs={6}>

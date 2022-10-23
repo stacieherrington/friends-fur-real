@@ -2,17 +2,13 @@ export function PetEndpoints(builder) {
   return {
     addPet: builder.mutation({
       query: (form) => {
+        form.enctype = "multipart/form-data";
         const formData = new FormData(form);
-        const entries = Array.from(formData.entries());
-        const data = entries.reduce((pet, [key, value]) => {
-          pet[key] = Number.parseInt(value) || value;
-          return pet;
-        }, {});
         return {
           method: "POST",
           url: "/api/pets",
           credentials: "include",
-          body: data,
+          body: formData,
         };
       },
       invalidateTags: [{ type: "Pet", id: "LIST" }],

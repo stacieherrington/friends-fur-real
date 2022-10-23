@@ -1,3 +1,5 @@
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+
 10/19/2022
 
 Made add pet form work with new APIs. Added picture to story form. Made delete
