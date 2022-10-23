@@ -1,6 +1,6 @@
 import boto3
 import os
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, ParamValidationError
 from fastapi import UploadFile
 
 
@@ -34,6 +34,6 @@ def upload_to_s3(user_id: str, file: UploadFile, filename: str) -> str | None:
         )
         print(response)
         return file_path
-    except ClientError as e:
+    except (ClientError, ParamValidationError) as e:
         print(e)
         return None
