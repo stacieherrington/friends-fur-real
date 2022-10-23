@@ -9,35 +9,33 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import { useState, useEffect } from 'react';
-import { useGetTokenQuery } from "./redux/api";
-import { useLogoutMutation } from "./redux/api";
+import { useGetTokenQuery } from "../redux/api"
+import { useLogoutMutation } from "../redux/api";
 
 
-
-
-export const loadApplications = async () => {
+export default function ApplicationList() {
   const {
     data: tokenData,
     error: tokenError,
     isLoading: tokenLoading,
-  } = useGetTokenQuery();
+  } = useGetTokenQuery(); 
   const [logout, { data: logoutData }] = useLogoutMutation();
+  const { data: applications } = useGetTokenQuery("application");
 
-  console.log(tokenData)
+  console.log(applications)
 
+  if (tokenLoading) { return <h1>Loading...</h1>; }
 
-const filterOptions = createFilterOptions({
-  matchFrom: 'start',
-  stringify: (option) => option.status,
-});
+  const filterOptions = createFilterOptions({
+    matchFrom: 'start',
+    stringify: (option) => option.status,
+  });
 
-const ApplicationStatus = [
-  { status: 'Submitted' },
-  { status: 'Pending' },
-  { status: 'Approved' },
-];
-
+  const ApplicationStatus = [
+    { status: 'Submitted' },
+    { status: 'Pending' },
+    { status: 'Approved' },
+  ];
 
   return (
     <Container sx={{ paddingTop: 10 }} >
@@ -77,18 +75,18 @@ const ApplicationStatus = [
             </TableRow>
           </TableHead>
           <TableBody>
-            {applicationsList.map((application) => (
+            {/* {applications.map((application) => ( */}
               <TableRow
-                key={props.name}
+              // key={application.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">{application.name}</TableCell>
-                <TableCell align="center">{application.email}</TableCell>
-                <TableCell align="center">{application.pet}</TableCell>
-                <TableCell align="center">{application.status}</TableCell>
-                <TableCell align="center">{application.application_detail}</TableCell>
+              <TableCell component="th" scope="row">name</TableCell>
+              <TableCell align="center">email</TableCell>
+              <TableCell align="center">pet</TableCell>
+              <TableCell align="center">status</TableCell>
+              <TableCell align="center">detail</TableCell>
               </TableRow>
-            ))}
+            {/* ))} */}
           </TableBody>
         </Table>
       </TableContainer>
