@@ -5,18 +5,10 @@ import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
-import { Paper, Typography, Box } from "@mui/material"
+import { Paper, Typography, Box } from "@mui/material";
+import { useGetThreePetsQuery } from "./redux/api";
 
 
-async function loadThreePets(setPetsList) {
-  const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/random/pets/`);
-  if (response.ok) {
-    const data = await response.json();
-    setPetsList(data.pets);
-  } else {
-    console.error(response);
-  }
-}
 async function loadThreeStories(setStoriesList) {
   const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/stories/random/`);
   if (response.ok) {
@@ -28,21 +20,12 @@ async function loadThreeStories(setStoriesList) {
 }
 
 function HomePage(props) {
-  const [petsList, setPetsList] = useState([]);
   const [storiesList, setStoriesList] = useState([]);
+  const { data: petsList, error, isLoading } = useGetThreePetsQuery();
   useEffect(() => {
-    loadThreePets(setPetsList);
     loadThreeStories(setStoriesList);
   }, [])
 
-  async function handleDelete(id) {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/pets/${id}/`, { method: 'DELETE', credentials: "include" });
-    console.log(id)
-    if (response.ok) {
-      console.log("Success!")
-      loadThreePets(setPetsList);
-    }
-  }
 
   return (
     <>
@@ -63,15 +46,15 @@ function HomePage(props) {
           <Box sx={{ flexGrow: 1 }}> {/* random pet list */}
             <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Featured Friends</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
-              {petsList.map((pet) => (
+              { petsList && petsList.map((pet) => (
                 <Grid item xs={4} sm={4} md={4} key={pet.id}>
-                  <PetCard handleDelete={handleDelete} {...pet} />
+                  <PetCard pet={pet} />
                 </Grid>
               ))}
             </Grid>
           </Box>
           <Box sx={{ flexGrow: 1 }}>  {/* random story list */}
-            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy</Typography>
+            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy Tails</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               {storiesList.map((story) => (
                 <Grid item xs={4} sm={4} md={4} key={story.id}>

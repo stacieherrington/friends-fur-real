@@ -1,23 +1,6 @@
 import { clearForm } from "../slices/applicationSlice";
-export function applicationEndpoints(builder) {
+export function ApplicationEndpoints(builder) {
   return {
-    // addApplication: builder.mutation({
-    //   query: (form) => {
-    //     const formData = new FormData(form);
-    //     const entries = Array.from(formData.entries());
-    //     const data = entries.reduce((app, [key, value]) => {
-    //       app[key] = Number.parseInt(value) || value;
-    //       return app;
-    //     }, {});
-    //     return {
-    //       method: "POST",
-    //       url: "/api/applications/",
-    //       credentials: "include",
-    //       body: data,
-    //     };
-    //   },
-    //   invalidateTags: [{ type: "Application", id: "LIST" }],
-    // }),
     addApplication: builder.mutation({
       query: (data) => ({
         url: "/api/applications/",
@@ -33,17 +16,50 @@ export function applicationEndpoints(builder) {
         } catch (error) {}
       },
     }),
-    listApplications: builder.query({
+    listAccountApplications: builder.query({
+      query: (accountId) => `/api/accounts/${accountId}/applications/`,
+      providesTags: (data) => {
+        const tags = [{ type: "Application", id: "LIST" }];
+        if (!data || !data.adoptions) return tags;
+        const { Applications } = data;
+        if (Applications) {
+          tags.concat(
+            ...Applications.map(({ id }) => ({
+              type: "Application",
+              id,
+            }))
+          );
+        }
+        return tags;
+      },
+    }),
+    listRescueApplications: builder.query({
+      query: (rescueId) => `/api/${rescueId}/applications/`,
+      providesTags: (data) => {
+        const tags = [{ type: "Application", id: "LIST" }];
+        if (!data || !data.adoptions) return tags;
+        const { Applications } = data;
+        if (Applications) {
+          tags.concat(
+            ...Applications.map(({ id }) => ({
+              type: "Application",
+              id,
+            }))
+          );
+        }
+        return tags;
+      },
+    }),
+    listAllApplications: builder.query({
       query: () => `/api/applications/`,
-      providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: "Application", id }))
-          : ["Application"],
+      providesTags: (application) => [
+        { type: "Application", id: application.id },
+      ],
     }),
     getApplication: builder.query({
       query: (applicationId) => `/api/applications/${applicationId}/`,
-      providesTags: (result, error, applicationId) => [
-        { type: "Application", id: applicationId },
+      providesTags: (application) => [
+        { type: "Application", id: application.id },
       ],
     }),
     patchApplication: builder.mutation({
@@ -51,8 +67,26 @@ export function applicationEndpoints(builder) {
         method: "PATCH",
         url: `/api/applications/${applicationId}/`,
       }),
-      invalidatesTags: (result, error, applicationId) => [
-        { type: "Application", id: applicationId },
+      invalidateTags: (application) => [
+        { type: "Application", id: application.id },
+      ],
+    }),
+    approveApplication: builder.mutation({
+      query: (applicationId) => ({
+        method: "PATCH",
+        url: `/api/applications/${applicationId}/approve/`,
+      }),
+      invalidateTags: (application) => [
+        { type: "Application", id: application.id },
+      ],
+    }),
+    rejectApplication: builder.mutation({
+      query: (applicationId) => ({
+        method: "PATCH",
+        url: `/api/applications/${applicationId}/reject/`,
+      }),
+      invalidateTags: (application) => [
+        { type: "Application", id: application.id },
       ],
     }),
     deleteApplication: builder.mutation({
@@ -60,8 +94,8 @@ export function applicationEndpoints(builder) {
         method: "DELETE",
         url: `/api/applications/${applicationId}/`,
       }),
-      invalidatesTags: (result, error, applicationId) => [
-        { type: "Application", id: applicationId },
+      invalidateTags: (application) => [
+        { type: "Application", id: application.id },
       ],
     }),
   };

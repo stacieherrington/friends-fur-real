@@ -13,16 +13,20 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
 import { MenuItem } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormGroup } from '@mui/material';
-import { useAddPetMutation } from '../redux/api';
-import { Input } from '@mui/material';
+import { useParams } from "react-router-dom";
+import { useGetPetQuery, usePutPetMutation } from '../redux/api';
+
 
 
 const theme = createTheme();
 
 
-export default function PetForm() {
+export default function UpdatePet() {
+  const { petId } = useParams();
+  const { data, isLoading } = useGetPetQuery(petId);
+  const [updatePet] = usePutPetMutation();
   const [fields, setFields] = useState({
     "name": "",
     "type": "",
@@ -42,10 +46,20 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-  const [addPet] = useAddPetMutation();
+  useEffect(() => {
+    if (data !== undefined) {
+      let pet = {...data}
+      if (pet.pictures === null) {
+        pet.pictures = "";
+      }
+      setFields(pet);
+    }
+  }, [data]);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    addPet(event.target)
+    fields.age = Number.parseInt(fields.age)
+    fields.weight = Number.parseInt(fields.weight)
+    updatePet({petId, data: fields})
   };
   const handleChange = (event) => {
     let {name, type, value, checked} = event.target;
@@ -79,6 +93,7 @@ export default function PetForm() {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     id="name"
@@ -90,6 +105,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     select
                     required
                     fullWidth
@@ -113,6 +129,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     id="breed"
@@ -124,6 +141,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
                         if (event.target.value < 0) {
@@ -140,6 +158,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     select
@@ -159,6 +178,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     required
                     fullWidth
                     select
@@ -181,6 +201,7 @@ export default function PetForm() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
+                    disabled={isLoading}
                     type={"number"}
                     onChange={(event) => {
                         if (event.target.value < 0) {
@@ -196,15 +217,20 @@ export default function PetForm() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Input
-                    type="file"
+                  <TextField
+                    disabled={isLoading}
+                    type="url"
                     fullWidth
                     id="pictures"
+                    label="Picture URL"
                     name="pictures"
+                    onChange={handleChange}
+                    value={fields.pictures}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    disabled={isLoading}
                     fullWidth
                     id="color"
                     label="Color"
@@ -213,21 +239,10 @@ export default function PetForm() {
                     value={fields.primary_color}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    multiline
-                    fullWidth
-                    id="description"
-                    label="Description"
-                    name="description"
-                    onChange={handleChange}
-                    value={fields.description}
-                  />
-                </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_dogs}
                       name="ok_with_dogs"
@@ -238,6 +253,7 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
                       name="ok_with_cats"/>
@@ -247,6 +263,7 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
                       name="ok_with_kids"/>
@@ -256,6 +273,7 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.shots_up_to_date}
                       name="shots_up_to_date"
@@ -265,6 +283,7 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
@@ -274,7 +293,8 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                    onChange={handleChange}
+                      disabled={isLoading}
+                      onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
                      />} label="House-trained" />
@@ -283,6 +303,7 @@ export default function PetForm() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
+                      disabled={isLoading}
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
@@ -291,12 +312,13 @@ export default function PetForm() {
                 </Grid>
               </Grid>
               <Button
+                disabled={isLoading}
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Add Pet
+                Update Pet
               </Button>
             </Box>
           </Box>

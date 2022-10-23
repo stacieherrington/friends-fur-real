@@ -15,9 +15,30 @@ import ApplicationForm from "./applications/ApplicationForm";
 import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 import { useState, useEffect } from "react";
+import UpdatePet from "./pets/UpdatePet";
 import ManagePetPage from './Manage/ManagePetPage';
 
 function App() {
+  // globle roles state for now:
+  const [roles, setRoles] = useState([]);
+  const [refresh, setRefresh] = useState(1);
+
+  useEffect(() => {
+    const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
+    const fetchConfig = {
+      method: 'get',
+      credentials: "include",
+    }
+    fetch(checkTokenUrl, fetchConfig)
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setRoles(data.account.roles);
+        }
+      })
+      .catch(e => console.error(e));
+  }, [refresh])
+
   return (
     <>
       <BrowserRouter>
@@ -30,6 +51,7 @@ function App() {
             <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
+            <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />

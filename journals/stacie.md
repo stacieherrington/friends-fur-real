@@ -1,3 +1,16 @@
+10/22/2022
+
+Restored petslist functionality. Refactored petslist and homepage to use RTK query.
+Updated the http method for updating a pet from patch to put because put is the
+correct method, since I am replacing the entire object.
+
+Then, I got S3 to work. Now pictures uploaded for our pets are stored on AWS S3.
+I created and configured a security policy that limits access to the development
+bucket, and then I created a single-purpose user with that security policy. The
+code currently uses that user's credentials to upload files into the bucket.
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+
 10/19/2022
 
 Made add pet form work with new APIs. Added picture to story form. Made delete
