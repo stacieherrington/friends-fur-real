@@ -44,12 +44,16 @@ export function PetEndpoints(builder) {
       providesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),
     putPet: builder.mutation({
-      query: ({petId, data}) => (console.log(petId, data) || {
-        method: "put",
-        url: `/api/pets/${petId}/`,
-        body: data,
-        credentials: "include",
-      }),
+      query: ({petId, form}) => {
+        form.enctype = "multipart/form-data";
+        const formData = new FormData(form);
+        return {
+          method: "PUT",
+          url: `/api/pets/${petId}`,
+          credentials: "include",
+          body: formData,
+        };
+      },
       invalidatesTags: (pet) => [{ type: "Pet", id: pet.id }],
     }),
     deletePet: builder.mutation({

@@ -62,9 +62,12 @@ class PetQueries(Queries):
     def update_pet(self, id, data) -> PetOut:
         try:
             id = ObjectId(id)
+            data = data.dict()
+            if data["pictures"] is None:
+                del data["pictures"]
             pet = self.collection.find_one_and_update(
                 {"_id": id},
-                {"$set": data.dict()},
+                {"$set": data},
                 return_document=ReturnDocument.AFTER,
             )
         except:

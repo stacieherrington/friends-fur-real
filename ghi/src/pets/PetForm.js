@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { FormGroup } from '@mui/material';
 import { useAddPetMutation } from '../redux/api';
 import { Input } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const theme = createTheme();
@@ -42,7 +43,8 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-  const [addPet] = useAddPetMutation();
+  const [addPet, {data: petCreate}] = useAddPetMutation();
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
     addPet(event.target)
@@ -55,7 +57,9 @@ export default function PetForm() {
     const update = {...fields, [name]: value};
     setFields(update);
   };
-
+  if (petCreate) {
+    setTimeout(() => navigate("/pets"), 0)
+  }
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -196,6 +200,9 @@ export default function PetForm() {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <Typography>
+                    Please upload a photo.
+                  </Typography>
                   <Input
                     type="file"
                     fullWidth
