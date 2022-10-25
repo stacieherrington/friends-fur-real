@@ -33,28 +33,35 @@ export function ApplicationEndpoints(builder) {
         return tags;
       },
     }),
+    // listRescueApplications: builder.query({
+    //   query: (rescueId) => `/api/${rescueId}/applications/`,
+    //   providesTags: (data) => {
+    //     const tags = [{ type: "Application", id: "LIST" }];
+    //     if (!data || !data.adoptions) return tags;
+    //     const { Applications } = data;
+    //     if (Applications) {
+    //       tags.concat(
+    //         ...Applications.map(({ id }) => ({
+    //           type: "Application",
+    //           id,
+    //         }))
+    //       );
+    //     }
+    //     return tags;
+    //   },
+    // }),
     listRescueApplications: builder.query({
-      query: (rescueId) => `/api/${rescueId}/applications/`,
-      providesTags: (data) => {
-        const tags = [{ type: "Application", id: "LIST" }];
-        if (!data || !data.adoptions) return tags;
-        const { Applications } = data;
-        if (Applications) {
-          tags.concat(
-            ...Applications.map(({ id }) => ({
-              type: "Application",
-              id,
-            }))
-          );
-        }
-        return tags;
-      },
+      query: () => ({
+        method: "get",
+        url: `/api/manage/applications/`,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      }),
+      providesTags: () => ["Application"],
     }),
     listAllApplications: builder.query({
       query: () => `/api/applications/`,
-      providesTags: (application) => [
-        { type: "Application", id: application.id },
-      ],
+      providesTags: () => ["Application"],
     }),
     getApplication: builder.query({
       query: (applicationId) => `/api/applications/${applicationId}/`,

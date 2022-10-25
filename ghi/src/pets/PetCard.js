@@ -9,7 +9,28 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import IconButton from "@mui/material/IconButton";
+
 import SliceAppForm from "../applications/SliceAppForm";
+import { usePatchFavoritePetMutation } from "../redux/api";
+
+function FavoritePet({ petId }) {
+  const [petFavorite, { data: favData, isLoading: loadingFavData }] =
+    usePatchFavoritePetMutation(petId);
+  return (
+    <IconButton
+      color='error'
+      size='small'
+      onClick={() => {
+        petFavorite({ pet_id: petId });
+      }}
+    >
+      Favorite
+      <FavoriteBorderIcon />
+    </IconButton>
+  );
+}
 export default function PetCard(props) {
   const { id, rescue_id, pictures, name } = props;
   const [open, setOpen] = React.useState(false);
@@ -43,6 +64,8 @@ export default function PetCard(props) {
       <CardActions>
         <Button size='small'>More Info</Button>
         <SliceAppForm pet_id={id} rescue_id={rescue_id} />
+
+        <FavoritePet petId={id} />
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}

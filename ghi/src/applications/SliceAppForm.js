@@ -1,31 +1,33 @@
-import * as React from "react";
-import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  MenuItem,
+  Typography,
+  Container,
+  Box,
+  FormLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Modal,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Copyright from "../components/Copyright";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
-import Box from "@mui/material/Box";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
-import Modal from "@mui/material/Modal";
-import { useAddApplicationMutation } from "../redux/api";
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useAddApplicationMutation, useGetTokenQuery } from "../redux/api";
+import Copyright from "../components/Copyright";
 import { updateField } from "../redux/slices/applicationSlice";
 import { preventDefault } from "../redux/utility";
+import Login from "../Login/Login";
 
 const theme = createTheme();
 
@@ -51,6 +53,12 @@ const residences = [
 ];
 
 export default function ApplicationForm(props) {
+  const {
+    data: token,
+    error,
+    isSuccess: tokenSuccess,
+    isLoading,
+  } = useGetTokenQuery();
   const { pet_id, rescue_id } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -83,17 +91,15 @@ export default function ApplicationForm(props) {
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
-  const error = [agrees_to_terms].filter((v) => v).length < 1;
+  const requiredError = [agrees_to_terms].filter((v) => v).length < 1;
 
-  if (isSuccess) {
-    setTimeout(() => {
-      handleClose();
-    }, 0);
-  }
   return (
     <ThemeProvider theme={theme}>
-      <Button onClick={handleOpen}>Adopt me!</Button>
-
+      {token ? (
+        <Button onClick={handleOpen}>Adopt me!</Button>
+      ) : (
+        <Login petCard='petCard' />
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -113,32 +119,40 @@ export default function ApplicationForm(props) {
             >
               <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
                 <LockOutlinedIcon />
-              </Avatar>{" "}
+              </Avatar>
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
               </Typography>
               <Box
                 component='form'
-                onSubmit={preventDefault(application, () => ({
-                  first_name,
-                  last_name,
-                  address: { address_one, address_two, city, state, zip_code },
-                  phone_number,
-                  date_ready,
-                  landlord_restrictions,
-                  residence_type,
-                  has_small_children,
-                  smoke_free_home,
-                  has_dogs,
-                  has_cats,
-                  wants_preapproval,
-                  agrees_to_terms,
-                  residence_owned,
-                  pet_id: pet_id,
-                  rescue_id: rescue_id,
-                  status,
-                }))}
-                noValidate
+                onSubmit={preventDefault(application, () => {
+                  handleClose();
+                  return {
+                    first_name,
+                    last_name,
+                    address: {
+                      address_one,
+                      address_two,
+                      city,
+                      state,
+                      zip_code,
+                    },
+                    phone_number,
+                    date_ready,
+                    landlord_restrictions,
+                    residence_type,
+                    has_small_children,
+                    smoke_free_home,
+                    has_dogs,
+                    has_cats,
+                    wants_preapproval,
+                    agrees_to_terms,
+                    residence_owned,
+                    pet_id: pet_id,
+                    rescue_id: rescue_id,
+                    status,
+                  };
+                })}
               >
                 <TextField
                   margin='normal'
@@ -342,7 +356,7 @@ export default function ApplicationForm(props) {
                 <Box sx={{ m: 3 }}>
                   <FormControl
                     required
-                    error={error}
+                    error={requiredError}
                     component='fieldset'
                     variant='standard'
                   >

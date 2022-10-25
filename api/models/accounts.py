@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List
+from models.pet import PetOut
 from models.rescue import Address, Location
 
 
@@ -44,6 +45,8 @@ class AccountDisplay(BaseModel):
     last_name: str | None
     picture: str | None
     address: Address | None
+    about_me: str | None
+    favorites: List[object] | None
 
 
 class AccountUpdate(BaseModel):
@@ -51,7 +54,16 @@ class AccountUpdate(BaseModel):
     last_name: str | None
     picture: str | None
     address: Address | None
+    about_me: str | None
 
 
 class AccountList(BaseModel):
     accounts: List[AccountOut]
+
+
+class AccountPets(BaseModel):
+    favorites: List[object] | None
+
+
+class PetId(BaseModel):
+    pet_id: str | None

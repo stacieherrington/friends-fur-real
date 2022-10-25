@@ -8,6 +8,7 @@ from models.accounts import (
     AccountList,
     AccountUpdate,
     AccountDisplay,
+    AccountPets,
 )
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
@@ -138,3 +139,67 @@ class AccountQueries(Queries):
             print(e)
             return None
         return AccountDisplay(**acct)
+
+    def favorite_pet(self, account_id, pet_id) -> AccountPets:
+
+        # pet = ObjectId(pet_id.dict()["pet_id"])
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(account_id)},
+            {
+                "$addToSet": {"favorites": {"pet": ObjectId(pet_id.dict()["pet_id"])}},
+            },
+            
+            return_document=ReturnDocument.AFTER,
+        )
+        print(acct)
+        if not acct:
+            return None
+        # acct["pet_id"] = str(acct["pet_id"])
+        return AccountPets(**acct)
+
+    def delete_favorite(self, account_id, pet_id) -> AccountPets:
+
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(account_id)},
+            {
+                "$pull": {"favorites": pet_id.dict()["pet_id"]},
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
+            return None
+        return AccountPets(**acct)
+
+
+    def get_favorites():
+        acct = self.collection.aggregate(
+            [
+                {
+                    "$addFields": {
+                        "FavPets": {
+                            "$map": {
+                                "input": "$favorites",
+                                "as": "pet_id",
+                                "in": {"$toObjectId": "$$pet_id"},
+                            }
+                        }
+                    }
+                },
+                {
+                    "$lookup": {
+                        "from": "pets",
+                        "localField": "FavPets",
+                        "foreignField": "_id",
+                        "as": "FavoritePets",
+                    }
+                },
+                {"$match": {"_id": ObjectId(id)}},
+            ]
+        )
+
+        for i in acct:
+            del i["FavPets"]
+            for j in i["FavoritePets"]:
+                j["pet_id"] = str(j["_id"])
+                print(i, "+++++++++++++++++++++++++++")
+

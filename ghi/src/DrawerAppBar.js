@@ -21,9 +21,10 @@ import ManagementMenu from "./Manage/ManagementMenu";
 import { useState } from "react";
 import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
+import Login from "./Login/Login";
+import SignUpForm from "./Signup/Signup";
 
 const drawerWidth = 240;
-
 
 function DrawerAppBar(props) {
   const {
@@ -191,8 +192,11 @@ function DrawerAppBar(props) {
             />
           </Typography>
           {tokenData ? (
-            <ManagementMenu is_staff={tokenData.account.roles.includes('staff')} is_admin={tokenData.account.roles.includes('admin')} />) : null
-          }
+            <ManagementMenu
+              is_staff={tokenData.account.roles.includes("staff")}
+              is_admin={tokenData.account.roles.includes("admin")}
+            />
+          ) : null}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button href='/' sx={{ color: "#fff" }}>
               Home
@@ -240,33 +244,30 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
             </Menu>
             {tokenData ? (
-              <Button href='/login' sx={{ color: "#fff" }} onClick={logout}>
-                Logout
-              </Button>
-            ) : (
               <>
-                <Button href='/signup' sx={{ color: "#fff" }}>
-                  Signup
+                <Button href='/' sx={{ color: "#fff" }} onClick={logout}>
+                  Logout
                 </Button>
 
-                <Button href='/login' sx={{ color: "#fff" }}>
-                  Login
-                </Button>
+                <IconButton
+                  size='large'
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  color='inherit'
+                  href='/accounts/profile/'
+                >
+                  <AccountCircle />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <SignUpForm appBar='appBar' />
+
+                <Login />
               </>
             )}
           </Box>
-          <div>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              // onClick={}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
       <Box component='nav'>

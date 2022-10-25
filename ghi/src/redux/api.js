@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AuthEndpoints } from "./endpoints/authEps";
+import { AccountEndpoints } from "./endpoints/accountEps";
 import { PetEndpoints } from "./endpoints/petEps";
 import { ApplicationEndpoints } from "./endpoints/applicationEps";
 import { SuccessStoryEndpoints } from "./endpoints/successStoryEps";
-import { AccountEndpoints } from "./endpoints/accountEps";
+// import { AccountEndpoints } from "./endpoints/unusedEps";
 import { RescueEndpoints } from "./endpoints/rescueEps";
 
 export const apiSlice = createApi({
@@ -28,7 +28,6 @@ export const apiSlice = createApi({
     "Rescue",
   ],
   endpoints: (builder) => ({
-    ...AuthEndpoints(builder),
     ...AccountEndpoints(builder),
     ...ApplicationEndpoints(builder),
     ...PetEndpoints(builder),
@@ -43,10 +42,10 @@ export const {
   useLogoutMutation,
   useGetTokenQuery,
   useDeleteSessionsMutation,
-  useAddAccountMutation,
   useListAccountsQuery,
   useSingleAccountQuery,
   usePatchUpdateAccountMutation,
+  usePatchFavoritePetMutation,
   usePatchPromoteAccountMutation,
   usePatchDemoteAccountMutation,
   usePatchLocalizeAccountMutation,

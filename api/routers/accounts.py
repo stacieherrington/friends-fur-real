@@ -7,9 +7,11 @@ from fastapi import (
     Request,
 )
 from jwtdown_fastapi.authentication import Token
+
 from .auth import authenticator
 from pydantic import BaseModel
 
+from queries.pet import PetQueries
 from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
@@ -23,6 +25,7 @@ from models.accounts import (
     AccountList,
     AccountUpdate,
     AccountDisplay,
+    PetId,
 )
 from acl.nominatim import Nominatim
 
@@ -271,3 +274,49 @@ async def localize_account(
         return response
     else:
         raise HTTPException(404, "Cannot set location")
+
+
+@router.patch(
+    "/api/accounts/profile/pets/",
+    tags=["Accounts"],
+)
+async def favorite_pet(
+    request: Request,
+    pet_id: PetId,
+    account: dict = Depends(authenticator.try_get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+
+    response = queries.favorite_pet(account_id, pet_id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This account id does not exist!")
+
+
+@router.delete(
+    "/api/accounts/profile/pets/",
+    tags=["Accounts"],
+)
+async def delete_favorite(
+    request: Request,
+    pet_id: PetId,
+    account: dict = Depends(authenticator.try_get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+
+    response = queries.delete_favorite(account_id, pet_id)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This account id does not exist!")
+
+
