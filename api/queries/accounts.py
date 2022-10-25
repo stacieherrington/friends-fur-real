@@ -12,6 +12,8 @@ from models.accounts import (
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
 from typing import Any
+from acl.nominatim import Nominatim
+from fastapi import Depends
 
 
 class DuplicateAccountError(ValueError):
@@ -21,6 +23,10 @@ class DuplicateAccountError(ValueError):
 class AccountQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "accounts"
+
+    def __init__(self, address_service: Nominatim = Depends()):
+        self.address_service = address_service
+
 
     def get(self, email: str) -> Account:
         props = self.collection.find_one({"email": email})
@@ -38,6 +44,7 @@ class AccountQueries(Queries):
         dup_test = self.collection.find_one({"email": props["email"]})
         if dup_test:
             raise DuplicateAccountError
+        self.add_location(props)
         self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return Account(**props)
@@ -72,9 +79,11 @@ class AccountQueries(Queries):
         return self.collection.find_one({"_id": ObjectId(id)})
 
     def update_account(self, id, data) -> AccountDisplay:
+        data = data.dict(exclude_unset=True)
+        self.add_location(data)
         acct = self.collection.find_one_and_update(
             {"_id": ObjectId(id)},
-            {"$set": data.dict(exclude_unset=True)},
+            {"$set": data},
             return_document=ReturnDocument.AFTER,
         )
         if not acct:
@@ -138,3 +147,19 @@ class AccountQueries(Queries):
             print(e)
             return None
         return AccountDisplay(**acct)
+
+    def add_location(self, account):
+        address = account["address"]
+        address_string = address["address_one"]
+        if address["address_two"] is not None:
+            address_string = f"{address_string}, {address['address_two']}"
+        address_string = f"{address_string},{address['city']}, {address['state']}, {address['zip_code']}"
+        query = address_string.replace(" ", "+")
+        location = self.address_service.location_from_address(query)
+        if location is None:
+            address_string = (
+                f"{address['city']}, {address['state']}, {address['zip_code']}"
+            )
+            query = address_string.replace(" ", "+")
+            location = self.address_service.location_from_address(query)
+        account["location"] = location

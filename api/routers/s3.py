@@ -32,7 +32,6 @@ def upload_to_s3(user_id: str, file: UploadFile, filename: str) -> str | None:
                 "ContentDisposition": "inline; filename=filename.jpg",
             },
         )
-        print(response)
         return file_path
     except (ClientError, ParamValidationError) as e:
         print(e)

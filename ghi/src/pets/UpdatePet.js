@@ -14,9 +14,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/Copyright';
 import { MenuItem } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { FormGroup } from '@mui/material';
+import { FormGroup, Input } from '@mui/material';
 import { useParams } from "react-router-dom";
 import { useGetPetQuery, usePutPetMutation } from '../redux/api';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -26,7 +27,8 @@ const theme = createTheme();
 export default function UpdatePet() {
   const { petId } = useParams();
   const { data, isLoading } = useGetPetQuery(petId);
-  const [updatePet] = usePutPetMutation();
+  const [updatePet, {data: petUpdate}] = usePutPetMutation();
+  const navigate = useNavigate()
   const [fields, setFields] = useState({
     "name": "",
     "type": "",
@@ -59,7 +61,7 @@ export default function UpdatePet() {
     event.preventDefault();
     fields.age = Number.parseInt(fields.age)
     fields.weight = Number.parseInt(fields.weight)
-    updatePet({petId, data: fields})
+    updatePet({petId, form: event.target})
   };
   const handleChange = (event) => {
     let {name, type, value, checked} = event.target;
@@ -69,7 +71,9 @@ export default function UpdatePet() {
     const update = {...fields, [name]: value};
     setFields(update);
   };
-
+  if (petUpdate) {
+    setTimeout(() => navigate("/pets"), 0)
+  }
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -87,7 +91,7 @@ export default function UpdatePet() {
               <PetsIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Add a pet
+              Update pet
             </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -217,15 +221,15 @@ export default function UpdatePet() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <Typography>
+                    Please upload a photo.
+                  </Typography>
+                  <Input
                     disabled={isLoading}
-                    type="url"
+                    type="file"
                     fullWidth
                     id="pictures"
-                    label="Picture URL"
                     name="pictures"
-                    onChange={handleChange}
-                    value={fields.pictures}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -237,6 +241,18 @@ export default function UpdatePet() {
                     name="primary_color"
                     onChange={handleChange}
                     value={fields.primary_color}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    multiline
+                    fullWidth
+                    id="description"
+                    label="Description"
+                    name="description"
+                    onChange={handleChange}
+                    value={fields.description}
                   />
                 </Grid>
                 <Grid item xs={6}>

@@ -1,3 +1,9 @@
+10/24/2022
+
+Made geo-query work for pets list. Create account and update account now add
+location. Finished update pet and now you can upload pictures there.
+
+
 10/22/2022
 
 Restored petslist functionality. Refactored petslist and homepage to use RTK query.
