@@ -69,6 +69,8 @@ We are excited about the future pawsibilities for our site. The following are fe
 - Integrated payment of adoption fees.
 - Visitor can set preferred maximum distance for location sort.
 - Rescue organizations can customize their adoption/foster applications.
+- Allow account holders to change email and/or password.
+- Forgot password email with password reset link.
 
 ## Project initialization
 
