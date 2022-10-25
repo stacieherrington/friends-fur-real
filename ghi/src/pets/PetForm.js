@@ -43,22 +43,32 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-  const [addPet, {data: petCreate}] = useAddPetMutation();
+
+  let addAnother = false;
+
+  const [addPet, { data: petCreate }] = useAddPetMutation();
   const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
     addPet(event.target)
   };
   const handleChange = (event) => {
-    let {name, type, value, checked} = event.target;
+    let { name, type, value, checked } = event.target;
     if (type === "checkbox") {
       value = checked;
     }
-    const update = {...fields, [name]: value};
+    const update = { ...fields, [name]: value };
     setFields(update);
   };
+  const setAddAnotherTrue = () => {
+    addAnother = true;
+  };
   if (petCreate) {
-    setTimeout(() => navigate("/pets"), 0)
+    if (addAnother) {
+      setTimeout(() => navigate("/pets/create"), 0)
+    } else {
+      setTimeout(() => navigate("/pets"), 0)
+    }
   }
   return (
     <>
@@ -104,7 +114,7 @@ export default function PetForm() {
                     value={fields.type}
                     helperText="Please select type"
                   >
-                  <MenuItem value="dog">
+                    <MenuItem value="dog">
                       dog
                     </MenuItem>
                     <MenuItem value="cat">
@@ -130,10 +140,10 @@ export default function PetForm() {
                   <TextField
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     fullWidth
                     id="age"
@@ -187,10 +197,10 @@ export default function PetForm() {
                   <TextField
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     value={fields.weight}
                     fullWidth
@@ -247,8 +257,8 @@ export default function PetForm() {
                     <FormControlLabel control={<Checkbox
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
-                      name="ok_with_cats"/>
-                      } label="Ok with cats" />
+                      name="ok_with_cats" />
+                    } label="Ok with cats" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -256,8 +266,8 @@ export default function PetForm() {
                     <FormControlLabel control={<Checkbox
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
-                      name="ok_with_kids"/>
-                      } label="Ok with children" />
+                      name="ok_with_kids" />
+                    } label="Ok with children" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -275,16 +285,16 @@ export default function PetForm() {
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
-                     />} label="Spayed or neutered" />
+                    />} label="Spayed or neutered" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                    onChange={handleChange}
+                      onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
-                     />} label="House-trained" />
+                    />} label="House-trained" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -293,7 +303,7 @@ export default function PetForm() {
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
-                     />} label="Special needs" />
+                    />} label="Special needs" />
                   </FormGroup>
                 </Grid>
               </Grid>
@@ -304,6 +314,15 @@ export default function PetForm() {
                 sx={{ mt: 3, mb: 2 }}
               >
                 Add Pet
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={setAddAnotherTrue}
+              >
+                Save and Add Another
               </Button>
             </Box>
           </Box>

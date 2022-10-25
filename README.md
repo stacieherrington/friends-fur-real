@@ -53,7 +53,7 @@ Our site gives rescues the power to publicize their adoptable pets in a nationwi
   - Admin/staff can navigate to an application detail page, and can approve or reject the application.
   - Once an application for a particular pet is approved, the pet is marked adopted in the database, and any other application made for that same pet will be automatically rejected.
 - On the story management page, a rescue admin/staff can view a list of submitted success stories written by the rescue's own approved adopters. Admin/staff can navigate to story detail pages, and can approve or reject stories. Once a story is approved by the rescue admin/staff, the story is automatically published.
-- Rescue admin has a special page to manage staff. Regular account holders can be promoted to staff, and staff can be demoted back to regular account holders.
+- Rescue admin has a special page to manage staff. Through this page, regular account holders can be promoted to staff, and staff can be demoted back to regular account holders.
 
 
 ## The future of FriendsFurReal
