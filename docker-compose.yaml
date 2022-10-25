@@ -41,6 +41,10 @@ services:
       WAIT_HOSTS: mongo:27017
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
+      AWS_BUCKET_NAME: ${AWS_BUCKET_NAME}
+      AWS_SERVER_PUBLIC_KEY: ${AWS_SERVER_PUBLIC_KEY}
+      AWS_SERVER_SECRET_KEY: ${AWS_SERVER_SECRET_KEY}
+      AWS_HOST: https://ffr-development.s3.us-east-2.amazonaws.com/
   ghi:
     build:
       context: ghi

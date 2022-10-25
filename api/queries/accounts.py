@@ -13,6 +13,8 @@ from models.accounts import (
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
 from typing import Any
+from acl.nominatim import Nominatim
+from fastapi import Depends
 
 
 class DuplicateAccountError(ValueError):
@@ -22,6 +24,10 @@ class DuplicateAccountError(ValueError):
 class AccountQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "accounts"
+
+    def __init__(self, address_service: Nominatim = Depends()):
+        self.address_service = address_service
+
 
     def get(self, email: str) -> Account:
         props = self.collection.find_one({"email": email})
@@ -39,6 +45,7 @@ class AccountQueries(Queries):
         dup_test = self.collection.find_one({"email": props["email"]})
         if dup_test:
             raise DuplicateAccountError
+        self.add_location(props)
         self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return Account(**props)
@@ -73,9 +80,11 @@ class AccountQueries(Queries):
         return self.collection.find_one({"_id": ObjectId(id)})
 
     def update_account(self, id, data) -> AccountDisplay:
+        data = data.dict(exclude_unset=True)
+        self.add_location(data)
         acct = self.collection.find_one_and_update(
             {"_id": ObjectId(id)},
-            {"$set": data.dict(exclude_unset=True)},
+            {"$set": data},
             return_document=ReturnDocument.AFTER,
         )
         if not acct:
@@ -140,66 +149,18 @@ class AccountQueries(Queries):
             return None
         return AccountDisplay(**acct)
 
-    def favorite_pet(self, account_id, pet_id) -> AccountPets:
-
-        # pet = ObjectId(pet_id.dict()["pet_id"])
-        acct = self.collection.find_one_and_update(
-            {"_id": ObjectId(account_id)},
-            {
-                "$addToSet": {"favorites": {"pet": ObjectId(pet_id.dict()["pet_id"])}},
-            },
-            
-            return_document=ReturnDocument.AFTER,
-        )
-        print(acct)
-        if not acct:
-            return None
-        # acct["pet_id"] = str(acct["pet_id"])
-        return AccountPets(**acct)
-
-    def delete_favorite(self, account_id, pet_id) -> AccountPets:
-
-        acct = self.collection.find_one_and_update(
-            {"_id": ObjectId(account_id)},
-            {
-                "$pull": {"favorites": pet_id.dict()["pet_id"]},
-            },
-            return_document=ReturnDocument.AFTER,
-        )
-        if not acct:
-            return None
-        return AccountPets(**acct)
-
-
-    def get_favorites():
-        acct = self.collection.aggregate(
-            [
-                {
-                    "$addFields": {
-                        "FavPets": {
-                            "$map": {
-                                "input": "$favorites",
-                                "as": "pet_id",
-                                "in": {"$toObjectId": "$$pet_id"},
-                            }
-                        }
-                    }
-                },
-                {
-                    "$lookup": {
-                        "from": "pets",
-                        "localField": "FavPets",
-                        "foreignField": "_id",
-                        "as": "FavoritePets",
-                    }
-                },
-                {"$match": {"_id": ObjectId(id)}},
-            ]
-        )
-
-        for i in acct:
-            del i["FavPets"]
-            for j in i["FavoritePets"]:
-                j["pet_id"] = str(j["_id"])
-                print(i, "+++++++++++++++++++++++++++")
-
+    def add_location(self, account):
+        address = account["address"]
+        address_string = address["address_one"]
+        if address["address_two"] is not None:
+            address_string = f"{address_string}, {address['address_two']}"
+        address_string = f"{address_string},{address['city']}, {address['state']}, {address['zip_code']}"
+        query = address_string.replace(" ", "+")
+        location = self.address_service.location_from_address(query)
+        if location is None:
+            address_string = (
+                f"{address['city']}, {address['state']}, {address['zip_code']}"
+            )
+            query = address_string.replace(" ", "+")
+            location = self.address_service.location_from_address(query)
+        account["location"] = location

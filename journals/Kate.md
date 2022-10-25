@@ -98,3 +98,15 @@ I got stuck at one point with figuring out how to pull out the story data by a s
 Today I finished working on the story detail page. I created story lists page and got the list of story cards to render on the page. I made some modifications on the story card, and some styling changes on our page. 
 
 As I was working on the story list page, I had discovered how to truncate a long string. The story now fits  the story card without stretching it all the way. It was pretty cool to figure out how to do that. 
+
+
+## October 20, 2022
+
+Today I started working on the management for application lists. Created a table and was able to map the list of applications depending on the rescue. Utilized redux/store to fetch the application data. Learned how to get data using redux for the first time. abs
+
+
+## October 24, 2022
+
+Today, I continued working on the application list. Added a way to filter the table/list by it's status (Approved, Submitted & Rejected). Now you are able to filter by select/dropdown for the status. I also modified some of the styling for the page and added the routes for some of the navbar links. 
+
+I was stuck for a long time with this filter feature. It turns out using the Autocomplete for mui was not the right/best choice to filter. Figured out that I had to use the Select tag to filter through. Thankful for Tyler and Gary for helping me out with this, or I would've been stuck for a while. 

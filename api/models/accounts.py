@@ -47,6 +47,7 @@ class AccountDisplay(BaseModel):
     address: Address | None
     about_me: str | None
     favorites: List[object] | None
+    rescue_id: str | None
 
 
 class AccountUpdate(BaseModel):

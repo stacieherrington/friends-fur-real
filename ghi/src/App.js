@@ -15,9 +15,11 @@ import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from "./Manage/ManageStaffPage";
 import AccountProfile from "./accounts/AccountProfile";
 import { useState, useEffect } from "react";
+import UpdatePet from "./pets/UpdatePet";
+import { Container } from "@mui/material";
 
 function App() {
-  // globle roles state for now:
+  // global roles state for now:
   const [roles, setRoles] = useState([]);
   const [refresh, setRefresh] = useState(1);
 
@@ -40,14 +42,18 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <DrawerAppBar roles={roles} setRoles={setRoles} />
-        {/* <NavBar /> */}
-        <div className='container pt-2 pb-0 mb-0'>
+        <Container className='pt-2 pb-0 mb-0'>
+          <DrawerAppBar roles={roles} setRoles={setRoles} />
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/applications' element={<ApplicationList />} />
-            <Route path='/login' element={<LoginForm />} />
+            <Route path='/manage/applications' element={<ApplicationList />} />
+            <Route
+              path='/login'
+              element={<LoginForm setRefresh={setRefresh} />}
+            />
             <Route path='/pets' element={<PetsList />} />
+            <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route
@@ -59,7 +65,7 @@ function App() {
             <Route path='/manage/staff' element={<ManageStaffPage />} />
             <Route path='/accounts/profile' element={<AccountProfile />} />
           </Routes>
-        </div>
+        </Container>
       </BrowserRouter>
     </>
   );

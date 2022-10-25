@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
 import Typography from '@mui/material/Typography';
+import Copyright from "../components/Copyright";
 
 
 
@@ -26,10 +27,18 @@ export default function StoryDetail() {
 
   return (
     <>
-      <Box fixed sx={{ mt: '5%', mb: 5, py: 4, alignSelf: 'center', backgroundColor: '#FFEFD3', height: 'max-content', alignContent: 'center' }}>
-        <Box sx={{ marginX: '2%', height: '100%', padding: 2 }} align='center'>
-          {story.picture ? <img src={story.picture} width="50%" alt="pet" /> : null}
-          <hr class="solid" />
+      <Box sx={{
+        mt: '7%',
+        mx: 5,
+        py: 4,
+        alignSelf: 'center',
+        backgroundColor: '#FFEFD3',
+        height: "100%",
+        alignContent: 'center'
+      }}>
+        <Box fixed="true" sx={{ marginX: '2%', height: 'fit-content', padding: 2 }} align='center'>
+          {story.picture ? <img src={story.picture} width="30%" alt="pet" /> : null}
+          <hr className="solid" />
           <Typography sx={{ mb: 1.5, fontSize: 25, fontWeight: 'bold', textAlign: 'justify' }} color="#FF9633">
             {story.title}
           </Typography>
@@ -38,6 +47,7 @@ export default function StoryDetail() {
           </Typography>
         </Box>
       </Box>
+      <Copyright sx={{ mt: 7, mb: 0 }} />
     </>
   )
 }

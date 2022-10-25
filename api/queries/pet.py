@@ -6,6 +6,15 @@ from typing import List
 from pymongo import ReturnDocument
 from random import randint
 from .accounts import AccountQueries
+import os
+
+
+AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
+
+
+def enrich_pictures(pet):
+    if pet.get("pictures") and not pet["pictures"].startswith("http") and AWS_HOST:
+        pet["pictures"] = f"{AWS_HOST}/{pet['pictures']}"
 
 
 class PetQueries(Queries):
@@ -16,6 +25,7 @@ class PetQueries(Queries):
         try:
             id = ObjectId(id)
             pet = self.collection.find_one({"_id": id})
+            enrich_pictures(pet)
         except:
             return None
         if not pet:
@@ -26,6 +36,8 @@ class PetQueries(Queries):
         pet = pet.dict()
         pet["is_adopted"] = False
         pet["rescue_id"] = rescue_id
+        if pet["pictures"] is None:
+            del pet["pictures"]
         insert_result = self.collection.insert_one(pet)
         # the insert_result have acknowledged(True/ False), and inserted_id(ObjectID of the new pet)
         if insert_result.acknowledged:
@@ -36,6 +48,7 @@ class PetQueries(Queries):
         result = self.collection.find({"is_adopted": False})
         pets = []
         for pet in result:
+            enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
@@ -52,14 +65,18 @@ class PetQueries(Queries):
     def update_pet(self, id, data) -> PetOut:
         try:
             id = ObjectId(id)
+            data = data.dict()
+            if data["pictures"] is None:
+                del data["pictures"]
             pet = self.collection.find_one_and_update(
                 {"_id": id},
-                {"$set": data.dict()},
+                {"$set": data},
                 return_document=ReturnDocument.AFTER,
             )
         except:
             return None
         if pet:
+            enrich_pictures(pet)
             return PetOut(**pet, id=str(id))
 
     def get_three_random_pets(self) -> List[PetOut]:
@@ -68,6 +85,7 @@ class PetQueries(Queries):
         )
         pets = []
         for pet in result:
+            enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets
@@ -76,6 +94,7 @@ class PetQueries(Queries):
         result = self.collection.find({"rescue_id": rescue_id})
         pets = []
         for pet in result:
+            enrich_pictures(pet)
             pet["id"] = str(pet["_id"])
             pets.append(PetOut(**pet))
         return pets

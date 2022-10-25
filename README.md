@@ -1,92 +1,82 @@
-# Friends Fur Real
+# FriendsFurReal
+
+- Gary Tang
+- Kate Quashie-Javellana
+- Stacie Herrington
+- Tyler Male
+
+Friends Fur Real - helping our furry friends find their fur-ever families!
+
+## Design
+
+- [API design](docs/api-design.md)
+- [Original wireframe](docs/FriendsFurReal.png)
+- [Revised wireframe](docs/fur.png)
+
+## Intended market
+
+We are targeting local animal rescue organizations nationwide, as well as the general public, in an effort to bring these two groups together to help more pets find loving fur-ever homes.
+
+## Functionality
+
+### Site visitor/potential adopter
+
+In the past, potential adopters have had to visit multiple individual rescue organizations and shelters in search of their purr-fect pet.
+Now, visitors to our site can access profiles of adoptable pets sponsored by a variety of organizations, all in one convenient place, with a streamlined adoption application process.
+- A visitor is greeted with the homepage, which displays three randomly selected adoptable pets (Featured Friends), as well as teasers from three random "success stories" (Happy Tails) of pets who were matched with their fur-ever homes through our site.
+- A visitor can choose to create an account with just an email address, password, and ZIP code (for location-based pet sorting). But, a visitor can also choose to browse anonymously and view all the available pets.
+- From the homepage, a visitor can:
+  - Click on a featured pet card to see pet details, or click on the card's "Adopt me!" button (which will direct them to sign in or create an account if they are not logged in) and then fill out an adoption application.
+  - Favorite a featured pet (if signed in).
+  - Click on a Happy Tails success story teaser card to read the full story.
+  - Navigate to a list of adoptable pets, which is limited to 200 miles away from the visitor and sorted by distance if the visitor is signed in (thanks to our **geospatial query** and a free and open address service).
+  - Navigate to a list of success stories.
+  - Navigate to their profile page (if signed in).
+- From the pets list page, a visitor can:
+  - Click on a pet card to see pet details, or click on the card's "Adopt me!" button (which will direct them to sign in or create an account if they are not logged in) and then fill out an adoption application.
+  - Favorite a pet.
+  - Choose from some dropdown filters to filter the pet sort.
+- A visitor can make unlimited adoption applications (but cannot make more than one application per pet).
+- A visitor with an approved adoption application can submit their own success story to be included with Happy Tails. (A rescue admin or staff must approve the story before it is published.)
+- From the profile page, a visitor can add details (like name, address, and photo) to their profile, as well as view their favorites list and a list of any applications they have completed. Their applications list displays the status of any applications (submitted, rejected, approved).
+
+### Rescue organization admin/staff
+
+Our site gives rescues the power to publicize their adoptable pets in a nationwide database, reaching more potential adopters than ever before.
+- A rescue organization member is given the role of staff or admin for their particular organization. An admin can promote a regular account holder to staff with just their email address. Admin and staff can create, update, and delete pets that belong to their own organization.
+- When a rescue admin or staff is signed in, some extra features display for them:
+  - A "management" dropdown menu on the navbar that navigates to pet, application, and story management pages.
+  - For any pet belonging to the rescue, the pet card (whether on the homepage or the pets list page) will display additional buttons: update and delete.
+- From the pet management page, a rescue admin/staff can view, add, update, and delete their own pets.
+  - The create and update pet forms include photo uploading functionality with **AWS S3 integration**.
+- On the application management page, a rescue admin/staff can view a list of adoption applications submitted for any of the rescue's pets.
+  - Admin/staff can navigate to an application detail page, and can approve or reject the application.
+  - Once an application for a particular pet is approved, the pet is marked adopted in the database, and any other application made for that same pet will be automatically rejected.
+- On the story management page, a rescue admin/staff can view a list of submitted success stories written by the rescue's own approved adopters. Admin/staff can navigate to story detail pages, and can approve or reject stories. Once a story is approved by the rescue admin/staff, the story is automatically published.
+- Rescue admin has a special page to manage staff. Regular account holders can be promoted to staff, and staff can be demoted back to regular account holders.
 
 
+## The future of FriendsFurReal
 
-## Getting started
+We are excited about the future pawsibilities for our site. The following are features we would like to add soon.
+- The ability to accommodate foster parents as well as adopters:
+  - Foster "matchmaking" results based on location and pet criteria. Matchmaking results will be provided to rescue organizations as well as potential foster parents.
+  - Foster applications.
+- The ability to upload multiple pet photos.
+- Messaging between rescue orgs and potential adopters/fosters.
+- Pets searchable by any criteria.
+- Email notifications for approved/rejected adoption/foster applications and success stories.
+- Integrated payment of adoption fees.
+- Visitor can set preferred maximum distance for location sort.
+- Rescue organizations can customize their adoption/foster applications.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Project initialization
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+To fully enjoy this application on your local machine, please make sure to follow these steps:
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/thejadehelmet/friends-fur-real.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/thejadehelmet/friends-fur-real/-/settings/integrations)
-
-## Collaborate with your team
-
-- [x] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+1. Clone the repository down to your local machine
+2. CD into the new project directory
+3. *Insert instructions for installing fake database*
+4. Run `docker compose build`
+5. Run `docker compose up`
+6. *...what else???*

@@ -9,31 +9,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import IconButton from "@mui/material/IconButton";
-
 import SliceAppForm from "../applications/SliceAppForm";
-import { usePatchFavoritePetMutation } from "../redux/api";
+import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
 
-function FavoritePet({ petId }) {
-  const [petFavorite, { data: favData, isLoading: loadingFavData }] =
-    usePatchFavoritePetMutation(petId);
-  return (
-    <IconButton
-      color='error'
-      size='small'
-      onClick={() => {
-        petFavorite({ pet_id: petId });
-      }}
-    >
-      Favorite
-      <FavoriteBorderIcon />
-    </IconButton>
-  );
-}
 export default function PetCard(props) {
-  const { id, rescue_id, pictures, name } = props;
+  const { id, rescue_id, pictures, name } = props.pet;
   const [open, setOpen] = React.useState(false);
+  const [deletePet] = useDeletePetMutation();
+  const { data, error, isLoading } = useGetCurrentAccountQuery();
+  const isRescuer = data && data.rescue_id === props.pet.rescue_id;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,60 +28,78 @@ export default function PetCard(props) {
   };
 
   return (
-    <Card>
-      {props.pictures && props.pictures.length ? (
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
           height='200'
-          image={props.pictures}
-          alt={props.breed}
+          image={props.pet.pictures}
+          alt={props.pet.breed}
         />
       ) : null}
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
-          {props.name}
+          {props.pet.name}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
-          {props.description}
+        <Typography
+          variant='body2'
+          color='text.secondary'
+          sx={{
+            display: "-webkit-box",
+            overflow: "hidden",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 3,
+          }}
+        >
+          {props.pet.description}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size='small'>More Info</Button>
         <SliceAppForm pet_id={id} rescue_id={rescue_id} />
-
-        <FavoritePet petId={id} />
       </CardActions>
       <CardActions>
-        {/* Only show this for staff/admin role */}
-        <Button size='small'>Update</Button>
-        <Button size='small' onClick={handleClickOpen}>
-          Delete
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              Are you sure you want to delete this pet?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} autoFocus>
-              Cancel
+        {isRescuer && (
+          <>
+            <Button size='small' href={`/pets/${props.pet.id}`}>
+              Update
             </Button>
-            <Button
-              onClick={() => {
-                handleClose();
-                props.handleDelete(props.id);
-              }}
-            >
+            <Button size='small' onClick={handleClickOpen}>
               Delete
             </Button>
-          </DialogActions>
-        </Dialog>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  Are you sure you want to delete this pet?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} autoFocus>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    deletePet(props.pet.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )}
       </CardActions>
     </Card>
   );
