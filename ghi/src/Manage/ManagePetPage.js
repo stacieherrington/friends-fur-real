@@ -14,7 +14,7 @@ async function loadPets(setPetsList) {
     }
 }
 
-function PetsList(props) {
+function ManagePetPage(props) {
     const [petsList, setPetsList] = useState([]);
     useEffect(() => {
         loadPets(setPetsList);
@@ -47,4 +47,4 @@ function PetsList(props) {
     );
 }
 
-export default PetsList;
+export default ManagePetPage;
