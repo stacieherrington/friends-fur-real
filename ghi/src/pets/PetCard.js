@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
 import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
-
+import PetD from "./PetD";
 
 
 export default function PetCard(props) {

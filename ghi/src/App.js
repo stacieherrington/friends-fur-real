@@ -19,6 +19,7 @@ import UpdatePet from "./pets/UpdatePet";
 import PetDetail from "./pets/PetDetail";
 import ManagePetPage from './Manage/ManagePetPage';
 import ApplicationDetail from "./applications/ApplicationDetail";
+import PetD from "./pets/PetD";
 
 function App() {
   // globle roles state for now:
@@ -62,6 +63,7 @@ function App() {
             <Route path="/manage/staff" element={<ManageStaffPage />} />
             <Route path="/manage/pets" element={<ManagePetPage />} />
             <Route path='/manage/applications/:applicationId' element={<ApplicationDetail />} />
+            <Route path='/pets/d' element={<PetD />} />
           </Routes>
         </div>
       </BrowserRouter>
