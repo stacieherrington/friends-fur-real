@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import UpdatePet from "./pets/UpdatePet";
 import PetDetail from "./pets/PetDetail";
 import ManagePetPage from './Manage/ManagePetPage';
+import ApplicationDetail from "./applications/ApplicationDetail";
 
 function App() {
   // globle roles state for now:
@@ -60,6 +61,7 @@ function App() {
             <Route path='/stories' element={<StoriesList />} />
             <Route path="/manage/staff" element={<ManageStaffPage />} />
             <Route path="/manage/pets" element={<ManagePetPage />} />
+            <Route path='/manage/applications/:applicationId' element={<ApplicationDetail />} />
           </Routes>
         </div>
       </BrowserRouter>
