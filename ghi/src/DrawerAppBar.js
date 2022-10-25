@@ -42,7 +42,6 @@ function DrawerAppBar(props) {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <div align='center' sx={{ my: 2 }}>
         <Avatar
-          textAlign='center'
           alt='Cute Logo'
           src='../images/cute-icon.png'
           sx={{ width: 60, height: 60 }}
