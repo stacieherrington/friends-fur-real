@@ -43,8 +43,7 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-
-  let addAnother = false;
+  const [addAnother, setAddAnother] = useState(false);
 
   const [addPet, { data: petCreate }] = useAddPetMutation();
   const navigate = useNavigate()
@@ -65,7 +64,7 @@ export default function PetForm() {
   };
   if (petCreate) {
     if (addAnother) {
-      setTimeout(() => navigate("/pets/create"), 0)
+      setTimeout(() => setFields(), 0)
     } else {
       setTimeout(() => navigate("/pets"), 0)
     }
@@ -320,7 +319,7 @@ export default function PetForm() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={setAddAnotherTrue}
+                onClick={() => setAddAnother(true)}
               >
                 Save and Add Another
               </Button>
