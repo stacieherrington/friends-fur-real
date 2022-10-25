@@ -49,8 +49,6 @@ export default function ApplicationList() {
       setAppList(applications.filter((app) => app.status === event.target.value))
 
   }
-  console.log('STATUSSS', status);
-
 
   return (
     <Container sx={{ paddingTop: 10 }} >
@@ -97,17 +95,17 @@ export default function ApplicationList() {
           </TableHead>
           <TableBody>
             {appList.map((application) => (
-            <TableRow
+              <TableRow
                 key={application.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell component="th" scope="row">{application.first_name}</TableCell>
                 <TableCell align="center">{application.last_name}</TableCell>
                 <TableCell align="center">{application.phone_number}</TableCell>
                 <TableCell align="center">{application.pet_id}</TableCell>
                 <TableCell align="center">{application.status}</TableCell>
-            </TableRow>
-            ))} 
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

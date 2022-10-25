@@ -27,8 +27,16 @@ export default function StoryDetail() {
 
   return (
     <>
-      <Box sx={{ mt: '7%', mb: 0, py: 4, alignSelf: 'center', backgroundColor: '#FFEFD3', height: "100%", alignContent: 'center' }}>
-        <Box sx={{ marginX: '2%', height: 'fit-content', padding: 2 }} align='center'>
+      <Box sx={{
+        mt: '7%',
+        mx: 5,
+        py: 4,
+        alignSelf: 'center',
+        backgroundColor: '#FFEFD3',
+        height: "100%",
+        alignContent: 'center'
+      }}>
+        <Box fixed sx={{ marginX: '2%', height: 'fit-content', padding: 2 }} align='center'>
           {story.picture ? <img src={story.picture} width="30%" alt="pet" /> : null}
           <hr class="solid" />
           <Typography sx={{ mb: 1.5, fontSize: 25, fontWeight: 'bold', textAlign: 'justify' }} color="#FF9633">

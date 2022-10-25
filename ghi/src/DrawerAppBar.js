@@ -11,17 +11,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, Avatar } from "@mui/material";
 import ManagementMenu from "./Manage/ManagementMenu";
-import { useState } from "react";
 import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
-import { NavLink } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -36,42 +32,7 @@ function DrawerAppBar(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
-  const [anchorEl3, setAnchorEl3] = React.useState(null);
 
-  const handleMenu1 = (event) => {
-    setAnchorEl1(event.currentTarget);
-  };
-
-  const handleMenu2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenu3 = (event) => {
-    setAnchorEl3(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClose1 = () => {
-    setAnchorEl1(null);
-  };
-
-  const handleClose2 = () => {
-    setAnchorEl2(null);
-  };
-
-  const handleClose3 = () => {
-    setAnchorEl3(null);
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -79,81 +40,52 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant='h6' sx={{ my: 2 }}>
-        FFR Logo
-      </Typography>
+      <div align='center' sx={{ my: 2 }}>
+        <Avatar
+          textAlign='center'
+          alt='Cute Logo'
+          src='../images/cute-icon.png'
+          sx={{ width: 60, height: 60 }}
+        />
+      </div>
       <Divider />
       <List>
-        <Link href='/'>
+        <Link href='/' underline="none">
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleMenu3} sx={{ textAlign: "center" }}>
-            <ListItemText primary={"Rescues"} />
-          </ListItemButton>
-          <Menu
-            id='menu-appbar1'
-            anchorEl={anchorEl3}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorEl3)}
-            onClose={handleClose3}
-          >
-            <MenuItem onClick={handleClose3}>Rescue Link 1</MenuItem>
-            <MenuItem onClick={handleClose3}>Rescue Link 2</MenuItem>
-            <MenuItem onClick={handleClose3}>Rescue Link 3</MenuItem>
-          </Menu>
-        </ListItem>
-
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleMenu} sx={{ textAlign: "center" }}>
-            <ListItemText primary={"Adopters"} />
-          </ListItemButton>
-        </ListItem>
-        <Menu
-          id='menu-appbar2'
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>Adopter Link 1</MenuItem>
-          <MenuItem onClick={handleClose}>Adopter Link 2</MenuItem>
-        </Menu>
-        <Link href='/signup'>
+        <Link href='/pets' underline="none">
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary={"Find a Friend"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link href='/stories' underline="none">
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary={"Stories"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link href='/signup' underline="none">
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Signup"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/login'>
+        <Link href='/login' underline="none">
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Login"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/login'>
+        <Link href='/login' underline="none">
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }} onClick={logout}>
               <ListItemText primary={"Logout"} />
@@ -180,8 +112,7 @@ function DrawerAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant='h6'
+          <Box
             component='div'
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
@@ -190,7 +121,7 @@ function DrawerAppBar(props) {
               src='../images/cute-icon.png'
               sx={{ width: 60, height: 60 }}
             />
-          </Typography>
+          </Box>
           {tokenData ? (
             <ManagementMenu is_staff={tokenData.account.roles.includes('staff')} is_admin={tokenData.account.roles.includes('admin')} />) : null
           }
@@ -198,51 +129,12 @@ function DrawerAppBar(props) {
             <Button href='/' sx={{ color: "#fff" }}>
               Home
             </Button>
-            <Button onClick={handleMenu1} sx={{ color: "#fff" }}>
-              Rescues
+            <Button color="inherit" href='/pets'>
+              Find a Friend
             </Button>
-            <Menu
-              id='menu-appbar3'
-              anchorEl={anchorEl1}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl1)}
-              onClose={handleClose1}
-            >
-              <MenuItem onClick={handleClose1}>Rescue Link 1</MenuItem>
-              <MenuItem onClick={handleClose1}>Rescue Link 2</MenuItem>
-            </Menu>
-            <Button onClick={handleMenu2} sx={{ color: "#fff" }}>
-              Pets
+            <Button href='/stories' sx={{ color: "#fff" }}>
+              Stories
             </Button>
-            <Menu
-              id='menu-appbar4'
-              anchorEl={anchorEl2}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl2)}
-              onClose={handleClose2}
-            >
-              <MenuItem onClick={handleClose2} ><Button color="inherit" href='/pets'>
-                Adoptable Pets
-              </Button></MenuItem>
-              <MenuItem onClick={handleClose2}><Button color="inherit" href='/stories'>
-                Success Stories </Button></MenuItem>
-            </Menu>
             {tokenData ? (
               <Button href='/login' sx={{ color: "#fff" }} onClick={logout}>
                 Logout
