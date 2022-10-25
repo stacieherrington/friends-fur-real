@@ -3,6 +3,7 @@ from models.pet import PetOut, PetIn, PetsList, PetUpdate
 from queries.pet import PetQueries
 from .auth import authenticator
 from .s3 import upload_to_s3
+from queries.rescue import RescueQueries
 
 
 router = APIRouter(tags=["Pets"])
@@ -13,9 +14,7 @@ not_authorized = HTTPException(
 )
 
 
-@router.get(
-    "/api/pets/{pet_id}/", response_model=PetOut, summary="Detail a Pet"
-)
+@router.get("/api/pets/{pet_id}/", response_model=PetOut, summary="Detail a Pet")
 def get_pet(pet_id: str, queries: PetQueries = Depends()):
     response = queries.get_pet(pet_id)
     if response:
@@ -73,7 +72,8 @@ def create_pet(
         special_needs=special_needs,
         is_adopted=False,
     )
-    pet.pictures = upload_to_s3(account["id"], pictures.file, pictures.filename)
+    if pictures.filename:
+        pet.pictures = upload_to_s3(account["id"], pictures.file, pictures.filename)
     response = queries.create_pet(pet, rescue_id)
     if response:
         return response
@@ -86,8 +86,22 @@ def create_pet(
     response_model=PetsList,
     summary="List all Pets that is not adopted",
 )
-def list_pets(queries: PetQueries = Depends()):
-    return PetsList(pets=queries.list_pets())
+def list_pets(
+    pet_queries: PetQueries = Depends(),
+    rescue_queries: RescueQueries = Depends(),
+    account: dict = Depends(authenticator.try_get_current_account_data),
+):
+    if account is None:
+        pets = pet_queries.list_pets()
+    else:
+        try:
+            rescues = rescue_queries.sort_rescues_by_distance(account["id"])
+            pets = []
+            for rescue in rescues:
+                pets = pets + rescue.pets
+        except KeyError:
+            pets = pet_queries.list_pets()
+    return PetsList(pets=pets)
 
 
 @router.delete(

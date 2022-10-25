@@ -14,7 +14,10 @@ export function PetEndpoints(builder) {
       invalidateTags: [{ type: "Pet", id: "LIST" }],
     }),
     listPets: builder.query({
-      query: () => `/api/pets/`,
+      query: () => ({
+        url: `/api/pets/`,
+        credentials: "include",
+      }),
       transformResponse: (response, meta, arg) => response.pets,
       providesTags: (data) => {
         const tags = [{ type: "Pet", id: "LIST" }];
