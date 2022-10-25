@@ -29,7 +29,7 @@ class RescueIn(BaseModel):
 class RescueOut(RescueIn):
     id: str | None
     location: Location | None
-
+    pets: List[PetOut]
 
 class RescuesList(BaseModel):
     rescues: List[RescueOut]

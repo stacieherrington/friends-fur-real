@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from typing import List, Any
 from pymongo import ReturnDocument
 from .accounts import AccountQueries
+from .pet import enrich_pictures
 
 
 class RescueQueries(Queries):
@@ -87,15 +88,32 @@ class RescueQueries(Queries):
     def sort_rescues_by_distance(self, account_id):
         account = AccountQueries().get_account_dict(account_id)
         account_location = account["location"]
-        location_query = {
-            "$nearSphere": {
-                "$geometry": account_location,
-                "$maxDistance": 321869,  # 200 miles in meters
-            }
-        }
-        result = self.collection.find({"location": location_query})
+        result = self.collection.aggregate(
+            [
+                {
+                    "$geoNear": {
+                        "near": account_location,
+                        "distanceField": "distance",
+                        "maxDistance": 321869,
+                        "spherical": True,
+                    }
+                },
+                {"$addFields": {"id": {"$toString": "$_id"}}},
+                {
+                    "$lookup": {
+                        "from": "pets",
+                        "localField": "id",
+                        "foreignField": "rescue_id",
+                        "as": "pets",
+                    }
+                },
+            ]
+        )
         rescues = []
         for rescue in result:
             rescue["id"] = str(rescue["_id"])
+            for pet in rescue["pets"]:
+                pet["id"] = str(pet["_id"])
+                enrich_pictures(pet)
             rescues.append(RescueOut(**rescue))
         return rescues

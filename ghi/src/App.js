@@ -43,12 +43,12 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <DrawerAppBar />
         {/* <NavBar /> */}
         <div className='container pt-2 pb-0 mb-0'>
+          <DrawerAppBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/applications' element={<ApplicationList />} />
+            <Route path='/manage/applications' element={<ApplicationList />} />
             <Route path='/applications/new' element={<ApplicationForm />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />

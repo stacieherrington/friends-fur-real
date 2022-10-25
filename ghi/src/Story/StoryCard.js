@@ -5,13 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 
 
 
 export default function StoryCard(props) {
   return (
-    <Card sx={{ maxHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center', flexBasis: '50%' }}>
+    <Card sx={{ maxHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       {props.picture ? <CardMedia
         component="img"
         height="180"
@@ -39,7 +38,7 @@ export default function StoryCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-          <Button href={`${props.id}`} size="small">Read More</Button>
+        <Button href={`stories/${props.id}`} size="small">Read More</Button>
       </CardActions>
     </Card>
   );

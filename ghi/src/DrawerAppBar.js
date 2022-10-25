@@ -21,6 +21,7 @@ import ManagementMenu from "./Manage/ManagementMenu";
 import { useState } from "react";
 import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
+import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -186,7 +187,7 @@ function DrawerAppBar(props) {
           >
             <Avatar
               alt='Cute Logo'
-              src='/images/cute-icon.png'
+              src='../images/cute-icon.png'
               sx={{ width: 60, height: 60 }}
             />
           </Typography>
@@ -219,7 +220,7 @@ function DrawerAppBar(props) {
               <MenuItem onClick={handleClose1}>Rescue Link 2</MenuItem>
             </Menu>
             <Button onClick={handleMenu2} sx={{ color: "#fff" }}>
-              Adopters
+              Pets
             </Button>
             <Menu
               id='menu-appbar4'
@@ -236,8 +237,11 @@ function DrawerAppBar(props) {
               open={Boolean(anchorEl2)}
               onClose={handleClose2}
             >
-              <MenuItem onClick={handleClose2}>Adopters Link 1</MenuItem>
-              <MenuItem onClick={handleClose2}>Adopters Link 2</MenuItem>
+              <MenuItem onClick={handleClose2} ><Button color="inherit" href='/pets'>
+                Adoptable Pets
+              </Button></MenuItem>
+              <MenuItem onClick={handleClose2}><Button color="inherit" href='/stories'>
+                Success Stories </Button></MenuItem>
             </Menu>
             {tokenData ? (
               <Button href='/login' sx={{ color: "#fff" }} onClick={logout}>

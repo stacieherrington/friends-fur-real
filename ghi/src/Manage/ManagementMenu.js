@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function ManagementMenu(props) {
@@ -17,7 +18,7 @@ export default function ManagementMenu(props) {
     if (is_admin || is_staff) {
         return (
             <div>
-                <Button color='error' variant='contained'
+                <Button sx={{ color: '#FF9633', fontWeight: "bold" }}
                     id="nav-management-positioned-button"
                     aria-controls={open ? 'nav-management-positioned-menu' : undefined}
                     aria-haspopup="true"
@@ -42,7 +43,7 @@ export default function ManagementMenu(props) {
                     }}
                 >
                     <MenuItem onClick={handleClose}><Button href='/manage/pets'>Manage Pets</Button></MenuItem>
-                    <MenuItem onClick={handleClose}><Button>Review Applications</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button><Button color="inherit" href="/manage/applications">Review Applications</Button></Button></MenuItem>
                     <MenuItem onClick={handleClose}><Button>Review Stories</Button></MenuItem>
                     <MenuItem disabled={!is_admin} onClick={handleClose}><Button href='/manage/staff'>Manage Staff</Button></MenuItem>
                 </Menu>

@@ -5,7 +5,7 @@ import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
-import { Paper, Typography, Box } from "@mui/material";
+import { Paper, Typography, Box, Container } from "@mui/material";
 import { useGetThreePetsQuery } from "./redux/api";
 
 
@@ -29,9 +29,9 @@ function HomePage(props) {
 
   return (
     <>
-      <div className="px-4 my-5 pt-5 text-center">
+      <Container className="mt-5 mb-0 pt-5 text-center">
         <SearchBar />
-        <div className="py-3">
+        <div className="py-4">
           <h1 className="display-3 fw-bold">FriendsFurReal</h1>
           <div style={{ backgroundImage: "url(/images/pups.jpg)" }}>
             <img
@@ -64,7 +64,7 @@ function HomePage(props) {
             </Grid>
           </Box>
         </div>
-      </div >
+      </Container>
       <Copyright sx={{ mt: 10, mb: 4 }} />
     </>
   )
