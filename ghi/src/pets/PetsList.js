@@ -6,11 +6,9 @@ import { useEffect, useState } from "react";
 
 export default function PetsList() {
 
-  const { data, error, isLoading } = useListPetsQuery();
+  const { data, isLoading } = useListPetsQuery();
   const [petType, setPetType] = useState('all');
   const [petList, setPetList] = useState([]);
-
-  console.log("DATAAA", data)
 
   useEffect(() => {
     if (data) {
