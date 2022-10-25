@@ -30,7 +30,7 @@ export default function PetCard(props) {
   };
 
   return (
-    <Card>
+    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
@@ -43,7 +43,13 @@ export default function PetCard(props) {
         <Typography gutterBottom variant='h5' component='div'>
           {props.pet.name}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography variant='body2' color='text.secondary'
+          sx={{
+            display: '-webkit-box',
+            overflow: 'hidden',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 3,
+          }}>
           {props.pet.description}
         </Typography>
       </CardContent>

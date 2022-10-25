@@ -12,7 +12,7 @@ export default function PetsList() {
       <Typography
         variant='h3'
         align='center'
-        sx={{ py: 3, fontWeight: "bold" }}
+        sx={{ py: 5, fontWeight: "bold" }}
       >
         Adoptable Pets
       </Typography>
