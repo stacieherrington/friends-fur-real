@@ -5,12 +5,6 @@ import { useListPetsQuery } from "../redux/api";
 
 export default function PetsList() {
 
-function PetsList(props) {
-  const [petsList, setPetsList] = useState([]);
-  useEffect(() => {
-    loadPets(setPetsList);
-  }, [])
-
   const { data, error, isLoading } = useListPetsQuery();
 
   return (
@@ -18,8 +12,9 @@ function PetsList(props) {
       <Typography
         variant='h3'
         align='center'
-        sx={{ py: 4, fontWeight: 'bold' }} >
-        Find your FURiend!
+        sx={{ py: 5, fontWeight: "bold" }}
+      >
+        Adoptable Pets
       </Typography>
       <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
         {data && data.map((pet) => (

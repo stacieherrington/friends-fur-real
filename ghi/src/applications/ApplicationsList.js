@@ -6,11 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Container } from '@mui/material'
-import TextField from '@mui/material/TextField';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import { useGetTokenQuery } from "../redux/api"
+import { Container, Menu } from '@mui/material'
+import { useGetTokenQuery, useListRescueApplicationsQuery } from "../redux/api"
 import { useLogoutMutation } from "../redux/api";
+import { useEffect, useState } from "react";
+import { Select, MenuItem, InputLabel } from '@mui/material';
+
 // import {uset}
 
 export default function ApplicationList() {
@@ -20,22 +21,36 @@ export default function ApplicationList() {
     isLoading: tokenLoading,
   } = useGetTokenQuery();
   const [logout, { data: logoutData }] = useLogoutMutation();
-  const { data: applications } = useGetTokenQuery("application");
+  const { data: applicationData, error, isLoading } = useListRescueApplicationsQuery();
+  const [appList, setAppList] = useState([]);
+  const [status, setStatus] = useState('All');
 
-  console.log(applications)
 
-  if (tokenLoading) { return <h1>Loading...</h1>; }
+  useEffect(() => {
+    if (applicationData) {
+      setAppList(applicationData.applications)
+    }
+  }, [applicationData]);
 
-  const filterOptions = createFilterOptions({
-    matchFrom: 'start',
-    stringify: (option) => option.status,
-  });
+  if (tokenLoading) { return (<h1>Loading...</h1>); }
 
-  const ApplicationStatus = [
-    { status: 'Submitted' },
-    { status: 'Pending' },
-    { status: 'Approved' },
-  ];
+  if (isLoading) { return (<h1>Loading applications...</h1>) }
+
+  const { applications } = applicationData
+
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    setStatus(event.target.value)
+
+    event.target.value === "All" ?
+      setAppList(applications)
+      :
+      setAppList(applications.filter((app) => app.status === event.target.value))
+
+  }
+  console.log('STATUSSS', status);
+
 
   return (
     <Container sx={{ paddingTop: 10 }} >
@@ -58,35 +73,41 @@ export default function ApplicationList() {
           }}
           >
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Pet</TableCell>
+              <TableCell>First name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Phone number</TableCell>
+              <TableCell>Pet Id</TableCell>
               <TableCell>
-                <Autocomplete
-                  id="application-filter"
-                  options={ApplicationStatus}
+                <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Status"
+                  value={status}
+                  onChange={handleChange}
                   size="small"
-                  sx={{ width: 'auto' }}
-                  getOptionLabel={(props) => props.status}
-                  filterOptions={filterOptions}
-                  renderInput={(status) => <TextField {...status} label="Filter Status" />} />
+                >
+                  <MenuItem value={'All'}>All</MenuItem>
+                  <MenuItem value={'Approved'}>Approved</MenuItem>
+                  <MenuItem value={'Submitted'}>Submitted</MenuItem>
+                  <MenuItem value={'Rejected'}>Rejected</MenuItem>
+                </Select>
               </TableCell>
-              <TableCell>Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {applications.map((application) => ( */}
+            {appList.map((application) => (
             <TableRow
-              // key={application.name}
+                key={application.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">name</TableCell>
-              <TableCell align="center">email</TableCell>
-              <TableCell align="center">pet</TableCell>
-              <TableCell align="center">status</TableCell>
-              <TableCell align="center">detail</TableCell>
+                <TableCell component="th" scope="row">{application.first_name}</TableCell>
+                <TableCell align="center">{application.last_name}</TableCell>
+                <TableCell align="center">{application.phone_number}</TableCell>
+                <TableCell align="center">{application.pet_id}</TableCell>
+                <TableCell align="center">{application.status}</TableCell>
             </TableRow>
-            {/* ))} */}
+            ))} 
           </TableBody>
         </Table>
       </TableContainer>
