@@ -331,7 +331,7 @@ export default function UpdatePet() {
                     <FormControlLabel control={<Checkbox
                       disabled={!isRescuer}
                       onChange={handleChange}
-                      checked={fields.special_needs? fields.name : false}
+                      checked={fields.special_needs? fields.special_needs : false}
                       name="special_needs"
                     />} label="Special needs" />
                   </FormGroup>

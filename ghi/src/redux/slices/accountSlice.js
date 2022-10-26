@@ -5,6 +5,10 @@ const initialState = {
   email: "",
   password: "",
   zip_code: "",
+  address_one: "",
+  address_two: "",
+  city: "",
+  state: "",
 };
 
 export const accountSlice = createSlice({

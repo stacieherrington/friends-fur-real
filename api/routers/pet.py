@@ -91,7 +91,8 @@ def list_pets(
     rescue_queries: RescueQueries = Depends(),
     account: dict = Depends(authenticator.try_get_current_account_data),
 ):
-    if account is None:
+    print(account)
+    if account is None or not account['location']:
         pets = pet_queries.list_pets()
     else:
         try:

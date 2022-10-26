@@ -95,7 +95,13 @@ export default function SignUpForm(props) {
                     return {
                       email,
                       password,
-                      address: { zip_code },
+                      address: {
+                        address_one: "",
+                        address_two: "",
+                        city: "",
+                        state: "",
+                        zip_code,
+                      },
                     };
                   })}
                   sx={{ mt: 3 }}
