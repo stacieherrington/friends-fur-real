@@ -43,14 +43,38 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-  const [addAnother, setAddAnother] = useState(false);
 
   const [addPet, { data: petCreate }] = useAddPetMutation();
   const navigate = useNavigate()
-  const handleSubmit = async (event) => {
+  const submitAndNavigateAway = async (event) => {
     event.preventDefault();
-    addPet(event.target)
+    addPet(event.target.form);
+    setTimeout(() => navigate("/pets"), 0)
+
   };
+  const submitAndAddAnother = async (event) => {
+    event.preventDefault();
+    addPet(event.target.form);
+    setFields({
+      "name": "",
+      "type": "",
+      "breed": "",
+      "age": "",
+      "sex": "",
+      "size": "",
+      "description": "",
+      "weight": "",
+      "pictures": "",
+      "primary_color": "",
+      "ok_with_dogs": false,
+      "ok_with_cats": false,
+      "shots_up_to_date": false,
+      "ok_with_kids": false,
+      "spayed_neutered": false,
+      "house_trained": false,
+      "special_needs": false,
+    });
+  }
   const handleChange = (event) => {
     let { name, type, value, checked } = event.target;
     if (type === "checkbox") {
@@ -59,35 +83,7 @@ export default function PetForm() {
     const update = { ...fields, [name]: value };
     setFields(update);
   };
-  const setAddAnotherTrue = () => {
-    addAnother = true;
-  };
-  if (petCreate) {
-    if (addAnother) {
-      setAddAnother(false);
-      setFields({
-        "name": "",
-        "type": "",
-        "breed": "",
-        "age": "",
-        "sex": "",
-        "size": "",
-        "description": "",
-        "weight": "",
-        "pictures": "",
-        "primary_color": "",
-        "ok_with_dogs": false,
-        "ok_with_cats": false,
-        "shots_up_to_date": false,
-        "ok_with_kids": false,
-        "spayed_neutered": false,
-        "house_trained": false,
-        "special_needs": false,
-      });
-    } else {
-      setTimeout(() => navigate("/pets"), 0)
-    }
-  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -107,7 +103,7 @@ export default function PetForm() {
             <Typography component="h1" variant="h5">
               Add a pet
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -326,19 +322,18 @@ export default function PetForm() {
                 </Grid>
               </Grid>
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={submitAndNavigateAway}
               >
                 Add Pet
               </Button>
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() => setAddAnother(true)}
+                onClick={submitAndAddAnother}
               >
                 Save and Add Another
               </Button>
