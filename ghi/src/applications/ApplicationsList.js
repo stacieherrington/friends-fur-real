@@ -105,6 +105,7 @@ export default function ApplicationList() {
                 <TableCell align="center">{application.phone_number}</TableCell>
                 <TableCell align="center">{application.pet_id}</TableCell>
                 <TableCell align="center">{application.status}</TableCell>
+                <TableCell align="center"><Button href={`/manage/applications/${application.id}`}>Detail</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
