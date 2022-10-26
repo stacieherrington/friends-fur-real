@@ -41,6 +41,10 @@ class AccountQueries(Queries):
         props = acct.dict()
         props["password"] = hashed_password
         props["roles"] = roles
+        props["address"]["address_one"] = ""
+        props["address"]["address_two"] = ""
+        props["address"]["city"] = ""
+        props["address"]["state"] = ""
         dup_test = self.collection.find_one({"email": props["email"]})
         if dup_test:
             raise DuplicateAccountError
