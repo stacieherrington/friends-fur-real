@@ -9,6 +9,14 @@ from models.story import (
 )
 
 from .application import ApplicationQueries
+import os
+
+
+AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
+
+def enrich_pictures(story):
+    if story.get("picture") and not story["picture"].startswith("http") and AWS_HOST:
+        story["picture"] = f"{AWS_HOST}/{story['picture']}"
 
 
 class SuccessStoryQueries(Queries):
@@ -35,6 +43,8 @@ class SuccessStoryQueries(Queries):
             story["pet_id"] = application["pet_id"]
             story["rescue_id"] = application["rescue_id"]
             story["account_id"] = application["account_id"]
+            if story["picture"] is None:
+                del story["picture"]
             insert_result = self.collection.insert_one(story)
             if insert_result.acknowledged:
                 return {"message": "Thank you for your story!"}
@@ -48,6 +58,7 @@ class SuccessStoryQueries(Queries):
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             stories.append(SuccessStoryOut(**story))
         return stories
 
@@ -58,6 +69,7 @@ class SuccessStoryQueries(Queries):
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             stories.append(SuccessStoryOut(**story))
         return stories
 
@@ -69,6 +81,7 @@ class SuccessStoryQueries(Queries):
             return None
         if story:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             return SuccessStoryOut(**story)
         else:
             return None
@@ -82,6 +95,7 @@ class SuccessStoryQueries(Queries):
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             stories.append(SuccessStoryOut(**story))
         return stories
 
@@ -90,6 +104,7 @@ class SuccessStoryQueries(Queries):
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             stories.append(SuccessStoryOut(**story))
         return stories
 
@@ -111,6 +126,7 @@ class SuccessStoryQueries(Queries):
     def reject_story(self, story_id) -> SuccessStoryOut:
         try:
             story = self.get_story(story_id).dict()
+            enrich_pictures(story)
         except:
             return
         # 1. check db, make sure the target story status is Submitted:
@@ -128,6 +144,7 @@ class SuccessStoryQueries(Queries):
         stories = []
         for story in result:
             story["id"] = str(story["_id"])
+            enrich_pictures(story)
             stories.append(SuccessStoryOut(**story))
         return stories
 
@@ -141,6 +158,7 @@ class SuccessStoryQueries(Queries):
                 {"$set": data},
                 return_document=ReturnDocument.AFTER,
             )
+            enrich_pictures(story)
         except:
             return None
         if story:

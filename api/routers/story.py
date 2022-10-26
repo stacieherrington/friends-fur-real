@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status, Form, UploadFile, File
 from queries.application import ApplicationQueries
 from models.story import (
     SuccessStoryIn,
@@ -7,6 +7,8 @@ from models.story import (
 )
 from queries.story import SuccessStoryQueries
 from .auth import authenticator
+from .s3 import upload_to_s3
+
 
 router = APIRouter(tags=["Stories"])
 
@@ -24,19 +26,30 @@ not_authorized = HTTPException(
 )
 def create_story(
     application_id: str,
-    story: SuccessStoryIn,
     request: Request,
+    title: str = Form(default=None),
+    story: str = Form(default=None),
+    picture: UploadFile = File(),
+    signature: str = Form(default=None),
     account: dict = Depends(authenticator.get_current_account_data),
     queries: SuccessStoryQueries = Depends(),
     application_queries: ApplicationQueries = Depends(),
 ):
-    # 1. check if login and get account_id:
+    # check if logged in and get account_id:
     if account and authenticator.cookie_name in request.cookies:
         if not application_queries.current_account_id_match_application(
             application_id, account["id"]
         ):
             raise not_authorized
-        response = queries.create_story(story, application_id)
+        success_story = SuccessStoryIn(
+            title=title,
+            story=story,
+            signature=signature,
+            status="Submitted",
+        )
+        if picture.filename:
+            success_story.picture = upload_to_s3(account["id"], picture.file, picture.filename)
+        response = queries.create_story(success_story, application_id)
         if response:
             return response
         else:
