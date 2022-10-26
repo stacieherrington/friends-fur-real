@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function ManagementMenu(props) {
     const { is_admin, is_staff } = props;
@@ -41,10 +42,10 @@ export default function ManagementMenu(props) {
                         horizontal: 'left',
                     }}
                 >
-                    <MenuItem onClick={handleClose}>Manage Pets</MenuItem>
-                    <MenuItem onClick={handleClose}><Button color="inherit" href="/manage/applications">Review Applications</Button></MenuItem>
-                    <MenuItem onClick={handleClose}>Review Stories</MenuItem>
-                    <MenuItem disabled={!is_admin} onClick={handleClose}>Manage Staff</MenuItem>
+                    <MenuItem onClick={handleClose}><Button href='/manage/pets'>Manage Pets</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button href="/manage/applications">Review Applications</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button href='/manage/stories'>Review Stories</Button></MenuItem>
+                    <MenuItem disabled={!is_admin} onClick={handleClose}><Button href='/manage/staff'>Manage Staff</Button></MenuItem>
                 </Menu>
             </div>
         );

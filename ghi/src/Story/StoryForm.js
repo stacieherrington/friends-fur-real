@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { useParams } from "react-router-dom";
+import PetsIcon from '@mui/icons-material/Pets';
 
 
 
@@ -56,8 +56,8 @@ export default function StoryForm() {
           width: 'fit-content'
         }}>
         <Box component="form" onSubmit={handleSubmit} noValidate >
-          <Box sx={{ paddingTop: 6, paddingBottom: 5 }}>
-            <Typography component="h1" variant="h4" sx={{ py: 2, color: "#CFE0FB" }}>
+          <Box sx={{ paddingTop: 20, paddingBottom: 5 }}>
+            <Typography component="h1" variant="h4" sx={{ py: 2, color: "#294C60" }}>
               Share your story
             </Typography>
             <TextField
@@ -89,6 +89,7 @@ export default function StoryForm() {
               error={storyError}
             />
             <TextField
+              sx={{ marginTop: 3 }}
               onChange={(event) => setPicture(event.target.value)}
               label="A recent picture URL"
               value={picture}
@@ -102,13 +103,11 @@ export default function StoryForm() {
               error={pictureError}
             />
           </Box>
-          <Button
-            onClick={() => console.log('clicked!!')}
+          <Button            
+            variant="contained"
             type="submit"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            color="primary"
-            endIcon={<SendRoundedIcon />}
+            sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+            endIcon={<PetsIcon />}
           >
             Submit story
           </Button>

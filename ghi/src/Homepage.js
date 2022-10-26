@@ -1,11 +1,11 @@
 import * as React from 'react';
-import SearchBar from './components/SearchBar';
+
 import PetCard from './pets/PetCard';
 import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
-import { Paper, Typography, Box, Container } from "@mui/material";
+import { Typography, Box, Container } from "@mui/material";
 import { useGetThreePetsQuery } from "./redux/api";
 
 
@@ -30,10 +30,9 @@ function HomePage(props) {
   return (
     <>
       <Container className="mt-5 mb-0 pt-5 text-center">
-        <SearchBar />
         <div className="py-4">
-          <h1 className="display-3 fw-bold">FriendsFurReal</h1>
-          <div style={{ backgroundImage: "url(/images/pups.jpg)" }}>
+          <Typography variant="h2" sx={{ fontWeight: "bold" }}>FriendsFurReal</Typography>
+          <div style={{ backgroundImage: "url(/images/pups.jpg)", paddingTop: 3 }}>
             <img
               src="images/pups.jpg"
               width="50%"

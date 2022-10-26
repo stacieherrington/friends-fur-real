@@ -10,9 +10,8 @@ import { Container, Menu } from '@mui/material'
 import { useGetTokenQuery, useListRescueApplicationsQuery } from "../redux/api"
 import { useLogoutMutation } from "../redux/api";
 import { useEffect, useState } from "react";
-import { Select, MenuItem, InputLabel } from '@mui/material';
+import { Select, MenuItem, InputLabel, Button, Typography } from '@mui/material';
 
-// import {uset}
 
 export default function ApplicationList() {
   const {
@@ -52,7 +51,7 @@ export default function ApplicationList() {
 
   return (
     <Container sx={{ paddingTop: 10 }} >
-      <h1>Application Lists</h1>
+      <Typography variant="h4" align="center" paddingBottom={2}>Application List</Typography>
 
       <TableContainer component={Paper}>
         <Table sx={{
@@ -60,13 +59,14 @@ export default function ApplicationList() {
         }}
           aria-label="simple table">
           <TableHead sx={{
-            background: "#CFE0FB",
+            background: "#294C60",
             alignItems: 'center',
             "& th": {
               fontSize: "1rem",
               fontWeight: 'bold',
               textAlign: 'center',
               padding: 1,
+              color: "#FFF"
             },
           }}
           >
@@ -76,7 +76,7 @@ export default function ApplicationList() {
               <TableCell>Phone number</TableCell>
               <TableCell>Pet Id</TableCell>
               <TableCell>
-                <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                <InputLabel id="demo-simple-select-label" sx={{ color: "#FFF" }}>Status</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -84,6 +84,7 @@ export default function ApplicationList() {
                   value={status}
                   onChange={handleChange}
                   size="small"
+                  sx={{ color: "#FFF", border: '1px solid #ced4da' }}
                 >
                   <MenuItem value={'All'}>All</MenuItem>
                   <MenuItem value={'Approved'}>Approved</MenuItem>
@@ -91,6 +92,7 @@ export default function ApplicationList() {
                   <MenuItem value={'Rejected'}>Rejected</MenuItem>
                 </Select>
               </TableCell>
+              <TableCell>Review</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,6 +106,7 @@ export default function ApplicationList() {
                 <TableCell align="center">{application.phone_number}</TableCell>
                 <TableCell align="center">{application.pet_id}</TableCell>
                 <TableCell align="center">{application.status}</TableCell>
+                <TableCell align="center"><Button href={`/manage/applications/${application.id}`}>Detail</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>

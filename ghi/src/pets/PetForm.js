@@ -43,27 +43,51 @@ export default function PetForm() {
     "house_trained": false,
     "special_needs": false,
   });
-  const [addPet, {data: petCreate}] = useAddPetMutation();
+
+  const [addPet, { data: petCreate }] = useAddPetMutation();
   const navigate = useNavigate()
-  const handleSubmit = async (event) => {
+  const submitAndNavigateAway = async (event) => {
     event.preventDefault();
-    addPet(event.target)
+    addPet(event.target.form);
+    setTimeout(() => navigate("/manage/pets"), 0)
+
   };
+  const submitAndAddAnother = async (event) => {
+    event.preventDefault();
+    addPet(event.target.form);
+    setFields({
+      "name": "",
+      "type": "",
+      "breed": "",
+      "age": "",
+      "sex": "",
+      "size": "",
+      "description": "",
+      "weight": "",
+      "pictures": "",
+      "primary_color": "",
+      "ok_with_dogs": false,
+      "ok_with_cats": false,
+      "shots_up_to_date": false,
+      "ok_with_kids": false,
+      "spayed_neutered": false,
+      "house_trained": false,
+      "special_needs": false,
+    });
+  }
   const handleChange = (event) => {
-    let {name, type, value, checked} = event.target;
+    let { name, type, value, checked } = event.target;
     if (type === "checkbox") {
       value = checked;
     }
-    const update = {...fields, [name]: value};
+    const update = { ...fields, [name]: value };
     setFields(update);
   };
-  if (petCreate) {
-    setTimeout(() => navigate("/pets"), 0)
-  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
@@ -73,13 +97,13 @@ export default function PetForm() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: '#CFE0FB' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#294C60' }}>
               <PetsIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Add a pet
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -104,7 +128,7 @@ export default function PetForm() {
                     value={fields.type}
                     helperText="Please select type"
                   >
-                  <MenuItem value="dog">
+                    <MenuItem value="dog">
                       dog
                     </MenuItem>
                     <MenuItem value="cat">
@@ -130,10 +154,10 @@ export default function PetForm() {
                   <TextField
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     fullWidth
                     id="age"
@@ -187,10 +211,10 @@ export default function PetForm() {
                   <TextField
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     value={fields.weight}
                     fullWidth
@@ -247,8 +271,8 @@ export default function PetForm() {
                     <FormControlLabel control={<Checkbox
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
-                      name="ok_with_cats"/>
-                      } label="Ok with cats" />
+                      name="ok_with_cats" />
+                    } label="Ok with cats" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -256,8 +280,8 @@ export default function PetForm() {
                     <FormControlLabel control={<Checkbox
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
-                      name="ok_with_kids"/>
-                      } label="Ok with children" />
+                      name="ok_with_kids" />
+                    } label="Ok with children" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -275,16 +299,16 @@ export default function PetForm() {
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
-                     />} label="Spayed or neutered" />
+                    />} label="Spayed or neutered" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                    onChange={handleChange}
+                      onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
-                     />} label="House-trained" />
+                    />} label="House-trained" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
@@ -293,18 +317,34 @@ export default function PetForm() {
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
-                     />} label="Special needs" />
+                    />} label="Special needs" />
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Box
+                sx={{
+                  display: 'grid',
+                  columnGap: 3,
+                  rowGap: 1,
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                }}
+              ><Button
+                onClick={submitAndNavigateAway}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                endIcon={<PetsIcon />}
               >
-                Add Pet
-              </Button>
+                  Add Pet
+                </Button>
+                <Button
+                  onClick={submitAndAddAnother}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                  endIcon={<PetsIcon />}
+                >
+                  Save and Add Another
+                </Button>
+              </Box>
             </Box>
           </Box>
           <Copyright sx={{ mt: 10 }} />

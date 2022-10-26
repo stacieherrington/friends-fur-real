@@ -38,7 +38,7 @@ export default function StoryCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`stories/${props.id}`} size="small">Read More</Button>
+        <Button href={`/stories/${props.id}`} size="small">Read More</Button>
       </CardActions>
     </Card>
   );

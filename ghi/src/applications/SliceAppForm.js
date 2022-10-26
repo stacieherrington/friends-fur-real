@@ -17,11 +17,11 @@ import {
   Modal,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import SendSharpIcon from "@mui/icons-material/SendSharp";
-import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
-import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
-import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
+
+import PetsIcon from '@mui/icons-material/Pets';
+import PetCard from "../pets/PetCard";
+import {SmokingRoomsSharpIcon, DoneOutlineSharpIcon, SmokeFreeSharpIcon } from "@mui/icons-material";
+
 
 import { useAddApplicationMutation, useGetTokenQuery } from "../redux/api";
 import Copyright from "../components/Copyright";
@@ -117,9 +117,9 @@ export default function ApplicationForm(props) {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
-                <LockOutlinedIcon />
-              </Avatar>
+              <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
+                <PetsIcon />
+              </Avatar>{" "}
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
               </Typography>
@@ -377,11 +377,10 @@ export default function ApplicationForm(props) {
 
                 <Button
                   type='submit'
-                  fullWidth
-                  variant='outlined'
-                  sx={{ mt: 3, mb: 2 }}
-                  color='success'
-                  endIcon={<SendSharpIcon />}
+                  fullWidth      
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                  endIcon={<PetsIcon />}
                 >
                   Submit
                 </Button>

@@ -27,6 +27,7 @@ export default function PetsList() {
       setPetList(data)
       :
       setPetList(data.filter((pet) => pet.type.toLowerCase() === event.target.value))
+
   }
 
   return (
@@ -63,7 +64,7 @@ export default function PetsList() {
       <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
         {petList && petList.map((pet) => (
           <Grid item xs={4} sm={4} md={4} key={pet.id}>
-            <PetCard pet={pet}/>
+            <PetCard pet={pet} />
           </Grid>
         ))}
       </Grid>

@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
 import DrawerAppBar from "./DrawerAppBar";
 import ApplicationList from "./applications/ApplicationsList";
 import HomePage from "./Homepage";
@@ -16,28 +15,12 @@ import ManageStaffPage from "./Manage/ManageStaffPage";
 import AccountProfile from "./accounts/AccountProfile";
 import { useState, useEffect } from "react";
 import UpdatePet from "./pets/UpdatePet";
+import ManagePetPage from "./Manage/ManagePetPage";
+import ApplicationDetail from "./applications/ApplicationDetail";
+import ManageStoryPage from "./Manage/ManageStoryPage";
 import { Container } from "@mui/material";
 
 function App() {
-  // global roles state for now:
-  // const [roles, setRoles] = useState([]);
-  // const [refresh, setRefresh] = useState(1);
-
-  // useEffect(() => {
-  //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
-  //   const fetchConfig = {
-  //     method: "get",
-  //     credentials: "include",
-  //   };
-  //   fetch(checkTokenUrl, fetchConfig)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data) {
-  //         setRoles(data.account.roles);
-  //       }
-  //     })
-  //     .catch((e) => console.error(e));
-  // }, [refresh]);
 
   return (
     <>
@@ -59,8 +42,14 @@ function App() {
             />
             <Route path='/stories/:storyId' element={<StoryDetail />} />
             <Route path='/stories' element={<StoriesList />} />
-            <Route path='/manage/staff' element={<ManageStaffPage />} />
             <Route path='/accounts/profile' element={<AccountProfile />} />
+            <Route path='/manage/staff' element={<ManageStaffPage />} />
+            <Route path='/manage/pets' element={<ManagePetPage />} />
+            <Route path='/manage/stories' element={<ManageStoryPage />} />
+            <Route
+              path='/manage/applications/:applicationId'
+              element={<ApplicationDetail />}
+            />
           </Routes>
         </Container>
       </BrowserRouter>
