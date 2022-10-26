@@ -64,7 +64,26 @@ export default function PetForm() {
   };
   if (petCreate) {
     if (addAnother) {
-      setTimeout(() => setFields(), 0)
+      setAddAnother(false);
+      setFields({
+        "name": "",
+        "type": "",
+        "breed": "",
+        "age": "",
+        "sex": "",
+        "size": "",
+        "description": "",
+        "weight": "",
+        "pictures": "",
+        "primary_color": "",
+        "ok_with_dogs": false,
+        "ok_with_cats": false,
+        "shots_up_to_date": false,
+        "ok_with_kids": false,
+        "spayed_neutered": false,
+        "house_trained": false,
+        "special_needs": false,
+      });
     } else {
       setTimeout(() => navigate("/pets"), 0)
     }
