@@ -30,11 +30,11 @@ function App() {
             <Route path='/' element={<HomePage />} />
             {/* <Route path='/applications' element={<ApplicationList />} /> */}
             <Route path='/manage/applications' element={<ApplicationList />} />
-            <Route path='/login' element={<LoginForm />} />
+            {/* <Route path='/login' element={<LoginForm />} /> */}
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
-            <Route path='/signup' element={<Signup />} />
+            {/* <Route path='/signup' element={<Signup />} /> */}
             <Route
               path='/applications/:applicationId/stories/new'
               element={<StoryForm />}
