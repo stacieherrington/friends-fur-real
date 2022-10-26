@@ -302,6 +302,7 @@ export default function PetForm() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                endIcon={<PetsIcon />}
               >
                 Add Pet
               </Button>
