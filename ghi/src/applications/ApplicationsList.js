@@ -10,7 +10,7 @@ import { Container, Menu } from '@mui/material'
 import { useGetTokenQuery, useListRescueApplicationsQuery } from "../redux/api"
 import { useLogoutMutation } from "../redux/api";
 import { useEffect, useState } from "react";
-import { Select, MenuItem, InputLabel } from '@mui/material';
+import { Select, MenuItem, InputLabel, Button } from '@mui/material';
 
 // import {uset}
 
@@ -91,6 +91,7 @@ export default function ApplicationList() {
                   <MenuItem value={'Rejected'}>Rejected</MenuItem>
                 </Select>
               </TableCell>
+              <TableCell>Review</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,6 +105,7 @@ export default function ApplicationList() {
                 <TableCell align="center">{application.phone_number}</TableCell>
                 <TableCell align="center">{application.pet_id}</TableCell>
                 <TableCell align="center">{application.status}</TableCell>
+                <TableCell align="center"><Button href={`/manage/applications/${application.id}`}>Detail</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>

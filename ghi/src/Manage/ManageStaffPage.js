@@ -4,31 +4,43 @@ import { Box, Toolbar, Typography, Container } from '@mui/material';
 import AddStaff from './AddStaff';
 import { useState, useEffect } from 'react';
 
-async function loadStaff() {
-    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/manage/staff/`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" }
-    });
-    if (response.ok) {
-        const data = await response.json();
-        return data.accounts
-    } else {
-        console.error(response);
-    }
-}
+
 
 export default function ManageStaffPage() {
     const [staffList, setStaffList] = useState([]);
+    const [email, setEmail] = useState('');
+    const [refresh, setRefresh] = useState(1);
+
 
     useEffect(() => {
-        setStaffList(loadStaff())
-    }, [])
+        const url = `${process.env.REACT_APP_API_HOST}/api/manage/staff/`;
+        const fetchConfig = {
+            method: "GET",
+            credentials: "include",
+        }
+        fetch(url, fetchConfig)
+            .then(res => res.json())
+            .then(data => setStaffList(data.accounts))
+            .catch(e => console.error(e))
+    }, [refresh])
+
+    const promoteStaff = () => {
+        const url = `${process.env.REACT_APP_API_HOST}/api/accounts/promote/${email}`;
+        const fetchConfig = {
+            method: "PATCH",
+            credentials: "include",
+        };
+        fetch(url, fetchConfig)
+            .then(res => res.json())
+            .then(data => { if (data) setRefresh(refresh => refresh + 1) })
+            .catch(e => console.error(e))
+    }
 
     return (
-        <Container component="main" sx={{ mt: 5 }}>
+        <Container component="main" sx={{ mt: 7 }}>
             <Typography variant="h4" align="center">Manage Staff</Typography>
-            <StaffTable staffList={staffList} />
-            <AddStaff />
+            <StaffTable staffList={staffList} refresh={refresh} setRefresh={setRefresh} />
+            <AddStaff email={email} setEmail={setEmail} promoteStaff={promoteStaff} />
         </Container>
     )
 }

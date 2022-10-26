@@ -117,7 +117,7 @@ function DrawerAppBar(props) {
           >
             <Avatar
               alt='Cute Logo'
-              src='../images/cute-icon.png'
+              src='/images/cute-icon.png'
               sx={{ width: 60, height: 60 }}
             />
           </Box>

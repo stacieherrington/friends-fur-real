@@ -16,6 +16,9 @@ import StoriesList from "./Story/StoriesList";
 import ManageStaffPage from './Manage/ManageStaffPage';
 import { useState, useEffect } from "react";
 import UpdatePet from "./pets/UpdatePet";
+import ManagePetPage from './Manage/ManagePetPage';
+import ApplicationDetail from "./applications/ApplicationDetail";
+import ManageStoryPage from "./Manage/ManageStoryPage";
 import { Container } from "@mui/material";
 
 function App() {
@@ -42,13 +45,14 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        {/* <NavBar /> */}
         <Container className='pt-2 pb-0 mb-0' >
-          <DrawerAppBar roles={roles} setRoles={setRoles} />
+          <DrawerAppBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/manage/applications' element={<ApplicationList />} />
             <Route path='/applications/new' element={<ApplicationForm />} />
-            <Route path='/login' element={<LoginForm setRefresh={setRefresh} />} />
+            <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
@@ -57,6 +61,9 @@ function App() {
             <Route path='/stories/:storyId' element={<StoryDetail />} />
             <Route path='/stories' element={<StoriesList />} />
             <Route path="/manage/staff" element={<ManageStaffPage />} />
+            <Route path="/manage/pets" element={<ManagePetPage />} />
+            <Route path="/manage/stories" element={<ManageStoryPage />} />
+            <Route path='/manage/applications/:applicationId' element={<ApplicationDetail />} />
           </Routes>
         </Container>
       </BrowserRouter>

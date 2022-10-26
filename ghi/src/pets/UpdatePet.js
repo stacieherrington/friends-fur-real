@@ -16,7 +16,7 @@ import { MenuItem } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { FormGroup, Input } from '@mui/material';
 import { useParams } from "react-router-dom";
-import { useGetPetQuery, usePutPetMutation } from '../redux/api';
+import { useGetPetQuery, usePutPetMutation, useGetTokenQuery } from '../redux/api';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -27,8 +27,14 @@ const theme = createTheme();
 export default function UpdatePet() {
   const { petId } = useParams();
   const { data, isLoading } = useGetPetQuery(petId);
-  const [updatePet, {data: petUpdate}] = usePutPetMutation();
+  const [updatePet, { data: petUpdate }] = usePutPetMutation();
   const navigate = useNavigate()
+  const {
+    data: tokenData,
+    error: tokenError,
+    isLoading: tokenLoading,
+  } = useGetTokenQuery();
+  const [isRescuer, setIsRescuer] = useState(false);
   const [fields, setFields] = useState({
     "name": "",
     "type": "",
@@ -50,25 +56,28 @@ export default function UpdatePet() {
   });
   useEffect(() => {
     if (data !== undefined) {
-      let pet = {...data}
+      let pet = { ...data }
       if (pet.pictures === null) {
         pet.pictures = "";
       }
       setFields(pet);
+      if (tokenData) {
+        setIsRescuer(tokenData.account.rescue_id === data.rescue_id)
+      }
     }
-  }, [data]);
+  }, [data, tokenData]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     fields.age = Number.parseInt(fields.age)
     fields.weight = Number.parseInt(fields.weight)
-    updatePet({petId, form: event.target})
+    updatePet({ petId, form: event.target })
   };
   const handleChange = (event) => {
-    let {name, type, value, checked} = event.target;
+    let { name, type, value, checked } = event.target;
     if (type === "checkbox") {
       value = checked;
     }
-    const update = {...fields, [name]: value};
+    const update = { ...fields, [name]: value };
     setFields(update);
   };
   if (petUpdate) {
@@ -97,7 +106,7 @@ export default function UpdatePet() {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     required
                     fullWidth
                     id="name"
@@ -109,7 +118,7 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     select
                     required
                     fullWidth
@@ -120,7 +129,7 @@ export default function UpdatePet() {
                     value={fields.type}
                     helperText="Please select type"
                   >
-                  <MenuItem value="dog">
+                    <MenuItem value="dog">
                       dog
                     </MenuItem>
                     <MenuItem value="cat">
@@ -133,7 +142,7 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     required
                     fullWidth
                     id="breed"
@@ -145,13 +154,13 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     fullWidth
                     id="age"
@@ -162,7 +171,7 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     required
                     fullWidth
                     select
@@ -182,7 +191,7 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     required
                     fullWidth
                     select
@@ -205,13 +214,13 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     type={"number"}
                     onChange={(event) => {
-                        if (event.target.value < 0) {
-                            event.target.value = 0;
-                          }
-                          handleChange(event);
+                      if (event.target.value < 0) {
+                        event.target.value = 0;
+                      }
+                      handleChange(event);
                     }}
                     value={fields.weight}
                     fullWidth
@@ -225,7 +234,7 @@ export default function UpdatePet() {
                     Please upload a photo.
                   </Typography>
                   <Input
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     type="file"
                     fullWidth
                     id="pictures"
@@ -234,7 +243,7 @@ export default function UpdatePet() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    disabled={isLoading}
+                    disabled={!isRescuer}
                     fullWidth
                     id="color"
                     label="Color"
@@ -248,6 +257,7 @@ export default function UpdatePet() {
                     required
                     multiline
                     fullWidth
+                    disabled={!isRescuer}
                     id="description"
                     label="Description"
                     name="description"
@@ -258,7 +268,7 @@ export default function UpdatePet() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.ok_with_dogs}
                       name="ok_with_dogs"
@@ -269,27 +279,27 @@ export default function UpdatePet() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.ok_with_cats}
-                      name="ok_with_cats"/>
-                      } label="Ok with cats" />
+                      name="ok_with_cats" />
+                    } label="Ok with cats" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.ok_with_kids}
-                      name="ok_with_kids"/>
-                      } label="Ok with children" />
+                      name="ok_with_kids" />
+                    } label="Ok with children" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.shots_up_to_date}
                       name="shots_up_to_date"
@@ -299,43 +309,43 @@ export default function UpdatePet() {
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.spayed_neutered}
                       name="spayed_neutered"
-                     />} label="Spayed or neutered" />
+                    />} label="Spayed or neutered" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.house_trained}
                       name="house_trained"
-                     />} label="House-trained" />
+                    />} label="House-trained" />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={6}>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox
-                      disabled={isLoading}
+                      disabled={!isRescuer}
                       onChange={handleChange}
                       checked={fields.special_needs}
                       name="special_needs"
-                     />} label="Special needs" />
+                    />} label="Special needs" />
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Button
-                disabled={isLoading}
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Update Pet
-              </Button>
+              {isRescuer ?
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Update Pet
+                </Button> : null}
             </Box>
           </Box>
           <Copyright sx={{ mt: 10 }} />

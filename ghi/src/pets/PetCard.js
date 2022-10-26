@@ -11,7 +11,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
 import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
-
+import { Popover } from "@mui/material";
+import PetDetailPopover from "./PetDetailPopover";
 
 
 export default function PetCard(props) {
@@ -21,6 +22,19 @@ export default function PetCard(props) {
   const { data, error, isLoading } = useGetCurrentAccountQuery();
   const isRescuer = data && data.rescue_id === props.pet.rescue_id;
 
+  // for petDetail Popover:
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleDetailClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleDetailClose = () => {
+    setAnchorEl(null);
+  };
+  const openDetail = Boolean(anchorEl);
+  const detailId = openDetail ? "simple-popover" : undefined;
+  // petDetail Popover done
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,7 +42,6 @@ export default function PetCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       {props.pet.pictures && props.pet.pictures.length ? (
@@ -54,40 +67,54 @@ export default function PetCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small'>More Info</Button>
+        <Button aria-describedby={detailId} onClick={handleDetailClick}>
+          More Info
+        </Button>
+        <Popover
+          id={detailId}
+          open={openDetail}
+          anchorEl={anchorEl}
+          onClose={handleDetailClose}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left"
+          }}
+        >
+          <PetDetailPopover petId={id} />
+        </Popover>
         <SliceAppForm pet_id={id} rescue_id={rescue_id} />
       </CardActions>
       <CardActions>
         {isRescuer && (
-        <>
-          <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-          <Button size="small" onClick={handleClickOpen}>Delete</Button>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='alert-dialog-title'
-            aria-describedby='alert-dialog-description'
-          >
-            <DialogContent>
-              <DialogContentText id='alert-dialog-description'>
-                Are you sure you want to delete this pet?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} autoFocus>
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  handleClose();
-                  deletePet(props.pet.id);
-                }}
-              >
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>)}
+          <>
+            <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
+            <Button size="small" onClick={handleClickOpen}>Delete</Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  Are you sure you want to delete this pet?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} autoFocus>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    deletePet(props.pet.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>)}
       </CardActions>
     </Card>
   );

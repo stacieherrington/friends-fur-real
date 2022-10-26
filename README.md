@@ -29,7 +29,7 @@ Now, visitors to our site can access profiles of adoptable pets sponsored by a v
   - Click on a featured pet card to see pet details, or click on the card's "Adopt me!" button (which will direct them to sign in or create an account if they are not logged in) and then fill out an adoption application.
   - Favorite a featured pet (if signed in).
   - Click on a Happy Tails success story teaser card to read the full story.
-  - Navigate to a list of adoptable pets, which is limited to 200 miles away from the visitor and sorted by distance if the visitor is signed in (thanks to our *geospatial query* and a free and open address service).
+  - Navigate to a list of adoptable pets, which is limited to 200 miles away from the visitor and sorted by distance if the visitor is signed in (thanks to our **geospatial query** and a free and open address service).
   - Navigate to a list of success stories.
   - Navigate to their profile page (if signed in).
 - From the pets list page, a visitor can:
@@ -48,12 +48,12 @@ Our site gives rescues the power to publicize their adoptable pets in a nationwi
   - A "management" dropdown menu on the navbar that navigates to pet, application, and story management pages.
   - For any pet belonging to the rescue, the pet card (whether on the homepage or the pets list page) will display additional buttons: update and delete.
 - From the pet management page, a rescue admin/staff can view, add, update, and delete their own pets.
-  - The create and update pet forms include photo uploading functionality with *AWS S3 integration*.
+  - The create and update pet forms include photo uploading functionality with **AWS S3 integration**.
 - On the application management page, a rescue admin/staff can view a list of adoption applications submitted for any of the rescue's pets.
   - Admin/staff can navigate to an application detail page, and can approve or reject the application.
   - Once an application for a particular pet is approved, the pet is marked adopted in the database, and any other application made for that same pet will be automatically rejected.
 - On the story management page, a rescue admin/staff can view a list of submitted success stories written by the rescue's own approved adopters. Admin/staff can navigate to story detail pages, and can approve or reject stories. Once a story is approved by the rescue admin/staff, the story is automatically published.
-- Rescue admin has a special page to manage staff. Regular account holders can be promoted to staff, and staff can be demoted back to regular account holders.
+- Rescue admin has a special page to manage staff. Through this page, regular account holders can be promoted to staff, and staff can be demoted back to regular account holders.
 
 
 ## The future of FriendsFurReal
@@ -69,6 +69,8 @@ We are excited about the future pawsibilities for our site. The following are fe
 - Integrated payment of adoption fees.
 - Visitor can set preferred maximum distance for location sort.
 - Rescue organizations can customize their adoption/foster applications.
+- Allow account holders to change email and/or password.
+- Forgot password email with password reset link.
 
 ## Project initialization
 
