@@ -1,3 +1,8 @@
+10/25/2022
+
+Wrote README. Did some miscellaneous js bug fixes. Added "Save and add another" button to the create pet form. Worked on converting add story form to use RTK query and to be able to upload a picture.
+
+
 10/24/2022
 
 Made geo-query work for pets list. Create account and update account now add
