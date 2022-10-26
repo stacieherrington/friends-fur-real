@@ -1,3 +1,8 @@
+10/26/2022
+
+Paired with Kate all morning on styling. Did a lot of testing and bug fixing today. Fixed location query to return only un-adopted pets. Converted story form to use RTK query and formData to be able to upload picture. Updated README. Fixed navigation on story form. Deleted some print statements and stuff. Wrote unit test. Dealt with a difficult merge.
+
+
 10/25/2022
 
 Wrote README. Did some miscellaneous js bug fixes. Added "Save and add another" button to the create pet form. Worked on converting add story form to use RTK query and to be able to upload a picture.
@@ -22,17 +27,16 @@ code currently uses that user's credentials to upload files into the bucket.
 
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
 
+
 10/19/2022
 
 Made add pet form work with new APIs. Added picture to story form. Made delete
 button on pet card work. Made miscellaneous fixes to navbar, homepage, pets list.
 
 
-
 10/18/2022
 
 Finished Add Pet form. Tested Gary's new APIs. Helped Kate with story detail page.
-
 
 
 10/17/2022
@@ -51,8 +55,8 @@ Continued to learn React MUI.
 Today I fixed the geospatial query. I learned the problem was something missing
 called a 2dsphere index.
 ## NOTE!
-db.rescue.createIndex({location: "2dsphere"}) <-- This needs to run on every
-Mongo db that's going to do our application.
+db.rescues.createIndex({location: "2dsphere"}) <-- This needs to run on every
+Mongo db that's going to do our application. Also run for db.accounts.
 
 I also started learning MUI.
 
@@ -105,10 +109,3 @@ Today as a whole group we worked on setup--the yaml file and the Dockerfiles. We
 also created our database volumes and installed MongoDB Compass.
 
 It was really cool to get all the Docker containers running!
-
-
-Each entry should contain:
-The date of the entry
-A list of features/issues that you worked on and who you worked with, if applicable
-A reflection on any design conversations that you had
-At least one ah-ha! moment that you had during your coding, however small
