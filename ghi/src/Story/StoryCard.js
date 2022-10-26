@@ -20,7 +20,13 @@ export default function StoryCard(props) {
       <CardContent
         sx={{ padding: 1, margin: 0 }}
       >
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div"
+          sx={{
+            display: '-webkit-box',
+            overflow: 'hidden',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 1,
+          }}>
           {props.title}
         </Typography>
         <Typography
