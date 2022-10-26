@@ -21,6 +21,7 @@ import {
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 
