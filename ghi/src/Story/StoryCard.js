@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 export default function StoryCard(props) {
   return (
-    <Card sx={{ maxHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       {props.picture ? <CardMedia
         component="img"
         height="180"
