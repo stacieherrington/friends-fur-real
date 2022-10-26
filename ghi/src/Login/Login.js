@@ -38,8 +38,6 @@ export default function LoginForm(props) {
   const handleClose = () => setOpen(false);
   const [login, { isSuccess }] = useLoginMutation();
 
-  const { setRefresh } = props;
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     login(event.target);
