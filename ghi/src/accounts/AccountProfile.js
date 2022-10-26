@@ -44,124 +44,124 @@ const style = {
   overflow: "auto",
 };
 
-function createData(name, email, pet, status, application_detail) {
-  return { name, email, pet, status, application_detail };
-}
+// function createData(name, email, pet, status, application_detail) {
+//   return { name, email, pet, status, application_detail };
+// }
 
-const rows = [
-  createData(
-    "Grape Wick",
-    "jwick@email.com",
-    "pet_name",
-    "status",
-    "application_id"
-  ),
-  createData(
-    "Steve Wick",
-    "jwick@email.com",
-    "pet_name",
-    "submitted",
-    "application_id"
-  ),
-  createData(
-    "John Wick",
-    "jwick@email.com",
-    "pet_name",
-    "status",
-    "application_id"
-  ),
-];
-const trows = [
-  createData(
-    "white Wick",
-    "jwick@email.com",
-    "pet_name",
-    "status",
-    "application_id"
-  ),
-  createData(
-    "orange Wick",
-    "jwick@email.com",
-    "pet_name",
-    "submitted",
-    "application_id"
-  ),
-  createData(
-    "brown Wick",
-    "jwick@email.com",
-    "pet_name",
-    "status",
-    "application_id"
-  ),
-];
+// const rows = [
+//   createData(
+//     "Grape Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "status",
+//     "application_id"
+//   ),
+//   createData(
+//     "Steve Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "submitted",
+//     "application_id"
+//   ),
+//   createData(
+//     "John Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "status",
+//     "application_id"
+//   ),
+// ];
+// const trows = [
+//   createData(
+//     "white Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "status",
+//     "application_id"
+//   ),
+//   createData(
+//     "orange Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "submitted",
+//     "application_id"
+//   ),
+//   createData(
+//     "brown Wick",
+//     "jwick@email.com",
+//     "pet_name",
+//     "status",
+//     "application_id"
+//   ),
+// ];
 
-const filterOptions = createFilterOptions({
-  matchFrom: "start",
-  stringify: (option) => option.status,
-});
+// const filterOptions = createFilterOptions({
+//   matchFrom: "start",
+//   stringify: (option) => option.status,
+// });
 
-const ApplicationStatus = [
-  { status: "Submitted" },
-  { status: "Pending" },
-  { status: "Approved" },
-];
+// const ApplicationStatus = [
+//   { status: "Submitted" },
+//   { status: "Pending" },
+//   { status: "Approved" },
+// ];
 
-const ApplicationList = () => {
-  return (
-    <TableContainer component={Paper}>
-      <h1>Applications</h1>
-      <Table aria-label='simple table'>
-        <TableHead
-          sx={{
-            background: "#CFE0FB",
-            alignItems: "center",
-            "& th": {
-              fontSize: "1rem",
-              fontWeight: "bold",
-              textAlign: "center",
-            },
-          }}
-        >
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Pet Name</TableCell>
-            <TableCell>
-              <Autocomplete
-                id='application-filter'
-                options={ApplicationStatus}
-                size='small'
-                sx={{ width: "auto" }}
-                getOptionLabel={(option) => option.status}
-                filterOptions={filterOptions}
-                renderInput={(params) => (
-                  <TextField {...params} label='Filter Status' />
-                )}
-              />
-            </TableCell>
-            <TableCell>Details</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell align='center'>{row.email}</TableCell>
-              <TableCell align='center'>{row.pet}</TableCell>
-              <TableCell align='center'>{row.status}</TableCell>
-              <TableCell align='center'>{row.application_detail}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
+// const ApplicationList = () => {
+//   return (
+//     <TableContainer component={Paper}>
+//       <h1>Applications</h1>
+//       <Table aria-label='simple table'>
+//         <TableHead
+//           sx={{
+//             background: "#CFE0FB",
+//             alignItems: "center",
+//             "& th": {
+//               fontSize: "1rem",
+//               fontWeight: "bold",
+//               textAlign: "center",
+//             },
+//           }}
+//         >
+//           <TableRow>
+//             <TableCell>Name</TableCell>
+//             <TableCell>Email</TableCell>
+//             <TableCell>Pet Name</TableCell>
+//             <TableCell>
+//               <Autocomplete
+//                 id='application-filter'
+//                 options={ApplicationStatus}
+//                 size='small'
+//                 sx={{ width: "auto" }}
+//                 getOptionLabel={(option) => option.status}
+//                 filterOptions={filterOptions}
+//                 renderInput={(params) => (
+//                   <TextField {...params} label='Filter Status' />
+//                 )}
+//               />
+//             </TableCell>
+//             <TableCell>Details</TableCell>
+//           </TableRow>
+//         </TableHead>
+//         <TableBody>
+//           {rows.map((row) => (
+//             <TableRow
+//               key={row.name}
+//               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+//             >
+//               <TableCell component='th' scope='row'>
+//                 {row.name}
+//               </TableCell>
+//               <TableCell align='center'>{row.email}</TableCell>
+//               <TableCell align='center'>{row.pet}</TableCell>
+//               <TableCell align='center'>{row.status}</TableCell>
+//               <TableCell align='center'>{row.application_detail}</TableCell>
+//             </TableRow>
+//           ))}
+//         </TableBody>
+//       </Table>
+//     </TableContainer>
+//   );
+// };
 
 const ProfileDetails = (props) => {
   const [open, setOpen] = useState(false);
@@ -194,7 +194,12 @@ const ProfileDetails = (props) => {
       <Button>Change Profile Picture</Button>
       <CardContent>
         <TableContainer component={Paper}>
-          <h1>{accountData.first_name}'s Page!</h1>
+          {accountData.first_name ? (
+            <h1>{accountData.first_name}'s Page!</h1>
+          ) : (
+            <h1>Your account details</h1>
+          )}
+
           <Table aria-label='simple table'>
             <TableHead
               sx={{
@@ -274,7 +279,7 @@ export default function AccountProfile() {
       <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
         <Grid container spacing={2}>
           <Grid item xs={7} rowspacing={4}>
-            <ApplicationList />
+            {/* <ApplicationList /> */}
             <br></br>
             <AccountApplications />
           </Grid>
