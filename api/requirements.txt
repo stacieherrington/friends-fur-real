@@ -5,5 +5,5 @@ passlib[bcrypt]==1.7.4
 python-multipart==0.0.5
 websockets
 jwtdown-fastapi==0.3.0
-pytest[all]==7.2.0
 boto3==1.24.96
+pytest[all]==7.2.0

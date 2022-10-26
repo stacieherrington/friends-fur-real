@@ -70,7 +70,6 @@ export default function ApplicationDetail() {
         else { console.error("fetch reject error") }
     };
 
-    console.log(isRescuer);
     if (application)
         return (
           <Box sx={{ mt: 13 }}>
