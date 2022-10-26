@@ -21,7 +21,6 @@ import ManageStoryPage from "./Manage/ManageStoryPage";
 import { Container } from "@mui/material";
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
@@ -37,7 +36,7 @@ function App() {
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
             <Route
-              path='applications/:applicationId/stories/new'
+              path='/applications/:applicationId/stories/new'
               element={<StoryForm />}
             />
             <Route path='/stories/:storyId' element={<StoryDetail />} />

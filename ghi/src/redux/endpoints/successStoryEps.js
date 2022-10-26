@@ -1,18 +1,14 @@
 export function SuccessStoryEndpoints(builder) {
   return {
     addSuccessStory: builder.mutation({
-      query: (form) => {
+      query: ({applicationId, form}) => {
+        form.enctype = "multipart/form-data";
         const formData = new FormData(form);
-        const entries = Array.from(formData.entries());
-        const data = entries.reduce((app, [key, value]) => {
-          app[key] = Number.parseInt(value) || value;
-          return app;
-        }, {});
         return {
           method: "POST",
-          url: "/api/pets{id}/story",
+          url: `/api/applications/${applicationId}/story/`,
           credentials: "include",
-          body: data,
+          body: formData,
         };
       },
       invalidateTags: [{ type: "SuccessStory", id: "LIST" }],

@@ -18,7 +18,7 @@ function ManageStoryPage(props) {
     const [storiesList, setStoriesList] = useState([]);
     useEffect(() => {
         loadStories(setStoriesList);
-    }, [storiesList])
+    }, [])
 
 
     async function deleteStory(id) {

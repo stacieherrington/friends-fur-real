@@ -35,7 +35,7 @@ Now, visitors to our site can access profiles of adoptable pets sponsored by a v
 - From the pets list page, a visitor can:
   - Click on a pet card to see pet details, or click on the card's "Adopt me!" button (which will direct them to sign in or create an account if they are not logged in) and then fill out an adoption application.
   - Favorite a pet.
-  - Choose from some dropdown filters to filter the pet sort.
+  - Choose from a dropdown filter to filter the pet sort by type.
 - A visitor can make unlimited adoption applications (but cannot make more than one application per pet).
 - A visitor with an approved adoption application can submit their own success story to be included with Happy Tails. (A rescue admin or staff must approve the story before it is published.)
 - From the profile page, a visitor can add details (like name, address, and photo) to their profile, as well as view their favorites list and a list of any applications they have completed. Their applications list displays the status of any applications (submitted, rejected, approved).
@@ -59,6 +59,8 @@ Our site gives rescues the power to publicize their adoptable pets in a nationwi
 ## The future of FriendsFurReal
 
 We are excited about the future pawsibilities for our site. The following are features we would like to add soon.
+- Pagination on pets list and stories list.
+- More filters on pets list page.
 - The ability to accommodate foster parents as well as adopters:
   - Foster "matchmaking" results based on location and pet criteria. Matchmaking results will be provided to rescue organizations as well as potential foster parents.
   - Foster applications.
@@ -71,6 +73,8 @@ We are excited about the future pawsibilities for our site. The following are fe
 - Rescue organizations can customize their adoption/foster applications.
 - Allow account holders to change email and/or password.
 - Forgot password email with password reset link.
+- Alerts for incorrect login/password or attempting duplicate submissions.
+- 100% conversion to RTK queries.
 
 ## Project initialization
 
