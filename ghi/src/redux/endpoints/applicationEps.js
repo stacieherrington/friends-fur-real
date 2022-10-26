@@ -16,22 +16,31 @@ export function ApplicationEndpoints(builder) {
         } catch (error) {}
       },
     }),
+    // listAccountApplications: builder.query({
+    //   query: () => `/api/accounts/profile/applications/`,
+    //   providesTags: (data) => {
+    //     const tags = [{ type: "Application", id: "LIST" }];
+    //     if (!data || !data.adoptions) return tags;
+    //     const { Applications } = data;
+    //     if (Applications) {
+    //       tags.concat(
+    //         ...Applications.map(({ id }) => ({
+    //           type: "Application",
+    //           id,
+    //         }))
+    //       );
+    //     }
+    //     return tags;
+    //   },
+    // }),
     listAccountApplications: builder.query({
-      query: (accountId) => `/api/accounts/${accountId}/applications/`,
-      providesTags: (data) => {
-        const tags = [{ type: "Application", id: "LIST" }];
-        if (!data || !data.adoptions) return tags;
-        const { Applications } = data;
-        if (Applications) {
-          tags.concat(
-            ...Applications.map(({ id }) => ({
-              type: "Application",
-              id,
-            }))
-          );
-        }
-        return tags;
-      },
+      query: () => ({
+        method: "get",
+        url: `/api/accounts/profile/applications/`,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      }),
+      providesTags: () => ["Application"],
     }),
     // listRescueApplications: builder.query({
     //   query: (rescueId) => `/api/${rescueId}/applications/`,

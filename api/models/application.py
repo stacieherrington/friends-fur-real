@@ -29,10 +29,6 @@ class ApplicationIn(BaseModel):
     ] | None
 
 
-# class AdoptionApplicationIn(AdoptionApplicationUpdate):
-#     pet: PetOut | None
-
-
 class ApplicationUpdate(BaseModel):
     first_name: str | None
     last_name: str | None

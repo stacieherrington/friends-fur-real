@@ -28,7 +28,7 @@ export default function PetCard(props) {
       </CardContent>
       <CardActions>
         <Button size="small">More Info</Button>
-        <SliceAppForm/>
+        <SliceAppForm pet_id={id} rescue_id={rescue_id}/>
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}

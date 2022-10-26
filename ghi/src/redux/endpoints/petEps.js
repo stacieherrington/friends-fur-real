@@ -16,7 +16,7 @@ export function PetEndpoints(builder) {
     listPets: builder.query({
       query: () => ({
         url: `/api/pets/`,
-        credentials: "include",
+        // credentials: "include",
       }),
       transformResponse: (response, meta, arg) => response.pets,
       providesTags: (data) => {
@@ -47,7 +47,7 @@ export function PetEndpoints(builder) {
       providesTags: () => ["Pet"],
     }),
     putPet: builder.mutation({
-      query: ({petId, form}) => {
+      query: ({ petId, form }) => {
         form.enctype = "multipart/form-data";
         const formData = new FormData(form);
         return {

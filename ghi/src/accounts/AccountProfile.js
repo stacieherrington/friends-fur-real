@@ -26,6 +26,7 @@ import { useState } from "react";
 
 import { useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
+import AccountApplications from "../applications/AccountApplications";
 
 const theme = createTheme();
 
@@ -242,7 +243,6 @@ const ProfileDetails = (props) => {
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Table>
               <TableBody>
-              
                 {addressMap.map((e) => (
                   <TableRow key={e[0]}>
                     <TableCell>
@@ -276,6 +276,7 @@ export default function AccountProfile() {
           <Grid item xs={7} rowspacing={4}>
             <ApplicationList />
             <br></br>
+            <AccountApplications />
           </Grid>
           <Grid item xs={5}>
             <ProfileDetails />

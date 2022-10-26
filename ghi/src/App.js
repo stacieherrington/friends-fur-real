@@ -20,38 +20,35 @@ import { Container } from "@mui/material";
 
 function App() {
   // global roles state for now:
-  const [roles, setRoles] = useState([]);
-  const [refresh, setRefresh] = useState(1);
+  // const [roles, setRoles] = useState([]);
+  // const [refresh, setRefresh] = useState(1);
 
-  useEffect(() => {
-    const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
-    const fetchConfig = {
-      method: "get",
-      credentials: "include",
-    };
-    fetch(checkTokenUrl, fetchConfig)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          setRoles(data.account.roles);
-        }
-      })
-      .catch((e) => console.error(e));
-  }, [refresh]);
+  // useEffect(() => {
+  //   const checkTokenUrl = `${process.env.REACT_APP_API_HOST}/token/`;
+  //   const fetchConfig = {
+  //     method: "get",
+  //     credentials: "include",
+  //   };
+  //   fetch(checkTokenUrl, fetchConfig)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data) {
+  //         setRoles(data.account.roles);
+  //       }
+  //     })
+  //     .catch((e) => console.error(e));
+  // }, [refresh]);
 
   return (
     <>
       <BrowserRouter>
         <Container className='pt-2 pb-0 mb-0'>
-          <DrawerAppBar roles={roles} setRoles={setRoles} />
+          <DrawerAppBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/applications' element={<ApplicationList />} />
+            {/* <Route path='/applications' element={<ApplicationList />} /> */}
             <Route path='/manage/applications' element={<ApplicationList />} />
-            <Route
-              path='/login'
-              element={<LoginForm setRefresh={setRefresh} />}
-            />
+            <Route path='/login' element={<LoginForm />} />
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
