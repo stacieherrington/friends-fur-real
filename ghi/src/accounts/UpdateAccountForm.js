@@ -45,7 +45,7 @@ export default function UpdateAccountForm() {
 
   const [updateAcc, { error, isLoading, isSuccess }] =
     usePatchUpdateAccountMutation(data);
-  console.log(data);
+
   const [first_name, setFirst] = useState(data.first_name);
   const [last_name, setLast] = useState(data.last_name);
   const [address_one, setAddOne] = useState(data.address.address_one);
@@ -148,7 +148,13 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Address One'
                       onChange={addOneChange}
-                      value={address_one ? address_one : ""}
+                      value={
+                        address_one === "string"
+                          ? ""
+                          : address_one
+                          ? address_one
+                          : ""
+                      }
                       type='text'
                       name='address_one'
                     />
@@ -159,7 +165,13 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Address Two'
                       onChange={addTwoChange}
-                      value={address_two ? address_one : ""}
+                      value={
+                        address_two === "string"
+                          ? ""
+                          : address_one
+                          ? address_one
+                          : ""
+                      }
                       type='text'
                       name='address_two'
                     />
@@ -170,7 +182,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='City'
                       onChange={cityChange}
-                      value={city ? city : ""}
+                      value={city === "string" ? "" : city ? city : ""}
                       type='text'
                       name='city'
                     />
@@ -181,7 +193,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='State'
                       onChange={stateChange}
-                      value={state ? state : ""}
+                      value={state === "string" ? "" : state ? state : ""}
                       type='text'
                       name='state'
                     />
@@ -192,7 +204,9 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Zip Code'
                       onChange={zipChange}
-                      value={zip_code ? zip_code : ""}
+                      value={
+                        zip_code === "string" ? "" : zip_code ? zip_code : ""
+                      }
                       type='text'
                       name='zip_code'
                     />
@@ -203,7 +217,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Picture URL'
                       onChange={pictureChange}
-                      value={picture ? picture : ""}
+                      value={picture === "string" ? "" : picture ? picture : ""}
                       type='text'
                       name='picture'
                     />
@@ -214,7 +228,9 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Write a little about yourself!'
                       onChange={aboutChange}
-                      value={about_me ? about_me : ""}
+                      value={
+                        about_me === "string" ? "" : about_me ? about_me : ""
+                      }
                       multiline
                       maxRows={8}
                       type='text'
