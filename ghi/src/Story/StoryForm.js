@@ -23,21 +23,19 @@ export default function StoryForm() {
     "signature": "",
   });
 
-  const [addStory, { form: storyCreate }] = useAddSuccessStoryMutation();
+  const [addStory] = useAddSuccessStoryMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    addStory({ applicationId, form: event.target })
+    addStory({ applicationId, form: event.target });
+    setTimeout(() => navigate("/"), 0);
   };
 
   const handleChange = (event) => {
     let { name, value } = event.target;
     const update = { ...fields, [name]: value };
     setFields(update);
-  };
-  if (storyCreate) {
-    setTimeout(() => navigate("/"), 0)
   };
 
   return (
