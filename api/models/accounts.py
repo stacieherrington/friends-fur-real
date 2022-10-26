@@ -46,7 +46,6 @@ class AccountDisplay(BaseModel):
     picture: str | None
     address: Address | None
     about_me: str | None
-    favorites: List[object] | None
     rescue_id: str | None
 
 
@@ -61,10 +60,3 @@ class AccountUpdate(BaseModel):
 class AccountList(BaseModel):
     accounts: List[AccountOut]
 
-
-class AccountPets(BaseModel):
-    favorites: List[object] | None
-
-
-class PetId(BaseModel):
-    pet_id: str | None

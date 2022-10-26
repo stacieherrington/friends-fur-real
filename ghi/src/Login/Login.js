@@ -49,6 +49,8 @@ export default function LoginForm(props) {
     <ThemeProvider theme={theme}>
       {props.petCard ? (
         <Button onClick={handleOpen}>Adopt me!</Button>
+      ) : props.signUp ? (
+        <Button onClick={handleOpen}>Already have an account? Sign in!</Button>
       ) : (
         <Button sx={{ color: "#fff" }} onClick={handleOpen}>
           Login

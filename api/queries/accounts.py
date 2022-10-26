@@ -8,7 +8,6 @@ from models.accounts import (
     AccountList,
     AccountUpdate,
     AccountDisplay,
-    AccountPets,
 )
 from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId

@@ -17,6 +17,7 @@ import { useSignupMutation } from "../redux/api";
 // import { useNavigate } from "react-router-dom";
 import { updateField } from "../redux/slices/accountSlice";
 import { preventDefault } from "../redux/utility";
+import LoginForm from "../Login/Login";
 
 const theme = createTheme();
 const style = {
@@ -143,13 +144,13 @@ export default function SignUpForm(props) {
                   >
                     Sign Up
                   </Button>
-                  {/* <Grid container justifyContent='flex-end'>
+                  <Grid container justifyContent='flex-end'>
                     <Grid item>
                       <Link href='/login' variant='body2'>
-                        Already have an account? Sign in
+                        <LoginForm signUp={"signUp"} />
                       </Link>
                     </Grid>
-                  </Grid> */}
+                  </Grid>
                 </Box>
               </Box>
               <Copyright sx={{ mt: 10 }} />

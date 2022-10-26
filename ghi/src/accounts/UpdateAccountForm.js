@@ -14,7 +14,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import SendSharpIcon from "@mui/icons-material/SendSharp";
 
 import React, { useState } from "react";
-
 import Copyright from "../components/Copyright";
 import {
   useSingleAccountQuery,
@@ -46,7 +45,7 @@ export default function UpdateAccountForm() {
 
   const [updateAcc, { error, isLoading, isSuccess }] =
     usePatchUpdateAccountMutation(data);
-
+  console.log(data);
   const [first_name, setFirst] = useState(data.first_name);
   const [last_name, setLast] = useState(data.last_name);
   const [address_one, setAddOne] = useState(data.address.address_one);
@@ -123,7 +122,7 @@ export default function UpdateAccountForm() {
                       margin='normal'
                       fullWidth
                       onChange={firstChange}
-                      value={first_name}
+                      value={first_name ? first_name : ""}
                       type='text'
                       name='first_name'
                       label='First Name'
@@ -136,7 +135,7 @@ export default function UpdateAccountForm() {
                       margin='normal'
                       fullWidth
                       onChange={lastChange}
-                      value={last_name}
+                      value={last_name ? last_name : ""}
                       type='text'
                       name='last_name'
                       label='Last Name'
@@ -149,7 +148,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Address One'
                       onChange={addOneChange}
-                      value={address_one}
+                      value={address_one ? address_one : ""}
                       type='text'
                       name='address_one'
                     />
@@ -160,7 +159,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Address Two'
                       onChange={addTwoChange}
-                      value={address_two}
+                      value={address_two ? address_one : ""}
                       type='text'
                       name='address_two'
                     />
@@ -171,7 +170,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='City'
                       onChange={cityChange}
-                      value={city}
+                      value={city ? city : ""}
                       type='text'
                       name='city'
                     />
@@ -182,7 +181,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='State'
                       onChange={stateChange}
-                      value={state}
+                      value={state ? state : ""}
                       type='text'
                       name='state'
                     />
@@ -193,7 +192,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Zip Code'
                       onChange={zipChange}
-                      value={zip_code}
+                      value={zip_code ? zip_code : ""}
                       type='text'
                       name='zip_code'
                     />
@@ -204,7 +203,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Picture URL'
                       onChange={pictureChange}
-                      value={picture}
+                      value={picture ? picture : ""}
                       type='text'
                       name='picture'
                     />
@@ -215,7 +214,7 @@ export default function UpdateAccountForm() {
                       fullWidth
                       label='Write a little about yourself!'
                       onChange={aboutChange}
-                      value={about_me}
+                      value={about_me ? about_me : ""}
                       multiline
                       maxRows={8}
                       type='text'

@@ -11,7 +11,6 @@ from jwtdown_fastapi.authentication import Token
 from .auth import authenticator
 from pydantic import BaseModel
 
-from queries.pet import PetQueries
 from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
@@ -25,7 +24,6 @@ from models.accounts import (
     AccountList,
     AccountUpdate,
     AccountDisplay,
-    PetId,
 )
 from acl.nominatim import Nominatim
 
@@ -173,8 +171,8 @@ async def single_account(
 @router.patch(
     "/api/accounts/profile/",
     response_model=AccountDisplay,
-    summary="Update Current Logined Account",
-    description="allowed logined user to update personal detail in account profile page.(Don't Change Email! CAN NOT change password yet!)",
+    summary="Update Current Logged in Account",
+    description="allowed logged in user to update personal detail in account profile page.(Don't Change Email! CAN NOT change password yet!)",
     tags=["Accounts"],
 )
 def update_account(
@@ -199,7 +197,7 @@ def update_account(
 @router.patch(
     "/api/accounts/promote/{email}/",
     summary="Promote an account as a staff by email ----> management",
-    description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(aotu use same rescue_id of the admin)",
+    description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(auto use same rescue_id of the admin)",
     tags=["Accounts", "management"],
 )
 async def promote_account(
@@ -223,7 +221,7 @@ async def promote_account(
 @router.patch(
     "/api/accounts/demote/{email}/",
     summary="Demote an account as a staff by email ----> management",
-    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belone to this admin's rescue",
+    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belong to this admin's rescue",
     tags=["Accounts", "management"],
 )
 async def demote_account(
@@ -240,7 +238,7 @@ async def demote_account(
     if response:
         return response
     else:
-        raise HTTPException(404, "Cannot deomote-- Invalid Account ")
+        raise HTTPException(404, "Cannot demote-- Invalid Account ")
 
 
 # Can you move this localize function under queries.account.py?
@@ -274,49 +272,3 @@ async def localize_account(
         return response
     else:
         raise HTTPException(404, "Cannot set location")
-
-
-@router.patch(
-    "/api/accounts/profile/pets/",
-    tags=["Accounts"],
-)
-async def favorite_pet(
-    request: Request,
-    pet_id: PetId,
-    account: dict = Depends(authenticator.try_get_current_account_data),
-    queries: AccountQueries = Depends(),
-):
-    if account and authenticator.cookie_name in request.cookies:
-        account_id = account["id"]
-    else:
-        raise not_authorized
-
-    response = queries.favorite_pet(account_id, pet_id)
-    if response:
-        return response
-    else:
-        raise HTTPException(404, "This account id does not exist!")
-
-
-@router.delete(
-    "/api/accounts/profile/pets/",
-    tags=["Accounts"],
-)
-async def delete_favorite(
-    request: Request,
-    pet_id: PetId,
-    account: dict = Depends(authenticator.try_get_current_account_data),
-    queries: AccountQueries = Depends(),
-):
-    if account and authenticator.cookie_name in request.cookies:
-        account_id = account["id"]
-    else:
-        raise not_authorized
-
-    response = queries.delete_favorite(account_id, pet_id)
-    if response:
-        return response
-    else:
-        raise HTTPException(404, "This account id does not exist!")
-
-
