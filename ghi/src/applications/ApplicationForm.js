@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import SendSharpIcon from "@mui/icons-material/SendSharp";
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -21,6 +20,8 @@ import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Modal from "@mui/material/Modal";
+import PetsIcon from '@mui/icons-material/Pets';
+import PetCard from "../pets/PetCard";
 
 
 
@@ -407,14 +408,13 @@ export default function ApplicationForm(pet_id, rescue_id, name, petPicture) {
                     />
                   </FormControl>
                 </Box>
-
                 <Button
                   type='submit'
                   fullWidth
                   variant='outlined'
                   sx={{ mt: 3, mb: 2 }}
                   color='success'
-                  endIcon={<SendSharpIcon />}
+                  endIcon={<PetsIcon />}
                 >
                   Submit
                 </Button>

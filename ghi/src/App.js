@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
 import DrawerAppBar from "./DrawerAppBar";
 import ApplicationList from "./applications/ApplicationsList";
 import HomePage from "./Homepage";

@@ -15,16 +15,22 @@ export default function AddStaff(props) {
         <Container maxWidth="md">
             <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
                 <Typography variant="h6">
-                    Promote A Staff
+                    Promote someone to Staff
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextField label="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} helperText="Please enter staff email">
+                            <TextField
+                                size="small"
+                                label="email"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                helperText="Please enter staff email">
                             </TextField>
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success" >
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }} color="success" >
                         Promote
                     </Button>
                 </Box>

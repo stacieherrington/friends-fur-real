@@ -37,7 +37,7 @@ export default function ManageStaffPage() {
     }
 
     return (
-        <Container component="main" sx={{ mt: 7 }}>
+        <Container component="main" sx={{ mt: 13 }}>
             <Typography variant="h4" align="center">Manage Staff</Typography>
             <StaffTable staffList={staffList} refresh={refresh} setRefresh={setRefresh} />
             <AddStaff email={email} setEmail={setEmail} promoteStaff={promoteStaff} />

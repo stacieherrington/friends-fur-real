@@ -90,13 +90,13 @@ export default function UpdatePet() {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 12,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: '#CFE0FB' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#294C60' }}>
               <PetsIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -123,7 +123,7 @@ export default function UpdatePet() {
                     required
                     fullWidth
                     id="type"
-                    label="Select"
+                    label="Type"
                     name="type"
                     onChange={handleChange}
                     value={fields.type}
@@ -175,9 +175,9 @@ export default function UpdatePet() {
                     required
                     fullWidth
                     select
-                    label="Select"
-                    value={fields.sex}
+                    label="Sex"
                     name="sex"
+                    value={fields.sex}
                     onChange={handleChange}
                     helperText="Please select sex"
                   >
@@ -195,9 +195,9 @@ export default function UpdatePet() {
                     required
                     fullWidth
                     select
-                    label="Select"
-                    value={fields.size}
+                    label="Size"
                     name="size"
+                    value={fields.size}
                     onChange={handleChange}
                     helperText="Please select size"
                   >
@@ -339,10 +339,11 @@ export default function UpdatePet() {
               </Grid>
               {isRescuer ?
                 <Button
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                  endIcon={<PetsIcon />}
                   type="submit"
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
                 >
                   Update Pet
                 </Button> : null}

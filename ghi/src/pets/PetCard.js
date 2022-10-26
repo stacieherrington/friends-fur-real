@@ -43,11 +43,11 @@ export default function PetCard(props) {
     setOpen(false);
   };
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 'auto' }}>
       {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
-          height='200'
+          height='250'
           image={props.pet.pictures}
           alt={props.pet.breed}
         />

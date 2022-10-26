@@ -13,7 +13,7 @@ import { useGetTokenQuery } from '../redux/api';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: "#294C60",
         color: theme.palette.common.white,
         fontSize: 20,
         fontWeight: 600,
@@ -61,7 +61,13 @@ function StyledBodyRow(props) {
                 <StyledTableCell sx={{ p: 1 }} align="center">{first_name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 1 }} align="center">{last_name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 1 }} align="center">{email}</StyledTableCell>
-                <StyledTableCell sx={{ p: 1 }} align="center">{props.staff.roles.includes('admin') ? <Typography>Admin</Typography> : < Button size='small' variant="contained" color="secondary" onClick={handleDemote}>Demote</Button>} </StyledTableCell>
+                <StyledTableCell sx={{ p: 1 }} align="center">{props.staff.roles.includes('admin') ?
+                    <Typography>Admin</Typography>
+                    :
+                    < Button size='small' variant="contained"
+                        sx={{ backgroundColor: "#294C60" }}
+                        onClick={handleDemote}>Demote</Button>}
+                </StyledTableCell>
             </StyledTableRow >)
 }
 
@@ -73,7 +79,7 @@ export default function StaffTable(props) {
             <Typography sx={{ py: 2 }} variant="h6" align="center">Staff List</Typography>
             <TableContainer sx={{ maxHeight: 342, }}>
                 <Table sx={{ minWidth: 360 }} aria-label="staff table">
-                    <TableHead>
+                    <TableHead sx={{ backgroundColor: "#294C60" }}>
                         <StyledTableRow>
                             <StyledTableCell align="center">Name</StyledTableCell>
                             <StyledTableCell align="center">Last Name</StyledTableCell>

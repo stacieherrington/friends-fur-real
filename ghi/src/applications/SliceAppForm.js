@@ -5,12 +5,11 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import SendSharpIcon from "@mui/icons-material/SendSharp";
+import PetsIcon from '@mui/icons-material/Pets';
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -111,8 +110,8 @@ export default function ApplicationForm(props) {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
-                <LockOutlinedIcon />
+              <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
+                <PetsIcon />
               </Avatar>{" "}
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
@@ -363,11 +362,10 @@ export default function ApplicationForm(props) {
 
                 <Button
                   type='submit'
-                  fullWidth
-                  variant='outlined'
-                  sx={{ mt: 3, mb: 2 }}
-                  color='success'
-                  endIcon={<SendSharpIcon />}
+                  fullWidth      
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                  endIcon={<PetsIcon />}
                 >
                   Submit
                 </Button>

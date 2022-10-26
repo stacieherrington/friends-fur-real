@@ -87,7 +87,7 @@ export default function PetForm() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
@@ -97,7 +97,7 @@ export default function PetForm() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: '#CFE0FB' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#294C60' }}>
               <PetsIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -321,23 +321,30 @@ export default function PetForm() {
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Box
+                sx={{
+                  display: 'grid',
+                  columnGap: 3,
+                  rowGap: 1,
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                }}
+              ><Button
                 onClick={submitAndNavigateAway}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                 endIcon={<PetsIcon />}
               >
-                Add Pet
-              </Button>
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={submitAndAddAnother}
-              >
-                Save and Add Another
-              </Button>
+                  Add Pet
+                </Button>
+                <Button
+                  onClick={submitAndAddAnother}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+                  endIcon={<PetsIcon />}
+                >
+                  Save and Add Another
+                </Button>
+              </Box>
             </Box>
           </Box>
           <Copyright sx={{ mt: 10 }} />
