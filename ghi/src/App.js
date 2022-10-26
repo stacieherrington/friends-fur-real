@@ -19,9 +19,10 @@ import UpdatePet from "./pets/UpdatePet";
 import ManagePetPage from './Manage/ManagePetPage';
 import ApplicationDetail from "./applications/ApplicationDetail";
 import ManageStoryPage from "./Manage/ManageStoryPage";
+import { Container } from "@mui/material";
 
 function App() {
-  // globle roles state for now:
+  // global roles state for now:
   const [roles, setRoles] = useState([]);
   const [refresh, setRefresh] = useState(1);
 
@@ -45,7 +46,7 @@ function App() {
     <>
       <BrowserRouter>
         {/* <NavBar /> */}
-        <div className='container pt-2 pb-0 mb-0'>
+        <Container className='pt-2 pb-0 mb-0' >
           <DrawerAppBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
@@ -64,7 +65,7 @@ function App() {
             <Route path="/manage/stories" element={<ManageStoryPage />} />
             <Route path='/manage/applications/:applicationId' element={<ApplicationDetail />} />
           </Routes>
-        </div>
+        </Container>
       </BrowserRouter>
     </>
   );
