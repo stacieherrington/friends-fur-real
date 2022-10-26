@@ -24,7 +24,6 @@ import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 
-
 import { useAddApplicationMutation, useGetTokenQuery } from "../redux/api";
 import Copyright from "../components/Copyright";
 import { updateField } from "../redux/slices/applicationSlice";
@@ -121,7 +120,7 @@ export default function ApplicationForm(props) {
             >
               <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <PetsIcon />
-              </Avatar>{" "}
+              </Avatar>
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
               </Typography>

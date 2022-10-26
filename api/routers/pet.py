@@ -99,6 +99,7 @@ def list_pets(
             pets = []
             for rescue in rescues:
                 pets = pets + rescue.pets
+            print(pets)
         except KeyError:
             pets = pet_queries.list_pets()
     return PetsList(pets=pets)

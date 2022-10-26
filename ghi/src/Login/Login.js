@@ -36,11 +36,14 @@ export default function LoginForm(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [login, { isSuccess }] = useLoginMutation();
+  const [login, { error }] = useLoginMutation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     login(event.target);
+    if (error) {
+      alert('INCORRECT CREDENTIALS');
+    }
   };
 
   return (
