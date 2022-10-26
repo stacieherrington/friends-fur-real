@@ -1,19 +1,16 @@
 from routers.accounts import (
     AccountToken,
-    list_accounts,
     AccountQueries,
     AccountOut,
-    single_account,
-    Account,
 )
 from models.rescue import Address, Location
-from models.accounts import AccountList
 from main import app
 from fastapi.testclient import TestClient
 from routers.auth import authenticator
 from queries.accounts import AccountQueries
 
 client = TestClient(app)
+
 
 fakeAccount = AccountOut(
     email="email",
@@ -32,27 +29,6 @@ fakeAccount = AccountOut(
     location=Location(type="Point", coordinates=["11.1", "22.2"]),
 )
 
-fakeAdminAccount = AccountList(
-    accounts=[
-        AccountOut(
-            email="email",
-            id="1",
-            first_name="",
-            last_name="",
-            picture="",
-            rescue_id="rescue",
-            roles=[2],
-            address=Address(
-                address_one="",
-                address_two="",
-                city="",
-                state="",
-                zip_code="18064",
-            ),
-            location=Location(type="Point", coordinates=["11.1", "22.2"]),
-        )
-    ]
-)
 
 fakeToken = AccountToken(
     access_token="faked",
@@ -77,17 +53,17 @@ def test_get_token():
     assert response.json() == fakeToken
 
 
-# async def admin_in_override():
-#     return fakeAdminAccount
+class EmptyAccountRepo:
+    def list_accounts(self):
+        return []
 
 
-# app.dependency_overrides[
-#     authenticator.try_get_current_account_data
-# ] = admin_in_override
+def test_list_all_accounts():
+    app.dependency_overrides[AccountQueries] = EmptyAccountRepo
+    response = client.get("/api/accounts/")
+    app.dependency_overrides = {}
+    assert response.status_code == 200
+    assert response.json()["accounts"] == []
 
 
-# def test_get_current_account():
-#     response = client.get("/api/manage/staff/")
 
-#     assert response.status_code == 200
-#     assert response.json() == []
