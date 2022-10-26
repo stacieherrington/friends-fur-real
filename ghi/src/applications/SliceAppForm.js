@@ -18,9 +18,11 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import PetsIcon from '@mui/icons-material/Pets';
+import PetsIcon from "@mui/icons-material/Pets";
 import PetCard from "../pets/PetCard";
-import {SmokingRoomsSharpIcon, DoneOutlineSharpIcon, SmokeFreeSharpIcon } from "@mui/icons-material";
+import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
+import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
+import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 
 
 import { useAddApplicationMutation, useGetTokenQuery } from "../redux/api";
@@ -377,8 +379,8 @@ export default function ApplicationForm(props) {
 
                 <Button
                   type='submit'
-                  fullWidth      
-                  variant="contained"
+                  fullWidth
+                  variant='contained'
                   sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                   endIcon={<PetsIcon />}
                 >

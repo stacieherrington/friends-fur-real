@@ -16,7 +16,7 @@ export function PetEndpoints(builder) {
     listPets: builder.query({
       query: () => ({
         url: `/api/pets/`,
-        // credentials: "include",
+        credentials: "include",
       }),
       transformResponse: (response, meta, arg) => response.pets,
       providesTags: (data) => {
