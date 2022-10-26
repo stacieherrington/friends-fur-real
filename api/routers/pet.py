@@ -92,7 +92,7 @@ def list_pets(
     account: dict = Depends(authenticator.try_get_current_account_data),
 ):
     print(account)
-    if account is None or not account['location']:
+    if account is None:
         pets = pet_queries.list_pets()
     else:
         try:
