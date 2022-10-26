@@ -56,7 +56,7 @@ function App() {
             <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='applications/:applicationId/stories/new' element={<StoryForm />} />
+            <Route path='/applications/:applicationId/stories/new' element={<StoryForm />} />
             <Route path='/stories/:storyId' element={<StoryDetail />} />
             <Route path='/stories' element={<StoriesList />} />
             <Route path="/manage/staff" element={<ManageStaffPage />} />

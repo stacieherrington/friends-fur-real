@@ -6,7 +6,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Copyright from '../components/Copyright';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAddSuccessStoryMutation } from '../redux/api';
+import { Input } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 
 
@@ -14,40 +16,29 @@ import PetsIcon from '@mui/icons-material/Pets';
 
 export default function StoryForm() {
   const { applicationId } = useParams()
-  const [title, setTitle] = useState('')
-  const [story, setStory] = useState('')
-  const [picture, setPicture] = useState('')
-  const [titleError, setTitleError] = useState(false)
-  const [storyError, setStoryError] = useState(false)
-  const [pictureError, setPictureError] = useState(false)
+  const [fields, setFields] = useState({
+    "title": "",
+    "story": "",
+    "picture": "",
+    "signature": "",
+  });
 
+  const [addStory, { form: storyCreate }] = useAddSuccessStoryMutation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}/story/`;
-    const data = { title, story, picture };
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    })
-    console.log(data)
-    if (response.ok) {
-      console.log('YAY!')
-    }
-    setTitleError(false)
-    setStoryError(false)
-    if (title == '') {
-      setTitleError(true)
-    }
-    if (story == '') {
-      setStoryError(true)
-    }
-    if (picture == '') {
-      setPictureError(true)
-    }
+    addStory({ applicationId, form: event.target })
   };
 
+  const handleChange = (event) => {
+    let { name, value } = event.target;
+    const update = { ...fields, [name]: value };
+    setFields(update);
+  };
+  if (storyCreate) {
+    setTimeout(() => navigate("/"), 0)
+  };
 
   return (
     <>
@@ -61,9 +52,9 @@ export default function StoryForm() {
               Share your story
             </Typography>
             <TextField
-              onChange={(event) => setTitle(event.target.value)}
+              value={fields.title}
+              onChange={handleChange}
               label="Title"
-              value={title}
               id="title"
               name="title"
               variant="outlined"
@@ -71,12 +62,11 @@ export default function StoryForm() {
               required
               color="primary"
               sx={{ marginBottom: 3 }}
-              error={titleError}
             />
             <TextField
-              onChange={(event) => setStory(event.target.value)}
+              onChange={handleChange}
               label="Story"
-              value={story}
+              value={fields.story}
               id="story"
               name="story"
               variant="outlined"
@@ -86,24 +76,31 @@ export default function StoryForm() {
               required
               multiline
               rows={5}
-              error={storyError}
             />
-            <TextField
-              sx={{ marginTop: 3 }}
-              onChange={(event) => setPicture(event.target.value)}
-              label="A recent picture URL"
-              value={picture}
+            <Typography sx={{ marginTop: 3 }}>
+              Please upload a recent photo.
+            </Typography>
+            <Input
+              type="file"
+              fullWidth
               id="picture"
               name="picture"
+              sx={{ my: 3 }}
+            />
+            <TextField
+              onChange={handleChange}
+              label="How do you want to sign your story? First name? Initials? Location?"
+              value={fields.signature}
+              id="signature"
+              name="signature"
               variant="outlined"
               size="small"
               color="primary"
               fullWidth
               required
-              error={pictureError}
             />
           </Box>
-          <Button            
+          <Button
             variant="contained"
             type="submit"
             sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
