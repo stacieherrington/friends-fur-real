@@ -1,13 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Typography, Box, TextField, Grid, Button } from '@mui/material';
 import Copyright from '../components/Copyright';
 
 
 
-export default function AddStaff() {
-    let handleChange;
-    let handleSubmit;
-    let fields;
+export default function AddStaff(props) {
+    const { email, setEmail, promoteStaff } = props;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        promoteStaff();
+    }
     return (
         <Container maxWidth="md">
             <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
@@ -17,7 +20,7 @@ export default function AddStaff() {
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextField label="email" name="email" onChange={handleChange} helperText="Please enter staff email">
+                            <TextField label="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} helperText="Please enter staff email">
                             </TextField>
                         </Grid>
                     </Grid>

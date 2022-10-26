@@ -43,8 +43,8 @@ export default function ManagementMenu(props) {
                     }}
                 >
                     <MenuItem onClick={handleClose}><Button href='/manage/pets'>Manage Pets</Button></MenuItem>
-                    <MenuItem onClick={handleClose}><Button color="inherit" href="/manage/applications">Review Applications</Button></MenuItem>
-                    <MenuItem onClick={handleClose}><Button>Review Stories</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button href="/manage/applications">Review Applications</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button href='/manage/stories'>Review Stories</Button></MenuItem>
                     <MenuItem disabled={!is_admin} onClick={handleClose}><Button href='/manage/staff'>Manage Staff</Button></MenuItem>
                 </Menu>
             </div>
