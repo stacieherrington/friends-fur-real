@@ -49,7 +49,7 @@ export default function PetForm() {
   const submitAndNavigateAway = async (event) => {
     event.preventDefault();
     addPet(event.target.form);
-    setTimeout(() => navigate("/pets"), 0)
+    setTimeout(() => navigate("/manage/pets"), 0)
 
   };
   const submitAndAddAnother = async (event) => {
