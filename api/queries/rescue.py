@@ -112,6 +112,7 @@ class RescueQueries(Queries):
         rescues = []
         for rescue in result:
             rescue["id"] = str(rescue["_id"])
+            rescue["pets"] = [p for p in rescue["pets"] if not p["is_adopted"]]
             for pet in rescue["pets"]:
                 pet["id"] = str(pet["_id"])
                 enrich_pictures(pet)
