@@ -51,19 +51,3 @@ def test_get_token():
 
     assert response.status_code == 200
     assert response.json() == fakeToken
-
-
-class EmptyAccountRepo:
-    def list_accounts(self):
-        return []
-
-
-def test_list_all_accounts():
-    app.dependency_overrides[AccountQueries] = EmptyAccountRepo
-    response = client.get("/api/accounts/")
-    app.dependency_overrides = {}
-    assert response.status_code == 200
-    assert response.json()["accounts"] == []
-
-
-
