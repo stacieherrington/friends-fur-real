@@ -11,15 +11,12 @@ import { Modal } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
 import { useSignupMutation } from "../redux/api";
-// import { useNavigate } from "react-router-dom";
 import { updateField } from "../redux/slices/accountSlice";
 import { preventDefault } from "../redux/utility";
 import LoginForm from "../Login/Login";
 
-const theme = createTheme();
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,123 +44,117 @@ export default function SignUpForm(props) {
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
-
-  // if (isSuccess) {
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 0);
-  // }
   return (
     <>
-      <ThemeProvider theme={theme}>
-        {props.appBar ? (
-          <Button sx={{ color: "#fff" }} onClick={signOpen}>
-            Signup
-          </Button>
-        ) : (
-          <Button onClick={signOpen}>
-            {"Don't have an account? Sign Up"}
-          </Button>
-        )}
-        <Modal
-          open={sign}
-          onClose={signClosed}
-          aria-labelledby='modal-modal-title'
-          aria-describedby='modal-modal-description'
-        >
-          <Box sx={style}>
-            <Container component='main' maxWidth='xs'>
-              <CssBaseline />
+      {props.appBar ? (
+        <Button sx={{ color: "#fff" }} onClick={signOpen}>
+          Signup
+        </Button>
+      ) : props.burger ? (
+        <Box sx={{ mx: "auto" }} onClick={signOpen}>
+          Signup
+        </Box>
+      ) : (
+        <Button onClick={signOpen}>{"Don't have an account? Sign Up"}</Button>
+      )}
+      <Modal
+        open={sign}
+        onClose={signClosed}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Container component='main' maxWidth='xs'>
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component='h1' variant='h5'>
+                Sign up
+              </Typography>
               <Box
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
+                component='form'
+                onSubmit={preventDefault(signup, () => {
+                  signClosed();
+                  return {
+                    email,
+                    password,
+                    address: {
+                      address_one: "",
+                      address_two: "",
+                      city: "",
+                      state: "",
+                      zip_code,
+                    },
+                  };
+                })}
+                sx={{ mt: 3 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
-                  <LockOutlinedIcon />
-                </Avatar>
-                <Typography component='h1' variant='h5'>
-                  Sign up
-                </Typography>
-                <Box
-                  component='form'
-                  onSubmit={preventDefault(signup, () => {
-                    signClosed();
-                    return {
-                      email,
-                      password,
-                      address: {
-                        address_one: "",
-                        address_two: "",
-                        city: "",
-                        state: "",
-                        zip_code,
-                      },
-                    };
-                  })}
-                  sx={{ mt: 3 }}
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      label='Email Address'
+                      name='email'
+                      onChange={field}
+                      value={email}
+                      autoComplete='email'
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name='password'
+                      label='Password'
+                      type='password'
+                      onChange={field}
+                      value={password}
+                      autoComplete='new-password'
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      onChange={field}
+                      value={zip_code}
+                      label='Zip Code'
+                      name='zip_code'
+                      autoComplete='zip-code'
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
                 >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        label='Email Address'
-                        name='email'
-                        onChange={field}
-                        value={email}
-                        autoComplete='email'
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name='password'
-                        label='Password'
-                        type='password'
-                        onChange={field}
-                        value={password}
-                        autoComplete='new-password'
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        onChange={field}
-                        value={zip_code}
-                        label='Zip Code'
-                        name='zip_code'
-                        autoComplete='zip-code'
-                      />
-                    </Grid>
+                  Sign Up
+                </Button>
+                <Grid container justifyContent='flex-end'>
+                  <Grid item>
+                    <Link variant='body2'>
+                      <LoginForm onClick={signClosed} signUp={"signUp"} />
+                    </Link>
                   </Grid>
-                  <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Grid container justifyContent='flex-end'>
-                    <Grid item>
-                      <Link variant='body2'>
-                        <LoginForm onClick={signClosed} signUp={"signUp"} />
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </Box>
+                </Grid>
               </Box>
-              <Copyright sx={{ mt: 10 }} />
-            </Container>
-          </Box>
-        </Modal>
-      </ThemeProvider>
+            </Box>
+            <Copyright sx={{ mt: 10 }} />
+          </Container>
+        </Box>
+      </Modal>
     </>
   );
 }

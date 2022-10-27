@@ -1,7 +1,7 @@
 export function SuccessStoryEndpoints(builder) {
   return {
     addSuccessStory: builder.mutation({
-      query: ({applicationId, form}) => {
+      query: ({ applicationId, form }) => {
         form.enctype = "multipart/form-data";
         const formData = new FormData(form);
         return {
@@ -36,7 +36,10 @@ export function SuccessStoryEndpoints(builder) {
       providesTags: ["SuccessStory"],
     }),
     threeRandomStories: builder.query({
-      query: () => `/api/stories/random/`,
+      query: () => ({
+        method: "get",
+        url: `/api/stories/random/`,
+      }),
       providesTags: ["SuccessStory"],
     }),
     patchSuccessStory: builder.mutation({

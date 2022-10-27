@@ -30,8 +30,6 @@ import { updateField } from "../redux/slices/applicationSlice";
 import { preventDefault } from "../redux/utility";
 import Login from "../Login/Login";
 
-const theme = createTheme();
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -95,7 +93,7 @@ export default function ApplicationForm(props) {
   const requiredError = [agrees_to_terms].filter((v) => v).length < 1;
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {token ? (
         <Button onClick={adoptOpen}>Adopt me!</Button>
       ) : (
@@ -391,6 +389,6 @@ export default function ApplicationForm(props) {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }

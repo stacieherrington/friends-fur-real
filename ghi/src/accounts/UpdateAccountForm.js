@@ -21,8 +21,6 @@ import {
 } from "../redux/api";
 import { preventDefault } from "../redux/utility";
 
-const theme = createTheme();
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -67,7 +65,7 @@ export default function UpdateAccountForm() {
   const aboutChange = (e) => setAbout(e.target.value);
 
   return (
-    <ThemeProvider theme={theme}>
+<>
       <Grid container justifyContent='flex-end'>
         <Grid item>
           <Button onClick={handleOpen}>Update Account</Button>
@@ -254,6 +252,6 @@ export default function UpdateAccountForm() {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+      </>
   );
 }

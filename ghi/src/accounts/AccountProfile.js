@@ -8,8 +8,6 @@ import {
   Collapse,
   Paper,
   Container,
-  TextField,
-  Autocomplete,
   Grid,
   Button,
   Card,
@@ -20,39 +18,13 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { createFilterOptions } from "@mui/material/Autocomplete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetTokenQuery, useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
 import AccountApplications from "../applications/AccountApplications";
-
-// const theme = createTheme();
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   height: 800,
-//   width: 600,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   mt: 3,
-//   overflow: "auto",
-// };
-
-// const ProfileDetails = (props) => {
-
-//   return (
-
-//   );
-// };
 
 export default function AccountProfile(props) {
   const navigate = useNavigate();
@@ -76,7 +48,6 @@ export default function AccountProfile(props) {
     return <>Loading...</>;
   }
 
-  console.log(accountData);
   const addressMap = Object.entries(accountData.address);
   return (
     <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
@@ -102,10 +73,14 @@ export default function AccountProfile(props) {
           <AccountApplications />
         </Grid>
         <Grid item xs={4} sm={6} md={8} lg={10}>
+          <Box textAlign='center'>
+            <h1>My details</h1>
+          </Box>
+
           <Card>
             <CardMedia
               component='img'
-              sx={{ mx: "auto", maxWidth: "40%" }}
+              sx={{ mx: "auto", maxWidth: "25vw" }}
               src={
                 accountData.picture
                   ? accountData.picture
@@ -122,11 +97,6 @@ export default function AccountProfile(props) {
             </Box>
             <CardContent>
               <TableContainer component={Paper}>
-                {accountData.first_name ?
-                  <Box textAlign='center'><h1>{`${accountData.first_name}`}'s details</h1></Box>
-                :<Box textAlign='center'><h3>My details</h3></Box>
-                }
-
                 <Table aria-label='simple table'>
                   <TableHead
                     sx={{
@@ -145,6 +115,8 @@ export default function AccountProfile(props) {
                       <TableCell>
                         {accountData.first_name && accountData.last_name
                           ? `${accountData.first_name} ${accountData.last_name}`
+                          : accountData.first_name
+                          ? `${accountData.first_name}`
                           : ""}
                       </TableCell>
                     </TableRow>

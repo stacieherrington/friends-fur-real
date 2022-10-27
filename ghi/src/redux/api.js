@@ -3,7 +3,6 @@ import { AccountEndpoints } from "./endpoints/accountEps";
 import { PetEndpoints } from "./endpoints/petEps";
 import { ApplicationEndpoints } from "./endpoints/applicationEps";
 import { SuccessStoryEndpoints } from "./endpoints/successStoryEps";
-// import { AccountEndpoints } from "./endpoints/unusedEps";
 import { RescueEndpoints } from "./endpoints/rescueEps";
 
 export const apiSlice = createApi({

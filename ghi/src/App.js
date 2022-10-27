@@ -28,7 +28,6 @@ function App() {
           <DrawerAppBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
-            {/* <Route path='/applications' element={<ApplicationList />} /> */}
             <Route path='/manage/applications' element={<ApplicationList />} />
             {/* <Route path='/login' element={<LoginForm />} /> */}
             <Route path='/pets' element={<PetsList />} />

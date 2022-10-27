@@ -3,20 +3,15 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Modal } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
 import { useLoginMutation } from "../redux/api";
-import { useNavigate } from "react-router-dom";
 import SignUpForm from "../Signup/Signup";
 
-const theme = createTheme();
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,11 +42,15 @@ export default function LoginForm(props) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {props.petCard ? (
         <Button onClick={logOpen}>Adopt me!</Button>
       ) : props.signUp ? (
         <Button onClick={logOpen}>Already have an account? Sign in!</Button>
+      ) : props.burger ? (
+        <Box sx={{ mx: "auto" }} onClick={logOpen}>
+          Login
+        </Box>
       ) : (
         <Button sx={{ color: "#fff" }} onClick={logOpen}>
           Login
@@ -124,6 +123,6 @@ export default function LoginForm(props) {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }

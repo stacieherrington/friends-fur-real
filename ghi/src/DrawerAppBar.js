@@ -19,7 +19,7 @@ import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
 import Login from "./Login/Login";
 import SignUpForm from "./Signup/Signup";
-
+import LoginForm from "./Login/Login";
 
 const drawerWidth = 240;
 
@@ -30,11 +30,9 @@ function DrawerAppBar(props) {
     isLoading: tokenLoading,
   } = useGetTokenQuery();
   const [logout, { data: logoutData }] = useLogoutMutation();
-  
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -51,42 +49,42 @@ function DrawerAppBar(props) {
       </div>
       <Divider />
       <List>
-        <Link href='/' underline="none">
+        <Link href='/' underline='none'>
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/pets' underline="none">
+        <Link href='/pets' underline='none'>
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Find a Friend"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/stories' underline="none">
+        <Link href='/stories' underline='none'>
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <ListItemText primary={"Stories"} />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/signup' underline="none">
+        <Link underline='none'>
           <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={"Signup"} />
+            <ListItemButton sx={{ mx: "auto" }}>
+              <SignUpForm burger='burger' />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/login' underline="none">
+        <Link underline='none'>
           <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={"Login"} />
+            <ListItemButton sx={{ mx: "auto" }}>
+              <LoginForm burger='burger' />
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link href='/login' underline="none">
+        <Link href='/login' underline='none'>
           <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }} onClick={logout}>
               <ListItemText primary={"Logout"} />
@@ -133,7 +131,7 @@ function DrawerAppBar(props) {
             <Button href='/' sx={{ color: "#fff" }}>
               Home
             </Button>
-            <Button color="inherit" href='/pets'>
+            <Button color='inherit' href='/pets'>
               Find a Friend
             </Button>
             <Button href='/stories' sx={{ color: "#fff" }}>
