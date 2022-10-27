@@ -9,10 +9,6 @@ import {
   Modal,
   Grid,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import SendSharpIcon from "@mui/icons-material/SendSharp";
-
 import React, { useState } from "react";
 import Copyright from "../components/Copyright";
 import {
@@ -20,8 +16,8 @@ import {
   usePatchUpdateAccountMutation,
 } from "../redux/api";
 import { preventDefault } from "../redux/utility";
+import PetsIcon from '@mui/icons-material/Pets';
 
-const theme = createTheme();
 
 const style = {
   position: "absolute",
@@ -67,7 +63,7 @@ export default function UpdateAccountForm() {
   const aboutChange = (e) => setAbout(e.target.value);
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Grid container justifyContent='flex-end'>
         <Grid item>
           <Button onClick={handleOpen}>Update Account</Button>
@@ -91,8 +87,8 @@ export default function UpdateAccountForm() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
-                <LockOutlinedIcon />
+              <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
+                <PetsIcon />
               </Avatar>
               <Typography component='h1' variant='h5'>
                 Update Account
@@ -241,10 +237,10 @@ export default function UpdateAccountForm() {
                 <Button
                   type='submit'
                   fullWidth
-                  variant='outlined'
-                  sx={{ mt: 3, mb: 2 }}
-                  color='success'
-                  endIcon={<SendSharpIcon />}
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
+
+                  endIcon={<PetsIcon />}
                 >
                   Submit
                 </Button>
@@ -254,6 +250,6 @@ export default function UpdateAccountForm() {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }

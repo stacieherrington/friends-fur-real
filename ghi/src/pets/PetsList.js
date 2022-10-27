@@ -39,7 +39,7 @@ export default function PetsList() {
       >
         Adoptable Pets
       </Typography>
-      <Box marginBottom={3}>
+      <Box marginBottom={5}>
         <Grid container justifyContent='center' spacing={2} columns={16}>
           <Grid item xs={2}>
             <InputLabel id="demo-simple-select-label">Pet Type</InputLabel>
