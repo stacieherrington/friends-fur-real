@@ -8,6 +8,7 @@ from models.application import (
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from .pet import PetQueries, PetOut
+import sys
 
 
 class ApplicationQueries(Queries):
@@ -43,6 +44,7 @@ class ApplicationQueries(Queries):
     def list_account_applications(self, id) -> List[ApplicationOut]:
         response = self.collection.aggregate(
             [
+                {"$match": {"account_id": id}},
                 {"$addFields": {"petObjId": {"$toObjectId": "$pet_id"}}},
                 {
                     "$lookup": {
@@ -56,11 +58,14 @@ class ApplicationQueries(Queries):
         )
         apps = []
         for app in response:
-            app["id"] = str(app["_id"])
-            pet = app["pets"][0]
-            pet["id"] = str(pet["_id"])
-            app["pet"] = pet
-            apps.append(ApplicationOutWithPet(**app))
+            try:
+                app["id"] = str(app["_id"])
+                pet = app["pets"][0]
+                pet["id"] = str(pet["_id"])
+                app["pet"] = pet
+                apps.append(ApplicationOutWithPet(**app))
+            except IndexError:
+                print(f"BAD DATA FOR APPLICATION {app['id']}", file=sys.stderr)
         return apps
 
     def approve_application(self, application_id) -> ApplicationOut:

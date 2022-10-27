@@ -75,6 +75,13 @@ export default function AccountApplications() {
         applications.filter((app) => app.status === event.target.value)
       );
   };
+  if (!isLoading && applications.length === 0) {
+    return (
+      <Container sx={{ paddingTop: 10 }}>
+        <Typography variant="h4" align="center" sx={{ mb: 3 }}>You have no applications.</Typography>
+      </Container>
+    )
+  }
   return (
     <Container sx={{ paddingTop: 10 }}>
       <Typography variant="h3" align="center" sx={{ mb: 3 }}>My Applications</Typography>
