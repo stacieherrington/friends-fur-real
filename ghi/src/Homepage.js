@@ -26,7 +26,6 @@ function HomePage(props) {
     loadThreeStories(setStoriesList);
   }, [])
 
-  console.log(storiesList)
   return (
     <>
       <Container className="mt-5 mb-0 pt-5 text-center">
@@ -51,7 +50,7 @@ function HomePage(props) {
                 </Grid>
               ))}
             </Grid>
-          </Box> 
+          </Box>
           {storiesList.length !== 0 ? (
           <Box sx={{ flexGrow: 1 }}>  {/* random story list */}
             <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy Tails</Typography>
