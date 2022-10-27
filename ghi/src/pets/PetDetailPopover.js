@@ -22,7 +22,6 @@ export default function PetDetailPopover(props) {
           <Box
             component="img"
             sx={{ height: { xs: 240, md: 420, lg: 500 }, mx: "auto" }}
-            alt="The house from the offer."
             src={petData.pictures} />
           <Paper sx={{ m: 1, maxWidth: { xs: 490, md: 610, lg: 730 } }}><Typography>{petData.description}</Typography></Paper>
         </Box>

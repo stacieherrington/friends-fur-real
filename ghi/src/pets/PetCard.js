@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
 import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
-import { Popover } from "@mui/material";
+import { Popover, Box } from "@mui/material";
 import PetDetailPopover from "./PetDetailPopover";
 
 
@@ -43,16 +43,16 @@ export default function PetCard(props) {
     setOpen(false);
   };
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 'auto' }}>
+    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 680 }}>
       {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
-          height='250'
+          width="100%"
           image={props.pet.pictures}
           alt={props.pet.breed}
         />
       ) : null}
-      <CardContent>
+      <CardContent sx={{ padding: 1 }}>
         <Typography gutterBottom variant='h5' component='div'>
           {props.pet.name}
         </Typography>
@@ -63,7 +63,7 @@ export default function PetCard(props) {
             display: "-webkit-box",
             overflow: "hidden",
             WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 3,
+            WebkitLineClamp: 2,
           }}
         >
           {props.pet.description}
@@ -85,13 +85,13 @@ export default function PetCard(props) {
         >
           <PetDetailPopover petId={id} />
         </Popover>
-        <SliceAppForm pet_id={id} rescue_id={rescue_id} />
+        <SliceAppForm pet_id={id} rescue_id={rescue_id} sx={{ pb: 0 }} />
       </CardActions>
       <CardActions>
         {isRescuer && (
           <>
-            <Button size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-            <Button size="small" onClick={handleClickOpen}>Delete</Button>
+            <Button sx={{ pt: 0, pb: 5 }} size="small" href={`/pets/${props.pet.id}`}>Update</Button>
+            <Button sx={{ pt: 0, pb: 5 }} size="small" onClick={handleClickOpen}>Delete</Button>
             <Dialog
               open={open}
               onClose={handleClose}

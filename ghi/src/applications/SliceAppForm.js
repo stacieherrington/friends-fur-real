@@ -16,8 +16,6 @@ import {
   Checkbox,
   Modal,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import PetsIcon from "@mui/icons-material/Pets";
 import PetCard from "../pets/PetCard";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";

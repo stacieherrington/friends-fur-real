@@ -74,6 +74,7 @@ We are excited about the future pawsibilities for our site. The following are fe
 - Forgot password email with password reset link.
 - Alerts for incorrect login/password or attempting duplicate submissions.
 - 100% conversion to RTK queries.
+- Rescue profile pages with logos, pictures, donation information, etc.
 
 ## Project initialization
 
