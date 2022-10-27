@@ -49,5 +49,12 @@ class ApplicationOut(ApplicationIn):
     id: str
 
 
+class ApplicationOutWithPet(ApplicationOut):
+    pet: PetOut
+
+
 class ApplicationList(BaseModel):
     applications: List[ApplicationOut]
+
+class ApplicationListWithPet(BaseModel):
+    applications: List[ApplicationOutWithPet]

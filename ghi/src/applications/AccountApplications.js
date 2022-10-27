@@ -6,14 +6,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Container, Menu, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import {
   useGetTokenQuery,
   useListAccountApplicationsQuery,
 } from "../redux/api";
-import { useLogoutMutation } from "../redux/api";
 import { useEffect, useState } from "react";
 import { Select, MenuItem, InputLabel } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 export default function AccountApplications() {
@@ -22,8 +22,6 @@ export default function AccountApplications() {
     error: tokenError,
     isLoading: tokenLoading,
   } = useGetTokenQuery();
-
-  const [logout, { data: logoutData }] = useLogoutMutation();
 
   const {
     data: applicationData,
@@ -45,10 +43,11 @@ export default function AccountApplications() {
   }
 
   if (isLoading) {
-    return <h1>Loading applicationData...</h1>;
+    return <h1>Loading application data...</h1>;
   }
 
   const { applications } = applicationData
+
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -57,13 +56,12 @@ export default function AccountApplications() {
     event.target.value === "All"
       ? setAppList(applications)
       : setAppList(
-          applications.filter((app) => app.status === event.target.value)
-        );
+        applications.filter((app) => app.status === event.target.value)
+      );
   };
   return (
     <Container sx={{ paddingTop: 10 }}>
-      <Typography variant="h3" align="center" sx={{mb: 3}}>My Applications</Typography>
-
+      <Typography variant="h3" align="center" sx={{ mb: 3 }}>My Applications</Typography>
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -85,10 +83,9 @@ export default function AccountApplications() {
             }}
           >
             <TableRow>
-              <TableCell>First name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Phone number</TableCell>
-              <TableCell>Pet Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Breed</TableCell>
               <TableCell>
                 <InputLabel id='demo-simple-select-label' sx={{ color: "#FFF" }}>Status</InputLabel>
                 <Select
@@ -115,12 +112,15 @@ export default function AccountApplications() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component='th' scope='row'>
-                  {application.first_name}
+                  {application.pet.name}
                 </TableCell>
-                <TableCell align='center'>{application.last_name}</TableCell>
-                <TableCell align='center'>{application.phone_number}</TableCell>
-                <TableCell align='center'>{application.pet_id}</TableCell>
-                <TableCell align='center'>{application.status}</TableCell>
+                <TableCell align='center'>{application.pet.type}</TableCell>
+                <TableCell align='center'>{application.pet.breed}</TableCell>
+                <TableCell align='center'>
+                  {application.status === "Approved" ?
+                   <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your story!</Link> :
+                   application.status }
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

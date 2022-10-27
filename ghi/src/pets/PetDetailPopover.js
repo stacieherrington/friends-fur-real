@@ -61,32 +61,32 @@ export default function PetDetailPopover(props) {
           <Grid item xs={3} sm={3} md={3} >
             <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
               <ListItem>
-                <ListItemText primary="Ok With Dog?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText primary="Ok with dogs?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Ok With Cat?" secondary={petData.ok_with_kids ? "yes" : "no"} />
+                <ListItemText primary="Ok with cats?" secondary={petData.ok_with_kids ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Ok With Children?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText primary="Ok with children?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Shots Up to Data?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText primary="Shots up-to-date?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
               </ListItem>
             </List>
           </Grid>
           <Grid item xs={3} sm={3} md={3} >
             <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
               <ListItem>
-                <ListItemText primary="Spayed or Neutered?" secondary={petData.spayed_neutered ? "yes" : "no"} />
+                <ListItemText primary="Spayed or neutered?" secondary={petData.spayed_neutered ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="House Trained?" secondary={petData.house_trained ? "yes" : "no"} />
+                <ListItemText primary="House-trained?" secondary={petData.house_trained ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Special Needs?" secondary={petData.special_needs ? "yes" : "no"} />
+                <ListItemText primary="Special needs?" secondary={petData.special_needs ? "yes" : "no"} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Is Adopted?" secondary={petData.is_adopted ? "yes" : "no"} />
+                <ListItemText primary="Is adopted?" secondary={petData.is_adopted ? "yes" : "no"} />
               </ListItem>
             </List>
           </Grid>

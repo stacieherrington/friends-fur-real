@@ -3,10 +3,11 @@ from typing import List
 from models.application import (
     ApplicationIn,
     ApplicationOut,
+    ApplicationOutWithPet,
 )
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
-from .pet import PetQueries
+from .pet import PetQueries, PetOut
 
 
 class ApplicationQueries(Queries):
@@ -40,11 +41,26 @@ class ApplicationQueries(Queries):
             return ApplicationOut(**app, id=application_id)
 
     def list_account_applications(self, id) -> List[ApplicationOut]:
-        response = self.collection.find({"account_id": id})
+        response = self.collection.aggregate(
+            [
+                {"$addFields": {"petObjId": {"$toObjectId": "$pet_id"}}},
+                {
+                    "$lookup": {
+                        "from": "pets",
+                        "localField": "petObjId",
+                        "foreignField": "_id",
+                        "as": "pets",
+                    }
+                },
+            ]
+        )
         apps = []
         for app in response:
             app["id"] = str(app["_id"])
-            apps.append(ApplicationOut(**app))
+            pet = app["pets"][0]
+            pet["id"] = str(pet["_id"])
+            app["pet"] = pet
+            apps.append(ApplicationOutWithPet(**app))
         return apps
 
     def approve_application(self, application_id) -> ApplicationOut:
@@ -62,9 +78,7 @@ class ApplicationQueries(Queries):
                 filter={"application_id": ObjectId(application_id)},
                 update={"$set": {"status": "Rejected"}},
             )
-            return {
-                "message": "Sorry, this pet has been adopted by other family!"
-            }
+            return {"message": "Sorry, this pet has been adopted by other family!"}
         else:
             # 3. if there is no approved application for this pet,
             #       update all application status to Rejected, then update current application_id to approved

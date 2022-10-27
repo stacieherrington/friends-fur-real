@@ -8,8 +8,6 @@ import {
   Collapse,
   Paper,
   Container,
-  TextField,
-  Autocomplete,
   Grid,
   Button,
   Card,
@@ -23,38 +21,14 @@ import {
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetTokenQuery, useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
 import AccountApplications from "../applications/AccountApplications";
 
-// const theme = createTheme();
 
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   height: 800,
-//   width: 600,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   mt: 3,
-//   overflow: "auto",
-// };
-
-// const ProfileDetails = (props) => {
-
-//   return (
-
-//   );
-// };
-
-export default function AccountProfile(props) {
+export default function AccountProfile() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const {
@@ -78,7 +52,6 @@ export default function AccountProfile(props) {
 
   const addressMap = Object.entries(accountData.address);
   return (
-    // <ThemeProvider theme={theme}>
       <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
         <Grid container spacing={2} columns={{ xs: 4, sm: 6, md: 8, lg: 10 }}>
           <Grid item xs={4} sm={6} md={8} lg={10} rowspacing={4}>
@@ -179,6 +152,5 @@ export default function AccountProfile(props) {
           </Grid>
         </Grid>
       </Container>
-    // </ThemeProvider>
   );
 }
