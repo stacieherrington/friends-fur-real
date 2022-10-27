@@ -24,8 +24,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-
-import { useSingleAccountQuery } from "../redux/api";
+import { useNavigate } from "react-router-dom";
+import { useGetTokenQuery, useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
 import AccountApplications from "../applications/AccountApplications";
 
@@ -45,15 +45,27 @@ const style = {
   overflow: "auto",
 };
 
-const ProfileDetails = (props) => {
+// const ProfileDetails = (props) => {
+
+//   return (
+
+//   );
+// };
+
+export default function AccountProfile(props) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const {
     data: accountData,
     error: accountError,
     isLoading: accountLoading,
   } = useSingleAccountQuery();
-  if (accountError) {
-    alert(accountError);
+  const { data: token } = useGetTokenQuery();
+
+  if (!token) {
+    setTimeout(() => {
+      navigate("/");
+    }, 0);
   }
   if (!accountData) {
     return <>Loading....</>;
@@ -64,14 +76,27 @@ const ProfileDetails = (props) => {
 
   const addressMap = Object.entries(accountData.address);
   return (
-    <Card>
+    <ThemeProvider theme={theme}>
+      <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
+        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12, lg: 6 }}>
+          <Grid item xs={4} sm={4} md={4} lg={6} rowspacing={4}>
+            {/* <ApplicationList /> */}
+            <br></br>
+            <AccountApplications />
+          </Grid>
+          <Grid item xs={4} sm={4} md={4} lg={6}>
+          <Card>
       <CardMedia
         component='img'
-        height='400'
-        width='auto'
-        src={accountData.picture}
-        alt={accountData.first_name}
-        image='/images/addphoto.webp'
+        sx={{ maxWidth: "40%", justifyContent: "center" }}
+        src={
+          accountData.picture ? accountData.picture : "/images/addphoto.webp"
+        }
+        alt={
+          accountData.first_name
+            ? accountData.first_name
+            : "add a display photo!"
+        }
       />
       <Button>Change Profile Picture</Button>
       <CardContent>
@@ -154,21 +179,6 @@ const ProfileDetails = (props) => {
         <UpdateAccountForm data={accountData} />
       </CardActions>
     </Card>
-  );
-};
-
-export default function AccountProfile() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={7} rowspacing={4}>
-            {/* <ApplicationList /> */}
-            <br></br>
-            <AccountApplications />
-          </Grid>
-          <Grid item xs={5}>
-            <ProfileDetails />
           </Grid>
         </Grid>
       </Container>
