@@ -5,7 +5,6 @@ import { useGetPetQuery } from '../redux/api';
 
 export default function PetDetailPopover(props) {
   const { petId } = props;
-  const name = 'test'
   const { data, isLoading } = useGetPetQuery(petId);
   const [petData, setPetData] = React.useState(null);
   React.useEffect(() => {
