@@ -16,8 +16,6 @@ import {
   Checkbox,
   Modal,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import PetsIcon from "@mui/icons-material/Pets";
 import PetCard from "../pets/PetCard";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
@@ -30,7 +28,7 @@ import { updateField } from "../redux/slices/applicationSlice";
 import { preventDefault } from "../redux/utility";
 import Login from "../Login/Login";
 
-const theme = createTheme();
+
 
 const style = {
   position: "absolute",
@@ -95,7 +93,7 @@ export default function ApplicationForm(props) {
   const requiredError = [agrees_to_terms].filter((v) => v).length < 1;
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {token ? (
         <Button onClick={handleOpen}>Adopt me!</Button>
       ) : (
@@ -391,6 +389,6 @@ export default function ApplicationForm(props) {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }
