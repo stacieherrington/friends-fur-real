@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Container, Menu } from "@mui/material";
+import { Container, Menu, Typography } from "@mui/material";
 import {
   useGetTokenQuery,
   useListAccountApplicationsQuery,
@@ -15,7 +15,6 @@ import { useLogoutMutation } from "../redux/api";
 import { useEffect, useState } from "react";
 import { Select, MenuItem, InputLabel } from "@mui/material";
 
-// import {uset}
 
 export default function AccountApplications() {
   const {
@@ -49,22 +48,21 @@ export default function AccountApplications() {
     return <h1>Loading applicationData...</h1>;
   }
 
-  // const { applicationData } = applicationData;
+  const { applications } = applicationData
 
   const handleChange = (event) => {
     event.preventDefault();
     setStatus(event.target.value);
 
     event.target.value === "All"
-      ? setAppList(applicationData)
+      ? setAppList(applications)
       : setAppList(
-          applicationData.filter((app) => app.status === event.target.value)
+          applications.filter((app) => app.status === event.target.value)
         );
   };
-
   return (
     <Container sx={{ paddingTop: 10 }}>
-      <h1>Application Lists</h1>
+      <Typography variant="h3" align="center" sx={{mb: 3}}>My Applications</Typography>
 
       <TableContainer component={Paper}>
         <Table
@@ -75,13 +73,14 @@ export default function AccountApplications() {
         >
           <TableHead
             sx={{
-              background: "#CFE0FB",
+              background: "#294C60",
               alignItems: "center",
               "& th": {
                 fontSize: "1rem",
                 fontWeight: "bold",
                 textAlign: "center",
                 padding: 1,
+                color: "#FFF"
               },
             }}
           >
@@ -91,7 +90,7 @@ export default function AccountApplications() {
               <TableCell>Phone number</TableCell>
               <TableCell>Pet Id</TableCell>
               <TableCell>
-                <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+                <InputLabel id='demo-simple-select-label' sx={{ color: "#FFF" }}>Status</InputLabel>
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
@@ -99,6 +98,7 @@ export default function AccountApplications() {
                   value={status}
                   onChange={handleChange}
                   size='small'
+                  sx={{ color: "#FFF", border: '1px solid #ced4da' }}
                 >
                   <MenuItem value={"All"}>All</MenuItem>
                   <MenuItem value={"Approved"}>Approved</MenuItem>
