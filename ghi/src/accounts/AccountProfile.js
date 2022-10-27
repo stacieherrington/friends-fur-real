@@ -53,7 +53,7 @@ const ProfileDetails = (props) => {
     isLoading: accountLoading,
   } = useSingleAccountQuery();
   if (accountError) {
-    console.log(accountError);
+    alert(accountError);
   }
   if (!accountData) {
     return <>Loading....</>;
@@ -71,7 +71,7 @@ const ProfileDetails = (props) => {
         width='auto'
         src={accountData.picture}
         alt={accountData.first_name}
-        image={null}
+        image='/images/addphoto.webp'
       />
       <Button>Change Profile Picture</Button>
       <CardContent>

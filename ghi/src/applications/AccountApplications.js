@@ -23,7 +23,6 @@ export default function AccountApplications() {
     error: tokenError,
     isLoading: tokenLoading,
   } = useGetTokenQuery();
-  console.log(tokenData);
 
   const [logout, { data: logoutData }] = useLogoutMutation();
 
