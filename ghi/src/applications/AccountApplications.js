@@ -155,7 +155,7 @@ export default function AccountApplications() {
                 <TableCell align='center'>{application.pet.breed}</TableCell>
                 <TableCell align='center'>
                   {application.status === "Approved" ?
-                    <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your story!</Link> :
+                    <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your adoption story!</Link> :
                     application.status}
                 </TableCell>
               </TableRow>
