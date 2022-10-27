@@ -36,9 +36,9 @@ const style = {
 
 export default function SignUpForm(props) {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [sign, setSign] = useState(false);
+  const signOpen = () => setSign(true);
+  const signClosed = () => setSign(false);
   const { email, password, zip_code } = useSelector((state) => state.account);
   const [signup, { error, isSuccess }] = useSignupMutation();
 
@@ -57,17 +57,17 @@ export default function SignUpForm(props) {
     <>
       <ThemeProvider theme={theme}>
         {props.appBar ? (
-          <Button sx={{ color: "#fff" }} onClick={handleOpen}>
+          <Button sx={{ color: "#fff" }} onClick={signOpen}>
             Signup
           </Button>
         ) : (
-          <Button onClick={handleOpen}>
+          <Button onClick={signOpen}>
             {"Don't have an account? Sign Up"}
           </Button>
         )}
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={sign}
+          onClose={signClosed}
           aria-labelledby='modal-modal-title'
           aria-describedby='modal-modal-description'
         >
@@ -91,7 +91,7 @@ export default function SignUpForm(props) {
                 <Box
                   component='form'
                   onSubmit={preventDefault(signup, () => {
-                    handleClose();
+                    signClosed();
                     return {
                       email,
                       password,
@@ -152,8 +152,8 @@ export default function SignUpForm(props) {
                   </Button>
                   <Grid container justifyContent='flex-end'>
                     <Grid item>
-                      <Link href='/login' variant='body2'>
-                        <LoginForm signUp={"signUp"} />
+                      <Link variant='body2'>
+                        <LoginForm onClick={signClosed} signUp={"signUp"} />
                       </Link>
                     </Grid>
                   </Grid>

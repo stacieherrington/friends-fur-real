@@ -33,33 +33,33 @@ const style = {
 
 export default function LoginForm(props) {
   // const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [log, setLog] = useState(false);
+  const logOpen = () => setLog(true);
+  const logClosed = () => setLog(false);
   const [login, { error }] = useLoginMutation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     login(event.target);
     if (error) {
-      alert('INCORRECT CREDENTIALS');
+      alert("INCORRECT CREDENTIALS");
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
       {props.petCard ? (
-        <Button onClick={handleOpen}>Adopt me!</Button>
+        <Button onClick={logOpen}>Adopt me!</Button>
       ) : props.signUp ? (
-        <Button onClick={handleOpen}>Already have an account? Sign in!</Button>
+        <Button onClick={logOpen}>Already have an account? Sign in!</Button>
       ) : (
-        <Button sx={{ color: "#fff" }} onClick={handleOpen}>
+        <Button sx={{ color: "#fff" }} onClick={logOpen}>
           Login
         </Button>
       )}
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={log}
+        onClose={logClosed}
         closeAfterTransition
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
@@ -117,7 +117,7 @@ export default function LoginForm(props) {
                   Sign In
                 </Button>
 
-                <SignUpForm />
+                <SignUpForm onClick={logClosed} />
               </Box>
             </Box>
             <Copyright sx={{ mt: 10, mb: 4 }} />

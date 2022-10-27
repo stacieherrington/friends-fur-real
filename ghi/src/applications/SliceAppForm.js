@@ -61,9 +61,9 @@ export default function ApplicationForm(props) {
     isLoading,
   } = useGetTokenQuery();
   const { pet_id, rescue_id } = props;
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [adopt, setAdopt] = useState(false);
+  const adoptOpen = () => setAdopt(true);
+  const adoptClose = () => setAdopt(false);
   const dispatch = useDispatch();
   const {
     first_name,
@@ -97,13 +97,13 @@ export default function ApplicationForm(props) {
   return (
     <ThemeProvider theme={theme}>
       {token ? (
-        <Button onClick={handleOpen}>Adopt me!</Button>
+        <Button onClick={adoptOpen}>Adopt me!</Button>
       ) : (
         <Login petCard='petCard' />
       )}
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={adopt}
+        onClose={adoptClose}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
@@ -127,7 +127,7 @@ export default function ApplicationForm(props) {
               <Box
                 component='form'
                 onSubmit={preventDefault(application, () => {
-                  handleClose();
+                  adoptClose();
                   return {
                     first_name,
                     last_name,

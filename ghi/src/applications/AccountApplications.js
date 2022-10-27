@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Container, Menu } from "@mui/material";
 import {
+  useGetPetQuery,
   useGetTokenQuery,
   useListAccountApplicationsQuery,
 } from "../redux/api";
@@ -23,7 +24,11 @@ export default function AccountApplications() {
     error: tokenError,
     isLoading: tokenLoading,
   } = useGetTokenQuery();
-
+  const {
+    data: petData,
+    error: petError,
+    isLoading: perLoading,
+  } = useGetPetQuery();
   const [logout, { data: logoutData }] = useLogoutMutation();
 
   const {
@@ -49,22 +54,22 @@ export default function AccountApplications() {
     return <h1>Loading applicationData...</h1>;
   }
 
-  // const { applicationData } = applicationData;
-
   const handleChange = (event) => {
     event.preventDefault();
     setStatus(event.target.value);
 
     event.target.value === "All"
-      ? setAppList(applicationData)
+      ? setAppList(applicationData.applications)
       : setAppList(
-          applicationData.filter((app) => app.status === event.target.value)
+          applicationData.applications.filter(
+            (app) => app.status === event.target.value
+          )
         );
   };
 
   return (
     <Container sx={{ paddingTop: 10 }}>
-      <h1>Application Lists</h1>
+      <h1>My Applications</h1>
 
       <TableContainer component={Paper}>
         <Table

@@ -109,7 +109,6 @@ async def delete_session(
     return True
 
 
-# IDK if we need this:
 @router.get(
     "/api/accounts/",
     response_model=AccountList,
@@ -132,12 +131,9 @@ async def list_accounts(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # 1. check if "admin" in "roles":
     if "admin" not in account["roles"]:
         raise not_authorized
-    # 2. get rescue_id from admin account:
     rescue_id = account["rescue_id"]
-    # 3. return the list of staff by rescue_id:
     return AccountList(accounts=queries.list_accounts_by_rescue_id(rescue_id))
 
 
@@ -153,7 +149,6 @@ async def single_account(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # check if logined:
     if account and authenticator.cookie_name in request.cookies:
         account_id = account["id"]
     else:
@@ -181,8 +176,6 @@ def update_account(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # for change password: need to check old passwrod, need a way to decode hashed password -> ensure password will be hashed -> data.password = pwd_context.hash(data.password)
-    # check if logined:
     if account and authenticator.cookie_name in request.cookies:
         account_id = account["id"]
     else:
@@ -205,12 +198,9 @@ async def promote_account(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # 1. check if "admin" in "roles":
     if "admin" not in account["roles"]:
         raise not_authorized
-    # 2. get rescue_id from current admin account:
     rescue_id = account["rescue_id"]
-    # 3. promote account by using email and rescue_id:
     response = queries.promote_account(email, rescue_id)
     if response:
         return response
@@ -229,10 +219,8 @@ async def demote_account(
     account: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends(),
 ):
-    # 1. check if "admin" in current account 'roles':
     if "admin" not in account["roles"]:
         raise not_authorized
-    # get rescue_id from current account data:
     rescue_id = account["rescue_id"]
     response = queries.demote_account(email, rescue_id)
     if response:
@@ -241,9 +229,6 @@ async def demote_account(
         raise HTTPException(404, "Cannot demote-- Invalid Account ")
 
 
-# Can you move this localize function under queries.account.py?
-# Make it one function when you call it pass in an account_id
-# so we can use it anywhere we could by just call import can call it?
 @router.patch(
     "/api/accounts/{account_id}/localize/",
     tags=["Accounts"],

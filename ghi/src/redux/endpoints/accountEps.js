@@ -96,18 +96,18 @@ export function AccountEndpoints(builder) {
       },
     }),
     patchPromoteAccount: builder.mutation({
-      query: (allAccountSliceId, ...patch) => ({
+      query: (accountId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/promote/${allAccountSliceId}/`,
+        url: `/api/accounts/promote/${accountId}/`,
         body: patch,
         credentials: "include",
       }),
       invalidatesTags: () => ["Account", "Token"],
     }),
     patchDemoteAccount: builder.mutation({
-      query: (allAccountSliceId, ...patch) => ({
+      query: (accountId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/demote/${allAccountSliceId}/`,
+        url: `/api/accounts/demote/${accountId}/`,
         body: patch,
         credentials: "include",
       }),
@@ -115,9 +115,9 @@ export function AccountEndpoints(builder) {
       invalidatesTags: ["Account", "Token"],
     }),
     patchLocalizeAccount: builder.mutation({
-      query: (allAccountSliceId, ...patch) => ({
+      query: (accountId, ...patch) => ({
         method: "PATCH",
-        url: `/api/accounts/localize/${allAccountSliceId}/`,
+        url: `/api/accounts/localize/${accountId}/`,
         body: patch,
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -153,7 +153,7 @@ export function AccountEndpoints(builder) {
       },
     }),
     // singleAccount: builder.query({
-    //   query: (allAccountSliceId) => `/api/accounts/${allAccountSliceId}/`,
+    //   query: (accountId) => `/api/accounts/${accountId}/`,
     //   providesTags: (account) => [{ type: "Account", id: account.id }],
     // }),
     getCurrentAccount: builder.query({
@@ -163,42 +163,42 @@ export function AccountEndpoints(builder) {
       }),
       providesTags: (account) => {
         if (account === undefined) {
-          return []
+          return [];
         }
-        return [{ type: "Account", id: account.id }]
+        return [{ type: "Account", id: account.id }];
       },
     }),
     // patchUpdateAccount: builder.mutation({
-    //   query: (allAccountSliceId, ...patch) => ({
+    //   query: (accountId, ...patch) => ({
     //     method: "PATCH",
-    //     url: `/api/accounts/${allAccountSliceId}`,
+    //     url: `/api/accounts/${accountId}`,
     //     body: patch,
     //   }),
     //   providesTags: (account) => [{ type: "Account", id: account.id }],
     //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     // }),
     // patchPromoteAccount: builder.mutation({
-    //   query: (allAccountSliceId, ...patch) => ({
+    //   query: (accountId, ...patch) => ({
     //     method: "PATCH",
-    //     url: `/api/accounts/promote/${allAccountSliceId}/`,
+    //     url: `/api/accounts/promote/${accountId}/`,
     //     body: patch,
     //   }),
     //   providesTags: (account) => [{ type: "Account", id: account.id }],
     //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     // }),
     // patchDemoteAccount: builder.mutation({
-    //   query: (allAccountSliceId, ...patch) => ({
+    //   query: (accountId, ...patch) => ({
     //     method: "PATCH",
-    //     url: `/api/accounts/demote/${allAccountSliceId}/`,
+    //     url: `/api/accounts/demote/${accountId}/`,
     //     body: patch,
     //   }),
     //   providesTags: (account) => [{ type: "Account", id: account.id }],
     //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
     // }),
     // patchLocalizeAccount: builder.mutation({
-    //   query: (allAccountSliceId, ...patch) => ({
+    //   query: (accountId, ...patch) => ({
     //     method: "PATCH",
-    //     url: `/api/accounts/localize/${allAccountSliceId}/`,
+    //     url: `/api/accounts/localize/${accountId}/`,
     //     body: patch,
     //   }),
     //   providesTags: (account) => [{ type: "Account", id: account.id }],

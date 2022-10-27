@@ -11,7 +11,7 @@ from queries.application import ApplicationQueries
 
 router = APIRouter(tags=["Applications"])
 not_authorized = HTTPException(
-    status_code=status.HTTP_401_UNAUTHORIZED,
+    status_code=status.HTTP_418_IM_A_TEAPOT,
     detail="Invalid authentication credentials",
     headers={"WWW-Authenticate": "Bearer"},
 )
@@ -57,7 +57,8 @@ def list_account_applications(
         return ApplicationList(
             applications=queries.list_account_applications(account_id)
         )
-    raise not_authorized
+    else:
+        raise not_authorized
 
 
 @router.get(
