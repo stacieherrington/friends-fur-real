@@ -76,7 +76,7 @@ export default function StoryDetail() {
       }}>
         <Box fixed="true" sx={{ marginX: '2%', height: 'fit-content', padding: 2 }} align='center'>
           {story.picture ? <img src={story.picture} width="30%" alt="pet" /> : null}
-          <hr classNameName="solid" />
+          <hr className="solid" />
           <Typography sx={{ mb: 1.5, fontSize: 25, fontWeight: 'bold', textAlign: 'justify' }} color="#FF9633">
             {story.title}
           </Typography>
@@ -88,10 +88,9 @@ export default function StoryDetail() {
           <Box sx={{ my: 2, '& button': { m: 1 } }}>
             <Button variant="contained" disabled={!isRescuer} color="success" onClick={handleApprove}>Approve</Button>
             <Button variant="contained" disabled={!isRescuer} color="error" onClick={handleReject}>Reject</Button>
-            {!isRescuer ? <Typography color="error">Sorry, This Application is Not for Your Rescue!</Typography> : null}
+            {!isRescuer ? <Typography color="error">Sorry, this story is not for your rescue!</Typography> : null}
           </Box> :
-          <Typography sx={{ mt: 2 }} variant='h4' align='center'>This Application Has been {story.status}</Typography>
-        }
+          null}
       </Box>
       <Copyright sx={{ mt: 7, mb: 0 }} />
     </>

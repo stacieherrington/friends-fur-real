@@ -110,3 +110,13 @@ Today I started working on the management for application lists. Created a table
 Today, I continued working on the application list. Added a way to filter the table/list by it's status (Approved, Submitted & Rejected). Now you are able to filter by select/dropdown for the status. I also modified some of the styling for the page and added the routes for some of the navbar links. 
 
 I was stuck for a long time with this filter feature. It turns out using the Autocomplete for mui was not the right/best choice to filter. Figured out that I had to use the Select tag to filter through. Thankful for Tyler and Gary for helping me out with this, or I would've been stuck for a while. 
+
+
+## October 25, 2022
+
+Today I worked on implementing a filter for Pet Types on our Pet's list. Also modified our nav bar's hamburger dropdown. Also did a little bit styling modification on our page.
+
+
+## October 26, 2022
+
+Today I worked on the style of our page, forms and buttons to have it all look on brand and cohesive with Stacie. Also changed the font for our page. As well as fixing the look of our manage staff page, the pet detail page. The team and I also worked on some bugs we discovered along the way.

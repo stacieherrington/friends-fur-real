@@ -63,9 +63,6 @@ export default function AccountProfile(props) {
     isLoading: accountLoading,
   } = useSingleAccountQuery();
   const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
-  // if (accountError) {
-  //   alert(accountError);
-  // }
 
   if (!token && !tokenLoading) {
     setTimeout(() => {
