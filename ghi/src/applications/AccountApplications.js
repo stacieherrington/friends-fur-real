@@ -12,8 +12,10 @@ import {
   useListAccountApplicationsQuery,
 } from "../redux/api";
 import { useEffect, useState } from "react";
-import { Select, MenuItem, InputLabel } from "@mui/material";
+import { Select, MenuItem, InputLabel, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Popover } from "@mui/material";
+import PetDetailPopover from "../pets/PetDetailPopover";
 
 
 export default function AccountApplications() {
@@ -31,6 +33,20 @@ export default function AccountApplications() {
 
   const [appList, setAppList] = useState([]);
   const [status, setStatus] = useState("All");
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [clickedId, setClickedId] = useState(null)
+  const handleDetailClick = (event, id) => {
+    setClickedId(id);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleDetailClose = () => {
+    setClickedId(null)
+    setAnchorEl(null);
+  };
+  const openDetail = Boolean(anchorEl);
+  const popoverClassName = openDetail ? "simple-popover" : undefined;
 
   useEffect(() => {
     if (applicationData) {
@@ -112,14 +128,28 @@ export default function AccountApplications() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component='th' scope='row'>
-                  {application.pet.name}
+                  <Button aria-describedby={popoverClassName} onClick={(e) => handleDetailClick(e, application.pet.id)}>
+                    {application.pet.name}
+                  </Button>
+                  <Popover
+                    id={popoverClassName}
+                    open={clickedId === application.pet.id ? openDetail : false}
+                    anchorEl={anchorEl}
+                    onClose={handleDetailClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left"
+                    }}
+                  >
+                    <PetDetailPopover petId={application.pet.id} />
+                  </Popover>
                 </TableCell>
                 <TableCell align='center'>{application.pet.type}</TableCell>
                 <TableCell align='center'>{application.pet.breed}</TableCell>
                 <TableCell align='center'>
                   {application.status === "Approved" ?
-                   <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your story!</Link> :
-                   application.status }
+                    <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your story!</Link> :
+                    application.status}
                 </TableCell>
               </TableRow>
             ))}
