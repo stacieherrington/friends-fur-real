@@ -104,6 +104,21 @@ three different permissions:
 |    `staff2@test.com`    | `password` |  `staff`   |
 |    `base2@test.com`     | `password` |  `base`    |
 
+Please login to different accounts to check the permissions.
+Current logged in account DOSE matter:
+
+- PetList (find a friend) Page:
+  - admin1, staff1, base1 was set location in Austin TX area.
+  - admin2, staff2, base2 was set location in Palm Desert CA area.
+  - Without login petlist page will display all adoptable pets.
+  - With logged in, petlist page will display pets within 200 miles and sorted by distance.
+- StoryList (Stories) Page:
+  - Only display all the stories has been approved.
+- Management (logged in as staff/admin):
+  - Only display the pets/applicaitons/storis that belone to your own rescue.
+  - Only staff/admin to add/update/delete pets for your own rescue.
+  - Only staff/admin Approve/Reject applications/stories for your own rescue.
+  - Only admin can Promote/Demote staff for your own rescue.
 
 ### Website Preview:
 
