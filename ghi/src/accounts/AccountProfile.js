@@ -9,14 +9,12 @@ import {
   Paper,
   Container,
   Grid,
-  Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   IconButton,
   Typography,
-  Box,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";

@@ -86,7 +86,6 @@ export function AccountEndpoints(builder) {
         url: "/api/accounts/profile/",
         credentials: "include",
         body: data,
-        // headers: { "Content-Type": "application/json" },
       }),
       invalidatesTags: () => ["Account"],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -133,12 +132,6 @@ export function AccountEndpoints(builder) {
         headers: { "Content-Type": "application/json" },
       }),
       invalidatesTags: () => ["Account"],
-      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-      //   try {
-      //     await queryFulfilled;
-      //     dispatch(clearForm());
-      //   } catch (error) {}
-      // },
     }),
     listAccounts: builder.query({
       query: () => `/api/accounts/`,
@@ -152,10 +145,6 @@ export function AccountEndpoints(builder) {
         return tags;
       },
     }),
-    // singleAccount: builder.query({
-    //   query: (accountId) => `/api/accounts/${accountId}/`,
-    //   providesTags: (account) => [{ type: "Account", id: account.id }],
-    // }),
     getCurrentAccount: builder.query({
       query: () => ({
         url: `/api/accounts/profile/`,
@@ -168,41 +157,5 @@ export function AccountEndpoints(builder) {
         return [{ type: "Account", id: account.id }];
       },
     }),
-    // patchUpdateAccount: builder.mutation({
-    //   query: (accountId, ...patch) => ({
-    //     method: "PATCH",
-    //     url: `/api/accounts/${accountId}`,
-    //     body: patch,
-    //   }),
-    //   providesTags: (account) => [{ type: "Account", id: account.id }],
-    //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
-    // }),
-    // patchPromoteAccount: builder.mutation({
-    //   query: (accountId, ...patch) => ({
-    //     method: "PATCH",
-    //     url: `/api/accounts/promote/${accountId}/`,
-    //     body: patch,
-    //   }),
-    //   providesTags: (account) => [{ type: "Account", id: account.id }],
-    //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
-    // }),
-    // patchDemoteAccount: builder.mutation({
-    //   query: (accountId, ...patch) => ({
-    //     method: "PATCH",
-    //     url: `/api/accounts/demote/${accountId}/`,
-    //     body: patch,
-    //   }),
-    //   providesTags: (account) => [{ type: "Account", id: account.id }],
-    //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
-    // }),
-    // patchLocalizeAccount: builder.mutation({
-    //   query: (accountId, ...patch) => ({
-    //     method: "PATCH",
-    //     url: `/api/accounts/localize/${accountId}/`,
-    //     body: patch,
-    //   }),
-    //   providesTags: (account) => [{ type: "Account", id: account.id }],
-    //   invalidatesTags: (account) => [{ type: "Account", id: account.id }],
-    // }),
   };
 }

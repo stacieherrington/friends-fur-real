@@ -5,9 +5,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import SliceAppForm from "../applications/SliceAppForm";
+import ApplicationForm from "../applications/ApplicationForm";
 export default function PetCard(props) {
-  const { id, rescue_id, pictures, name } = props;
+  const { id, rescue_id } = props;
 
   return (
     <Card sx={{ maxWidth: 250 }}>
@@ -29,7 +29,7 @@ export default function PetCard(props) {
       </CardContent>
       <CardActions>
         <Button size='small'>More Info</Button>
-        <SliceAppForm pet_id={id} rescue_id={rescue_id} />
+        <ApplicationForm pet_id={id} rescue_id={rescue_id} />
       </CardActions>
       <CardActions>
         {/* Only show this for staff/admin role */}

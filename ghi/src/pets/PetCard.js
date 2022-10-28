@@ -9,7 +9,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-// import SliceAppForm from "../applications/SliceAppForm";
 import {
   useDeletePetMutation,
   useGetCurrentAccountQuery,
@@ -18,24 +17,19 @@ import {
 import { Popover, Box } from "@mui/material";
 import PetDetailPopover from "./PetDetailPopover";
 import { useDispatch } from "react-redux";
-import {
-  APPLICATION_MODAL,
-  LOGIN_MODAL,
-  openModal,
-} from "../redux/slices/modalSlice";
+import { LOGIN_MODAL, openModal } from "../redux/slices/modalSlice";
 import { preventDefault } from "../redux/utility";
 import ApplicationForm from "../applications/ApplicationForm";
 export default function PetCard(props) {
   const dispatch = useDispatch();
-  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
+  const { data: token } = useGetTokenQuery();
 
-  const { id, rescue_id, pictures, name } = props.pet;
+  const { id, rescue_id } = props.pet;
   const [open, setOpen] = React.useState(false);
   const [deletePet] = useDeletePetMutation();
-  const { data, error, isLoading } = useGetCurrentAccountQuery();
+  const { data } = useGetCurrentAccountQuery();
   const isRescuer = data && data.rescue_id === props.pet.rescue_id;
 
-  // for petDetail Popover:
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleDetailClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -16,23 +16,6 @@ export function ApplicationEndpoints(builder) {
         } catch (error) {}
       },
     }),
-    // listAccountApplications: builder.query({
-    //   query: () => `/api/accounts/profile/applications/`,
-    //   providesTags: (data) => {
-    //     const tags = [{ type: "Application", id: "LIST" }];
-    //     if (!data || !data.adoptions) return tags;
-    //     const { Applications } = data;
-    //     if (Applications) {
-    //       tags.concat(
-    //         ...Applications.map(({ id }) => ({
-    //           type: "Application",
-    //           id,
-    //         }))
-    //       );
-    //     }
-    //     return tags;
-    //   },
-    // }),
     listAccountApplications: builder.query({
       query: () => ({
         method: "get",
@@ -42,23 +25,6 @@ export function ApplicationEndpoints(builder) {
       }),
       providesTags: () => ["Application"],
     }),
-    // listRescueApplications: builder.query({
-    //   query: (rescueId) => `/api/${rescueId}/applications/`,
-    //   providesTags: (data) => {
-    //     const tags = [{ type: "Application", id: "LIST" }];
-    //     if (!data || !data.adoptions) return tags;
-    //     const { Applications } = data;
-    //     if (Applications) {
-    //       tags.concat(
-    //         ...Applications.map(({ id }) => ({
-    //           type: "Application",
-    //           id,
-    //         }))
-    //       );
-    //     }
-    //     return tags;
-    //   },
-    // }),
     listRescueApplications: builder.query({
       query: () => ({
         method: "get",

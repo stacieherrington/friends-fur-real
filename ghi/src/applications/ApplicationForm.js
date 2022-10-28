@@ -16,6 +16,7 @@ import {
   Checkbox,
   Modal,
   IconButton,
+  Alert,
 } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
@@ -34,7 +35,7 @@ import {
 } from "../redux/slices/modalSlice";
 import ModalStyle from "../components/ModalStyle";
 import Notification from "../redux/Notification";
-
+import { clearForm } from "../redux/slices/applicationSlice";
 const residences = [
   { name: "Single Family Home" },
   { name: "Single Family w/ large yard" },
@@ -47,9 +48,6 @@ export default function ApplicationForm(props) {
   const dispatch = useDispatch();
   const { isOpen, modalType } = useSelector((state) => state.modal);
   const { pet_id, rescue_id } = props;
-  console.log(pet_id, rescue_id);
-  console.log(props);
-
   const {
     first_name,
     last_name,
@@ -72,7 +70,8 @@ export default function ApplicationForm(props) {
     status,
   } = useSelector((state) => state.application);
 
-  const [application, { error, isSuccess }] = useAddApplicationMutation();
+  const [application, { error, isSuccess, isError }] =
+    useAddApplicationMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
@@ -86,9 +85,10 @@ export default function ApplicationForm(props) {
     [dispatch]
   );
   const requiredError = agrees_to_terms === false || null;
-  // if (applicationError){
-  //   <></>
-  // }
+  if (!isOpen && modalType === APPLICATION_MODAL) {
+    dispatch(clearForm());
+  }
+
   return (
     <>
       <Button
@@ -102,6 +102,7 @@ export default function ApplicationForm(props) {
         open={isOpen && modalType === APPLICATION_MODAL}
         onClose={() => {
           dispatch(closeModal());
+          dispatch(clearForm());
         }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
@@ -110,6 +111,7 @@ export default function ApplicationForm(props) {
           <IconButton
             onClick={() => {
               dispatch(closeModal());
+              dispatch(clearForm());
             }}
             sx={{ alignItems: "flex-end", mx: 1, my: 1 }}
           >
@@ -127,8 +129,10 @@ export default function ApplicationForm(props) {
               <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <PetsIcon />
               </Avatar>
-              {error ? (
-                <Notification type='danger'>{error.data.detail}</Notification>
+              {isError ? (
+                <Notification>
+                  <Alert severity='error'>{error.data.detail}</Alert>
+                </Notification>
               ) : null}
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
@@ -136,9 +140,10 @@ export default function ApplicationForm(props) {
               <Box
                 component='form'
                 onSubmit={preventDefault(application, () => {
-                  if (isSuccess) {
+                  if (!isError && !isSuccess) {
                     dispatch(closeModal());
                   }
+
                   return {
                     first_name,
                     last_name,
@@ -275,6 +280,7 @@ export default function ApplicationForm(props) {
                   id='outlined-select-residence'
                   select
                   fullWidth
+                  required
                   name='residence_type'
                   label='Residence Type'
                   onChange={field}
@@ -329,7 +335,6 @@ export default function ApplicationForm(props) {
                   </FormControl>
                   <FormControl component='fieldset' variant='standard'>
                     <FormLabel component='legend'>
-                      <br></br>
                       <br></br>
                     </FormLabel>
                     <FormGroup>
