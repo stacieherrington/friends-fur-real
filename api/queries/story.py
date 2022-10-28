@@ -43,14 +43,16 @@ class SuccessStoryQueries(Queries):
             story["pet_id"] = application["pet_id"]
             story["rescue_id"] = application["rescue_id"]
             story["account_id"] = application["account_id"]
+            application["story_written"] = True
             if story["picture"] is None:
                 del story["picture"]
             insert_result = self.collection.insert_one(story)
+
             if insert_result.acknowledged:
                 return {"message": "Thank you for your story!"}
         else:
             return {
-                "message": "The application is not exist or may not been approved!"
+                "message": "The application does not exist or may not been approved!"
             }
 
     def get_approved_stories(self) -> List[SuccessStoryOut]:
