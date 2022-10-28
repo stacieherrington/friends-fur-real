@@ -18,10 +18,11 @@ export default function StoryCard(props) {
         alt="pet"
       /> : null}
       <CardContent
-        sx={{ padding: 1, margin: 0 }}
+        sx={{ pl: 2, pt:1, margin: 0 }}
       >
         <Typography gutterBottom variant="h5" component="div"
           sx={{
+            fontWeight:"bold",
             display: '-webkit-box',
             overflow: 'hidden',
             WebkitBoxOrient: 'vertical',
@@ -44,7 +45,11 @@ export default function StoryCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={`/stories/${props.id}`} size="small">Read More</Button>
+        <Button
+          sx={{ textAlign: "center", paddingLeft:1 }}
+          href={`/stories/${props.id}`} size="small">
+          Read More
+        </Button>
       </CardActions>
     </Card>
   );

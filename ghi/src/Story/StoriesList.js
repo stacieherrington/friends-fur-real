@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import StoryCard from './StoryCard';
 import { Box, Typography } from "@mui/material";
+import Copyright from "../components/Copyright";
 
 
 async function loadStories(setStoriesList) {
@@ -29,8 +30,9 @@ function StoriesList(props) {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, py: 4 }}>
-      <Typography variant='h3' align='center' sx={{ py: 5, fontWeight: 'bold' }}>Happy Tails</Typography>
+    <>
+    <Box sx={{ flexGrow: 1, pt: 12 }}>
+      <Typography variant='h3' align='center' sx={{ pb:5, fontWeight: 'bold' }}>Happy Tails</Typography>
       {storiesList ? (
         <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
         {storiesList.map((story) => (
@@ -40,10 +42,12 @@ function StoriesList(props) {
         ))}
       </Grid>
       )
-        :
-        <Typography> Write your story</Typography>
-      }
-    </Box>
+      :
+      <Typography> Write your story</Typography>
+    }
+      </Box>
+      <Copyright sx={{ mt: 10, mb: 4 }} />
+    </>
   );
 }
 

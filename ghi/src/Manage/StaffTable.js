@@ -75,8 +75,8 @@ export default function StaffTable(props) {
     const { staffList, setRefresh, refresh } = props;
 
     return (
-        <Paper elevation={6} sx={{ width: '100%', overflow: 'hidden', mt: 3 }}>
-            <Typography sx={{ py: 2 }} variant="h6" align="center">Staff List</Typography>
+        <Paper elevation={6} sx={{ width: '100%', overflow: 'hidden'}}>
+            <Typography sx={{ my: 1 }} variant="h6" align="center">Staff List</Typography>
             <TableContainer sx={{ maxHeight: 342, }}>
                 <Table sx={{ minWidth: 360 }} aria-label="staff table">
                     <TableHead sx={{ backgroundColor: "#294C60" }}>

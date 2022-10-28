@@ -11,15 +11,13 @@ import { Modal } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
 import { useSignupMutation } from "../redux/api";
-// import { useNavigate } from "react-router-dom";
 import { updateField } from "../redux/slices/accountSlice";
 import { preventDefault } from "../redux/utility";
 import LoginForm from "../Login/Login";
 
-const theme = createTheme();
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -55,7 +53,6 @@ export default function SignUpForm(props) {
   // }
   return (
     <>
-      <ThemeProvider theme={theme}>
         {props.appBar ? (
           <Button sx={{ color: "#fff" }} onClick={handleOpen}>
             Signup
@@ -82,7 +79,7 @@ export default function SignUpForm(props) {
                   alignItems: "center",
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
+                <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
@@ -146,7 +143,7 @@ export default function SignUpForm(props) {
                     type='submit'
                     fullWidth
                     variant='contained'
-                    sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                   >
                     Sign Up
                   </Button>
@@ -163,7 +160,6 @@ export default function SignUpForm(props) {
             </Container>
           </Box>
         </Modal>
-      </ThemeProvider>
     </>
   );
 }

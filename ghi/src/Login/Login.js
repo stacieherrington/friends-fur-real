@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Modal } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,10 +11,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
 import { useLoginMutation } from "../redux/api";
-import { useNavigate } from "react-router-dom";
 import SignUpForm from "../Signup/Signup";
 
-const theme = createTheme();
 const style = {
   position: "absolute",
   top: "50%",
@@ -42,12 +38,12 @@ export default function LoginForm(props) {
     event.preventDefault();
     login(event.target);
     if (error) {
-      alert('INCORRECT CREDENTIALS');
+      alert("INCORRECT CREDENTIALS");
     }
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {props.petCard ? (
         <Button onClick={handleOpen}>Adopt me!</Button>
       ) : props.signUp ? (
@@ -61,11 +57,11 @@ export default function LoginForm(props) {
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Container component='main' maxWidth='xs'>
+          <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
               sx={{
@@ -75,44 +71,43 @@ export default function LoginForm(props) {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
+              <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component='h1' variant='h5'>
+              <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
               <Box
-                component='form'
+                component="form"
                 onSubmit={handleSubmit}
                 noValidate
                 sx={{ mt: 1 }}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                   autoFocus
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  name='password'
-                  label='Password'
-                  type='password'
-                  id='password'
-                  autoComplete='current-password'
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
                 />
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  color='primary'
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                 >
                   Sign In
                 </Button>
@@ -124,6 +119,6 @@ export default function LoginForm(props) {
           </Container>
         </Box>
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }

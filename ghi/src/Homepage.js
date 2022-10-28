@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import PetsIcon from "@mui/icons-material/Pets";
 import PetCard from './pets/PetCard';
 import StoryCard from './Story/StoryCard'
 import Copyright from './components/Copyright';
@@ -29,12 +29,20 @@ function HomePage(props) {
   return (
     <>
       <Container className="mt-5 mb-0 pt-5 text-center">
-        <div className="py-4">
-          <Typography variant="h2" sx={{ fontWeight: "bold" }}>FriendsFurReal</Typography>
-          <div style={{ backgroundImage: "url(/images/pups.jpg)", paddingTop: 3 }}>
+        <div>
+          <Typography
+            startIcon={<PetsIcon />}
+            endIcon={<PetsIcon />}
+            variant="h1"
+            sx={{ fontWeight: "bold", pb:4 }}>
+            🐾Friends FurReal🐾
+
+          </Typography>
+          <div style={{ backgroundImage: "url(/images/pups.jpg)" }}>
             <img
               src="images/pups.jpg"
-              width="50%"
+              width="52%"
+              // height="100%"
               className="d-inline-block align-top"
               alt="Pet logo"
               shape="rounded"
@@ -42,7 +50,7 @@ function HomePage(props) {
           </div>
 
           <Box sx={{ flexGrow: 1 }}> {/* random pet list */}
-            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Featured Friends</Typography>
+            <Typography variant='h3' sx={{ pb: 5, pt: 12, fontWeight: 'bold' }}>Featured Friends</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               { petsList && petsList.map((pet) => (
                 <Grid item xs={4} sm={4} md={4} key={pet.id}>
@@ -53,7 +61,7 @@ function HomePage(props) {
           </Box>
           {storiesList.length !== 0 ? (
           <Box sx={{ flexGrow: 1 }}>  {/* random story list */}
-            <Typography variant='h3' sx={{ py: 3, fontWeight: 'bold' }}>Happy Tails</Typography>
+            <Typography variant='h3' sx={{ pb: 5, pt: 10, fontWeight: 'bold' }}>Happy Tails</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
               {storiesList.map((story) => (
                 <Grid item xs={4} sm={4} md={4} key={story.id}>

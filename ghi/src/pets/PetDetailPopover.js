@@ -1,7 +1,15 @@
-import React from 'react';
-import { List, ListItem, ListItemText, Box, Typography, Container, Grid, Paper } from '@mui/material';
-import { useGetPetQuery } from '../redux/api';
-
+import React from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Typography,
+  Container,
+  Grid,
+  Paper,
+} from "@mui/material";
+import { useGetPetQuery } from "../redux/api";
 
 export default function PetDetailPopover(props) {
   const { petId } = props;
@@ -11,22 +19,28 @@ export default function PetDetailPopover(props) {
     if (data) {
       setPetData(data);
     }
-  }, [data])
-  window.dispatchEvent(new Event("resize"))
+  }, [data]);
+  window.dispatchEvent(new Event("resize"));
+
   if (petData)
     return (
-      <Container sx={{ mt: 7 }}>
-        <Box align='center'>
-          <Typography variant='h3' sx={{ py: 3 }}>{petData.name}</Typography>
+      <Container sx={{ mt: 1 }}>
+        <Box align="center">
+          <Typography variant="h3" sx={{ py: 3 }}>
+            {petData.name}
+          </Typography>
           <Box
             component="img"
             sx={{ height: { xs: 240, md: 420, lg: 500 }, mx: "auto" }}
-            src={petData.pictures} />
-          <Paper sx={{ m: 1, maxWidth: { xs: 490, md: 610, lg: 730 } }}><Typography>{petData.description}</Typography></Paper>
+            src={petData.pictures}
+          />
+          <Paper sx={{ m: 1, maxWidth: { xs: 490, md: 610, lg: 730 } }}>
+            <Typography>{petData.description}</Typography>
+          </Paper>
         </Box>
         <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
-          <Grid item xs={3} sm={3} md={3} >
-            <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Grid item xs={3} sm={3} md={3}>
+            <List sx={{ maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemText primary="Name" secondary={petData.name} />
               </ListItem>
@@ -41,8 +55,8 @@ export default function PetDetailPopover(props) {
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={3} sm={3} md={3} >
-            <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Grid item xs={3} sm={3} md={3}>
+            <List sx={{ maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemText primary="Sex" secondary={petData.sex} />
               </ListItem>
@@ -53,43 +67,70 @@ export default function PetDetailPopover(props) {
                 <ListItemText primary="Weight" secondary={petData.weight} />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Color" secondary={petData.primary_color} />
+                <ListItemText
+                  primary="Color"
+                  secondary={petData.primary_color}
+                />
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={3} sm={3} md={3} >
-            <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Grid item xs={3} sm={3} md={3}>
+            <List sx={{ maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
-                <ListItemText primary="Ok with dogs?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText
+                  primary="Ok with dogs?"
+                  secondary={petData.ok_with_dogs ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Ok with cats?" secondary={petData.ok_with_kids ? "yes" : "no"} />
+                <ListItemText
+                  primary="Ok with cats?"
+                  secondary={petData.ok_with_kids ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Ok with children?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText
+                  primary="Ok with children?"
+                  secondary={petData.ok_with_dogs ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Shots up-to-date?" secondary={petData.ok_with_dogs ? "yes" : "no"} />
+                <ListItemText
+                  primary="Shots up-to-date?"
+                  secondary={petData.ok_with_dogs ? "yes" : "no"}
+                />
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={3} sm={3} md={3} >
-            <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Grid item xs={3} sm={3} md={3}>
+            <List sx={{ maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
-                <ListItemText primary="Spayed or neutered?" secondary={petData.spayed_neutered ? "yes" : "no"} />
+                <ListItemText
+                  primary="Spayed or neutered?"
+                  secondary={petData.spayed_neutered ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="House-trained?" secondary={petData.house_trained ? "yes" : "no"} />
+                <ListItemText
+                  primary="House-trained?"
+                  secondary={petData.house_trained ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Special needs?" secondary={petData.special_needs ? "yes" : "no"} />
+                <ListItemText
+                  primary="Special needs?"
+                  secondary={petData.special_needs ? "yes" : "no"}
+                />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Is adopted?" secondary={petData.is_adopted ? "yes" : "no"} />
+                <ListItemText
+                  primary="Is adopted?"
+                  secondary={petData.is_adopted ? "yes" : "no"}
+                />
               </ListItem>
             </List>
           </Grid>
         </Grid>
       </Container>
-    )
+    );
 }

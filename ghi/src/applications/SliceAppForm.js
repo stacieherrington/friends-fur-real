@@ -17,7 +17,6 @@ import {
   Modal,
 } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
-import PetCard from "../pets/PetCard";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
@@ -27,8 +26,6 @@ import Copyright from "../components/Copyright";
 import { updateField } from "../redux/slices/applicationSlice";
 import { preventDefault } from "../redux/utility";
 import Login from "../Login/Login";
-
-
 
 const style = {
   position: "absolute",
@@ -95,18 +92,20 @@ export default function ApplicationForm(props) {
   return (
     <>
       {token ? (
-        <Button onClick={handleOpen}>Adopt me!</Button>
+        <Button sx={{ textAlign: "center"}} onClick={handleOpen}>
+          Adopt me!
+        </Button>
       ) : (
-        <Login petCard='petCard' />
+        <Login petCard="petCard" />
       )}
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Container component='main' maxWidth='xs'>
+          <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
               sx={{
@@ -119,11 +118,11 @@ export default function ApplicationForm(props) {
               <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <PetsIcon />
               </Avatar>
-              <Typography component='h1' variant='h5'>
+              <Typography component="h1" variant="h5">
                 Adoption Application Form
               </Typography>
               <Box
-                component='form'
+                component="form"
                 onSubmit={preventDefault(application, () => {
                   handleClose();
                   return {
@@ -154,116 +153,116 @@ export default function ApplicationForm(props) {
                 })}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={first_name}
-                  type='text'
-                  name='first_name'
-                  label='First Name'
-                  autoComplete='current-first-name'
+                  type="text"
+                  name="first_name"
+                  label="First Name"
+                  autoComplete="current-first-name"
                   autoFocus
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={last_name}
-                  type='text'
-                  name='last_name'
-                  label='Last Name'
-                  autoComplete='current-last-name'
+                  type="text"
+                  name="last_name"
+                  label="Last Name"
+                  autoComplete="current-last-name"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Address One'
+                  label="Address One"
                   onChange={field}
                   value={address_one}
-                  type='text'
-                  name='address_one'
+                  type="text"
+                  name="address_one"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Address Two'
+                  label="Address Two"
                   onChange={field}
                   value={address_two}
-                  type='text'
-                  name='address_two'
+                  type="text"
+                  name="address_two"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='City'
+                  label="City"
                   onChange={field}
                   value={city}
-                  type='text'
-                  name='city'
+                  type="text"
+                  name="city"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='State'
+                  label="State"
                   onChange={field}
                   value={state}
-                  type='text'
-                  name='state'
+                  type="text"
+                  name="state"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Zip Code'
+                  label="Zip Code"
                   onChange={field}
                   value={zip_code}
-                  type='text'
-                  name='zip_code'
+                  type="text"
+                  name="zip_code"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Phone Number'
+                  label="Phone Number"
                   onChange={field}
                   value={phone_number}
-                  type='text'
-                  name='phone_number'
+                  type="text"
+                  name="phone_number"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={date_ready}
-                  name='date_ready'
-                  type='date'
-                  autoComplete='current-date'
+                  name="date_ready"
+                  type="date"
+                  autoComplete="current-date"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   fullWidth
                   onChange={field}
                   value={landlord_restrictions}
                   multiline
                   maxRows={4}
-                  name='landlord_restrictions'
-                  label='Landlord Restrictions'
-                  type='text'
-                  autoComplete='current-landlord-restrictions'
+                  name="landlord_restrictions"
+                  label="Landlord Restrictions"
+                  type="text"
+                  autoComplete="current-landlord-restrictions"
                 />
 
                 <TextField
-                  id='outlined-select-residence'
+                  id="outlined-select-residence"
                   select
                   fullWidth
-                  name='residence_type'
-                  label='Residence Type'
+                  name="residence_type"
+                  label="Residence Type"
                   onChange={field}
                   value={residence_type}
                 >
@@ -274,8 +273,8 @@ export default function ApplicationForm(props) {
                   ))}
                 </TextField>
                 <Box sx={{ display: "flex", m: 3 }}>
-                  <FormControl component='fieldset' variant='standard'>
-                    <FormLabel component='legend'>
+                  <FormControl component="fieldset" variant="standard">
+                    <FormLabel component="legend">
                       Select all that apply:
                     </FormLabel>
                     <FormGroup>
@@ -284,20 +283,20 @@ export default function ApplicationForm(props) {
                           <Checkbox
                             value={has_dogs}
                             onChange={field}
-                            name='has_dogs'
+                            name="has_dogs"
                           />
                         }
-                        label='Own dogs'
+                        label="Own dogs"
                       />
                       <FormControlLabel
                         control={
                           <Checkbox
                             value={has_cats}
                             onChange={field}
-                            name='has_cats'
+                            name="has_cats"
                           />
                         }
-                        label='Own cats'
+                        label="Own cats"
                       />
                       <FormControlLabel
                         control={
@@ -305,17 +304,17 @@ export default function ApplicationForm(props) {
                             value={smoke_free_home}
                             defaultChecked
                             onChange={field}
-                            name='smoke_free_home'
-                            icon={<SmokingRoomsSharpIcon color='error' />}
-                            checkedIcon={<SmokeFreeSharpIcon color='success' />}
+                            name="smoke_free_home"
+                            icon={<SmokingRoomsSharpIcon color="error" />}
+                            checkedIcon={<SmokeFreeSharpIcon color="success" />}
                           />
                         }
-                        label='Smoker?'
+                        label="Smoker?"
                       />
                     </FormGroup>
                   </FormControl>
-                  <FormControl component='fieldset' variant='standard'>
-                    <FormLabel component='legend'>
+                  <FormControl component="fieldset" variant="standard">
+                    <FormLabel component="legend">
                       <br></br>
                     </FormLabel>
                     <FormGroup>
@@ -324,30 +323,30 @@ export default function ApplicationForm(props) {
                           <Checkbox
                             value={has_small_children}
                             onChange={field}
-                            name='has_small_children'
+                            name="has_small_children"
                           />
                         }
-                        label='Have small children'
+                        label="Have small children"
                       />
                       <FormControlLabel
                         control={
                           <Checkbox
                             value={residence_owned}
                             onChange={field}
-                            name='residence_owned'
+                            name="residence_owned"
                           />
                         }
-                        label='Residence Owned'
+                        label="Residence Owned"
                       />
                       <FormControlLabel
                         control={
                           <Checkbox
                             value={wants_preapproval}
                             onChange={field}
-                            name='wants_preapproval'
+                            name="wants_preapproval"
                           />
                         }
-                        label='Get Pre-approved?'
+                        label="Get Pre-approved?"
                       />
                     </FormGroup>
                   </FormControl>
@@ -356,28 +355,28 @@ export default function ApplicationForm(props) {
                   <FormControl
                     required
                     error={requiredError}
-                    component='fieldset'
-                    variant='standard'
+                    component="fieldset"
+                    variant="standard"
                   >
                     <FormLabel>Required*</FormLabel>
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checkedIcon={<DoneOutlineSharpIcon color='success' />}
+                          checkedIcon={<DoneOutlineSharpIcon color="success" />}
                           value={agrees_to_terms}
                           onChange={field}
-                          name='agrees_to_terms'
+                          name="agrees_to_terms"
                         />
                       }
-                      label='I agree to the Terms and Conditions* *'
+                      label="I agree to the Terms and Conditions* *"
                     />
                   </FormControl>
                 </Box>
 
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
+                  variant="contained"
                   sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                   endIcon={<PetsIcon />}
                 >

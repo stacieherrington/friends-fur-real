@@ -66,9 +66,9 @@ export default function StoryDetail() {
   return (
     <>
       <Box sx={{
-        mt: '7%',
+        mt: 12,
         mx: 5,
-        py: 4,
+        py:2,
         alignSelf: 'center',
         backgroundColor: '#FFEFD3',
         height: "100%",

@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import SliceAppForm from "../applications/SliceAppForm";
 import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
-import { Popover, Box } from "@mui/material";
+import { Popover} from "@mui/material";
 import PetDetailPopover from "./PetDetailPopover";
 
 
@@ -43,22 +43,29 @@ export default function PetCard(props) {
     setOpen(false);
   };
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 680 }}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 680,
+      }}
+    >
       {props.pet.pictures && props.pet.pictures.length ? (
-        <CardMedia
-          component='img'
+        <CardMedia          
+          component="img"
           width="100%"
-          image={props.pet.pictures}
+          src={props.pet.pictures}
           alt={props.pet.breed}
         />
       ) : null}
-      <CardContent sx={{ padding: 1 }}>
-        <Typography gutterBottom variant='h5' component='div'>
+      <CardContent sx={{ pl: 2, pt:1}}>
+        <Typography gutterBottom variant="h5" sx={{fontWeight:"bold"}} component="div">
           {props.pet.name}
         </Typography>
         <Typography
-          variant='body2'
-          color='text.secondary'
+          variant="body2"
+          color="text.secondary"
           sx={{
             display: "-webkit-box",
             overflow: "hidden",
@@ -69,8 +76,13 @@ export default function PetCard(props) {
           {props.pet.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button aria-describedby={detailId} onClick={handleDetailClick}>
+      <CardActions sx={{pt:2, pb:0}}>
+        <Button
+          sx={{ textAlign: "center", paddingLeft:1 }}
+     
+          aria-describedby={detailId}
+          onClick={handleDetailClick}
+        >
           More Info
         </Button>
         <Popover
@@ -80,26 +92,38 @@ export default function PetCard(props) {
           onClose={handleDetailClose}
           anchorOrigin={{
             vertical: "top",
-            horizontal: "left"
+            horizontal: "left",
           }}
         >
           <PetDetailPopover petId={id} />
         </Popover>
         <SliceAppForm pet_id={id} rescue_id={rescue_id} sx={{ pb: 0 }} />
       </CardActions>
-      <CardActions>
+      <CardActions sx={{pt:0, pb:0, pl:1.3}} >
         {isRescuer && (
           <>
-            <Button sx={{ pt: 0, pb: 5 }} size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-            <Button sx={{ pt: 0, pb: 5 }} size="small" onClick={handleClickOpen}>Delete</Button>
+            <Button
+              sx={{ pt: 0, mb: 5, pr:4 }}
+              size="small"
+              href={`/pets/${props.pet.id}`}
+            >
+              Update
+            </Button>
+            <Button
+              sx={{ pt: 0, mb: 5, pl: 3 }}
+              size="small"
+              onClick={handleClickOpen}
+            >
+              Delete
+            </Button>
             <Dialog
               open={open}
               onClose={handleClose}
-              aria-labelledby='alert-dialog-title'
-              aria-describedby='alert-dialog-description'
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
             >
               <DialogContent>
-                <DialogContentText id='alert-dialog-description'>
+                <DialogContentText id="alert-dialog-description">
                   Are you sure you want to delete this pet?
                 </DialogContentText>
               </DialogContent>
@@ -117,7 +141,8 @@ export default function PetCard(props) {
                 </Button>
               </DialogActions>
             </Dialog>
-          </>)}
+          </>
+        )}
       </CardActions>
     </Card>
   );
