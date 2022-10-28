@@ -15,7 +15,7 @@ Friends Fur Real - helping our furry friends find their fur-ever families!
 
 ## Unit tests
 
-- [Gary's test]
+- [Gary's test](api/test/test_list_random_stories.py)
 - [Kate's test](api/test/test_list_rescue.py)
 - [Stacie's test](api/test/test_list_random_pets.py)
 - [Tyler's test](api/test_Tyler.py)
@@ -191,5 +191,4 @@ Manage Staff. Promote/Demote staff:
 
 You can see the data in MongoDB in the `fur` database.
 You should be able to access the documents at
-http://localhost:8081/db/fur/ 
-
+http://localhost:8081/db/fur/
