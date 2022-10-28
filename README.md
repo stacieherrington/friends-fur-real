@@ -13,6 +13,13 @@ Friends Fur Real - helping our furry friends find their fur-ever families!
 - [Original wireframe](docs/FriendsFurReal.png)
 - [Revised wireframe](docs/fur.png)
 
+## Unit tests
+
+- [Gary's test]
+- [Kate's test](api/test/test_list_rescue.py)
+- [Stacie's test](api/test/test_list_random_pets.py)
+- [Tyler's test](api/test_Tyler.py)
+
 ## Intended market
 
 We are targeting local animal rescue organizations nationwide, as well as the general public, in an effort to bring these two groups together to help more pets find loving fur-ever homes.
