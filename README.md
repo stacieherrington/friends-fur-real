@@ -137,6 +137,32 @@ Logout:
 ![Semantic description of image](/preview/logout.gif)
 <br>
 
+Staff/Admin login:
+<br>
+![Semantic description of image](/preview/staff_login.gif)
+<br>
+
+Manage Pet and Add Pet:
+<br>
+![Semantic description of image](/preview/manage_pet_add_pet.gif)
+<br>
+
+Review Applications:
+<br>
+![Semantic description of image](/preview/review_application.gif)
+<br>
+
+Review Stories:
+<br>
+![Semantic description of image](/preview/review_sotry.gif)
+<br>
+
+Manage Staff. Promote/Demote staff:
+<br>
+![Semantic description of image](/preview/Promote_demote_staff.gif)
+<br>
+
+
 
 ## Seeing the data
 
