@@ -62,7 +62,7 @@ Today, Worked on:
     2. change detail/update apis to GET/PATCH /api/accounts/profile/. This two APIs now check if a user is login-ed, only display detail/ allowed to update only if login-ed.
     3. for promote/demote APIs, this two APIs will auto check if the current user is login-ed and is “admin”. now using email to promote and demote
 
-## Oct 16, 2022
+## Oct 17, 2022
 Today, Worked on:
 - refactory on api for:
 - Story:
@@ -75,14 +75,51 @@ Today, Worked on:
     7. PATCH: approve / reject story by story_id now auto check current user is related rescue’s staff/admin.
     8. GET: /api/accounts/profile/stories/ list all stories for current logged in user. can display on account profile page.
 
-## Oct 17, 2022
+## Oct 18, 2022
 Today, Worked on:
 - All the APIs are done and regrouped with a new tag name “management” holds all the apis for rescue admin/staff. did not  merge yet. just test all the apis from create account ,create rescue(auto set admin), create pet , submit application, approve/ reject applications, create story base on an approved application, approve/reject stories. update application/story. promote/demote staff … all works good. not merged yet. everything is on branch 39. ready to merge.
 - setup mengodb init location-index when first time create docker volumn, and build docker compose.
 - create an namagement dropdown menu for rescue/staff
 
-## Oct 18, 2022
+## Oct 19, 2022
 - fixed api bug when update a pet.
 - login page works
 - use a refresh state to force Navbar rerender after logged in and redirect to homePage
 - conditional rendering management dropdown menu based on roles of current logged in user
+
+## Oct 20, 2022
+Today, Worked on:
+- changed list card from bootstrap to mui-grid and fixed listPet/listStory grid issue
+- using RTK useGetTokenQuery to check current logged in user's roles and conditional rendering base on roles.
+
+## Oct 21, 2022
+Today, Worked on:
+- managePets page working
+- petDetail/petUpdate conditional rendering, only display detail for nomal user, allowed pet owner to change from fields and update use the same component
+
+## Oct 24, 2022
+Today, Worked on:
+- application detail page done with conditional rendering. allowed onwer rescue staff/admin to approve/reject applications
+- create another petDetail component and set it as popover, will popup when click on each "more info" of each petCard
+- manage stories done
+
+## Oct 25, 2022
+Today, Worked on:
+- fix detal application bugs.
+- fix promote/demote function on staff management page.
+
+## Oct 26, 2022
+Today, Worked on:
+- Tried to add handle response ok/ error, but failed.
+- Troubleshoot bugs for projects with teammates.
+
+## Oct 27, 2022
+Today, Worked on:
+- Troubleshoot bugs for projects with teammates.
+- setup mongodb init datas when clone and build docker compose.
+
+## Oct 28 2022
+Today, Worked on:
+- Troubleshoot bugs for projects with teammates.
+- add one test case.
+- edit README.md add some preview gif on it.
