@@ -22,7 +22,8 @@ import {
   SIGNUP_MODAL,
   openModal,
   LOGIN_MODAL,
-} from "./redux/slices/modalSlice";import { NavLink } from "react-router-dom";
+} from "./redux/slices/modalSlice";
+import { NavLink } from "react-router-dom";
 
 
 const drawerWidth = 240;

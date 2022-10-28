@@ -11,39 +11,36 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Button,
+  Typography,
 } from "@mui/material";
 import {
   useGetTokenQuery,
   useListAccountApplicationsQuery,
 } from "../redux/api";
-import { useEffect, useState } from "react";
-import { Select, MenuItem, InputLabel, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Popover } from "@mui/material";
 import PetDetailPopover from "../pets/PetDetailPopover";
-
+import CircularUnderLoad from "../components/ProgressCircle";
 
 export default function AccountApplications() {
   const { isLoading: tokenLoading } = useGetTokenQuery();
 
-  const {
-    data: applicationData,
-    error,
-    isLoading,
-  } = useListAccountApplicationsQuery();
+  const { data: applicationData, isLoading } =
+    useListAccountApplicationsQuery();
 
   const [appList, setAppList] = useState([]);
   const [status, setStatus] = useState("All");
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [clickedId, setClickedId] = useState(null)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [clickedId, setClickedId] = useState(null);
   const handleDetailClick = (event, id) => {
     setClickedId(id);
     setAnchorEl(event.currentTarget);
   };
 
   const handleDetailClose = () => {
-    setClickedId(null)
+    setClickedId(null);
     setAnchorEl(null);
   };
   const openDetail = Boolean(anchorEl);
@@ -67,8 +64,7 @@ export default function AccountApplications() {
     return <h1>Loading application data...</h1>;
   }
 
-  const { applications } = applicationData
-
+  const { applications } = applicationData;
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -77,19 +73,23 @@ export default function AccountApplications() {
     event.target.value === "All"
       ? setAppList(applicationData.applications)
       : setAppList(
-        applications.filter((app) => app.status === event.target.value)
-      );
+          applications.filter((app) => app.status === event.target.value)
+        );
   };
   if (!isLoading && applications.length === 0) {
     return (
       <Container sx={{ paddingTop: 10 }}>
-        <Typography variant="h4" align="center" sx={{ mb: 3 }}>You have no applications.</Typography>
+        <Typography variant='h4' align='center' sx={{ mb: 3 }}>
+          You have no applications.
+        </Typography>
       </Container>
-    )
+    );
   }
   return (
     <Container sx={{ paddingTop: 10 }}>
-      <Typography variant="h3" align="center" sx={{ mb: 3 }}>My Applications</Typography>
+      <Typography variant='h3' align='center' sx={{ mb: 3 }}>
+        My Applications
+      </Typography>
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -145,7 +145,10 @@ export default function AccountApplications() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component='th' scope='row'>
-                  <Button aria-describedby={popoverClassName} onClick={(e) => handleDetailClick(e, application.pet.id)}>
+                  <Button
+                    aria-describedby={popoverClassName}
+                    onClick={(e) => handleDetailClick(e, application.pet.id)}
+                  >
                     {application.pet.name}
                   </Button>
                   <Popover
@@ -155,7 +158,7 @@ export default function AccountApplications() {
                     onClose={handleDetailClose}
                     anchorOrigin={{
                       vertical: "top",
-                      horizontal: "left"
+                      horizontal: "left",
                     }}
                   >
                     <PetDetailPopover petId={application.pet.id} />
@@ -164,9 +167,14 @@ export default function AccountApplications() {
                 <TableCell align='center'>{application.pet.type}</TableCell>
                 <TableCell align='center'>{application.pet.breed}</TableCell>
                 <TableCell align='center'>
-                  {application.status === "Approved" && !application.story_written ?
-                    <Link to={`/applications/${application.id}/stories/new`}>Approved - Share your adoption story!</Link> :
-                    application.status}
+                  {application.status === "Approved" &&
+                  !application.story_written ? (
+                    <Link to={`/applications/${application.id}/stories/new`}>
+                      Approved - Share your adoption story!
+                    </Link>
+                  ) : (
+                    application.status
+                  )}
                 </TableCell>
               </TableRow>
             ))}
