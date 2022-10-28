@@ -1,0 +1,136 @@
+conn = Mongo();
+db = conn.getDB('fur');
+
+db.applications.insertMany(
+    [{
+        "_id": ObjectId("635bdcb94cf081c002acb38c"),
+        "first_name": "Base1",
+        "last_name": "Test",
+        "address": {
+            "address_one": "9019 N Lake Creek PKWY",
+            "address_two": "",
+            "city": "Austin",
+            "state": "TX",
+            "zip_code": "78717"
+        },
+        "phone_number": "6266775555",
+        "has_small_children": false,
+        "has_dogs": false,
+        "has_cats": false,
+        "smoke_free_home": true,
+        "residence_type": "Single Family Home",
+        "residence_owned": "False",
+        "landlord_restrictions": "no",
+        "date_ready": "2022-10-28",
+        "wants_preapproval": null,
+        "agrees_to_terms": false,
+        "account_id": "635bd0d54cf081c002acb36b",
+        "pet_id": "635bd3084cf081c002acb376",
+        "rescue_id": "635bd1d64cf081c002acb373",
+        "status": "Approved"
+    }, {
+        "_id": ObjectId("635bdd554cf081c002acb38d"),
+        "first_name": "Base1",
+        "last_name": "Test",
+        "address": {
+            "address_one": "9022 N Lake Creek PKWY",
+            "address_two": "",
+            "city": "Austin",
+            "state": "TX",
+            "zip_code": "78717"
+        },
+        "phone_number": "6266775555",
+        "has_small_children": false,
+        "has_dogs": false,
+        "has_cats": false,
+        "smoke_free_home": true,
+        "residence_type": "Single Family Home",
+        "residence_owned": "False",
+        "landlord_restrictions": "no",
+        "date_ready": "2022-10-29",
+        "wants_preapproval": null,
+        "agrees_to_terms": false,
+        "account_id": "635bd0d54cf081c002acb36b",
+        "pet_id": "635bd4084cf081c002acb377",
+        "rescue_id": "635bd1d64cf081c002acb373",
+        "status": "Rejected"
+    }, {
+        "_id": ObjectId("635bdd804cf081c002acb38e"),
+        "first_name": "Base1",
+        "last_name": "Test",
+        "address": {
+            "address_one": "9022 N Lake Creek PKWY",
+            "address_two": "",
+            "city": "Austin",
+            "state": "TX",
+            "zip_code": "78717"
+        },
+        "phone_number": "6266775555",
+        "has_small_children": false,
+        "has_dogs": false,
+        "has_cats": false,
+        "smoke_free_home": true,
+        "residence_type": "Single Family Home",
+        "residence_owned": "False",
+        "landlord_restrictions": "No",
+        "date_ready": "2022-10-29",
+        "wants_preapproval": null,
+        "agrees_to_terms": false,
+        "account_id": "635bd0d54cf081c002acb36b",
+        "pet_id": "635bdafb4cf081c002acb384",
+        "rescue_id": "635bd1d64cf081c002acb373",
+        "status": "Approved"
+    }, {
+        "_id": ObjectId("635bdfb54cf081c002acb397"),
+        "first_name": "Base2",
+        "last_name": "Test",
+        "address": {
+            "address_one": "40221 Harris Ln",
+            "address_two": "",
+            "city": "Palm Desert",
+            "state": "CA",
+            "zip_code": "92211"
+        },
+        "phone_number": "62666666",
+        "has_small_children": false,
+        "has_dogs": false,
+        "has_cats": false,
+        "smoke_free_home": true,
+        "residence_type": "Apartment",
+        "residence_owned": "False",
+        "landlord_restrictions": "Yes",
+        "date_ready": "2022-10-29",
+        "wants_preapproval": null,
+        "agrees_to_terms": false,
+        "account_id": "635bd1774cf081c002acb371",
+        "pet_id": "635bd6634cf081c002acb37d",
+        "rescue_id": "635bd21d4cf081c002acb374",
+        "status": "Approved"
+    }, {
+        "_id": ObjectId("635be0164cf081c002acb398"),
+        "first_name": "Base2",
+        "last_name": "Test",
+        "address": {
+            "address_one": "40221 Harris Ln",
+            "address_two": "",
+            "city": "Palm Desert",
+            "state": "CA",
+            "zip_code": "92211"
+        },
+        "phone_number": "626262666",
+        "has_small_children": false,
+        "has_dogs": false,
+        "has_cats": false,
+        "smoke_free_home": true,
+        "residence_type": "Apartment",
+        "residence_owned": "False",
+        "landlord_restrictions": "Yes Small",
+        "date_ready": "2022-10-29",
+        "wants_preapproval": null,
+        "agrees_to_terms": false,
+        "account_id": "635bd1774cf081c002acb371",
+        "pet_id": "635bd7264cf081c002acb381",
+        "rescue_id": "635bd21d4cf081c002acb374",
+        "status": "Approved"
+    }]
+)

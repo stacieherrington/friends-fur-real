@@ -58,7 +58,7 @@ export default function LoginForm() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "#CFE0FB" }}>
+              <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component='h1' variant='h5'>
@@ -83,31 +83,30 @@ export default function LoginForm() {
                 sx={{ mt: 1 }}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                   autoFocus
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  name='password'
-                  label='Password'
-                  type='password'
-                  id='password'
-                  autoComplete='current-password'
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
                 />
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  color='primary'
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                 >
                   Login
                 </Button>

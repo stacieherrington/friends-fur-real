@@ -45,8 +45,8 @@ export default function StoryForm() {
           width: 'fit-content'
         }}>
         <Box component="form" onSubmit={handleSubmit} noValidate >
-          <Box sx={{ paddingTop: 20, paddingBottom: 5 }}>
-            <Typography component="h1" variant="h4" sx={{ py: 2, color: "#294C60" }}>
+          <Box sx={{ paddingTop: 12, paddingBottom: 2 }}>
+            <Typography component="h1" variant="h4" sx={{ pb: 2, color: "#294C60" }}>
               Share your story
             </Typography>
             <TextField

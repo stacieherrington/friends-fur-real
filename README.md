@@ -57,6 +57,7 @@ Our site gives rescues the power to publicize their adoptable pets in a nationwi
 ## The future of FriendsFurReal
 
 We are excited about the future pawsibilities for our site. The following are features we would like to add soon.
+- Handle success and handle request error for all the forms.
 - Pagination on pets list and stories list.
 - More filters on pets list page.
 - The ability to favorite a pet.
@@ -82,7 +83,106 @@ To fully enjoy this application on your local machine, please make sure to follo
 
 1. Clone the repository down to your local machine
 2. CD into the new project directory
-3. *Insert instructions for installing fake database*
+3. Fill the example.env file with your AWS bucket info and rename it to .env
+4. Run `docker volume create fur-mongo-data`
 4. Run `docker compose build`
 5. Run `docker compose up`
-6. *...what else???*
+
+## Demo:
+
+### Go to http://localhost:3000/ to see the website.
+
+The example data contains six accounts for you to use with
+three different permissions:
+
+|          Email          |  Password  |    Role    |
+|-------------------------|------------|------------|
+|    `admin1@test.com`    | `password` |  `admin`   |
+|    `staff1@test.com`    | `password` |  `staff`   |
+|    `base1@test.com`     | `password` |  `base`    |
+|-------------------------|-------------------------|
+|    `admin2@test.com`    | `password` |  `admin`   |
+|    `staff2@test.com`    | `password` |  `staff`   |
+|    `base2@test.com`     | `password` |  `base`    |
+
+Please login to different accounts to check the permissions.
+Current logged in account DOSE matter:
+
+- PetList (find a friend) Page:
+  - admin1, staff1, base1 was set location in Austin TX area.
+  - admin2, staff2, base2 was set location in Palm Desert CA area.
+  - Without login petlist page will display all adoptable pets.
+  - With logged in, petlist page will display pets within 200 miles and sorted by distance.
+- StoryList (Stories) Page:
+  - Only display all the stories has been approved.
+- Management (logged in as staff/admin):
+  - Only display the pets/applicaitons/storis that belone to your own rescue.
+  - Only staff/admin to add/update/delete pets for your own rescue.
+  - Only staff/admin Approve/Reject applications/stories for your own rescue.
+  - Only admin can Promote/Demote staff for your own rescue.
+
+### Website Preview:
+
+HomePage preview with random display of pets and stories:
+<br>
+![Semantic description of image](/preview/random_display.gif)
+<br>
+
+base user login:
+<br>
+![Semantic description of image](/preview/base_user_login.gif)
+<br>
+
+Check pet detail:
+<br>
+![Semantic description of image](/preview/detail_pet.gif)
+<br>
+
+Filter pets by type:
+<br>
+![Semantic description of image](/preview/filter_pets_by_type.gif)
+<br>
+
+Profile_page:
+<br>
+![Semantic description of image](/preview/profile_page.gif)
+<br>
+
+Logout:
+<br>
+![Semantic description of image](/preview/logout.gif)
+<br>
+
+Staff/Admin login:
+<br>
+![Semantic description of image](/preview/staff_login.gif)
+<br>
+
+Manage Pet and Add Pet:
+<br>
+![Semantic description of image](/preview/manage_pet_add_pet.gif)
+<br>
+
+Review Applications:
+<br>
+![Semantic description of image](/preview/review_application.gif)
+<br>
+
+Review Stories:
+<br>
+![Semantic description of image](/preview/review_story.gif)
+<br>
+
+Manage Staff. Promote/Demote staff:
+<br>
+![Semantic description of image](/preview/Promote_Demote_staff.gif)
+<br>
+
+
+
+## Seeing the data
+
+You can see the data in MongoDB in the `fur` database.
+You should be able to access the documents at
+http://localhost:8081/db/fur/ 
+

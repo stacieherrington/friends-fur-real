@@ -138,7 +138,7 @@ export default function ApplicationForm(props) {
                 Adoption Application Form
               </Typography>
               <Box
-                component='form'
+                component="form"
                 onSubmit={preventDefault(application, () => {
                   if (!isError) {
                     dispatch(closeModal());
@@ -172,112 +172,112 @@ export default function ApplicationForm(props) {
                 })}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={first_name}
-                  type='text'
-                  name='first_name'
-                  label='First Name'
-                  autoComplete='current-first-name'
+                  type="text"
+                  name="first_name"
+                  label="First Name"
+                  autoComplete="current-first-name"
                   autoFocus
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={last_name}
-                  type='text'
-                  name='last_name'
-                  label='Last Name'
-                  autoComplete='current-last-name'
+                  type="text"
+                  name="last_name"
+                  label="Last Name"
+                  autoComplete="current-last-name"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Address One'
+                  label="Address One"
                   onChange={field}
                   value={address_one}
-                  type='text'
-                  name='address_one'
+                  type="text"
+                  name="address_one"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Address Two'
+                  label="Address Two"
                   onChange={field}
                   value={address_two}
-                  type='text'
-                  name='address_two'
+                  type="text"
+                  name="address_two"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='City'
+                  label="City"
                   onChange={field}
                   value={city}
-                  type='text'
-                  name='city'
+                  type="text"
+                  name="city"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='State'
+                  label="State"
                   onChange={field}
                   value={state}
-                  type='text'
-                  name='state'
+                  type="text"
+                  name="state"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Zip Code'
+                  label="Zip Code"
                   onChange={field}
                   value={zip_code}
-                  type='text'
-                  name='zip_code'
+                  type="text"
+                  name="zip_code"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  label='Phone Number'
+                  label="Phone Number"
                   onChange={field}
                   value={phone_number}
-                  type='tel'
-                  name='phone_number'
+                  type="text"
+                  name="phone_number"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
                   onChange={field}
                   value={date_ready}
-                  name='date_ready'
-                  type='date'
-                  autoComplete='current-date'
+                  name="date_ready"
+                  type="date"
+                  autoComplete="current-date"
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   fullWidth
                   onChange={field}
                   value={landlord_restrictions}
                   multiline
                   maxRows={4}
-                  name='landlord_restrictions'
-                  label='Landlord Restrictions'
-                  type='text'
-                  autoComplete='current-landlord-restrictions'
+                  name="landlord_restrictions"
+                  label="Landlord Restrictions"
+                  type="text"
+                  autoComplete="current-landlord-restrictions"
                 />
 
                 <TextField
-                  id='outlined-select-residence'
+                  id="outlined-select-residence"
                   select
                   fullWidth
                   required
@@ -294,8 +294,8 @@ export default function ApplicationForm(props) {
                   ))}
                 </TextField>
                 <Box sx={{ display: "flex", m: 3 }}>
-                  <FormControl component='fieldset' variant='standard'>
-                    <FormLabel component='legend'>
+                  <FormControl component="fieldset" variant="standard">
+                    <FormLabel component="legend">
                       Select all that apply:
                     </FormLabel>
                     <FormGroup>
@@ -307,7 +307,7 @@ export default function ApplicationForm(props) {
                             name='has_dogs'
                           />
                         }
-                        label='Own dogs'
+                        label="Own dogs"
                       />
                       <FormControlLabel
                         control={
@@ -317,7 +317,7 @@ export default function ApplicationForm(props) {
                             name='has_cats'
                           />
                         }
-                        label='Own cats'
+                        label="Own cats"
                       />
                       <FormControlLabel
                         control={
@@ -329,12 +329,12 @@ export default function ApplicationForm(props) {
                             checkedIcon={<SmokeFreeSharpIcon color='success' />}
                           />
                         }
-                        label='Smoker?'
+                        label="Smoker?"
                       />
                     </FormGroup>
                   </FormControl>
-                  <FormControl component='fieldset' variant='standard'>
-                    <FormLabel component='legend'>
+                  <FormControl component="fieldset" variant="standard">
+                    <FormLabel component="legend">
                       <br></br>
                     </FormLabel>
                     <FormGroup>
@@ -346,7 +346,7 @@ export default function ApplicationForm(props) {
                             name='has_small_children'
                           />
                         }
-                        label='Have small children'
+                        label="Have small children"
                       />
                       <FormControlLabel
                         control={
@@ -356,7 +356,7 @@ export default function ApplicationForm(props) {
                             name='residence_owned'
                           />
                         }
-                        label='Residence Owned'
+                        label="Residence Owned"
                       />
                       <FormControlLabel
                         control={
@@ -366,7 +366,7 @@ export default function ApplicationForm(props) {
                             name='wants_preapproval'
                           />
                         }
-                        label='Get Pre-approved?'
+                        label="Get Pre-approved?"
                       />
                     </FormGroup>
                   </FormControl>
@@ -375,8 +375,8 @@ export default function ApplicationForm(props) {
                   <FormControl
                     required
                     error={requiredError}
-                    component='fieldset'
-                    variant='standard'
+                    component="fieldset"
+                    variant="standard"
                   >
                     <FormLabel>Required*</FormLabel>
                     <FormControlLabel
@@ -388,15 +388,15 @@ export default function ApplicationForm(props) {
                           name='agrees_to_terms'
                         />
                       }
-                      label='I agree to the Terms and Conditions* *'
+                      label="I agree to the Terms and Conditions* *"
                     />
                   </FormControl>
                 </Box>
 
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
+                  variant="contained"
                   sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
                   endIcon={<PetsIcon />}
                 >

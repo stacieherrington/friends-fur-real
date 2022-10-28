@@ -29,8 +29,8 @@ function ManageStoryPage(props) {
     }
 
     return (
-        <Box sx={{ flexGrow: 1, py: 4 }}>
-            <Typography variant='h3' align='center' sx={{ py: 5, fontWeight: 'bold' }}>Happy Tails</Typography>
+        <Box sx={{ flexGrow: 1, pt:12 }}>
+            <Typography variant='h3' align='center' sx={{ pb: 5, fontWeight: 'bold' }}>Happy Tails</Typography>
             <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {storiesList.map((story) => (
                     <Grid item xs={4} sm={4} md={4} key={story.id}>

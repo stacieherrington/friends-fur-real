@@ -58,20 +58,20 @@ export default function PetCard(props) {
       }}
     >
       {props.pet.pictures && props.pet.pictures.length ? (
-        <CardMedia
-          component='img'
-          width='100%'
-          image={props.pet.pictures}
+        <CardMedia          
+          component="img"
+          width="100%"
+          src={props.pet.pictures}
           alt={props.pet.breed}
         />
       ) : null}
-      <CardContent sx={{ padding: 1 }}>
-        <Typography gutterBottom variant='h5' component='div'>
+      <CardContent sx={{ pl: 2, pt:1}}>
+        <Typography gutterBottom variant="h5" sx={{fontWeight:"bold"}} component="div">
           {props.pet.name}
         </Typography>
         <Typography
-          variant='body2'
-          color='text.secondary'
+          variant="body2"
+          color="text.secondary"
           sx={{
             display: "-webkit-box",
             overflow: "hidden",
@@ -82,8 +82,13 @@ export default function PetCard(props) {
           {props.pet.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button aria-describedby={detailId} onClick={handleDetailClick}>
+      <CardActions sx={{pt:2, pb:0}}>
+        <Button
+          sx={{ textAlign: "center", paddingLeft:1 }}
+     
+          aria-describedby={detailId}
+          onClick={handleDetailClick}
+        >
           More Info
         </Button>
         <Popover
@@ -111,19 +116,19 @@ export default function PetCard(props) {
           </Button>
         )}
       </CardActions>
-      <CardActions>
+      <CardActions sx={{pt:0, pb:0, pl:1.3}} >
         {isRescuer && (
           <>
             <Button
-              sx={{ pt: 0, pb: 5 }}
-              size='small'
+              sx={{ pt: 0, mb: 5, pr:4 }}
+              size="small"
               href={`/pets/${props.pet.id}`}
             >
               Update
             </Button>
             <Button
-              sx={{ pt: 0, pb: 5 }}
-              size='small'
+              sx={{ pt: 0, mb: 5, pl: 3 }}
+              size="small"
               onClick={handleClickOpen}
             >
               Delete
@@ -131,11 +136,11 @@ export default function PetCard(props) {
             <Dialog
               open={open}
               onClose={handleClose}
-              aria-labelledby='alert-dialog-title'
-              aria-describedby='alert-dialog-description'
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
             >
               <DialogContent>
-                <DialogContentText id='alert-dialog-description'>
+                <DialogContentText id="alert-dialog-description">
                   Are you sure you want to delete this pet?
                 </DialogContentText>
               </DialogContent>

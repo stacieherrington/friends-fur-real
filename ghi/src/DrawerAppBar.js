@@ -25,18 +25,13 @@ import {
 } from "./redux/slices/modalSlice";
 import { NavLink } from "react-router-dom";
 
-
 const drawerWidth = 240;
 
 function DrawerAppBar(props) {
   const dispatch = useDispatch();
 
-  const {
-    data: tokenData,
-    error: tokenError,
-    isLoading: tokenLoading,
-  } = useGetTokenQuery();
-  const [logout, { data: logoutData }] = useLogoutMutation();
+  const { data: tokenData } = useGetTokenQuery();
+  const [logout] = useLogoutMutation();
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -83,7 +78,7 @@ function DrawerAppBar(props) {
               <ListItem disablePadding>
                 <ListItemButton sx={{ mx: "auto" }}>
                   <Box
-                    sx={{ mx: "auto" }}
+                    sx={{ mx: "auto", fontFamily: "Comfortaa" }}
                     onClick={() => {
                       dispatch(openModal(SIGNUP_MODAL));
                     }}
@@ -97,7 +92,7 @@ function DrawerAppBar(props) {
               <ListItem disablePadding>
                 <ListItemButton sx={{ mx: "auto" }}>
                   <Box
-                    sx={{ mx: "auto" }}
+                    sx={{ mx: "auto", fontFamily: "Comfortaa" }}
                     onClick={() => {
                       dispatch(openModal(LOGIN_MODAL));
                     }}
@@ -117,18 +112,20 @@ function DrawerAppBar(props) {
                 </ListItemButton>
               </ListItem>
             </Link>
-            <Link href='/accounts/profile/' underline='none'>
-              <ListItem disablePadding>
-                <ListItemButton
-                  size='large'
-                  aria-haspopup='true'
-                  color='inherit'
-                  align='center'
-                >
-                  <AccountCircle />
-                </ListItemButton>
-              </ListItem>
-            </Link>
+            <NavLink
+              to='/accounts/profile/'
+              style={() => ({ color: "primary" })}
+            >
+              <IconButton
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                color='inherit'
+              >
+                <AccountCircle />
+              </IconButton>
+            </NavLink>
           </>
         )}
       </List>
@@ -182,14 +179,16 @@ function DrawerAppBar(props) {
                 <Button href='/' sx={{ color: "#fff" }} onClick={logout}>
                   Logout
                 </Button>
-                <NavLink to="/accounts/profile/" style={() => ({color: "white"})}>
+                <NavLink
+                  to='/accounts/profile/'
+                  style={() => ({ color: "white" })}
+                >
                   <IconButton
                     size='large'
                     aria-label='account of current user'
                     aria-controls='menu-appbar'
                     aria-haspopup='true'
                     color='inherit'
-                    // href='/accounts/profile/'
                   >
                     <AccountCircle />
                   </IconButton>
@@ -244,10 +243,6 @@ function DrawerAppBar(props) {
 }
 
 DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

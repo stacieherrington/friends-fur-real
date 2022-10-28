@@ -21,11 +21,12 @@ export default function PetDetailPopover(props) {
     }
   }, [data]);
   window.dispatchEvent(new Event("resize"));
+
   if (petData)
     return (
-      <Container sx={{ mt: 7 }}>
-        <Box align='center'>
-          <Typography variant='h3' sx={{ py: 3 }}>
+      <Container sx={{ mt: 1 }}>
+        <Box align="center">
+          <Typography variant="h3" sx={{ py: 3 }}>
             {petData.name}
           </Typography>
           <Box
@@ -95,7 +96,7 @@ export default function PetDetailPopover(props) {
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary='Shots up-to-date?'
+                  primary="Shots up-to-date?"
                   secondary={petData.ok_with_dogs ? "yes" : "no"}
                 />
               </ListItem>
@@ -105,25 +106,25 @@ export default function PetDetailPopover(props) {
             <List sx={{ maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
                 <ListItemText
-                  primary='Spayed or neutered?'
+                  primary="Spayed or neutered?"
                   secondary={petData.spayed_neutered ? "yes" : "no"}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary='House-trained?'
+                  primary="House-trained?"
                   secondary={petData.house_trained ? "yes" : "no"}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary='Special needs?'
+                  primary="Special needs?"
                   secondary={petData.special_needs ? "yes" : "no"}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary='Is adopted?'
+                  primary="Is adopted?"
                   secondary={petData.is_adopted ? "yes" : "no"}
                 />
               </ListItem>
