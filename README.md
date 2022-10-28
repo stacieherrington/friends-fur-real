@@ -82,7 +82,34 @@ To fully enjoy this application on your local machine, please make sure to follo
 
 1. Clone the repository down to your local machine
 2. CD into the new project directory
-3. *Insert instructions for installing fake database*
+3. Fill the example.env file with your AWS bucket info and rename it to .env
+4. Run `docker volume create fur-mongo-data`
 4. Run `docker compose build`
 5. Run `docker compose up`
-6. *...what else???*
+
+## Demo 
+
+1. Go to http://localhost:3000/ to see the website.
+
+The example data contains six accounts for you to use with
+three different permissions:
+
+|          Email          |  Password  |    Role    |
+|-------------------------|------------|------------|
+|    `admin1@test.com`    | `password` |  `admin`   |
+|    `staff1@test.com`    | `password` |  `staff`   |
+|    `base1@test.com`     | `password` |  `base`    |
+|-------------------------|-------------------------|
+|    `admin2@test.com`    | `password` |  `admin`   |
+|    `staff2@test.com`    | `password` |  `staff`   |
+|    `base2@test.com`     | `password` |  `base`    |
+
+2. 
+
+
+## Seeing the data
+
+You can see the data in MongoDB in the `fur` database.
+You should be able to access the documents at
+http://localhost:8081/db/fur/ 
+
