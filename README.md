@@ -87,9 +87,9 @@ To fully enjoy this application on your local machine, please make sure to follo
 4. Run `docker compose build`
 5. Run `docker compose up`
 
-## Demo 
+## Demo:
 
-1. Go to http://localhost:3000/ to see the website.
+### Go to http://localhost:3000/ to see the website.
 
 The example data contains six accounts for you to use with
 three different permissions:
@@ -104,8 +104,13 @@ three different permissions:
 |    `staff2@test.com`    | `password` |  `staff`   |
 |    `base2@test.com`     | `password` |  `base`    |
 
-2. 
 
+### Website Preview:
+
+HomePage preview with random display of pets and stories:
+<br>
+![Semantic description of image](/preview/random_display.gif)
+<br>
 
 ## Seeing the data
 
