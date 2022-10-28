@@ -140,7 +140,7 @@ export default function ApplicationForm(props) {
               <Box
                 component='form'
                 onSubmit={preventDefault(application, () => {
-                  if (!isError && !isSuccess) {
+                  if (!isError) {
                     dispatch(closeModal());
                   }
 
