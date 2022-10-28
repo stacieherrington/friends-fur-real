@@ -119,12 +119,11 @@ Today I worked on implementing a filter for Pet Types on our Pet's list. Also mo
 
 ## October 26, 2022
 
-Today I worked on the style of our page, forms and buttons to have it all look on brand and cohesive with Stacie. Also changed the font for our page. As well as fixing the look of our manage staff page, the pet detail page. The team and I also worked on some bugs we discovered along the way.
-
+Today I worked on the style of our page, forms and buttons to have it all look on brand and cohesive with Stacie. Also changed the font for our page. As well as fixing the look of our manage staff page, the pet detail page. The team and I also worked on some bugs we discovered along the way. 
 
 ## October 27, 2022
 
-Today we worked on fixing the looks of the profile page, to finish up the page.abs
+Today we worked on fixing the looks of the profile page, to finish up the page. I also worked on the unit test for list rescues. 
 
 
 ## October 28, 2022
