@@ -1,8 +1,6 @@
 volumes:
   fur-mongo-data:
     external: true
-  fur-node-modules:
-    external: true
 services:
   mongo:
     image: mongo:6
@@ -46,30 +44,30 @@ services:
       AWS_SERVER_SECRET_KEY: ${AWS_SERVER_SECRET_KEY}
       AWS_HOST: https://ffr-development.s3.us-east-2.amazonaws.com/
   ghi:
-    build:
-      context: ghi
-      dockerfile: Dockerfile.dev
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
     volumes:
-      - fur-node-modules:/app/node_modules
       - ./ghi:/app
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
       REACT_APP_API_HOST: http://localhost:8000
-      REACT_APP_WS_HOST: ws://localhost:8000
-      WAIT_HOSTS: api:8000
-      WAIT_BEFORE: 5
-      WAIT_TIMEOUT: 60
   # ghi:
-  #   image: node:lts-bullseye
-  #   command: /bin/bash run.sh
-  #   working_dir: /app
+  #   build:
+  #     context: ghi
+  #     dockerfile: Dockerfile.dev
   #   volumes:
+  #     - fur-node-modules:/app/node_modules
   #     - ./ghi:/app
   #   ports:
-  #     - "3000:3000"
+  #     - 3000:3000
   #   environment:
-  #     HOST_OS: ${OS}
-  #     NODE_ENV: development
-  #     HOST: "0.0.0.0"
   #     REACT_APP_API_HOST: http://localhost:8000
+  #     REACT_APP_WS_HOST: ws://localhost:8000
+  #     WAIT_HOSTS: api:8000
+  #     WAIT_BEFORE: 5
+  #     WAIT_TIMEOUT: 60
