@@ -57,6 +57,7 @@ Our site gives rescues the power to publicize their adoptable pets in a nationwi
 ## The future of FriendsFurReal
 
 We are excited about the future pawsibilities for our site. The following are features we would like to add soon.
+- Handle success and handle request error for all the forms.
 - Pagination on pets list and stories list.
 - More filters on pets list page.
 - The ability to favorite a pet.
