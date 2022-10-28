@@ -1,3 +1,4 @@
+from fastapi import Depends
 from .client import Queries
 from bson.objectid import ObjectId
 from typing import List
@@ -5,8 +6,8 @@ from pymongo import ReturnDocument
 from models.story import (
     SuccessStoryOut,
     SuccessStoryIn,
-    SuccessStoryList,
 )
+from models.application import ApplicationUpdate
 
 from .application import ApplicationQueries
 import os
@@ -23,6 +24,9 @@ class SuccessStoryQueries(Queries):
     DB_NAME = "fur"
     COLLECTION = "stories"
 
+    def __init__(self, application_queries: ApplicationQueries = Depends()):
+        self.application_queries = application_queries
+
     def create_story(self, story: SuccessStoryIn, application_id):
         story = story.dict()
         # need to check if there is an story based on this application_id
@@ -33,22 +37,24 @@ class SuccessStoryQueries(Queries):
             return {"message": "You have submitted a story for this pet!"}
         # use application_id to get pet_id, rescue_id,account_id, and check if the status of application is "Approved"
         try:
-            application = (
-                ApplicationQueries().detail_application(application_id).dict()
+            application = self.application_queries.detail_application(
+                application_id
             )
         except:
             return None
-        if application and application["status"] == "Approved":
+        if application and application.status == "Approved":
             story["application_id"] = application_id
-            story["pet_id"] = application["pet_id"]
-            story["rescue_id"] = application["rescue_id"]
-            story["account_id"] = application["account_id"]
-            application["story_written"] = True
+            story["pet_id"] = application.pet_id
+            story["rescue_id"] = application.rescue_id
+            story["account_id"] = application.account_id
             if story["picture"] is None:
                 del story["picture"]
             insert_result = self.collection.insert_one(story)
 
             if insert_result.acknowledged:
+                update = ApplicationUpdate(**application.dict())
+                update.story_written = True
+                self.application_queries.update_application(application_id, update)
                 return {"message": "Thank you for your story!"}
         else:
             return {
