@@ -1,11 +1,8 @@
-from tokenize import Double
 from .client import Queries
-from models.pet import PetOut, PetIn, PetsList
+from models.pet import PetOut, PetIn
 from bson.objectid import ObjectId
 from typing import List
 from pymongo import ReturnDocument
-from random import randint
-from .accounts import AccountQueries
 import os
 
 
@@ -13,7 +10,11 @@ AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
 
 
 def enrich_pictures(pet):
-    if pet.get("pictures") and not pet["pictures"].startswith("http") and AWS_HOST:
+    if (
+        pet.get("pictures")
+        and not pet["pictures"].startswith("http")
+        and AWS_HOST
+    ):
         pet["pictures"] = f"{AWS_HOST}/{pet['pictures']}"
 
 
@@ -39,12 +40,10 @@ class PetQueries(Queries):
         if pet["pictures"] is None:
             del pet["pictures"]
         insert_result = self.collection.insert_one(pet)
-        # the insert_result have acknowledged(True/ False), and inserted_id(ObjectID of the new pet)
         if insert_result.acknowledged:
             return {"message": "Yeah! pet added!"}
 
     def list_pets(self) -> List[PetOut]:
-        # now return all the pet, need working on sort by distance later?
         result = self.collection.find({"is_adopted": False})
         pets = []
         for pet in result:
@@ -58,7 +57,6 @@ class PetQueries(Queries):
             delete_result = self.collection.delete_one({"_id": ObjectId(id)})
         except:
             return
-        # delete result has delete_result.deleted_count(ing), and delete_result.acknowledged(bool)
         if delete_result:
             return {"message": "pet has been deleted!"}
 

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -9,37 +10,23 @@ import {
   Modal,
   Grid,
 } from "@mui/material";
-import React, { useState } from "react";
+import PetsIcon from "@mui/icons-material/Pets";
 import Copyright from "../components/Copyright";
+import ModalStyle from "../components/ModalStyle";
 import {
   useSingleAccountQuery,
   usePatchUpdateAccountMutation,
 } from "../redux/api";
 import { preventDefault } from "../redux/utility";
-import PetsIcon from '@mui/icons-material/Pets';
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: 800,
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  mt: 3,
-  overflow: "auto",
-};
 
 export default function UpdateAccountForm() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const { data } = useSingleAccountQuery();
 
-  const [updateAcc, { error, isLoading, isSuccess }] =
-    usePatchUpdateAccountMutation(data);
+  const [updateAcc] = usePatchUpdateAccountMutation(data);
 
   const [first_name, setFirst] = useState(data.first_name);
   const [last_name, setLast] = useState(data.last_name);
@@ -62,7 +49,7 @@ export default function UpdateAccountForm() {
   const aboutChange = (e) => setAbout(e.target.value);
 
   return (
-<>
+    <>
       <Grid container justifyContent='flex-end'>
         <Grid item>
           <Button onClick={handleOpen}>Update Account</Button>
@@ -75,7 +62,7 @@ export default function UpdateAccountForm() {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
             <Box
@@ -163,8 +150,8 @@ export default function UpdateAccountForm() {
                       value={
                         address_two === "string"
                           ? ""
-                          : address_one
-                          ? address_one
+                          : address_two
+                          ? address_two
                           : ""
                       }
                       type='text'
@@ -238,7 +225,6 @@ export default function UpdateAccountForm() {
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2, backgroundColor: "#294C60" }}
-
                   endIcon={<PetsIcon />}
                 >
                   Submit
@@ -249,6 +235,6 @@ export default function UpdateAccountForm() {
           </Container>
         </Box>
       </Modal>
-      </>
+    </>
   );
 }

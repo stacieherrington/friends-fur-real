@@ -14,14 +14,14 @@ class ApplicationIn(BaseModel):
     has_cats: bool | None
     smoke_free_home: bool | None
     residence_type: str | None
-    residence_owned: str | None
+    residence_owned: bool | None
     landlord_restrictions: str | None
     date_ready: str | None
     wants_preapproval: bool | None
     agrees_to_terms: bool | None
     account_id: str | None
-    pet_id: str | None
-    rescue_id: str | None
+    pet_id: str
+    rescue_id: str
     status: Literal[
         "Submitted",
         "Approved",
@@ -38,7 +38,7 @@ class ApplicationUpdate(BaseModel):
     has_dogs: bool | None
     has_cats: bool | None
     residence_type: str | None
-    residence_owned: str | None
+    residence_owned: bool | None
     landlord_restrictions: str | None
     date_ready: str | None
     wants_preapproval: bool | None

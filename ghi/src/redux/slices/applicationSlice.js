@@ -15,7 +15,7 @@ const initialState = {
   has_small_children: false,
   has_dogs: false,
   has_cats: false,
-  wants_prepproval: false,
+  wants_preapproval: false,
   agrees_to_terms: false,
   residence_owned: false,
   smoke_free_home: true,
@@ -31,12 +31,14 @@ export const applicationSlice = createSlice({
     showModal: (state, action) => {
       state.show = action.payload;
     },
+    updateCheck: (state, action) => {
+      state[action.payload.field] = action.payload.checked;
+    },
     clearForm: () => {
       return initialState;
     },
   },
 });
 
-export const { clearForm, updateField, showModal } = applicationSlice.actions;
-
-export const APPLICATION_MODAL = "APPLICATION_MODAL";
+export const { clearForm, updateField, showModal, updateCheck } =
+  applicationSlice.actions;

@@ -5,17 +5,19 @@ from pymongo import ReturnDocument
 from models.story import (
     SuccessStoryOut,
     SuccessStoryIn,
-    SuccessStoryList,
 )
-
 from .application import ApplicationQueries
 import os
 
-
 AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
 
+
 def enrich_pictures(story):
-    if story.get("picture") and not story["picture"].startswith("http") and AWS_HOST:
+    if (
+        story.get("picture")
+        and not story["picture"].startswith("http")
+        and AWS_HOST
+    ):
         story["picture"] = f"{AWS_HOST}/{story['picture']}"
 
 
@@ -25,13 +27,11 @@ class SuccessStoryQueries(Queries):
 
     def create_story(self, story: SuccessStoryIn, application_id):
         story = story.dict()
-        # need to check if there is an story based on this application_id
         dup_check = self.collection.find_one(
             {"application_id": application_id}
         )
         if dup_check:
             return {"message": "You have submitted a story for this pet!"}
-        # use application_id to get pet_id, rescue_id,account_id, and check if the status of application is "Approved"
         try:
             application = (
                 ApplicationQueries().detail_application(application_id).dict()
@@ -50,7 +50,7 @@ class SuccessStoryQueries(Queries):
                 return {"message": "Thank you for your story!"}
         else:
             return {
-                "message": "The application is not exist or may not been approved!"
+                "message": "The application does not exist or may not been approved!"
             }
 
     def get_approved_stories(self) -> List[SuccessStoryOut]:
@@ -113,9 +113,7 @@ class SuccessStoryQueries(Queries):
             story = self.get_story(story_id).dict()
         except:
             return
-        # 1. check db, make sure the target story status is Submitted:
         if story["status"] == "Submitted":
-            # 2. update status from Submitted to Approved
             result = self.collection.find_one_and_update(
                 filter={"_id": ObjectId(story_id)},
                 update={"$set": {"status": "Approved"}},
@@ -129,9 +127,7 @@ class SuccessStoryQueries(Queries):
             enrich_pictures(story)
         except:
             return
-        # 1. check db, make sure the target story status is Submitted:
         if story["status"] == "Submitted":
-            # 2. update status from Submitted to Reject
             result = self.collection.find_one_and_update(
                 filter={"_id": ObjectId(story_id)},
                 update={"$set": {"status": "Rejected"}},
@@ -171,4 +167,4 @@ class SuccessStoryQueries(Queries):
         except:
             return None
         if delete_result.acknowledged:
-            return {"message": "pet has been deleted!"}
+            return {"message": "Pet has been deleted!"}

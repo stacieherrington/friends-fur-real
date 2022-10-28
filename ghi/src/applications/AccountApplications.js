@@ -1,40 +1,28 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Container, Menu, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import {
-  useGetPetQuery,
+  Container,
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
+import {
   useGetTokenQuery,
   useListAccountApplicationsQuery,
 } from "../redux/api";
-import { useLogoutMutation } from "../redux/api";
-import { useEffect, useState } from "react";
-import { Select, MenuItem, InputLabel } from "@mui/material";
-
+import CircularUnderLoad from "../components/ProgressCircle";
 
 export default function AccountApplications() {
-  const {
-    data: tokenData,
-    error: tokenError,
-    isLoading: tokenLoading,
-  } = useGetTokenQuery();
-  const {
-    data: petData,
-    error: petError,
-    isLoading: perLoading,
-  } = useGetPetQuery();
-  const [logout, { data: logoutData }] = useLogoutMutation();
+  const { isLoading: tokenLoading } = useGetTokenQuery();
 
-  const {
-    data: applicationData,
-    error,
-    isLoading,
-  } = useListAccountApplicationsQuery();
+  const { data: applicationData, isLoading } =
+    useListAccountApplicationsQuery();
 
   const [appList, setAppList] = useState([]);
   const [status, setStatus] = useState("All");
@@ -46,13 +34,20 @@ export default function AccountApplications() {
   }, [applicationData]);
 
   if (tokenLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <>
+        <CircularUnderLoad />
+      </>
+    );
   }
 
   if (isLoading) {
-    return <h1>Loading applicationData...</h1>;
+    return (
+      <>
+        <CircularUnderLoad />
+      </>
+    );
   }
-
   const handleChange = (event) => {
     event.preventDefault();
     setStatus(event.target.value);
@@ -65,6 +60,7 @@ export default function AccountApplications() {
           )
         );
   };
+
   return (
     <Container sx={{ paddingTop: 10 }}>
       <h1>My Applications</h1>
@@ -85,7 +81,7 @@ export default function AccountApplications() {
                 fontWeight: "bold",
                 textAlign: "center",
                 padding: 1,
-                color: "#FFF"
+                color: "#FFF",
               },
             }}
           >
@@ -95,7 +91,12 @@ export default function AccountApplications() {
               <TableCell>Phone number</TableCell>
               <TableCell>Pet Id</TableCell>
               <TableCell>
-                <InputLabel id='demo-simple-select-label' sx={{ color: "#FFF" }}>Status</InputLabel>
+                <InputLabel
+                  id='demo-simple-select-label'
+                  sx={{ color: "#FFF" }}
+                >
+                  Status
+                </InputLabel>
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
@@ -103,7 +104,7 @@ export default function AccountApplications() {
                   value={status}
                   onChange={handleChange}
                   size='small'
-                  sx={{ color: "#FFF", border: '1px solid #ced4da' }}
+                  sx={{ color: "#FFF", border: "1px solid #ced4da" }}
                 >
                   <MenuItem value={"All"}>All</MenuItem>
                   <MenuItem value={"Approved"}>Approved</MenuItem>

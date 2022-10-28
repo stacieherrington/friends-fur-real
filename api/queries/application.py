@@ -17,7 +17,6 @@ class ApplicationQueries(Queries):
         app = app.dict()
         app["account_id"] = account_id
         app["status"] = "Submitted"
-        # check if the account_id has an application based on the same pet_id:
         record = self.collection.find_one(
             {"pet_id": app["pet_id"], "account_id": account_id}
         )
@@ -48,27 +47,22 @@ class ApplicationQueries(Queries):
         return apps
 
     def approve_application(self, application_id) -> ApplicationOut:
-        # 1. check if there is an approved applicaiton with the same pet_id
         pet = self.detail_application(application_id)
         if not pet:
-            return None  # handle not find that application_id
+            return None
         pet_id = pet.pet_id
         has_approved_app = self.collection.find_one(
             {"pet_id": pet_id, "status": "Approved"}
         )
-        # 2. if there is an approved application for the same pet, change current application status to Rejected and return message
         if has_approved_app:
             self.collection.update_one(
                 filter={"application_id": ObjectId(application_id)},
                 update={"$set": {"status": "Rejected"}},
             )
             return {
-                "message": "Sorry, this pet has been adopted by other family!"
+                "message": "Sorry, this pet has been adopted by another family!"
             }
         else:
-            # 3. if there is no approved application for this pet,
-            #       update all application status to Rejected, then update current application_id to approved
-            #       update pet is_adopted to True
             PetQueries().is_adopted(pet_id)
             self.collection.update_many(
                 filter={"pet_id": pet_id},
@@ -95,7 +89,7 @@ class ApplicationQueries(Queries):
                 filter={"_id": ObjectId(application_id)}
             )
         except:
-            return {"message": "this application id is not exist!"}
+            return {"message": "Rhis application id does not exist!"}
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 

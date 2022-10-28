@@ -11,6 +11,7 @@ export const store = configureStore({
     [accountSlice.name]: accountSlice.reducer,
     [applicationSlice.name]: applicationSlice.reducer,
     [modalSlice.name]: modalSlice.reducer,
+    
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(apiSlice.middleware);

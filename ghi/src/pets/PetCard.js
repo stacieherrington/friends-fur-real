@@ -9,13 +9,26 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import SliceAppForm from "../applications/SliceAppForm";
-import { useDeletePetMutation, useGetCurrentAccountQuery } from "../redux/api";
+// import SliceAppForm from "../applications/SliceAppForm";
+import {
+  useDeletePetMutation,
+  useGetCurrentAccountQuery,
+  useGetTokenQuery,
+} from "../redux/api";
 import { Popover, Box } from "@mui/material";
 import PetDetailPopover from "./PetDetailPopover";
-
-
+import { useDispatch } from "react-redux";
+import {
+  APPLICATION_MODAL,
+  LOGIN_MODAL,
+  openModal,
+} from "../redux/slices/modalSlice";
+import { preventDefault } from "../redux/utility";
+import ApplicationForm from "../applications/ApplicationForm";
 export default function PetCard(props) {
+  const dispatch = useDispatch();
+  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
+
   const { id, rescue_id, pictures, name } = props.pet;
   const [open, setOpen] = React.useState(false);
   const [deletePet] = useDeletePetMutation();
@@ -33,8 +46,6 @@ export default function PetCard(props) {
   };
   const openDetail = Boolean(anchorEl);
   const detailId = openDetail ? "simple-popover" : undefined;
-  // petDetail Popover done
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -42,12 +53,20 @@ export default function PetCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 680 }}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 680,
+      }}
+    >
       {props.pet.pictures && props.pet.pictures.length ? (
         <CardMedia
           component='img'
-          width="100%"
+          width='100%'
           image={props.pet.pictures}
           alt={props.pet.breed}
         />
@@ -80,18 +99,41 @@ export default function PetCard(props) {
           onClose={handleDetailClose}
           anchorOrigin={{
             vertical: "top",
-            horizontal: "left"
+            horizontal: "left",
           }}
         >
           <PetDetailPopover petId={id} />
         </Popover>
-        <SliceAppForm pet_id={id} rescue_id={rescue_id} sx={{ pb: 0 }} />
+
+        {token ? (
+          <ApplicationForm pet_id={id} rescue_id={rescue_id} />
+        ) : (
+          <Button
+            onClick={preventDefault(() => {
+              dispatch(openModal(LOGIN_MODAL));
+            })}
+          >
+            Adopt me!
+          </Button>
+        )}
       </CardActions>
       <CardActions>
         {isRescuer && (
           <>
-            <Button sx={{ pt: 0, pb: 5 }} size="small" href={`/pets/${props.pet.id}`}>Update</Button>
-            <Button sx={{ pt: 0, pb: 5 }} size="small" onClick={handleClickOpen}>Delete</Button>
+            <Button
+              sx={{ pt: 0, pb: 5 }}
+              size='small'
+              href={`/pets/${props.pet.id}`}
+            >
+              Update
+            </Button>
+            <Button
+              sx={{ pt: 0, pb: 5 }}
+              size='small'
+              onClick={handleClickOpen}
+            >
+              Delete
+            </Button>
             <Dialog
               open={open}
               onClose={handleClose}
@@ -117,7 +159,8 @@ export default function PetCard(props) {
                 </Button>
               </DialogActions>
             </Dialog>
-          </>)}
+          </>
+        )}
       </CardActions>
     </Card>
   );

@@ -58,7 +58,6 @@ async def get_token(
     request: Request,
     account: Account = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
-    # this line is to check if the user is logined
     if account and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
@@ -69,7 +68,7 @@ async def get_token(
 
 @router.post(
     "/api/accounts/",
-    description="create an account, form.address.zip_code is required!!!",
+    description="create an account, form.address.zip_code is required!",
     response_model=AccountToken | HttpError,
     tags=["Accounts"],
 )
@@ -98,11 +97,9 @@ async def create_account(
 )
 async def delete_session(
     account_id: str,
-    # here is how to check current_account data/roles from back end 1
     account: dict = Depends(authenticator.get_current_account_data),
     repo: SessionQueries = Depends(),
 ) -> bool:
-    # here is how to check current_account data/roles from back end 2
     if "base" not in account["roles"]:
         raise not_authorized
     repo.delete_sessions(account_id)
@@ -125,7 +122,10 @@ async def list_accounts(
     tags=["Accounts", "management"],
     response_model=AccountList,
     summary="List Rescue staff ----> management",
-    description="* admin required! list all the staff for rescue admin by rescue_id, will auto check if logined account is 'admin', will auto get admin's rescue_id and only display staff belone to the rescue! ",
+    description="* admin required! list all the staff for\
+         rescue admin by rescue_id, will auto check\
+        if logged in account is 'admin', will auto get\
+        admin's rescue_id and only display staff that belong to the rescue! ",
 )
 async def list_accounts(
     account: dict = Depends(authenticator.get_current_account_data),
@@ -141,7 +141,8 @@ async def list_accounts(
     "/api/accounts/profile/",
     response_model=AccountDisplay,
     summary="Detail Current Logined Account",
-    description="display on account profile page,can use PATCH /api/accounts/{account_id} to update",
+    description="display on account profile page,can\
+         use PATCH /api/accounts/{account_id} to update",
     tags=["Accounts"],
 )
 async def single_account(
@@ -167,7 +168,9 @@ async def single_account(
     "/api/accounts/profile/",
     response_model=AccountDisplay,
     summary="Update Current Logged in Account",
-    description="allowed logged in user to update personal detail in account profile page.(Don't Change Email! CAN NOT change password yet!)",
+    description="Allows logged in user to update personal\
+     detail in account profile page.(Don't Change Email! CAN\
+         NOT change password yet!)",
     tags=["Accounts"],
 )
 def update_account(
@@ -190,7 +193,8 @@ def update_account(
 @router.patch(
     "/api/accounts/promote/{email}/",
     summary="Promote an account as a staff by email ----> management",
-    description="Admin enter an email to promote that account to 'staff' with the same rescue_id of admin(auto use same rescue_id of the admin)",
+    description="Admin enter an email to promote that account to 'staff'\
+         with the same rescue_id of admin(auto use same rescue_id of the admin)",
     tags=["Accounts", "management"],
 )
 async def promote_account(
@@ -211,7 +215,9 @@ async def promote_account(
 @router.patch(
     "/api/accounts/demote/{email}/",
     summary="Demote an account as a staff by email ----> management",
-    description="Admin enter an email to Demote that account, remove staff with the same rescue_id of admin. This api will check if the staff is belong to this admin's rescue",
+    description="Admin enter an email to Demote that account, remove\
+        staff with the same rescue_id of admin. This api will\
+        check if the staff is belong to this admin's rescue",
     tags=["Accounts", "management"],
 )
 async def demote_account(

@@ -1,4 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status, Form, UploadFile, File
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Request,
+    status,
+    Form,
+    UploadFile,
+    File,
+)
 from queries.application import ApplicationQueries
 from models.story import (
     SuccessStoryIn,
@@ -22,7 +31,8 @@ not_authorized = HTTPException(
 @router.post(
     "/api/applications/{application_id}/story/",
     summary="Create an Story for an Application",
-    description="only allowed to create a story for an appoved application. (A story is really only for an appoved application, not a pet.)",
+    description="Only allows to create a story for an\
+        appoved application)",
 )
 def create_story(
     application_id: str,
@@ -48,12 +58,14 @@ def create_story(
             status="Submitted",
         )
         if picture.filename:
-            success_story.picture = upload_to_s3(account["id"], picture.file, picture.filename)
+            success_story.picture = upload_to_s3(
+                account["id"], picture.file, picture.filename
+            )
         response = queries.create_story(success_story, application_id)
         if response:
             return response
         else:
-            raise HTTPException(400, "something went wrong!")
+            raise HTTPException(400, "Something went wrong!")
     else:
         raise not_authorized
 
@@ -93,7 +105,8 @@ def get_story(story_id: str, queries: SuccessStoryQueries = Depends()):
 @router.get(
     "/api/rescues/{rescue_id}/stories/",
     summary="List all approved stories by rescue_id",
-    description="allowed user to use dropdown to filter approved stories by rescue_id",
+    description="Allows user to use dropdown to filter\
+        approved stories by rescue_id",
     response_model=SuccessStoryList,
 )
 def list_rescue_stories(
@@ -106,7 +119,8 @@ def list_rescue_stories(
 @router.get(
     "/api/manage/stories/",
     summary="List All Stories for Review by admin/staff rescue_id ----> management",
-    description="this api check if the current user is 'admin'/ 'staff', and list all the stories for their recue only",
+    description="Checks if the current user is\
+        'admin'/ 'staff', and list all the stories for their recue only",
     response_model=SuccessStoryList,
     tags=["management"],
 )
@@ -124,7 +138,8 @@ def manage_list_story(
 @router.patch(
     "/api/stories/{story_id}/approve/",
     summary="To Approve a Story ----> management",
-    description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
+    description="Automatically checks if current user is admin/staff and\
+         check if this story related pet/application belong to this rescue",
     tags=["management"],
 )
 def approve_story(
@@ -157,7 +172,8 @@ def approve_story(
 @router.patch(
     "/api/stories/{story_id}/reject/",
     summary="To Reject a Story ----> management",
-    description="will auto check if current user is admin/staff and check if this story related pet/application belone to this rescue",
+    description="Automatically checks if current user is admin/staff and check if\
+         this story related pet/application belong to this rescue",
     tags=["management"],
 )
 def reject_story(
@@ -207,8 +223,8 @@ def list_account_story(
 
 @router.patch(
     "/api/stories/{story_id}/",
-    summary="update an submitted story before approved/rejected.",
-    description="allowed current user to update a submitted story before approved/rejected.",
+    summary="Update an submitted story before approved/rejected.",
+    description="Allows current user to update a submitted story before approved/rejected.",
     response_model=SuccessStoryOut,
 )
 def update_story(
@@ -239,7 +255,7 @@ def update_story(
 @router.delete(
     "/api/stories/{story_id}/",
     summary="Delete A Story",
-    description="allowed current user to delete a submitted story .",
+    description="Allows current user to delete a submitted story .",
 )
 def delete_story(
     request: Request,

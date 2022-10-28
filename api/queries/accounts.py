@@ -6,10 +6,8 @@ from models.accounts import (
     AccountIn,
     AccountOut,
     AccountList,
-    AccountUpdate,
     AccountDisplay,
 )
-from pymongo.errors import DuplicateKeyError
 from bson.objectid import ObjectId
 from typing import Any
 from acl.nominatim import Nominatim
@@ -26,7 +24,6 @@ class AccountQueries(Queries):
 
     def __init__(self, address_service: Nominatim = Depends()):
         self.address_service = address_service
-
 
     def get(self, email: str) -> Account:
         props = self.collection.find_one({"email": email})
@@ -105,7 +102,6 @@ class AccountQueries(Queries):
             return {"message": f"Account {id} has been deleted!"}
 
     def promote_account(self, email, rescue_id) -> AccountOut:
-        # find_ond_and_update not raise error, return None, before or after document
         acct = self.collection.find_one_and_update(
             {"email": email},
             {
@@ -116,13 +112,11 @@ class AccountQueries(Queries):
         )
         if not acct:
             return None
-        # kick off the user
         acct["id"] = str(acct["_id"])
         SessionQueries().delete_sessions(account_id=acct["id"])
         return AccountOut(**acct)
 
     def demote_account(self, email, rescue_id) -> AccountOut:
-        #
         acct = self.collection.find_one_and_update(
             {"email": email, "rescue_id": rescue_id},
             {
@@ -133,12 +127,10 @@ class AccountQueries(Queries):
         )
         if not acct:
             return None
-        # kick off the user
         acct["id"] = str(acct["_id"])
         SessionQueries().delete_sessions(account_id=acct["id"])
         return AccountOut(**acct)
 
-    # here:
     def set_account_location(
         self, acct: dict, location: dict
     ) -> AccountDisplay:

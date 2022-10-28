@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from sniffio import current_async_library_cvar
 from .auth import authenticator
 from models.application import (
     ApplicationIn,
@@ -20,7 +19,10 @@ not_authorized = HTTPException(
 @router.post(
     "/api/applications/",
     summary="Create Application",
-    description="This will create a new application, need all the form_info and pet_id ,rescue_id ,will auto add current user's account_id . this api will auto check if there is an application from same account to a same pet ",
+    description="This will create a new application, need all\
+        the form_info and pet_id ,rescue_id ,will auto add\
+        current user's account_id . this api will auto check\
+        if there is an application from same account to a same pet ",
 )
 def create_adoption_application(
     app: ApplicationIn,
@@ -45,7 +47,7 @@ def create_adoption_application(
     "/api/accounts/profile/applications/",
     response_model=ApplicationList,
     summary="List all Application for an account profile page",
-    description="This lists all the applicaitons by current loggin user's account_id",
+    description="This lists all the applications by current loggin user's account_id",
 )
 def list_account_applications(
     request: Request,
@@ -65,7 +67,7 @@ def list_account_applications(
     "/api/manage/applications/",
     response_model=ApplicationList,
     summary="List all Application for Rescue ----> management",
-    description="This lists all the applicaitons by rescue_id of current admin/staff",
+    description="This lists all the applications by rescue_id of current admin/staff",
     tags=["management"],
 )
 def list_adoption_applications(
@@ -104,7 +106,10 @@ def detail_application(
     "/api/applications/{application_id}/approve/",
     response_model=ApplicationOut | dict,
     summary="Approve an Application ----> management",
-    description="Approve an application by application_id, will check if there is an approved application based on the same pet_id, if not, change current status to Approved and change all other application have the same pet_id to Rejected",
+    description="Approve an application by application_id, will\
+        check if there is an approved application based on the\
+        same pet_id, if not, change current status to Approved\
+        and change all other application have the same pet_id to Rejected",
     tags=["management"],
 )
 def approve_application(
@@ -150,7 +155,9 @@ def reject_application(
 @router.delete(
     "/api/applications/{application_id}/",
     summary="Delete an Application",
-    description="Delete an application by application_id, allow user to cancle an applicaiton from account profile page, this api will make sure current user is the owner of that applicaiton",
+    description="Delete an application by application_id, allow user\
+        to cancel an applicaiton from account profile page, this api\
+        will make sure current user is the owner of that applicaiton",
 )
 def delete_application(
     application_id: str,
@@ -171,7 +178,7 @@ def delete_application(
     "/api/applications/{application_id}/",
     response_model=ApplicationOut,
     summary="Update Application(by adopter)",
-    description="Allowed adopter to update application details from account profile page",
+    description="Allows adopter to update application details from account profile page",
 )
 def update_application(
     application_id: str,

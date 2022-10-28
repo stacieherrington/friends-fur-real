@@ -15,8 +15,7 @@ import { Select, MenuItem, InputLabel, Button, Typography } from '@mui/material'
 
 export default function ApplicationList() {
   const {
-    data: tokenData,
-    error: tokenError,
+
     isLoading: tokenLoading,
   } = useGetTokenQuery();
   const [logout, { data: logoutData }] = useLogoutMutation();

@@ -1,74 +1,58 @@
-import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import { Modal } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Modal,
+  Typography,
+  Container,
+  IconButton,
+  Alert,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import CloseIcon from "@mui/icons-material/Close";
+
 import Copyright from "../components/Copyright";
+import ModalStyle from "../components/ModalStyle";
+import Notification from "../redux/Notification";
 import { useLoginMutation } from "../redux/api";
-import SignUpForm from "../Signup/Signup";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: 800,
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  mt: 3,
-  overflow: "auto",
-};
-
-export default function LoginForm(props) {
-  // const navigate = useNavigate();
-  const [log, setLog] = useState(false);
-  const logOpen = () => setLog(true);
-  const logClosed = () => setLog(false);
+import {
+  SIGNUP_MODAL,
+  openModal,
+  closeModal,
+  LOGIN_MODAL,
+} from "../redux/slices/modalSlice";
+import { clearForm } from "../redux/slices/accountSlice";
+export default function LoginForm() {
+  const dispatch = useDispatch();
+  const { isOpen, modalType } = useSelector((state) => state.modal);
   const [login, { error }] = useLoginMutation();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    login(event.target);
-    if (error) {
-      alert("INCORRECT CREDENTIALS");
-    }
-  };
 
   return (
     <>
-      {props.petCard ? (
-        <Button onClick={logOpen}>Adopt me!</Button>
-      ) : props.signUp ? (
-        <Button onClick={logOpen}>Already have an account? Sign in!</Button>
-      ) : props.burger ? (
-        <Box sx={{ mx: "auto" }} onClick={logOpen}>
-          Login
-        </Box>
-      ) : (
-        <Button sx={{ color: "#fff" }} onClick={logOpen}>
-          Login
-        </Button>
-      )}
       <Modal
-        open={log}
-        onClose={logClosed}
-        closeAfterTransition
+        open={isOpen && modalType === LOGIN_MODAL}
+        onClose={() => {
+          dispatch(closeModal());
+        }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
+          <IconButton
+            onClick={() => {
+              dispatch(closeModal(), clearForm());
+            }}
+            sx={{ alignItems: "flex-end", mx: 1, my: 1 }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -78,11 +62,23 @@ export default function LoginForm(props) {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component='h1' variant='h5'>
-                Sign in
+                Login
               </Typography>
+
+              {error ? (
+                <Notification>
+                  <Alert severity='error'>{error.data.detail}</Alert>
+                </Notification>
+              ) : null}
               <Box
                 component='form'
-                onSubmit={handleSubmit}
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  login(event.target);
+                  if (!error) {
+                    dispatch(closeModal());
+                  }
+                }}
                 noValidate
                 sx={{ mt: 1 }}
               >
@@ -113,13 +109,20 @@ export default function LoginForm(props) {
                   sx={{ mt: 3, mb: 2 }}
                   color='primary'
                 >
-                  Sign In
+                  Login
                 </Button>
 
-                <SignUpForm onClick={logClosed} />
+                <Button
+                  onClick={() => {
+                    closeModal();
+                    dispatch(openModal(SIGNUP_MODAL));
+                  }}
+                >
+                  {"Don't have an account? Sign Up"}
+                </Button>
               </Box>
             </Box>
-            <Copyright sx={{ mt: 10, mb: 4 }} />
+            <Copyright sx={{ mt: 16 }} />
           </Container>
         </Box>
       </Modal>

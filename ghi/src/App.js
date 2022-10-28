@@ -1,24 +1,22 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DrawerAppBar from "./DrawerAppBar";
-import ApplicationList from "./applications/ApplicationsList";
-import HomePage from "./Homepage";
-// import NavBar from './nav';
-import LoginForm from "./Login/Login";
-import PetsList from "./pets/PetsList";
-import Signup from "./Signup/Signup";
-import PetForm from "./pets/PetForm";
-import StoryForm from "./Story/StoryForm";
-import StoryDetail from "./Story/StoryDetail";
-import StoriesList from "./Story/StoriesList";
-import ManageStaffPage from "./Manage/ManageStaffPage";
-import AccountProfile from "./accounts/AccountProfile";
-import { useState, useEffect } from "react";
-import UpdatePet from "./pets/UpdatePet";
-import ManagePetPage from "./Manage/ManagePetPage";
-import ApplicationDetail from "./applications/ApplicationDetail";
-import ManageStoryPage from "./Manage/ManageStoryPage";
 import { Container } from "@mui/material";
+import DrawerAppBar from "./DrawerAppBar";
+import AccountProfile from "./accounts/AccountProfile";
+import ApplicationList from "./applications/ApplicationsList";
+import ApplicationDetail from "./applications/ApplicationDetail";
+import HomePage from "./Homepage";
+import LoginForm from "./Login/Login";
+import ManageStaffPage from "./Manage/ManageStaffPage";
+import ManagePetPage from "./Manage/ManagePetPage";
+import ManageStoryPage from "./Manage/ManageStoryPage";
+import PetForm from "./pets/PetForm";
+import PetsList from "./pets/PetsList";
+import SignUpForm from "./Signup/Signup";
+import StoryDetail from "./Story/StoryDetail";
+import StoryForm from "./Story/StoryForm";
+import StoriesList from "./Story/StoriesList";
+import UpdatePet from "./pets/UpdatePet";
 
 function App() {
   return (
@@ -29,11 +27,9 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/manage/applications' element={<ApplicationList />} />
-            {/* <Route path='/login' element={<LoginForm />} /> */}
             <Route path='/pets' element={<PetsList />} />
             <Route path='/pets/:petId' element={<UpdatePet />} />
             <Route path='/pets/create' element={<PetForm />} />
-            {/* <Route path='/signup' element={<Signup />} /> */}
             <Route
               path='/applications/:applicationId/stories/new'
               element={<StoryForm />}
@@ -49,6 +45,8 @@ function App() {
               element={<ApplicationDetail />}
             />
           </Routes>
+          <SignUpForm />
+          <LoginForm />
         </Container>
       </BrowserRouter>
     </>

@@ -25,15 +25,12 @@ import { useNavigate } from "react-router-dom";
 import { useGetTokenQuery, useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
 import AccountApplications from "../applications/AccountApplications";
-
-export default function AccountProfile(props) {
+import CircularUnderLoad from "../components/ProgressCircle";
+export default function AccountProfile() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const {
-    data: accountData,
-    error: accountError,
-    isLoading: accountLoading,
-  } = useSingleAccountQuery();
+  const { data: accountData, isLoading: accountLoading } =
+    useSingleAccountQuery();
   const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
 
   if (!token && !tokenLoading) {
@@ -41,16 +38,16 @@ export default function AccountProfile(props) {
       navigate("/");
     }, 0);
   }
-  if (!accountData) {
-    return <>Loading....</>;
+  if (!accountData || accountLoading) {
+    return <CircularUnderLoad />;
   }
   if (accountLoading) {
-    return <>Loading...</>;
+    return <CircularUnderLoad />;
   }
 
   const addressMap = Object.entries(accountData.address);
   return (
-    <Container disableGutters maxWidth={"xl"} sx={{ mt: 10 }}>
+    <Container disableGutters maxWidth={"xl"} sx={{ mt: 10, mb: 6 }}>
       <Grid container spacing={2} columns={{ xs: 4, sm: 6, md: 8, lg: 10 }}>
         <Grid
           sx={{ textAlign: "center" }}
@@ -68,8 +65,6 @@ export default function AccountProfile(props) {
           ) : (
             <Typography variant='h3'>My Profile</Typography>
           )}
-          {/* <ApplicationList /> */}
-          <br></br>
           <AccountApplications />
         </Grid>
         <Grid item xs={4} sm={6} md={8} lg={10}>
@@ -171,7 +166,7 @@ export default function AccountProfile(props) {
                 </Collapse>
               </TableContainer>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ mb: 2 }}>
               <UpdateAccountForm data={accountData} />
             </CardActions>
           </Card>

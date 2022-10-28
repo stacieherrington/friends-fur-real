@@ -1,41 +1,36 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import { Modal } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Modal,
+  Typography,
+  Container,
+  IconButton,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import CloseIcon from "@mui/icons-material/Close";
 import Copyright from "../components/Copyright";
 import { useSignupMutation } from "../redux/api";
 import { updateField } from "../redux/slices/accountSlice";
 import { preventDefault } from "../redux/utility";
-import LoginForm from "../Login/Login";
+import ModalStyle from "../components/ModalStyle";
+import Notification from "../redux/Notification";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: 800,
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  mt: 3,
-  overflow: "auto",
-};
+import {
+  SIGNUP_MODAL,
+  closeModal,
+  openModal,
+  LOGIN_MODAL,
+} from "../redux/slices/modalSlice";
 
-export default function SignUpForm(props) {
+export default function SignUpForm() {
   const dispatch = useDispatch();
-  const [sign, setSign] = useState(false);
-  const signOpen = () => setSign(true);
-  const signClosed = () => setSign(false);
+  const { isOpen, modalType } = useSelector((state) => state.modal);
   const { email, password, zip_code } = useSelector((state) => state.account);
   const [signup, { error, isSuccess }] = useSignupMutation();
 
@@ -46,29 +41,27 @@ export default function SignUpForm(props) {
   );
   return (
     <>
-      {props.appBar ? (
-        <Button sx={{ color: "#fff" }} onClick={signOpen}>
-          Signup
-        </Button>
-      ) : props.burger ? (
-        <Box sx={{ mx: "auto" }} onClick={signOpen}>
-          Signup
-        </Box>
-      ) : (
-        <Button onClick={signOpen}>{"Don't have an account? Sign Up"}</Button>
-      )}
       <Modal
-        open={sign}
-        onClose={signClosed}
+        open={isOpen && modalType === SIGNUP_MODAL}
+        onClose={() => {
+          dispatch(closeModal());
+        }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
+          <IconButton
+            onClick={() => {
+              dispatch(closeModal());
+            }}
+            sx={{ alignItems: "flex-end", mx: 1, my: 1 }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -80,10 +73,13 @@ export default function SignUpForm(props) {
               <Typography component='h1' variant='h5'>
                 Sign up
               </Typography>
+              {!error ? (
+                <Notification type='danger'>{error}</Notification>
+              ) : null}
               <Box
                 component='form'
                 onSubmit={preventDefault(signup, () => {
-                  signClosed();
+                  dispatch(closeModal());
                   return {
                     email,
                     password,
@@ -144,14 +140,18 @@ export default function SignUpForm(props) {
                 </Button>
                 <Grid container justifyContent='flex-end'>
                   <Grid item>
-                    <Link variant='body2'>
-                      <LoginForm onClick={signClosed} signUp={"signUp"} />
-                    </Link>
+                    <Button
+                      onClick={() => {
+                        dispatch(openModal(LOGIN_MODAL));
+                      }}
+                    >
+                      Already have an account? Sign in!
+                    </Button>
                   </Grid>
                 </Grid>
               </Box>
             </Box>
-            <Copyright sx={{ mt: 10 }} />
+            <Copyright sx={{ mt: 6 }} />
           </Container>
         </Box>
       </Modal>

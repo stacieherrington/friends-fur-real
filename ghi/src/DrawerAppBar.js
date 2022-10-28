@@ -17,13 +17,18 @@ import { Link, Avatar } from "@mui/material";
 import ManagementMenu from "./Manage/ManagementMenu";
 import { useGetTokenQuery } from "./redux/api";
 import { useLogoutMutation } from "./redux/api";
-import Login from "./Login/Login";
-import SignUpForm from "./Signup/Signup";
-import LoginForm from "./Login/Login";
+import { useDispatch } from "react-redux";
+import {
+  SIGNUP_MODAL,
+  openModal,
+  LOGIN_MODAL,
+} from "./redux/slices/modalSlice";
 
 const drawerWidth = 240;
 
 function DrawerAppBar(props) {
+  const dispatch = useDispatch();
+
   const {
     data: tokenData,
     error: tokenError,
@@ -70,27 +75,60 @@ function DrawerAppBar(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link underline='none'>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ mx: "auto" }}>
-              <SignUpForm burger='burger' />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link underline='none'>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ mx: "auto" }}>
-              <LoginForm burger='burger' />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link href='/login' underline='none'>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }} onClick={logout}>
-              <ListItemText primary={"Logout"} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        {!tokenData ? (
+          <>
+            <Link underline='none'>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ mx: "auto" }}>
+                  <Box
+                    sx={{ mx: "auto" }}
+                    onClick={() => {
+                      dispatch(openModal(SIGNUP_MODAL));
+                    }}
+                  >
+                    Signup
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link underline='none'>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ mx: "auto" }}>
+                  <Box
+                    sx={{ mx: "auto" }}
+                    onClick={() => {
+                      dispatch(openModal(LOGIN_MODAL));
+                    }}
+                  >
+                    Login
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href='/' underline='none'>
+              <ListItem disablePadding>
+                <ListItemButton sx={{ textAlign: "center" }} onClick={logout}>
+                  <ListItemText primary={"Logout"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link href='/accounts/profile/' underline='none'>
+              <ListItem disablePadding>
+                <ListItemButton
+                  size='large'
+                  aria-haspopup='true'
+                  color='inherit'
+                  align='center'
+                >
+                  <AccountCircle />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          </>
+        )}
       </List>
     </Box>
   );
@@ -156,9 +194,23 @@ function DrawerAppBar(props) {
               </>
             ) : (
               <>
-                <SignUpForm appBar='appBar' />
+                <Button
+                  sx={{ color: "#fff" }}
+                  onClick={() => {
+                    dispatch(openModal(SIGNUP_MODAL));
+                  }}
+                >
+                  Signup
+                </Button>
 
-                <Login />
+                <Button
+                  sx={{ color: "#fff" }}
+                  onClick={() => {
+                    dispatch(openModal(LOGIN_MODAL));
+                  }}
+                >
+                  Login
+                </Button>
               </>
             )}
           </Box>

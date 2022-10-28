@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
@@ -15,32 +15,26 @@ import {
   FormControlLabel,
   Checkbox,
   Modal,
+  IconButton,
 } from "@mui/material";
 import PetsIcon from "@mui/icons-material/Pets";
-import PetCard from "../pets/PetCard";
 import SmokeFreeSharpIcon from "@mui/icons-material/SmokeFreeSharp";
 import SmokingRoomsSharpIcon from "@mui/icons-material/SmokingRoomsSharp";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { useAddApplicationMutation, useGetTokenQuery } from "../redux/api";
+import { useAddApplicationMutation } from "../redux/api";
 import Copyright from "../components/Copyright";
-import { updateField } from "../redux/slices/applicationSlice";
+import { updateField, updateCheck } from "../redux/slices/applicationSlice";
 import { preventDefault } from "../redux/utility";
-import Login from "../Login/Login";
+import {
+  APPLICATION_MODAL,
+  closeModal,
+  openModal,
+} from "../redux/slices/modalSlice";
+import ModalStyle from "../components/ModalStyle";
+import Notification from "../redux/Notification";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: 800,
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  mt: 3,
-  overflow: "auto",
-};
 const residences = [
   { name: "Single Family Home" },
   { name: "Single Family w/ large yard" },
@@ -50,17 +44,12 @@ const residences = [
 ];
 
 export default function ApplicationForm(props) {
-  const {
-    data: token,
-    error,
-    isSuccess: tokenSuccess,
-    isLoading,
-  } = useGetTokenQuery();
-  const { pet_id, rescue_id } = props;
-  const [adopt, setAdopt] = useState(false);
-  const adoptOpen = () => setAdopt(true);
-  const adoptClose = () => setAdopt(false);
   const dispatch = useDispatch();
+  const { isOpen, modalType } = useSelector((state) => state.modal);
+  const { pet_id, rescue_id } = props;
+  console.log(pet_id, rescue_id);
+  console.log(props);
+
   const {
     first_name,
     last_name,
@@ -82,33 +71,54 @@ export default function ApplicationForm(props) {
     residence_owned,
     status,
   } = useSelector((state) => state.application);
-  const [application, { isSuccess }] = useAddApplicationMutation();
+
+  const [application, { error, isSuccess }] = useAddApplicationMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
-  const requiredError = [agrees_to_terms].filter((v) => v).length < 1;
-
+  const check = useCallback(
+    (e) =>
+      dispatch(
+        updateCheck({ field: e.target.name, checked: e.target.checked })
+      ),
+    [dispatch]
+  );
+  const requiredError = agrees_to_terms === false || null;
+  // if (applicationError){
+  //   <></>
+  // }
   return (
     <>
-      {token ? (
-        <Button onClick={adoptOpen}>Adopt me!</Button>
-      ) : (
-        <Login petCard='petCard' />
-      )}
+      <Button
+        onClick={() => {
+          dispatch(openModal(APPLICATION_MODAL));
+        }}
+      >
+        Adopt me!
+      </Button>
       <Modal
-        open={adopt}
-        onClose={adoptClose}
+        open={isOpen && modalType === APPLICATION_MODAL}
+        onClose={() => {
+          dispatch(closeModal());
+        }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
-          <Container component='main' maxWidth='xs'>
+        <Box sx={ModalStyle}>
+          <IconButton
+            onClick={() => {
+              dispatch(closeModal());
+            }}
+            sx={{ alignItems: "flex-end", mx: 1, my: 1 }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Container component='main'>
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -117,13 +127,18 @@ export default function ApplicationForm(props) {
               <Avatar sx={{ m: 1, bgcolor: "#294C60" }}>
                 <PetsIcon />
               </Avatar>
+              {error ? (
+                <Notification type='danger'>{error.data.detail}</Notification>
+              ) : null}
               <Typography component='h1' variant='h5'>
                 Adoption Application Form
               </Typography>
               <Box
                 component='form'
                 onSubmit={preventDefault(application, () => {
-                  adoptClose();
+                  if (isSuccess) {
+                    dispatch(closeModal());
+                  }
                   return {
                     first_name,
                     last_name,
@@ -145,8 +160,8 @@ export default function ApplicationForm(props) {
                     wants_preapproval,
                     agrees_to_terms,
                     residence_owned,
-                    pet_id: pet_id,
                     rescue_id: rescue_id,
+                    pet_id: pet_id,
                     status,
                   };
                 })}
@@ -230,7 +245,7 @@ export default function ApplicationForm(props) {
                   label='Phone Number'
                   onChange={field}
                   value={phone_number}
-                  type='text'
+                  type='tel'
                   name='phone_number'
                 />
                 <TextField
@@ -263,6 +278,7 @@ export default function ApplicationForm(props) {
                   name='residence_type'
                   label='Residence Type'
                   onChange={field}
+                  autoComplete='current-residence-type'
                   value={residence_type}
                 >
                   {residences.map((e) => (
@@ -280,8 +296,8 @@ export default function ApplicationForm(props) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={has_dogs}
-                            onChange={field}
+                            checked={has_dogs}
+                            onChange={check}
                             name='has_dogs'
                           />
                         }
@@ -290,8 +306,8 @@ export default function ApplicationForm(props) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={has_cats}
-                            onChange={field}
+                            checked={has_cats}
+                            onChange={check}
                             name='has_cats'
                           />
                         }
@@ -300,9 +316,8 @@ export default function ApplicationForm(props) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={smoke_free_home}
-                            defaultChecked
-                            onChange={field}
+                            checked={smoke_free_home}
+                            onChange={check}
                             name='smoke_free_home'
                             icon={<SmokingRoomsSharpIcon color='error' />}
                             checkedIcon={<SmokeFreeSharpIcon color='success' />}
@@ -315,13 +330,14 @@ export default function ApplicationForm(props) {
                   <FormControl component='fieldset' variant='standard'>
                     <FormLabel component='legend'>
                       <br></br>
+                      <br></br>
                     </FormLabel>
                     <FormGroup>
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={has_small_children}
-                            onChange={field}
+                            checked={has_small_children}
+                            onChange={check}
                             name='has_small_children'
                           />
                         }
@@ -330,8 +346,8 @@ export default function ApplicationForm(props) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={residence_owned}
-                            onChange={field}
+                            checked={residence_owned}
+                            onChange={check}
                             name='residence_owned'
                           />
                         }
@@ -340,8 +356,8 @@ export default function ApplicationForm(props) {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            value={wants_preapproval}
-                            onChange={field}
+                            checked={wants_preapproval}
+                            onChange={check}
                             name='wants_preapproval'
                           />
                         }
@@ -362,8 +378,8 @@ export default function ApplicationForm(props) {
                       control={
                         <Checkbox
                           checkedIcon={<DoneOutlineSharpIcon color='success' />}
-                          value={agrees_to_terms}
-                          onChange={field}
+                          checked={agrees_to_terms}
+                          onChange={check}
                           name='agrees_to_terms'
                         />
                       }
