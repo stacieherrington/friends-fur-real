@@ -1,3 +1,8 @@
+10/28/2022
+
+Worked with the whole group to test the site and fix bugs. Added logic to display share your story link on the profile page application list to display only if a story hasn't been written. Updated readme.
+
+
 10/27/2022
 
 Worked with the whole group to test the site and fix bugs. Fixed application table on profile page to display pet information. Fixed bug on pet detail popover. Added popovers to the applications table. Fixed some display logic on the story detail page. Fixed bugs and style on account profile applications list. Fixed redirect on profile page when not logged in. Updated README.
