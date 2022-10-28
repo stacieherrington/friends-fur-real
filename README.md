@@ -112,6 +112,32 @@ HomePage preview with random display of pets and stories:
 ![Semantic description of image](/preview/random_display.gif)
 <br>
 
+base user login:
+<br>
+![Semantic description of image](/preview/base_user_login.gif)
+<br>
+
+Check pet detail:
+<br>
+![Semantic description of image](/preview/detail_pet.gif)
+<br>
+
+Filter pets by type:
+<br>
+![Semantic description of image](/preview/filter_pets_by_type.gif)
+<br>
+
+Profile_page:
+<br>
+![Semantic description of image](/preview/profile_page.gif)
+<br>
+
+Logout:
+<br>
+![Semantic description of image](/preview/logout.gif)
+<br>
+
+
 ## Seeing the data
 
 You can see the data in MongoDB in the `fur` database.
