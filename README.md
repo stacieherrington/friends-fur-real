@@ -154,12 +154,12 @@ Review Applications:
 
 Review Stories:
 <br>
-![Semantic description of image](/preview/review_sotry.gif)
+![Semantic description of image](/preview/review_story.gif)
 <br>
 
 Manage Staff. Promote/Demote staff:
 <br>
-![Semantic description of image](/preview/Promote_demote_staff.gif)
+![Semantic description of image](/preview/Promote_Demote_staff.gif)
 <br>
 
 
