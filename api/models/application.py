@@ -43,11 +43,22 @@ class ApplicationUpdate(BaseModel):
     date_ready: str | None
     wants_preapproval: bool | None
     agrees_to_terms: bool | None
+    story_written: bool | None
+
 
 
 class ApplicationOut(ApplicationIn):
     id: str
+    story_written: bool | None
+
+
+
+class ApplicationOutWithPet(ApplicationOut):
+    pet: PetOut
 
 
 class ApplicationList(BaseModel):
     applications: List[ApplicationOut]
+
+class ApplicationListWithPet(BaseModel):
+    applications: List[ApplicationOutWithPet]

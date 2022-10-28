@@ -22,7 +22,8 @@ import {
   SIGNUP_MODAL,
   openModal,
   LOGIN_MODAL,
-} from "./redux/slices/modalSlice";
+} from "./redux/slices/modalSlice";import { NavLink } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -180,17 +181,18 @@ function DrawerAppBar(props) {
                 <Button href='/' sx={{ color: "#fff" }} onClick={logout}>
                   Logout
                 </Button>
-
-                <IconButton
-                  size='large'
-                  aria-label='account of current user'
-                  aria-controls='menu-appbar'
-                  aria-haspopup='true'
-                  color='inherit'
-                  href='/accounts/profile/'
-                >
-                  <AccountCircle />
-                </IconButton>
+                <NavLink to="/accounts/profile/" style={() => ({color: "white"})}>
+                  <IconButton
+                    size='large'
+                    aria-label='account of current user'
+                    aria-controls='menu-appbar'
+                    aria-haspopup='true'
+                    color='inherit'
+                    // href='/accounts/profile/'
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </NavLink>
               </>
             ) : (
               <>

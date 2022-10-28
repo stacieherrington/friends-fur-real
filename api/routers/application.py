@@ -5,6 +5,7 @@ from models.application import (
     ApplicationList,
     ApplicationOut,
     ApplicationUpdate,
+    ApplicationListWithPet,
 )
 from queries.application import ApplicationQueries
 
@@ -45,7 +46,7 @@ def create_adoption_application(
 
 @router.get(
     "/api/accounts/profile/applications/",
-    response_model=ApplicationList,
+    response_model=ApplicationListWithPet,
     summary="List all Application for an account profile page",
     description="This lists all the applications by current loggin user's account_id",
 )
@@ -56,7 +57,7 @@ def list_account_applications(
 ):
     if account and authenticator.cookie_name in request.cookies:
         account_id = account["id"]
-        return ApplicationList(
+        return ApplicationListWithPet(
             applications=queries.list_account_applications(account_id)
         )
     else:

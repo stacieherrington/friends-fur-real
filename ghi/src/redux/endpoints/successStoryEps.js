@@ -11,7 +11,7 @@ export function SuccessStoryEndpoints(builder) {
           body: formData,
         };
       },
-      invalidateTags: [{ type: "SuccessStory", id: "LIST" }],
+      invalidatesTags: [{ type: "SuccessStory", id: "LIST" }, "Application"],
     }),
     listSuccessStory: builder.query({
       query: () => `/api/stories/`,

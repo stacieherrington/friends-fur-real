@@ -3,10 +3,13 @@ from typing import List
 from models.application import (
     ApplicationIn,
     ApplicationOut,
+    ApplicationOutWithPet,
+    ApplicationUpdate,
 )
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
-from .pet import PetQueries
+from .pet import PetQueries, PetOut
+import sys
 
 
 class ApplicationQueries(Queries):
@@ -39,11 +42,30 @@ class ApplicationQueries(Queries):
             return ApplicationOut(**app, id=application_id)
 
     def list_account_applications(self, id) -> List[ApplicationOut]:
-        response = self.collection.find({"account_id": id})
+        response = self.collection.aggregate(
+            [
+                {"$match": {"account_id": id}},
+                {"$addFields": {"petObjId": {"$toObjectId": "$pet_id"}}},
+                {
+                    "$lookup": {
+                        "from": "pets",
+                        "localField": "petObjId",
+                        "foreignField": "_id",
+                        "as": "pets",
+                    }
+                },
+            ]
+        )
         apps = []
         for app in response:
-            app["id"] = str(app["_id"])
-            apps.append(ApplicationOut(**app))
+            try:
+                app["id"] = str(app["_id"])
+                pet = app["pets"][0]
+                pet["id"] = str(pet["_id"])
+                app["pet"] = pet
+                apps.append(ApplicationOutWithPet(**app))
+            except IndexError:
+                print(f"BAD DATA FOR APPLICATION {app['id']}", file=sys.stderr)
         return apps
 
     def approve_application(self, application_id) -> ApplicationOut:
@@ -93,7 +115,7 @@ class ApplicationQueries(Queries):
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
-    def update_application(self, application_id, data) -> ApplicationIn:
+    def update_application(self, application_id: str, data: ApplicationUpdate) -> ApplicationOut:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(application_id)},
