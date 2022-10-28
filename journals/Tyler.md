@@ -41,3 +41,30 @@
 - I mostly worked on the application form which by the end of Oct 18, is fully functioning. It's a very large form and a lot of fields.  I experimented with using FormData() instead of useState().  It makes a lot of sense considering useState() just gets reset upon submission.  There's a lot that goes into trying to make a form with state VS FormData() but I was not able to get all fields to successfully carry over upon submission. 
 - I also experimented with modals.  If all goes well, I should be able to make any form a modal instead of having it live on it's own page. This may require more redux endpoints though, but we'll see going forward.
 
+## October 19-29 2022
+- Somehow I lost a few journals in branches but I'll be doing my best to try to catch up my journaling.  I thought I had up until the 21st but twice now ive somehow lost journals on branches.
+- October 19-21 I started working on application form.  I also finally added the a miniaturized version of the entire store that I created.  Application modal and form started out living on different files.  I did a lot of work with Signup form and Login form too.  I've run into a lot of hiccups and on the 21st.  We ended up utilizing a few more endpoints but they're not all exactly fully functioning or used. 
+-- October 21 I started a new branch because somehow when i merged into main I accidently deleted one of my teammates files, PetList.js.  Luckily, I thought it might happen, so I had saved the files prior to my merge and supplied them to my teammate.
+--October 22, 23 I worked all weekend on a branch.  I spent a lot of time making changes to different queries/mutations to make them all work.  When originally attempting to set up around my initial 30+ endpoints, all stored across multiple files, I only ever made sure they were working by supplying them an '_id' string value within them and checking them on the redux-dev-tools to ensure that they were properly receiving data.  At that point, I had not been able to utilize any of the mutations.  
+--October 24 I made a courageous move that I never did before, but it's become a much nicer experience using Gitlab overall.  Prior to this, on my own branch, this would be my process:
+-git add.
+-git commit -m 'message'
+-git checkout main
+-git pull main
+-git merge -mybranch-
+-git push
+ I found that this was not the best process, it often left me very distraught and nervous for merging.  The better process I ended up learning was to just simply be on my own branch and this is the process: 
+-git add .
+-git commit -m "message"
+-git push
+-git checkout main
+-git pull
+-git checkout -mybranch-
+-git merge main
+This is the best way for me now because I can resolve conflicts within my own branch without needing to worry about causing problems in main.
+-October 25-29 I spent a lot of time in redux and modals.  I made some changes to other peoples files but ultimately I ended up being able to achieve a lot of usefulness with redux.  I was able to create my own application slice and which was pretty cool.  I ended up being able to also make my account update form which populates the fields of the form with what is already existing.  The complexity was pretty high.  Modals started giving me a bit of problem on Oct 28 when I realized that the signup and login forms, which each have a link to the other modal, would render unlimitedly render each modal ontop of one another.  There was no conflict, because they would all close upon submission, but the screen continued to get darker because of the slight the way it slightly filtered out the backdrop. Candice helped me grasp a better understanding of how to take advantage of redux, and I went on to be successful several times.  I ended up fixing my application form checkboxes by creating an extra reducer on my application form to handle specific situations when I had checkboxes vs values.  If i kept a value on a checkbox, it would end up giving me back the string version of my boolean value as oppoosed to the boolean value changing.  The first time it would change to a string, it was broken.
+--October 29 I finalized a lot of different pieces of code.  I cleaned up a lot of extra comments and unused impots and made a lot of other functionality work correctly.  I don't think we had too many unused imports or overuse of comments.
+
+Overall I feel great about the project coming to an end, but I do wish today was Monday to have some more time to get a few extra features working like my FavoritePets which is not living on main at the moment, I couldn't quite get everything to function properly because of the need to make an extremely complex backend that would take a pet id string, search for it based on the ObjectId() in mongodb, then translate all of that to be able to add the pet to my list of favorites without actually just storing the pet on my account.
+
+Thanks again to all my teammates,we did a great job

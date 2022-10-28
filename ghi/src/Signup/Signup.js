@@ -32,7 +32,7 @@ export default function SignUpForm() {
   const dispatch = useDispatch();
   const { isOpen, modalType } = useSelector((state) => state.modal);
   const { email, password, zip_code } = useSelector((state) => state.account);
-  const [signup, { error, isSuccess }] = useSignupMutation();
+  const [signup, { error }] = useSignupMutation();
 
   const field = useCallback(
     (e) =>
@@ -134,7 +134,7 @@ export default function SignUpForm() {
                   type='submit'
                   fullWidth
                   variant='contained'
-                  sx={{ mt: 3, mb: 2,bgcolor: "#294C60" }}
+                  sx={{ mt: 3, mb: 2, bgcolor: "#294C60" }}
                 >
                   Sign Up
                 </Button>
