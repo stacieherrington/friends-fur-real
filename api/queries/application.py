@@ -4,6 +4,7 @@ from models.application import (
     ApplicationIn,
     ApplicationOut,
     ApplicationOutWithPet,
+    ApplicationUpdate,
 )
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
@@ -118,7 +119,7 @@ class ApplicationQueries(Queries):
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
-    def update_application(self, application_id, data) -> ApplicationIn:
+    def update_application(self, application_id: str, data: ApplicationUpdate) -> ApplicationOut:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(application_id)},
