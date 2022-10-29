@@ -36,7 +36,6 @@ export const apiSlice = createApi({
 });
 
 export const {
-  // useAddAccountMutation,
   useAddApplicationMutation,
   useAddPetMutation,
   useAddRescueMutation,
