@@ -1,30 +1,54 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Popover,
+  IconButton,
+} from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {
   useDeletePetMutation,
   useGetCurrentAccountQuery,
   useGetTokenQuery,
+  usePatchFavoritePetMutation,
 } from "../redux/api";
-import { Popover, Box } from "@mui/material";
 import PetDetailPopover from "./PetDetailPopover";
 import { useDispatch } from "react-redux";
 import { LOGIN_MODAL, openModal } from "../redux/slices/modalSlice";
 import { preventDefault } from "../redux/utility";
 import ApplicationForm from "../applications/ApplicationForm";
+
+function FavoritePet({ pet }) {
+  const [petFavorite, { data: favData, isLoading: loadingFavData }] =
+    usePatchFavoritePetMutation(pet.id);
+  return (
+    <IconButton
+      color='error'
+      size='small'
+      onClick={() => {
+        petFavorite(pet);
+      }}
+    >
+      Favorite
+      <FavoriteBorderIcon />
+    </IconButton>
+  );
+}
+
 export default function PetCard(props) {
   const dispatch = useDispatch();
   const { data: token } = useGetTokenQuery();
 
-  const { id, rescue_id } = props.pet;
+  const { id, rescue_id, name } = props.pet;
+  const { pet } = props;
   const [open, setOpen] = React.useState(false);
   const [deletePet] = useDeletePetMutation();
   const { data } = useGetCurrentAccountQuery();
@@ -58,20 +82,25 @@ export default function PetCard(props) {
       }}
     >
       {props.pet.pictures && props.pet.pictures.length ? (
-        <CardMedia          
-          component="img"
-          width="100%"
+        <CardMedia
+          component='img'
+          width='100%'
           src={props.pet.pictures}
           alt={props.pet.breed}
         />
       ) : null}
-      <CardContent sx={{ pl: 2, pt:1}}>
-        <Typography gutterBottom variant="h5" sx={{fontWeight:"bold"}} component="div">
+      <CardContent sx={{ pl: 2, pt: 1 }}>
+        <Typography
+          gutterBottom
+          variant='h5'
+          sx={{ fontWeight: "bold" }}
+          component='div'
+        >
           {props.pet.name}
         </Typography>
         <Typography
-          variant="body2"
-          color="text.secondary"
+          variant='body2'
+          color='text.secondary'
           sx={{
             display: "-webkit-box",
             overflow: "hidden",
@@ -82,10 +111,9 @@ export default function PetCard(props) {
           {props.pet.description}
         </Typography>
       </CardContent>
-      <CardActions sx={{pt:2, pb:0}}>
+      <CardActions sx={{ pt: 2, pb: 0 }}>
         <Button
-          sx={{ textAlign: "center", paddingLeft:1 }}
-     
+          sx={{ textAlign: "center", paddingLeft: 1 }}
           aria-describedby={detailId}
           onClick={handleDetailClick}
         >
@@ -115,20 +143,21 @@ export default function PetCard(props) {
             Adopt me!
           </Button>
         )}
+        <FavoritePet petId={id} petName={name} pet={pet} />
       </CardActions>
-      <CardActions sx={{pt:0, pb:0, pl:1.3}} >
+      <CardActions sx={{ pt: 0, pb: 0, pl: 1.3 }}>
         {isRescuer && (
           <>
             <Button
-              sx={{ pt: 0, mb: 5, pr:4 }}
-              size="small"
+              sx={{ pt: 0, mb: 5, pr: 4 }}
+              size='small'
               href={`/pets/${props.pet.id}`}
             >
               Update
             </Button>
             <Button
               sx={{ pt: 0, mb: 5, pl: 3 }}
-              size="small"
+              size='small'
               onClick={handleClickOpen}
             >
               Delete
@@ -136,11 +165,11 @@ export default function PetCard(props) {
             <Dialog
               open={open}
               onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
             >
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id='alert-dialog-description'>
                   Are you sure you want to delete this pet?
                 </DialogContentText>
               </DialogContent>

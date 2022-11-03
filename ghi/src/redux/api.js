@@ -55,6 +55,7 @@ export const {
   useListAccountApplicationsQuery,
   useListAccountsQuery,
   useListAllApplicationsQuery,
+  useListFavoritePetsQuery,
   useListPetsQuery,
   useListRescueApplicationsQuery,
   useListRescuesQuery,

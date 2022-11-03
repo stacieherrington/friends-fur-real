@@ -34,6 +34,15 @@ export function ApplicationEndpoints(builder) {
       }),
       providesTags: () => ["Application"],
     }),
+    listFavoritePets: builder.query({
+      query: () => ({
+        method:'get',
+        url:'/api/accounts/profile/pets/',
+        credentials:'include',
+        headers:{'Content-Type':'application/json'}
+      }),
+      providesTags:()=>['Application'],
+    }),
     listAllApplications: builder.query({
       query: () => `/api/applications/`,
       providesTags: () => ["Application"],
@@ -80,5 +89,6 @@ export function ApplicationEndpoints(builder) {
         { type: "Application", id: application.id },
       ],
     }),
+
   };
 }

@@ -124,12 +124,12 @@ export function AccountEndpoints(builder) {
       invalidatesTags: ["Account"],
     }),
     patchFavoritePet: builder.mutation({
-      query: (petId) => ({
+      query: (pet) => ({
         method: "PATCH",
         url: "/api/accounts/profile/pets/",
-        body: petId,
+        body: pet,
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
       }),
       invalidatesTags: () => ["Account"],
     }),

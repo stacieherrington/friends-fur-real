@@ -11,12 +11,13 @@ from jwtdown_fastapi.authentication import Token
 from .auth import authenticator
 from pydantic import BaseModel
 
+from queries.pet import PetQueries
 from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
 from queries.sessions import SessionQueries
-
+from models.pet import PetOut
 from models.accounts import (
     Account,
     AccountIn,
@@ -24,6 +25,9 @@ from models.accounts import (
     AccountList,
     AccountUpdate,
     AccountDisplay,
+    PetId,
+    AccountPets,
+    PetName,
 )
 from acl.nominatim import Nominatim
 
@@ -263,3 +267,80 @@ async def localize_account(
         return response
     else:
         raise HTTPException(404, "Cannot set location")
+
+
+@router.patch(
+    "/api/accounts/profile/pets/",
+    tags=["Accounts"],
+)
+async def favorite_pet(
+    request: Request,
+    pet: PetOut,
+    account: dict = Depends(authenticator.try_get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+
+    response = queries.favorite_pet(account_id, pet)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This account id does not exist!")
+
+
+@router.delete(
+    "/api/accounts/profile/pets/",
+    tags=["Accounts"],
+)
+async def delete_favorite(
+    request: Request,
+    pet: PetOut,
+    account: dict = Depends(authenticator.try_get_current_account_data),
+    queries: AccountQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+    else:
+        raise not_authorized
+
+    response = queries.delete_favorite(account_id, pet)
+    if response:
+        return response
+    else:
+        raise HTTPException(404, "This account id does not exist!")
+
+
+# @router.get(
+#     "/api/accounts/profile/pets/",
+#     tags=["Accounts"],
+#     response_model=AccountPets,
+# )
+# async def list_favorites(
+#     request: Request,
+#     account: dict = Depends(authenticator.get_current_account_data),
+#     queries: AccountQueries = Depends(),
+# ):
+#     if account and authenticator.cookie_name in request.cookies:
+#         account_id = account["id"]
+#         return AccountPets(favorites=queries.list_favorites(account_id))
+#     else:
+#         raise not_authorized
+
+
+@router.get(
+    "/api/accounts/profile/pets/",
+    tags=["Accounts"],
+)
+async def get_favorites(
+    request: Request,
+    account: dict = Depends(authenticator.get_current_account_data),
+    queries: AccountQueries = Depends(),
+    # petQuery: PetQueries = Depends(),
+):
+    if account and authenticator.cookie_name in request.cookies:
+        account_id = account["id"]
+        # pets=petQuery.get_favorites(account_id, pet_id)
+        return queries.get_favorites(account_id)

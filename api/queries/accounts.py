@@ -1,5 +1,6 @@
 from pymongo import ReturnDocument
 from queries.sessions import SessionQueries
+from pymongo import MongoClient
 from .client import Queries
 from models.accounts import (
     Account,
@@ -7,6 +8,7 @@ from models.accounts import (
     AccountOut,
     AccountList,
     AccountDisplay,
+    AccountPets,
 )
 from bson.objectid import ObjectId
 from typing import Any
@@ -159,3 +161,180 @@ class AccountQueries(Queries):
             query = address_string.replace(" ", "+")
             location = self.address_service.location_from_address(query)
         account["location"] = location
+
+    def favorite_pet(self, account_id, pet) -> AccountPets:
+
+        # pet = ObjectId(pet_id.dict()["pet_id"])
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(account_id)},
+            {
+                "$addToSet": {"favorites": {"pet_id": pet.id}},
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        print(acct)
+        if not acct:
+            return None
+        # acct.favorites["pets"] = str(acct.favorites["pets"])
+        acct["id"] = str(acct["_id"])
+        return AccountPets(**acct)
+
+    def delete_favorite(self, account_id, pet) -> AccountDisplay:
+
+        acct = self.collection.find_one_and_update(
+            {"_id": ObjectId(account_id)},
+            {
+                "$pull": {"favorites": {"pet_id": pet.id}},
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        if not acct:
+            return None
+        return {"Successfully removed pet from favorites"}
+
+    # def list_favorites(self, account_id):
+
+    # def list_favorites(self, account_id):
+    #     account = self.collection.aggrgate(
+    #         {"_id": account_id},
+
+    #         )
+    # pet = self.collection.find({"$favorites":['_id']})
+    # favs=[]
+    # for fav in pet:
+    #     if pet in account:
+    #         favs.append(pet)
+    # return favs
+
+    def get_favorites(self, account_id):
+        account = (
+            self.collection.find(
+                {"_id": ObjectId(account_id)},
+                # {
+                #     "from": "pets",
+                #     "pipeline": [
+                #         {"$unwind": "$_id"},
+                # [
+                #     {
+                #         "$lookup": {
+                #             "from": "pets",
+                #             "localField": "favorites.pet_id",
+                #             "foreignField": "_id",
+                #             "as": "FavoritePets",
+                #         }
+                #     },
+                #     # {'$map': {'input': '$favorites', 'as' :'pet_id','in':'$pet_id'}},
+                #     {
+                #         "$match": {
+                #             "_id": {
+                #                 "$map": {
+                #                     "input": "$favorites",
+                #                     "as": "pet_id",
+                #                     "in": "$pet_id",
+                #                 }
+                #             }
+                #         }
+                #     },
+                # ],
+                #     ],
+                #     "as": "pets",
+                # },
+            ),
+        )
+        # result = self.collection["accounts"].aggregate(
+        #     [
+        #         {
+        #             "$lookup": {
+        #                 "from": "pets",
+        #                 "pipeline": [{"$unwind": "$_id"}, {"$match": {}}],
+        #                 "as": "pets",
+        #             }
+        #         },
+        #         {"$project": {"favorites": "1", "pets": "1"}},
+        #     ]
+        # )
+
+        # Requires the PyMongo package.
+        # https://api.mongodb.com/python/current
+
+        result = self.collection["accounts"].aggregate(
+            [
+                {
+                    "$lookup": {
+                        "from": "pets",
+                        "pipeline": [
+                            {"$unwind": "$_id"},
+                            {"$match": {"_id": "$account.favorites.pet_id"}},
+                        ],
+                        "as": "pets",
+                    }
+                },
+                {"$project": {"favorites": "1", "pets": "1"}},
+            ]
+        )
+
+        return [result]
+        # pets = self.collection.aggregate(
+        #     {
+        #         "from": "pets",
+        #         "pipeline": [
+        #             {"$unwind": "$_id"},
+        #             {
+        #                 "$match": {
+        #                     "_id": {
+        #                         "$map": {
+        #                             "input": "$favorites",
+        #                             "as": "pet_id",
+        #                             "in": "$pet_id",
+        #                         }
+        #                     }
+        #                 }
+        #             },
+        #         ],
+        #         "as": "pets",
+        #     }
+        #         [
+        #             {
+        #                 "$lookup": {
+        #                     "from": "pets",
+        #                     "localField": "favorites.pet_id",
+        #                     "foreignField": "_id",
+        #                     "as": "FavoritePets",
+        #                 }
+        #             },
+        #             # {'$map': {'input': '$favorites', 'as' :'pet_id','in':'$pet_id'}},
+        #             {
+        #                 "$match": {
+        #                     "_id": {
+        #                         "$map": {
+        #                             "input": "$favorites",
+        #                             "as": "pet_id",
+        #                             "in": "$pet_id",
+        #                         }
+        #                     }
+        #                 }
+        #             },
+        #         ],
+        #     ],
+        #     "as": "pets",
+        # },
+        # )
+        # pets = self.collection.aggregate(
+        #     [
+        #         {
+        #             "$lookup": {
+        #                 "from": "pets",
+        #                 "localField": "FavPets",
+        #                 "foreignField": "_id",
+        #                 "as": "FavoritePets",
+        #             }
+        #         },
+        #         {"$match": {"_id": ObjectId(pet_id)}},
+        #     ]
+        # )
+
+        # for i in account:
+        #     # del i["FavPets"]
+        #     for j in i["FavoritePets"]:
+        #         j["pet_id"] = str(j["_id"])
+        #         print(i, "+++++++++++++++++++++++++++")

@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetTokenQuery, useSingleAccountQuery } from "../redux/api";
 import UpdateAccountForm from "./UpdateAccountForm";
 import AccountApplications from "../applications/AccountApplications";
+import AccountFavorites from './AccountFavorites'
 
 export default function AccountProfile() {
   const navigate = useNavigate();
@@ -104,26 +105,15 @@ export default function AccountProfile() {
                     </TableRow>
                   </TableBody>
                 </Table>
-                <Table>
-                  <TableBody>
-                    <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-                      <TableCell>
-                        <IconButton
-                          aria-label='expand row'
-                          size='small'
-                          onClick={() => setOpen(!open)}
-                        >
-                          {open ? (
-                            <KeyboardArrowUpIcon />
-                          ) : (
-                            <KeyboardArrowDownIcon />
-                          )}
-                          Address:
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                <IconButton
+                  aria-label='expand row'
+                  size='small'
+                  onClick={() => setOpen(!open)}
+                >
+                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  Address:
+                </IconButton>
+                
                 <Collapse in={open} timeout='auto' unmountOnExit>
                   <Table>
                     <TableBody>
@@ -149,6 +139,7 @@ export default function AccountProfile() {
               <UpdateAccountForm data={accountData} />
             </CardActions>
           </Card>
+          <AccountFavorites/>
         </Grid>
       </Grid>
     </Container>
