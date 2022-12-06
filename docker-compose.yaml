@@ -1,7 +1,7 @@
 volumes:
-  fur-mongo-data:
+  friends-data:
     external: true
-  fur-node-modules:
+  friends-modules:
     external: true
 services:
   mongo:
