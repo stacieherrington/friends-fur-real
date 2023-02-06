@@ -18,10 +18,13 @@ import StoryForm from "./Story/StoryForm";
 import StoriesList from "./Story/StoriesList";
 import UpdatePet from "./pets/UpdatePet";
 
+const domain = /https:\/\/[^/]+/;
+const basename = process.env.REACT_APP_PUBLIC_URL.replace(domain, "");
+
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Container className='pt-2 pb-0 mb-0'>
           <DrawerAppBar />
           <Routes>
