@@ -30,7 +30,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        os.environ.get("PUBLIC_URL", "http://localhost:3000"),
+        "http://localhost:3000",
+        os.environ.get("PUBLIC_URL", "REACT_APP_PUBLIC_URL"),
     ],
     allow_credentials=True,
     allow_methods=["*"],
