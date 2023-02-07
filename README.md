@@ -112,77 +112,77 @@ three different permissions:
 |    `staff2@test.com`    | `password` |  `staff`   |
 |    `base2@test.com`     | `password` |  `base`    |
 
-Please login to different accounts to check the permissions.
-Current logged in account DOSE matter:
+Please login to different accounts to experience how the permissions work.
+The account you use DOES matter:
 
 - PetList (find a friend) Page:
-  - admin1, staff1, base1 was set location in Austin TX area.
-  - admin2, staff2, base2 was set location in Palm Desert CA area.
-  - Without login petlist page will display all adoptable pets.
-  - With logged in, petlist page will display pets within 200 miles and sorted by distance.
+  - admin1, staff1, base1 will set your location to the Austin, TX area.
+  - admin2, staff2, base2 will set your location in Palm Desert, CA area.
+  - When browsing anonymously (without login) petlist page will display all adoptable pets.
+  - When logged in, petlist page will display pets within 200 miles, sorted by distance.
 - StoryList (Stories) Page:
-  - Only display all the stories has been approved.
+  - Will display only the stories that have been approved by their respective rescues.
 - Management (logged in as staff/admin):
-  - Only display the pets/applicaitons/storis that belone to your own rescue.
-  - Only staff/admin to add/update/delete pets for your own rescue.
-  - Only staff/admin Approve/Reject applications/stories for your own rescue.
-  - Only admin can Promote/Demote staff for your own rescue.
+  - You will be able to view only the pets/applications/stories that belong to your own rescue.
+  - Staff/admin can add/update/delete pets only for their own rescue.
+  - Staff/admin can approve/reject applications/stories only for their own rescue.
+  - Only admin can promote a regular user to staff (or demote staff back to regular user) for their own rescue only.
 
 ### Website Preview:
 
 HomePage preview with random display of pets and stories:
 <br>
-![Semantic description of image](/preview/random_display.gif)
+![HomePage preview with random display of pets and stories](/preview/random_display.gif)
 <br>
 
-base user login:
+Base User Login:
 <br>
-![Semantic description of image](/preview/base_user_login.gif)
-<br>
-
-Check pet detail:
-<br>
-![Semantic description of image](/preview/detail_pet.gif)
+![Base User Login](/preview/base_user_login.gif)
 <br>
 
-Filter pets by type:
+Check Pet Detail:
 <br>
-![Semantic description of image](/preview/filter_pets_by_type.gif)
+![Check Pet Detail](/preview/detail_pet.gif)
 <br>
 
-Profile_page:
+Filter Pets by Type:
 <br>
-![Semantic description of image](/preview/profile_page.gif)
+![Filter Pets by Type](/preview/filter_pets_by_type.gif)
+<br>
+
+Profile Page:
+<br>
+![Profile Page](/preview/profile_page.gif)
 <br>
 
 Logout:
 <br>
-![Semantic description of image](/preview/logout.gif)
+![Logout](/preview/logout.gif)
 <br>
 
-Staff/Admin login:
+Staff/Admin Login:
 <br>
-![Semantic description of image](/preview/staff_login.gif)
+![Staff/Admin Login](/preview/staff_login.gif)
 <br>
 
 Manage Pet and Add Pet:
 <br>
-![Semantic description of image](/preview/manage_pet_add_pet.gif)
+![Manage Pet and Add Pet](/preview/manage_pet_add_pet.gif)
 <br>
 
 Review Applications:
 <br>
-![Semantic description of image](/preview/review_application.gif)
+![Review Applications](/preview/review_application.gif)
 <br>
 
 Review Stories:
 <br>
-![Semantic description of image](/preview/review_story.gif)
+![Review Stories](/preview/review_story.gif)
 <br>
 
-Manage Staff. Promote/Demote staff:
+Manage Staff, Promote/Demote Staff:
 <br>
-![Semantic description of image](/preview/Promote_Demote_staff.gif)
+![Manage Staff, Promote/Demote Staff](/preview/Promote_Demote_staff.gif)
 <br>
 
 
