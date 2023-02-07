@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, Form, File
-from models.pet import PetOut, PetIn, PetsList, PetUpdate
+from models.pet import PetOut, PetIn, PetsList
 from queries.pet import PetQueries
 from .auth import authenticator
 from .s3 import upload_to_s3
@@ -154,7 +154,7 @@ def update_pet(
         raise not_authorized
     elif not queries.rescue_own_pet(pet_id, account["rescue_id"]):
         raise not_authorized
-    pet = PetUpdate(
+    pet = PetIn(
         name=name,
         type=type,
         breed=breed,

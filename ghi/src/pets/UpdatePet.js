@@ -29,8 +29,6 @@ export default function UpdatePet() {
   const navigate = useNavigate();
   const {
     data: tokenData,
-    error: tokenError,
-    isLoading: tokenLoading,
   } = useGetTokenQuery();
   const [isRescuer, setIsRescuer] = useState(false);
   const [fields, setFields] = useState({
