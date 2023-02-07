@@ -11,3 +11,4 @@ api/routers/__pycache__
 *.so
 .env
 .vscode/
+.venv
