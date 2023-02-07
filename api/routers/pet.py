@@ -172,6 +172,7 @@ def update_pet(
         house_trained=house_trained,
         special_needs=special_needs,
         is_adopted=False,
+        rescue_id=account["rescue_id"],
     )
     if pictures.filename:
         pet.pictures = upload_to_s3(account["id"], pictures.file, pictures.filename)
