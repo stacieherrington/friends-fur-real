@@ -8,6 +8,7 @@ from models.story import (
     SuccessStoryIn,
 )
 from .application import ApplicationQueries
+from queries.application import ApplicationUpdate
 import os
 
 AWS_HOST = os.environ.get("AWS_HOST", "").strip("/")
