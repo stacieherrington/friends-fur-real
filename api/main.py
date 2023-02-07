@@ -32,7 +32,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "REACT_APP_PUBLIC_URL",
-        os.environ.get("PUBLIC_URL", "REACT_APP_PUBLIC_URL"),
+        os.environ.get("CORS_HOST", "REACT_APP_PUBLIC_URL"),
     ],
     allow_credentials=True,
     allow_methods=["*"],

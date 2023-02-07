@@ -7,6 +7,7 @@ from models.story import (
     SuccessStoryOut,
     SuccessStoryIn,
 )
+from models.application import ApplicationUpdate
 from .application import ApplicationQueries
 import os
 
@@ -23,7 +24,7 @@ def enrich_pictures(story):
 
 
 class SuccessStoryQueries(Queries):
-    DB_NAME = "fur"
+    DB_NAME = "Fur-data"
     COLLECTION = "stories"
 
     def __init__(self, application_queries: ApplicationQueries = Depends()):
@@ -54,7 +55,9 @@ class SuccessStoryQueries(Queries):
             if insert_result.acknowledged:
                 update = ApplicationUpdate(**application.dict())
                 update.story_written = True
-                self.application_queries.update_application(application_id, update)
+                self.application_queries.update_application(
+                    application_id, update
+                )
                 return {"message": "Thank you for your story!"}
         else:
             return {

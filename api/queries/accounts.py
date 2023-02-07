@@ -19,7 +19,7 @@ class DuplicateAccountError(ValueError):
 
 
 class AccountQueries(Queries):
-    DB_NAME = "fur"
+    DB_NAME = "Fur-data"
     COLLECTION = "accounts"
 
     def __init__(self, address_service: Nominatim = Depends()):

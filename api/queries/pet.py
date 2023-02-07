@@ -19,7 +19,7 @@ def enrich_pictures(pet):
 
 
 class PetQueries(Queries):
-    DB_NAME = "fur"
+    DB_NAME = "Fur-data"
     COLLECTION = "pets"
 
     def get_pet(self, id) -> PetOut:

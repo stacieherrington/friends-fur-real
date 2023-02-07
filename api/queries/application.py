@@ -13,7 +13,7 @@ import sys
 
 
 class ApplicationQueries(Queries):
-    DB_NAME = "fur"
+    DB_NAME = "Fur-data"
     COLLECTION = "applications"
 
     def create_application(self, app: ApplicationIn, account_id):
@@ -115,7 +115,9 @@ class ApplicationQueries(Queries):
         if delete_result.acknowledged:
             return {"message": "Your Adoption application has been deleted!"}
 
-    def update_application(self, application_id: str, data: ApplicationUpdate) -> ApplicationOut:
+    def update_application(
+        self, application_id: str, data: ApplicationUpdate
+    ) -> ApplicationOut:
         try:
             app = self.collection.find_one_and_update(
                 {"_id": ObjectId(application_id)},

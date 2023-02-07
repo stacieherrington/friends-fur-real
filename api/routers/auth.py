@@ -4,6 +4,7 @@ from jwtdown_fastapi.authentication import Authenticator
 from models.accounts import AccountOut, Account
 from queries.accounts import AccountQueries
 from queries.sessions import SessionQueries
+from datetime import timedelta
 
 
 class Auth(Authenticator):
@@ -36,5 +37,5 @@ class Auth(Authenticator):
     async def validate_jti(self, jti, session_repo):
         return session_repo.get(jti) is not None
 
-
+time_limit = timedelta(hours=1)
 authenticator = Auth(os.environ["SIGNING_KEY"])

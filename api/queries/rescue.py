@@ -8,7 +8,7 @@ from .pet import enrich_pictures
 
 
 class RescueQueries(Queries):
-    DB_NAME = "fur"
+    DB_NAME = "Fur-data"
     COLLECTION = "rescues"
 
     def get_rescue(self, id) -> RescueOut:
